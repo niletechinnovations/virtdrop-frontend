@@ -1,0 +1,47 @@
+section.blog-section {background: #f7faff; padding: 3rem 0; position: relative; }
+.single-blog {border: 1px solid #d7e8f1;margin-bottom: 20px;border-radius: 5px;position: relative;background-color: #ffffff;box-shadow: 0px 10px 20px 0px rgba(189, 212, 239, 0.1);}
+.single-blog .post-img {position: relative; height: 220px; overflow: hidden; }
+.single-blog .post-img img {width: 100%; }
+.single-blog .post-tags {padding: 6px 10px;display: inline-block;border-radius: 3px;position: absolute;overflow: hidden;background: #d5042b;top: 5px;right: 5px;z-index: 1;}
+.single-blog .post-tags a {color: #fff; font-size: 12px; font-weight: bold; }
+
+.single-blog .post-content {padding: 20px 20px;position: relative;}
+.single-blog .post-content .post-meta {margin-bottom: 10px;}
+.single-blog .post-content .post-meta a {color: #607D8B;margin-right: 20px;font-size: 13px;}
+.single-blog .post-content h2 {font-size: 18px; line-height: 28px; }
+.single-blog .post-content h2 a {color: #495057; }
+
+.bttn-mid {position: relative;font-size: 14px;font-weight: 500;padding: 8px 30px;border-radius: 3px;display: inline-block;cursor: pointer;text-transform: uppercase;color: #ffffff;background: #002164;}
+.bttn-mid:hover{color: #ffffff}
+
+
+
+
+ .blog-single{background: #fff; padding: 20px; border-radius: 5px; position: relative; margin-bottom: 20px; } 
+  .blog-single .image {position: relative;    min-height: auto; margin-bottom: 28px; }
+  .blog-single .image img {position: relative; width: 100%; display: block; } 
+ .upper-box {position: relative; margin-bottom: 20px; }
+ .upper-box .title-box {position: relative; padding-left: 70px; }
+ .upper-box .title-box .date {position: absolute; left: 0px; top: 0px; color: #ffffff; min-width: 42px; padding: 10px 13px 0px; font-size: 13px; font-weight: 400; text-align: center; display: inline-block; background-color: #d5042b; }
+ .upper-box .title-box .date span {position: relative; font-size: 15px; font-weight: 700; line-height: 1em; color: #ffffff; margin-bottom: 2px; display: block; }
+ .upper-box .title-box h3 {position: relative; font-size: 20px; font-weight: 700; color: #333333; line-height: 1.2em; padding: 0; }
+ .title-box .post-meta {position: relative; margin-top: 5px; }
+ .title-box .post-meta li {position: relative; display: inline-block; margin-right: 20px; }
+ .title-box .post-meta li a {color: #777777; font-size: 14px; padding-left: 20px; }
+ .text p {color: #666666; font-size: 14px; line-height: 2em; margin-bottom: 18px; }
+ .text blockquote {position: relative; padding: 40px 40px; border-left: none; margin-top: 30px; margin-bottom: 30px; background-color: #f7f7f7; }
+ .text blockquote .blockquote-inner {position: relative; }
+ .text blockquote .quote-icon {position: absolute; left: 0px; top: 0px; width: 95px; color: #e3ba68; text-align: left; font-size: 46px; line-height: 1em; padding-top: 25px; padding-bottom: 25px; min-height: 100px; border-right: 1px solid #d4d4d4; }
+ .text blockquote .blockquote-text {font-size: 16px; color: #666666; font-weight: 300; line-height: 1.9em; padding-left: 130px; padding-top: 20px; padding-bottom: 20px; padding-right: 90px; }
+
+.sidebar-widget {position: relative; margin-bottom: 45px; background: #fff; padding: 10px; border-radius: 3px; }
+.sidebar-title {position: relative; margin-bottom: 30px; }
+.sidebar-title h2 {font-size: 18px; color: #333333; font-weight: 500; line-height: 1.2em; padding-bottom: 16px; text-transform: capitalize; }
+.sidebar-title h2:after {position: absolute; content: ''; left: 0px; bottom: 0px; width: 32px; height: 2px; background-color: #d5042b; }
+.sidebar .popular-posts .post {position: relative; padding-left: 100px; min-height: 70px; margin-bottom: 22px; }
+.sidebar .popular-posts .post .post-thumb {position: absolute; left: 0px; top: 0px; width: 80px; }
+.sidebar .popular-posts .post a, .sidebar .popular-posts .post a:hover {color: #333333; }
+.sidebar .popular-posts .post .post-thumb img {display: block; width: 100%; transition: all 0.3s ease; -moz-transition: all 0.3s ease; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -o-transition: all 0.3s ease; }
+.sidebar .popular-posts .post h4 {position: relative; top: -2px; font-size: 13px; margin: 0px 0px 0px; font-weight: 500; text-transform: capitalize; padding: 0; }
+.sidebar .popular-posts .post h4 a {color: #333333; transition: all 0.3s ease; -moz-transition: all 0.3s ease; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -o-transition: all 0.3s ease; }
+.sidebar .popular-posts .post .price {position: relative; color: #959595; font-size: 14px; margin-top: 5px; }

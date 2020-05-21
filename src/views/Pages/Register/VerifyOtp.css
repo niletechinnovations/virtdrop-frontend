@@ -1,0 +1,12 @@
+.Verify-otp-component{ min-height: 330px;}
+input.otp-input-field {
+    width: 4em !important;
+    text-align: center !important;
+    padding: 10px !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+.otp-container-input {
+    display: flex !important;
+    margin: 0 auto !important;
+}

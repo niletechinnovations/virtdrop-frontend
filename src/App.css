@@ -1,0 +1,69 @@
+
+@import './assets/plugin/font-awesome/css/font-awesome.min.css';
+
+/*----------------------------
+   element      
+----------------------------*/
+* {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+html { text-rendering: optimizeLegibility !important;-webkit-font-smoothing: antialiased !important;}
+.nopadding-left{padding-left:0;}
+.nopadding-right{padding-right:0;}
+.nopadding{padding-left:0;padding-right:0;}
+.mb10{padding-left:10px;padding-right:10px;}
+.tabbody{margin-right: -10px; margin-left: -10px;}
+*{margin:0; padding:0}
+a{ text-decoration:none;}
+a:hover{ text-decoration:none !important;}
+header, nav, section, article, aside, footer { display:block;}
+html {font-size: 100%;}
+body {font-size: 12px;font-family: 'Ubuntu', sans-serif;
+line-height: 26px;color: #777;-webkit-font-smoothing: antialiased;font-weight: normal;}
+h1, h2, h3, h4, h5, h6 {padding: 5px 0 15px 0;color: #333;font-weight: normal;-webkit-font-smoothing: antialiased;}
+:-ms-input-placeholder{color: #000;}
+#root .app{ min-height: 50vh;}
+.default-form p{ font-size: 14px;}
+button.btn{ font-size: 13px;}
+.navbar-brand .logo{ display: inline-block; width: 80px; height: auto; } 
+.default-form .form-group label {
+   font-size: 13px;
+   font-weight: 600;
+   margin-bottom: 0;
+   color: #414b50;
+}
+.default-form .form-control {
+   border: 1px solid #cfd2de;
+   border-radius: 3px;
+   padding: 10px 16px;
+   height: auto;
+   outline: none;
+   background-color: #ffffff;
+   color: #434b4e;
+   font-size: 13px;
+}
+/*button.btn{ padding: 7px 15px; font-size: 14px; border-radius: 4px; cursor: pointer; outline: none;}*/
+button.primary-button{
+   background: #002164;
+   border-color: #002164;
+   color: #fff;
+   display: inline-block;
+}
+.btn.btn-primary {
+   color: #fff;
+   background-color: rgba(0,33,100,.9);
+   border-color: rgba(0,33,100,.9);
+   border-color: rgba(0,33,100,.9);
+
+}
+.btn.btn-primary:not(:disabled):not(.disabled).active, .btn.btn-primary:hover {
+   color: #fff;
+   background-color: #002164;
+   border-color: #002164;
+}
+.btn.btn-primary:not(:disabled):not(.disabled):active:focus{
+   box-shadow: 0 0 0 0.2rem rgba(0,33,100,.5);
+   background-color: #002164;
+   border-color: #002164;
+}
+.Submit-form-button:disabled{ background-color: #002164 !important;}
+.errorMsg { width: 100%; font-size: 80%; color: #dc3545; }
+.sucessMsg { width: 100%; font-size: 80%; color: #6B8E23; }

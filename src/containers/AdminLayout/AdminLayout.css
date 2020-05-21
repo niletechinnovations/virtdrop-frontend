@@ -1,0 +1,105 @@
+.app.dashboard-template{ min-height: 100vh;}
+body.header-fixed .app.dashboard-template{
+	background:#e8edf2 ;
+}
+.dashboard-template .app-header .nav-item .nav-link {
+     padding-top: 0; 
+     padding-bottom: 0; 
+     background: 0; 
+     border: 0; 
+     color: #73818f;
+}
+.dashboard-template .Toastify__toast-container--top-right {
+	top: 3em !important;
+}
+.app-header { background-color: #1e222b !important; }
+.admin-panel{ min-height: 90vh;}
+a.profileDropDownLink {
+    color: #000 !important;
+    padding: 0px !important;
+}
+.app-header {
+    background-color: #ffffff !important;
+    background: #fff;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.13);
+    border: none;
+}
+
+.navbar .dropdown-menu a{font-size: 13px !important;}
+.sidebar .nav-link{font-size: 13px;color: #c6c7c7;} 
+.btn[class*="btn-outline-"]{padding-top: 6px; padding-bottom: 6px; font-size: 12px;}
+.card{border: none;box-shadow: none;}
+.card-header {background: #fff; border-bottom: 1px solid #e8edf2; }
+.sidebar{background: #002164; box-shadow: 0 0 30px #E0E0E4;}
+.sidebar ul li a.nav-link:hover{color:#ffffff; background: #001540;}
+.sidebar .nav-link.active { color: #ffffff; background: #001540; font-weight: 600; }
+.sidebar .nav-link.active .nav-icon,
+.sidebar .nav-link:hover .nav-icon{ color: #ffffff;}
+.sidebar .nav-dropdown.open {background: #d5e2ef; }
+.sidebar .nav-dropdown.open .nav-link {color: #1e222b;}
+.sidebar .nav-dropdown.open .nav-dropdown-toggle, .sidebar .nav-dropdown.open .nav-dropdown-toggle:hover{ background: #001540 !important; color: #ffffff;}
+.sidebar .nav-dropdown.open .nav-dropdown-items .nav-link:hover .nav-icon{ color: #000000;}
+.sidebar .nav-dropdown.open .nav-link:hover{ background: #c7d8e8;}
+.sidebar .nav-dropdown.open .nav-link:hover .nav-icon, .sidebar .nav-dropdown.open .nav-dropdown-toggle .nav-icon{color:#ffffff;}
+.sidebar .nav-dropdown.open a.nav-link.active { background: #c7d8e8; }
+.sidebar .sidebar-minimizer,
+.sidebar .sidebar-minimizer:hover{background:#d5042b}
+.sidebar-minimized .sidebar .sidebar-minimizer{background:#d5042b}
+.breadcrumb{border: none;}
+.breadcrumb li.breadcrumb-item {color: #797d80; font-size: 12px; }
+
+footer.app-footer {background: #fff; border: none; font-size: 12px; }
+
+a.btn-edit, button.btn-edit {background: #fff; padding: 5px; width: 30px; height: 30px; border: 1px solid #4CAF50; text-align: center; border-radius: 5px; margin: 0 2px; color: #4CAF50; display: inline-block; }
+a.btn-delete, button.btn-delete {background: #fff; padding: 5px; width: 30px; height: 30px; border: 1px solid #F44336; text-align: center; border-radius: 5px; margin: 0 2px; color: #F44336; display: inline-block; }
+a.btn-view, button.btn-view {background: #fff; padding: 5px; width: 30px; height: 30px; border: 1px solid #001540; text-align: center; border-radius: 5px; margin: 0 2px; color: #001540; display: inline-block; }
+.sidebar .nav-link .nav-icon{ color: #c6c7c7;}
+.sidebar .nav-dropdown.open .nav-icon{ color: #000000;}
+.admin-avatar{ float: left;}
+.admin-avatar .profileImage{
+    width: 35px; height: 35px; line-height: 35px; font-size: 16px;
+    margin-left: 20px; margin-right: 10px;
+}
+.admin-profile-username{ font-weight: 500; line-height: 36px; margin-right: 20px;}
+.admin-profile-username .caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid\9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+.sidebar .nav-item:last-of-type .nav-link {
+    background:#002164;
+}
+.sidebar .nav-dropdown.open .nav-item:last-of-type .nav-link { background: transparent;}
+.admin-dashboard .MuiSvgIcon-root{ font-size: 3em;}
+.mainHeading .card-header{ font-size: 18px; padding: 5px;}
+.MuiTable-root .MuiTableCell-head{ font-weight: bold; font-size: 12px; padding: 5px !important; z-index: 9;}
+td.MuiTableCell-root{ font-size: 0.77rem !important; padding: 5px !important;}
+.MuiTableCell-root p{ margin-bottom: 0; }
+.MuiPaper-root .MuiToolbar-gutters{ padding-left: 10px; padding-right: 10px;}
+h6.MuiTypography-root{ font-size: 14px; font-weight: 600;}
+.modal .modal-title{ padding-bottom: 0px;}
+.profileImage.userImg{ width: 36px; height: 36px; line-height: 32px; font-size: 16px;}
+table th.th-user-img{ padding-left: 25px;}
+.statusDrodownBtn .btn-sm{ padding: 0.25rem 0.5rem; font-size: 13px;}
+.actionBtnGroup{ width: 100px;}
+.changeStatusBtn{ position: absolute; left: 12px; }
+.view-all-btn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 12px;
+    box-shadow: none;
+}
+.dashboard-card-body{ padding-top: 10px;}
+.dashboard-card-body h5{ margin-bottom: 0px;}
+.filterRow .col-md-2, .filterRow .col-md-1{ padding-right: 5px; padding-left: 5px;}
+.filterRow label{ font-size: 12px; font-weight: 600;}
+.filterRow .form-control{ padding: 0.375rem 0.375rem;}
+.filterRow .btn{ padding: 5px 10px;}
+.react-datepicker-popper{ z-index: 99;}

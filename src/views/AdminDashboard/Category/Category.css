@@ -1,0 +1,13 @@
+.mainHeading{display: flex; align-items: center; right: 0;}
+.categoryAdd {position: absolute; right: 0; top: 0; background: #ffc107; color: #fff; font-size: 12px; box-shadow: none; }
+
+.MuiToolbar-gutters {padding: 0; }
+.MuiToolbar-regular {
+    min-height: 32px;
+}
+.MuiPaper-root.MuiPaper-elevation4.MUIDataTable-paper-2.MuiPaper-rounded{    box-shadow: none; border: 1px solid #e8edf2; background: #ffffff;}
+.MuiTableCell-head {background: rgb(255,255,255); background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(249,251,253,1) 100%); background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(249,251,253,1) 100%); background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(249,251,253,1) 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9fbfd',GradientType=0 ); border: 1px solid #e8edf2; padding: 10px 15px; }
+h6.MuiTypography-root {font-size: 14px; color: #000; }
+.MuiTableCell-root {padding:10px 15px !important; }
+.MuiTableRow-root.MuiTableRow-hover:hover {background-color: #ffffff !important; }
+

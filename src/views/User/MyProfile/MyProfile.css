@@ -1,0 +1,12 @@
+.profile-form {background: #fff; padding: 15px; border-radius: 5px; position: relative; }
+.profile-form h3 {font-size: 18px; font-weight: bold;}
+
+.profile-form .form-group label {font-size: 13px;font-weight: 600;margin-bottom: 0;color: #414b50;} 
+.profile-form .form-control {border: 1px solid #cfd2de;border-radius: 3px;padding: 10px 16px;height: auto;outline: none;background-color: #ffffff;color: #434b4e;font-size: 13px;}
+.profile-form .form-control:focus {box-shadow: none; border: 1px solid #002164; }
+.profile-form .form-control:-internal-autofill-selected {box-shadow: none; border: 2px solid #928c79;background-color: #b7b3a6 !important;}
+.chooseOrgDoc.form-control-file{ padding:7px 15px;}
+button.Submit-form-button {background: #002164;border: none;font-size: 13px;font-weight: bold;color: #fff;width: 100%;padding: 10px 15px;border-radius: 4px;display: inline-block;outline: none;cursor: pointer;}
+.docBtnArea{ float: left;  margin-right: 10px;}
+.downloadOrgDocLabel{ float: left; width: 100%;}
+.docBtnArea{margin: 2px;}
