@@ -46,7 +46,7 @@ class UserNavbar extends Component {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to="/user/my-listings" className="nav-link">
+              <Link to="/user/dashboard" className="nav-link">
                 <span className="icon-orders"><img src="/images/user.svg" height="24" alt="My Listing" /></span>
                 <span className="value-orders">Your Virtdrop VA</span>
               </Link>
@@ -58,7 +58,7 @@ class UserNavbar extends Component {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to="/user/reviews" className="nav-link">
+              <Link to="/user/dashboard" className="nav-link">
                 <span className="icon-orders"><img src="/images/task.svg" height="24" alt="Task Management" /></span>
                 <span className="value-orders">Task Management</span>
               </Link>
@@ -66,19 +66,11 @@ class UserNavbar extends Component {
           {/* </>
           } */}
 
-          { localStorage.getItem( 'isAdvertiser' )=== "true" && <>  
-            <NavItem>
-              <Link to="/advertiser/ads" className="nav-link">
-                <span className="icon-orders"><img src="/images/advertisment.png" height="24" alt="Advertisment" /></span>
-                <span className="value-orders">My Advertisment</span>
-              </Link>
-            </NavItem>
-          </>
-          }
+        
           
             <NavItem>
-              <Link to={ localStorage.getItem('isOrganization')=== "true" ? "/user/transactions" : "/advertiser/transactions" } className="nav-link">
-                <span className="icon-orders"><img src="/images/subscription.svg" height="24" alt="Subscription" /></span>
+              <Link to={ localStorage.getItem('isOrganization')=== "true" ? "/user/dashboard" : "/user/dashboard" } className="nav-link">
+                <span className="icon-orders"><img src="/images/billing.svg" height="24" alt="Subscription" /></span>
                 <span className="value-orders">My Subscription</span>
               </Link>
             </NavItem>

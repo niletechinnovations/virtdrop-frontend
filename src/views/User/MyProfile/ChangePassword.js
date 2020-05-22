@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Input, FormFeedback, FormText } from 'reactstrap';
+import { Card, CardHeader, CardBody, Row, Col, Form, Input, FormFeedback, FormText } from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
@@ -160,30 +160,39 @@ class ChangePassword extends Component {
       loaderElement = <Loader />
 
     return (
-      <div className="user-dashboard">
+      <div className="dashboard-section">
         <ToastContainer />
         {loaderElement}
-        <div className="ChangeChange-form">
-            <h3>Change Password</h3>
+        
+        <Card className="vd-card">
+            <CardHeader>
+              <div className="d-flex align-items-center">
+                  <div className="mr-auto">
+                  <h4 className="card-title"> Change Password</h4>
+                  </div>
+              </div>
+            </CardHeader>
+            <CardBody>
+        
             {/* <FormErrors formErrors={this.state.formErrors} /> */}
-            <Form onSubmit={this.submitHandler} noValidate>
+            <Form className="profile-form" onSubmit={this.submitHandler} noValidate>
               <Row>
                 <Col md="6">
-                   <div className="form-group">
+                  <div className="form-group">
                       <label htmlFor="oldPassword">Old Password</label>
                       <Input type="password" name="oldPassword" id="oldPassword" placeholder="Old Password" value={this.state.formField.oldPassword} onChange={this.changeHandler} invalid={formErrors['oldPassword'] !== undefined && formErrors['oldPassword'] !== ""} required />
                       <FormFeedback>{formErrors['oldPassword']}</FormFeedback>
-                   </div>
+                  </div>
                 </Col>
               </Row>
               <Row>
                 <Col md="6">
-                   <div className="form-group">
+                  <div className="form-group">
                       <label htmlFor="newPassword">New Password</label>
                       <Input type="password" name="newPassword" id="newPassword" placeholder="New Password" value={this.state.formField.newPassword} onChange={this.changeHandler} invalid={formErrors['newPassword'] !== undefined && formErrors['newPassword'] !== ""} required />
                       <FormText>Be at least 8 characters, Uppercase, lowercase letters, numbers & special characters</FormText>
                       <FormFeedback>{formErrors['newPassword']}</FormFeedback>
-                   </div>
+                  </div>
                 </Col>
               </Row>
               <Row>
@@ -197,13 +206,15 @@ class ChangePassword extends Component {
               </Row>
               <Row>  
                 <Col md="3">
-                   <div className="form-group">
+                  <div className="form-group">
                       <button type="submit"  disabled={!this.state.formValid} className="Submit-form-button btn btn-primary">Change Password</button>
-                   </div>
+                  </div>
                 </Col>
-             </Row>
-         </Form>
-       </div>
+            </Row>
+            </Form>
+          </CardBody>
+        </Card>
+      
       </div>
     );
   }

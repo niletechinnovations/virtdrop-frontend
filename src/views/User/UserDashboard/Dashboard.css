@@ -21,7 +21,8 @@
 /*.dashboard-card:hover {-webkit-box-shadow: 0 0px 30px rgba(15, 60, 216, 0.11); box-shadow: 0 0px 30px rgba(15, 60, 216, 0.11); } 
 .dashboard-card:after { content: ''; position: absolute; height: 2px; left:-100%; bottom: 0; -webkit-transition: all 0.4s linear; transition: all 0.4s linear; }
 .dashboard-card:hover:after{background-color: #1360fe;height: 2px;-webkit-transition: all 0.4s linear; transition: all 0.4s linear; width: 100%; left: 0 }
-*/.dashboard-card-content h2 {font-size: 14px; font-weight:500; color: #091e42; margin: 0; padding-top: 0; text-align: center; }
+*/
+.dashboard-card-content h2, .dashboard-card-content h2 a{font-size: 14px; font-weight:500; color: #091e42; margin: 0; padding-top: 0; text-align: center; }
 .dashboard-card-icon {width: 90px; margin: 0 auto 20px; background: #f4f9fc; height: 90px; border-radius: 50%; line-height: 90px; }
 
 .vd-card{-webkit-box-shadow: 0 0 4px 2px rgb(232, 240, 255); box-shadow: 0 0 4px 2px rgb(232, 240, 255); border-radius: 4px;position: relative;margin-bottom: 20px;border: none;}

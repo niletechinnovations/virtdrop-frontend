@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Input, Col, Row, FormGroup, Label} from 'reactstrap';
+import { Card, CardHeader, CardBody, Button, Form, Input, Col, Row, FormGroup, Label} from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
@@ -236,13 +236,21 @@ class MyProfile extends Component {
       loaderElement = <Loader />
 
     return (
-      <div className="user-dashboard">
+      <div className="dashboard-section">
          <ToastContainer />
          {loaderElement}
-        <div className="profile-form">
-            <h3>My Profile</h3>
+      
+         <Card className="vd-card">
+            <CardHeader>
+               <div className="d-flex align-items-center">
+                  <div className="mr-auto">
+                  <h4 className="card-title"><img src="/images/account.svg" height="30" alt="" /> My Profile</h4>
+                  </div>
+               </div>
+            </CardHeader>
+            <CardBody>
             <FormErrors formErrors={this.state.formErrors} />
-            <Form onSubmit={this.submitHandler} noValidate>
+            <Form className="profile-form" onSubmit={this.submitHandler} noValidate>
                <div className="row">
                   <div className="col-md-6">
                      <div className="form-group">
@@ -336,7 +344,9 @@ class MyProfile extends Component {
                   </Col>
                </div>
             </Form>
-         </div>
+            </CardBody>
+         </Card>
+         
       </div>
     );
   }
