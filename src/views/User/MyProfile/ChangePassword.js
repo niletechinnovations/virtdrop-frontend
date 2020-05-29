@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Row, Col, Form, Input, FormFeedback, FormText } from 'reactstrap';
+import { Card, CardHeader, CardBody, Row, Col, Form, Input, FormFeedback } from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
@@ -55,10 +55,10 @@ class ChangePassword extends Component {
             if(err.response !== undefined && err.response.status === 401) {
               localStorage.clear();
               this.props.history.push('/login');
-            }
-            else
+            }else{
               this.setState( { loading: false } );
               toast.error(err.message);
+            }
           } )
       } );
     }else{ console.log('Outside validation'); }
@@ -125,12 +125,6 @@ class ChangePassword extends Component {
       formValid = false;
       formErrors["newPassword"] = "*Please enter your password.";
     }
-    if (typeof formField.newPassword !== "undefined") {
-      if (!formField.newPassword.match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
-        formValid = false;
-        formErrors["newPassword"] = "*Please enter secure and strong password.";
-      }
-    }
     if (!formField.confirmPassword) {
       formValid = false;
       formErrors["confirmPassword"] = "*Please re-enter your password.";
@@ -190,7 +184,6 @@ class ChangePassword extends Component {
                   <div className="form-group">
                       <label htmlFor="newPassword">New Password</label>
                       <Input type="password" name="newPassword" id="newPassword" placeholder="New Password" value={this.state.formField.newPassword} onChange={this.changeHandler} invalid={formErrors['newPassword'] !== undefined && formErrors['newPassword'] !== ""} required />
-                      <FormText>Be at least 8 characters, Uppercase, lowercase letters, numbers & special characters</FormText>
                       <FormFeedback>{formErrors['newPassword']}</FormFeedback>
                   </div>
                 </Col>

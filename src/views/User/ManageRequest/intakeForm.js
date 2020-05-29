@@ -11,10 +11,10 @@ class intakeForm extends Component {
    constructor(props){
       super(props);
       this.state = {
-         formField: { organizationName: '', email: '', firstName: '', lastName:'', mobileNumber:'', phoneNumber:'', address:'', address2:'', city:'', state:'', postalCode:'', country:'', profilePic:'' },
-         formErrors: {organization_name: '', email: '', firstName: '', lastName: '', mobileNumber:'', phoneNumber:'', address:'', city:'', state:'', postalCode:'', country:'', error: ''},
+         formField: { vaType: 1, natureOfBusiness: '', engagementType: 1, engagementDescription:'', numberOfVA:'', skillSet:'' },
+         formErrors: {vaType: '', natureOfBusiness: '', engagementType: '', engagementDescription: '', numberOfVA:'', skillSet:'', error: ''},
          formValid: true,
-         organizationId: "",
+         requestId: "",
          invalidImage:'',
          loading: false
       };
@@ -24,7 +24,6 @@ class intakeForm extends Component {
       //this.getProfile();
    }
    
-   
    /* Submit Form Handler*/
    submitHandler (event) {
       event.preventDefault();
@@ -32,41 +31,32 @@ class intakeForm extends Component {
       this.setState( { loading: true}, () => {
         const formInputField = this.state.formField;
         const formData = {
-          "email": formInputField.email,
-          "profileId": this.state.organizationId,
-          "firstName": formInputField.firstName, 
-          "lastName": formInputField.lastName, 
-          "mobileNumber": formInputField.mobileNumber, 
-          "phoneNumber": formInputField.phoneNumber, 
-          "organizationName": formInputField.organizationName,
-          "address": formInputField.address, 
-          "address2": formInputField.address2,
-          "city": formInputField.city,
-          "state": formInputField.state,
-          "postalCode": formInputField.postalCode,
-          "country": formInputField.country
+          "vaType": formInputField.vaType,
+          "natureOfBusiness": formInputField.natureOfBusiness, 
+          "engagementType": formInputField.engagementType, 
+          "engagementDescription": formInputField.engagementDescription, 
+          "numberOfVA": formInputField.numberOfVA, 
+          "skillSet": formInputField.skillSet
         };
-        commonService.putAPIWithAccessToken('profile', formData)
+        commonService.postAPIWithAccessToken('va-request', formData)
           .then( res => {
             if ( undefined === res.data.data || !res.data.status ) {
-             
               this.setState( { loading: false} );
               toast.error(res.data.message);
               return;
-            }           
+            }
             this.setState({ loading: false});
-            localStorage.setItem( 'userName', formInputField.firstName+' '+formInputField.lastName);
-            //window.location.reload();
+            this.props.history.push('/user/manage-request');
             toast.success(res.data.message);
           } )
-          .catch( err => {         
+          .catch( err => {
             if(err.response !== undefined && err.response.status === 401) {
               localStorage.clear();
               this.props.history.push('/login');
+            }else{
+               this.setState( { loading: false } );
+               toast.error(err.message);
             }
-            else
-              this.setState( { loading: false } );
-              toast.error(err.message);
           } )
       } );
       
@@ -80,8 +70,7 @@ class intakeForm extends Component {
       formField[name] = value;
       this.setState({ formField: formField },
                     () => { this.validateField(name, value) });
-
-      console.log(this.state.formValid);
+      //console.log(this.state.formValid);
     };
 
     /* Validate Form Field */
@@ -90,38 +79,23 @@ class intakeForm extends Component {
       fieldValidationErrors.error = '';
    
       switch(fieldName) {         
-      case 'organizationName':        
-         fieldValidationErrors.organizationName = (value !== '') ? '' : ' is required';
+      case 'vaType':
+         fieldValidationErrors.vaType = (value !== '') ? '' : ' is required';
          break;
-      case 'firstName':        
-         fieldValidationErrors.firstName = (value !== '') ? '' : ' is required';
+      case 'natureOfBusiness':
+         fieldValidationErrors.natureOfBusiness = (value !== '') ? '' : ' is required';
          break;
-      case 'lastName':        
-         fieldValidationErrors.lastName = (value !== '') ? '' : ' is required';
+      case 'engagementType':
+         fieldValidationErrors.engagementType = (value !== '') ? '' : ' is required';
          break;               
-      case 'email':        
-         fieldValidationErrors.email = (value !== '') ? '' : ' is required';
+      case 'engagementDescription':        
+         fieldValidationErrors.engagementDescription = (value !== '') ? '' : ' is required';
          break;               
-      case 'mobileNumber':        
-         fieldValidationErrors.mobileNumber = (value !== '') ? '' : ' is required';
+      case 'numberOfVA':
+         fieldValidationErrors.numberOfVA = (value !== '') ? '' : ' is required';
          break;               
-      case 'phoneNumber':        
-         fieldValidationErrors.phoneNumber = (value !== '') ? '' : ' is required';
-         break;               
-      case 'address':        
-         fieldValidationErrors.address = (value !== '') ? '' : ' is required';
-         break;               
-      case 'city':        
-         fieldValidationErrors.city = (value !== '') ? '' : ' is required';
-         break;               
-      case 'state':        
-         fieldValidationErrors.state = (value !== '') ? '' : ' is required';
-         break;               
-      case 'postalCode':        
-         fieldValidationErrors.postalCode = (value !== '') ? '' : ' is required';
-         break;               
-      case 'country':        
-         fieldValidationErrors.country = (value !== '') ? '' : ' is required';
+      case 'skillSet':      
+         fieldValidationErrors.skillSet = (value !== '') ? '' : ' is required';
          break;               
       default:
          break;
@@ -170,8 +144,8 @@ class intakeForm extends Component {
                   <Row>
                      <Col md={"6"}>
                         <div className="form-group">
-                           <label htmlFor="typeOfVirtualAssistance">Type of Virtual Assistance *</label>
-                           <Input type="select" name="typeOfVirtualAssistance" id="typeOfVirtualAssistance" className="form-control" onChange={this.changeHandler} required>
+                           <label htmlFor="vaType">Type of Virtual Assistance *</label>
+                           <Input type="select" name="vaType" id="vaType" className="form-control" value={formField.vaType} onChange={this.changeHandler} required>
                               <option value="1">Business Support</option>
                               <option value="2">Personal Assistance</option>
                            </Input>
@@ -186,8 +160,8 @@ class intakeForm extends Component {
                      </Col>
                      <Col md={"6"}>
                         <div className="form-group">
-                           <label htmlFor="typeOfEngagement">Type of Engagement *</label>
-                           <Input type="select" name="typeOfEngagement" id="typeOfEngagement" className="form-control" value={formField.typeOfEngagement} required>
+                           <label htmlFor="engagementType">Type of Engagement *</label>
+                           <Input type="select" name="engagementType" id="engagementType" className="form-control" value={formField.engagementType} onChange={this.changeHandler} required>
                               <option value="1">Project-Based</option>
                               <option value="2">Ongoing Task</option>
                            </Input>
@@ -198,7 +172,7 @@ class intakeForm extends Component {
                            <Label htmlFor="engagementDescription">Engagement Description *</Label>
                            <Input type="textarea" name="engagementDescription" className="form-control" value={formField.engagementDescription} onChange={this.changeHandler} required></Input>
                            <FormText color="muted">
-                              e.g. Project Based - 2 Weeks, 1 MOnth etc. <br />
+                              e.g. Project Based - 2 Weeks, 1 Month etc. <br />
                               e.g. Ongoing Task - How many hours/daily <br />
                               <span className="text-danger">Disclaimer: Minimum of of 10 hours a Week</span>
                            </FormText>

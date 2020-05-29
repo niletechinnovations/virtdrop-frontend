@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Card, CardHeader, CardBody, Col, Row, Button, Form, Input, FormGroup,
-  Modal, ModalHeader, ModalBody, ModalFooter
+  Card, CardHeader, CardBody, Col, Row, Button, Form, Input, FormGroup, FormText, Label,
+  Modal, ModalHeader, ModalBody, ModalFooter, 
+  UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 
 import { toast } from 'react-toastify';
@@ -21,35 +22,33 @@ class requestLists extends Component {
       formProccessing: false,
       loading: false,
       rowIndex: -1,
-      activeFoodTruckID: '',
-      formField: { reviewId: '', truckName: '', reviewedBY: '', rating:'', status:'', comment:'' },
+      formField: { vaRequestId: '', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription:'', numberOfVA:'', skillSet:'' },
     } 
-    //this.submitHandler = this.submitHandler.bind(this);
-    //this.handleEditData = this.handleEditData.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
+    this.handleEditData = this.handleEditData.bind(this);
     //this.handleReviewStatus = this.handleReviewStatus.bind(this);
   }
 
-  componentDidMount() {     
-    
-    //this.truckLists({});
+  componentDidMount() {        
+    this.itemLists({});
   }
 
 
-  /* Review List API */
-  reviewLists(filterItem = {}) {
+  /* Request List API */
+  itemLists(filterItem = {}) {
     let strWalkQuery = "";
-    if(filterItem.filter_foodTruckId !== undefined && filterItem.filter_foodTruckId !== "" ) 
-      strWalkQuery += (strWalkQuery !=="" ) ? "/"+filterItem.filter_foodTruckId : "/"+filterItem.filter_foodTruckId;
+    if(filterItem.filter_vaRequestIds !== undefined && filterItem.filter_vaRequestIds !== "" ) 
+      strWalkQuery += (strWalkQuery !=="" ) ? "/"+filterItem.filter_vaRequestIds : "/"+filterItem.filter_vaRequestIds;
     
       this.setState( { loading: true}, () => {
-      commonService.getAPIWithAccessToken('food-truck/reviews'+strWalkQuery)
+      commonService.getAPIWithAccessToken('va-request'+strWalkQuery)
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);
             return;
-          }   
-          this.setState({loading:false, dataLists: res.data.data.reviewList});         
+          }
+          this.setState({loading:false, dataLists: res.data.data.requestList});         
         } )
         .catch( err => {         
           if(err.response !== undefined && err.response.status === 401) {
@@ -70,39 +69,61 @@ class requestLists extends Component {
     this.setState( { formProccessing: true}, () => {
       const formInputField = this.state.formField;
       const formData = {
-        "reviewId": formInputField.reviewId,
-        "message": formInputField.comment,
-        "status": formInputField.status
+        "vaType": formInputField.vaType,
+        "natureOfBusiness": formInputField.natureOfBusiness,
+        "engagementType": formInputField.engagementType,
+        "engagementDescription": formInputField.engagementDescription,
+        "numberOfVA": formInputField.numberOfVA,
+        "skillSet": formInputField.skillSet
       };
-    
       const rowIndex = this.state.rowIndex;
       if(rowIndex > -1) {
-        commonService.putAPIWithAccessToken('food-truck/reviews/status/', formData)
+        formData['vaRequestId'] = formInputField.vaRequestId;
+       
+        commonService.putAPIWithAccessToken('va-request', formData)
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {           
             this.setState( { formProccessing: false} );
             toast.error(res.data.message);
             return;
           } 
-          
           this.setState({ modal: false, formProccessing: false});
           toast.success(res.data.message);
-          this.reviewLists({filter_foodTruckId: this.state.activeFoodTruckID });
-         
+          this.itemLists();        
         } )
         .catch( err => {         
           if(err.response !== undefined && err.response.status === 401) {
             localStorage.clear();
             this.props.history.push('/login');
-          }else
+          }else{
             this.setState( { formProccessing: false } );
             toast.error(err.message);
+          } 
         } )
+      }else{
+        commonService.postAPIWithAccessToken('va-request', formData)
+          .then( res => {
+            if ( undefined === res.data.data || !res.data.status ) {
+              this.setState( { loading: false} );
+              toast.error(res.data.message);
+              return;
+            }
+            this.setState({ loading: false, modal: false, formProccessing: false });
+            toast.success(res.data.message);
+          } )
+          .catch( err => {
+            if(err.response !== undefined && err.response.status === 401) {
+              localStorage.clear();
+              this.props.history.push('/login');
+            }else{
+               this.setState( { loading: false } );
+               toast.error(err.message);
+            }
+          } )
       }
-
-    } );
-    
+    } );  
   };
+  
   /* Input Field On changes*/
   changeHandler = event => {
     const name = event.target.name;
@@ -116,54 +137,26 @@ class requestLists extends Component {
     this.setState({
       modal: !this.state.modal,
       rowIndex: -1,
-      formField: { truckName: '', reviewedBY: '', rating:'', message:'', comment:'', status:'', },
+      formField: { vaRequestId: '', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription:'', numberOfVA:'', skillSet:'' },
     });
   }
+
+  
 
   /* To edit review details/ change status */
   handleEditData(rowIndex){
     const rowData = this.state.dataLists[rowIndex];
+    //console.log(rowData); return;
     const formField = {
-        reviewId: rowData.reviewId,
-        truckName: rowData.truckName,
-        reviewedBY: rowData.reviewedBY,
-        rating: rowData.rating,
-        message: rowData.message,
-        comment: rowData.replyMessage,
-        status: rowData.status,
+        vaRequestId: rowData.vaRequestId,
+        vaType: rowData.vaType,
+        natureOfBusiness: rowData.natureOfBusiness,
+        engagementType: rowData.engagementType,
+        engagementDescription: rowData.engagementDescription,
+        numberOfVA: rowData.numberOfVA,
+        skillSet: rowData.skillSet,
     }
     this.setState({rowIndex: rowIndex, formField: formField, modal: true });
-  }
-
-  handleReviewStatus(status, rowIndex){
-    const statusData = this.state.dataLists[rowIndex];
-    
-    this.setState( { loading: true}, () => {
-      const formData = {
-        "reviewId": statusData.reviewId,
-        "status": status,
-        "message": statusData.replyMessage
-      };
-      commonService.putAPIWithAccessToken('food-truck/reviews/status', formData)
-        .then( res => {
-          if ( undefined === res.data.data || !res.data.status ) {           
-            this.setState( { loading: false} );
-            toast.error(res.data.message);
-            return;
-          } 
-          this.setState({ modal: false, loading: false});
-          toast.success(res.data.message);
-          this.reviewLists();
-        } )
-        .catch( err => {         
-          if(err.response !== undefined && err.response.status === 401) {
-            localStorage.clear();
-            this.props.history.push('/login');
-          }else
-            this.setState( { loading: false } );
-            toast.error(err.message);
-        } )
-    } );
   }
   
   render() {
@@ -188,7 +181,7 @@ class requestLists extends Component {
                   </div>
                 </div>
               </CardHeader>
-              <CardBody className="food-truck-list-section">
+              <CardBody className="item-list-section">
                 <div className="Search-filter">
                   <form>
                       <div className="row">
@@ -229,86 +222,105 @@ class requestLists extends Component {
                     <thead>
                       <tr>
                         <th>S.No</th>
-                        <th>Date</th>
                         <th>Type of VA</th>
                         <th>Nature of business </th>
                         <th>Type of engagement</th>
                         <th>No. of VA</th>
+                        <th>Date</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      {dataLists.map((dataInfo, index) => 
+                      <tr key={index}>
                         <td>
-                          <span className="sno">1</span>
+                          <span className="sno">{index+1}</span>
                         </td>
-                        <td>02/11/2020</td>
-                        <td>Business Support</td>
-                        <td>Real Estate</td>
-                        <td>Project Based</td>
-                        <td>5</td>
+                        <td>{ ( dataInfo.vaType===1 ? 'Business Support' : 'Personal Assistance' ) }</td>
+                        <td>{dataInfo.natureOfBusiness}</td>
+                        <td>{ ( dataInfo.engagementType===1 ? 'Project-Based' : 'Ongoing Task' ) }</td>
+                        <td>{dataInfo.numberOfVA}</td>
+                        <td>{(new Date(dataInfo.createdAt)).toLocaleDateString("en-US")}</td>
                         <td>
-                          <div className="dropdown action-dropdown">
-                            <button className="btn btn-trigger dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dropdownMenuLink">
-                              <img src="/images/more.svg" width="20" alt="more" />
-                            </button>
-                            <div className="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownMenuLink" >
-                              <a className="dropdown-item view-btn" href="#"><i className="fa fa-eye"></i> View</a>
-                              <a className="dropdown-item edit-btn" href="#"><i className="fa fa-pencil"></i> Edit</a>
-                              <a className="dropdown-item delete-btn" href="#"><i className="fa fa-trash-o"></i> Delete</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><span className="sno">2</span></td>
-                        <td>02/11/2020</td>
-                        <td>Business Support</td>
-                        <td>Real Estate</td>
-                        <td>Project Based</td>
-                        <td>5</td>
-                        <td>
-                          <div className="dropdown action-dropdown">
-                            <a className="btn btn-trigger dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="dropdownMenuLink">
-                                  <img src="/images/more.svg" width="20" alt="" />
-                              </a>
-                              <div className="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownMenuLink" >
-                                <a className="dropdown-item view-btn" href="#"><i className="fa fa-eye"></i> View</a>
-                                <a className="dropdown-item edit-btn" href="#"><i className="fa fa-pencil"></i> Edit</a>
-                                <a className="dropdown-item delete-btn" href="#"><i className="fa fa-trash-o"></i> Delete</a>
-                              </div>
-                          </div>
+                        <UncontrolledDropdown>
+                          <DropdownToggle color="default" className="btn-trigger">
+                            <img src="/images/more.svg" width="20" alt="more" />
+                          </DropdownToggle>
+                          <DropdownMenu className="action-dropdown">
+                            <DropdownItem onClick={() => { this.handleEditData(index) }} className="edit-btn"><i className="fa fa-pencil"></i> Edit</DropdownItem>
+                            <DropdownItem onClick={() => {
+                            if (window.confirm('Are you sure you want to delete this record?')) this.handleDeleteData(index) }} className="delete-btn"><i className="fa fa-trash-o"></i> Delete</DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>  
+                          
                         </td>
                       </tr>
+                     
+                      )}
+
                     </tbody>
                   </table>
                 </div>
-                <Row>
-                {dataLists.map((dataInfo, index) => 
-                  <Col lg="2" key={index} >
-                    
-                  </Col>
-                )}
-                </Row>
-                
               </CardBody>
             </Card>
-          
 
-        <Modal isOpen={modal} toggle={this.toggle} className="full-width-modal-section review-modal">
-          <ModalHeader toggle={this.toggle} className="pb-0">Reply Message</ModalHeader>
-          <Form onSubmit={this.submitHandler} noValidate className="texQueForm">
+        <Modal isOpen={modal} size="lg" toggle={this.toggle} className="full-width-modal-section">
+          <ModalHeader toggle={this.toggle} className="pb-0">VA Request Info</ModalHeader>
+          <Form onSubmit={this.submitHandler} noValidate className="profile-form">
             <ModalBody>
               <Row>
-                <Col md={"12"}>
-                  <FormGroup> 
-                    <Input type="textarea" placeholder="Put your message here" id="comment" name="comment" value={formField.comment} onChange={this.changeHandler} />
+                <Col md={"6"}>
+                  <div className="form-group">
+                      <label htmlFor="vaType">Type of Virtual Assistance *</label>
+                      <Input type="select" name="vaType" id="vaType" className="form-control" value={formField.vaType} onChange={this.changeHandler} required>
+                        <option value="1">Business Support</option>
+                        <option value="2">Personal Assistance</option>
+                      </Input>
+                  </div>
+                </Col>
+                <Col md={"6"}>
+                  <FormGroup>
+                      <label htmlFor="natureOfBusiness">Nature of Business *</label>
+                      <input type="text" name="natureOfBusiness" id="natureOfBusiness" className="form-control" placeholder="Nature of Business" value={formField.natureOfBusiness} onChange={this.changeHandler} required />
+                      <FormText color="muted">e.g. E-Commerce, Real Estate, Customer Service etc.</FormText>
                   </FormGroup>
                 </Col>
+                <Col md={"6"}>
+                  <div className="form-group">
+                      <label htmlFor="engagementType">Type of Engagement *</label>
+                      <Input type="select" name="engagementType" id="engagementType" className="form-control" value={formField.engagementType} onChange={this.changeHandler} required>
+                        <option value="1">Project-Based</option>
+                        <option value="2">Ongoing Task</option>
+                      </Input>
+                  </div>
+                </Col>
+                <Col md={"6"}>
+                  <FormGroup>
+                      <Label htmlFor="engagementDescription">Engagement Description *</Label>
+                      <Input type="textarea" name="engagementDescription" className="form-control" value={formField.engagementDescription} onChange={this.changeHandler} required></Input>
+                      <FormText color="muted">
+                        e.g. Project Based - 2 Weeks, 1 Month etc. <br />
+                        e.g. Ongoing Task - How many hours/daily <br />
+                        <span className="text-danger">Disclaimer: Minimum of of 10 hours a Week</span>
+                      </FormText>
+                  </FormGroup>
+                </Col>
+                <div className="col-md-6">
+                  <div className="form-group">
+                      <label htmlFor="numberOfVA">How many VAs do you need?</label>
+                      <input type="text" name="numberOfVA" id="numberOfVA" className="form-control" value={formField.numberOfVA} onChange={this.changeHandler} required />
+                  </div>
+                </div>
+                <Col md={"6"}>
+                  <FormGroup> 
+                      <Label htmlFor="skillSet">Skill Sets and Other Requirements</Label>
+                      <Input type="text" id="skillSet" className="form-control" name="skillSet" value={formField.skillSet} onChange={this.changeHandler}  />
+                  </FormGroup>
+                </Col>              
               </Row>
-            </ModalBody>
+             </ModalBody>
             <ModalFooter>
-                <Button color="primary" type="submit">{formProccessing ? processingBtnText : 'Submit' }</Button>
+                <Button color="primary" type="submit">{formProccessing ? processingBtnText : 'Save Changes' }</Button>
                 <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>
