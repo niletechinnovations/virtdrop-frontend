@@ -202,7 +202,14 @@ class HomePage extends React.Component {
 			</div>
 		</div>
 	</section>
-
+    <section className="become-virdrop-section">
+        <div className="container">
+            <h5 className="text-center text-white mb-4">We have a community of passionate people who love what they do, and are looking for new opportunities</h5>
+            <p className="text-center">
+                <Link to="/be-a-virdrop-va" className="get-btn">BE A VIRTDROP VA</Link>
+            </p>
+        </div>
+    </section>
     <section className="plan-section">
         <div className="container">
             <div className="heading-title text-center">

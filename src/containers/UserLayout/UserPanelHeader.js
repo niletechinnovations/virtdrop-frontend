@@ -52,8 +52,11 @@ class UserPanelHeader extends React.Component {
           { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() === "admin" ) && 
           <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "admin") ? `/admin/dashboard` : `/user/dashboard` } ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
           }
+          { localStorage.getItem( 'role' ).toLowerCase() === "organization" && 
+            <DropdownItem><Link to={ `/user/manage-request` } ><i className="fa fa-list-ul"></i> Manage Request</Link></DropdownItem>
+          }
           { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() !== "admin" ) && 
-            <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "organization") ? `/user/my-profile` : `/advertiser/profile` } ><i className="fa fa-user"></i> My Profile</Link></DropdownItem>
+            <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "organization") ? `/user/my-profile` : `/advertiser/profile` } ><i className="fa fa-user"></i> Manage Profile</Link></DropdownItem>
           }
           { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() !== "admin" ) && 
             <DropdownItem><Link to="/user/change-password"><i className="fa fa-key"></i> Change Password</Link></DropdownItem>

@@ -80,8 +80,9 @@ class RegisterPage extends React.Component {
               }
               
               this.setState({loading: false,  organizationName: "",firstName: "",lastName: "", mobileNumber:"", phoneNumber: "",password: "", address: '', address2:'',city:'',state:'',zipCode:'',errors:'' });
-              toast.success(res.data.message);
-              window.scrollTo(0, 0);
+              this.props.history.push('/thank-you');
+              //toast.success(res.data.message);
+              //window.scrollTo(0, 0);
             } )
             .catch( err => {
               toast.error(err.message);

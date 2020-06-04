@@ -11,6 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import './requestLists.css';
 
 class requestLists extends Component {
@@ -23,25 +26,37 @@ class requestLists extends Component {
       loading: false,
       rowIndex: -1,
       formField: { vaRequestId: '', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription:'', numberOfVA:'', skillSet:'' },
+      filterItem: { filter:'', filterVaType: '', filterNOB:'',  filterFrom:'',  filterTo:''}
     } 
+    this.filterItemList = this.filterItemList.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
     this.handleEditData = this.handleEditData.bind(this);
-    //this.handleReviewStatus = this.handleReviewStatus.bind(this);
+    this.handleDeleteData = this.handleDeleteData.bind(this);
   }
 
   componentDidMount() {        
     this.itemLists({});
   }
 
-
   /* Request List API */
   itemLists(filterItem = {}) {
-    let strWalkQuery = "";
-    if(filterItem.filter_vaRequestIds !== undefined && filterItem.filter_vaRequestIds !== "" ) 
-      strWalkQuery += (strWalkQuery !=="" ) ? "/"+filterItem.filter_vaRequestIds : "/"+filterItem.filter_vaRequestIds;
+    let filterQuery = "?pageSize=10000";
+   if(filterItem.filterFrom !== undefined && filterItem.filterFrom !== "" ){
+      let newFromDate = this.getFormatDate( filterItem.filterFrom );
+      filterQuery += (filterQuery !=="" ) ? "&start_date="+newFromDate : "?start_date="+newFromDate;
+    }
+    if(filterItem.filterTo !== undefined && filterItem.filterTo !== "" ){
+      let newToDate = this.getFormatDate( filterItem.filterTo );
+      filterQuery += (filterQuery !=="" ) ? "&end_date="+newToDate: "?end_date="+newToDate;
+    }
+    if(filterItem.filterVaType !== undefined && filterItem.filterVaType !== "" ) 
+      filterQuery += (filterQuery !=="" ) ? "&vaType="+filterItem.filterVaType: "?vaType="+filterItem.filterVaType;
     
-      this.setState( { loading: true}, () => {
-      commonService.getAPIWithAccessToken('va-request'+strWalkQuery)
+    if(filterItem.filterNOB !== undefined && filterItem.filterNOB !== "" ) 
+      filterQuery += (filterQuery !=="" ) ? "&natureOfBusiness="+filterItem.filterNOB: "?natureOfBusiness="+filterItem.filterNOB;
+    
+    this.setState( { loading: true}, () => {
+      commonService.getAPIWithAccessToken('va-request'+filterQuery)
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
@@ -88,8 +103,8 @@ class requestLists extends Component {
             return;
           } 
           this.setState({ modal: false, formProccessing: false});
-          toast.success(res.data.message);
           this.itemLists();        
+          toast.success(res.data.message);
         } )
         .catch( err => {         
           if(err.response !== undefined && err.response.status === 401) {
@@ -141,7 +156,35 @@ class requestLists extends Component {
     });
   }
 
-  
+  filterItemList(){
+    const filterItem = this.state.filterItem;
+    this.itemLists(filterItem);
+  }
+
+  changeFilterHandler = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    const filterItem = this.state.filterItem
+    filterItem[name] = value;
+    this.setState({ filterItem: filterItem });
+  };
+  setFilterFromDate = date => {
+    let filterFormField = this.state.filterItem;
+    filterFormField.filterFrom = date;
+    this.setState({ filterItem: filterFormField });
+  };
+  setFilterToDate = date => {
+    let filterFormField = this.state.filterItem;
+    filterFormField.filterTo = date;
+    this.setState({ filterItem: filterFormField });
+  };
+
+  resetfilterForm = () => {
+    this.setState({
+      filterItem: { filterFrom:'',  filterTo:'', filterStatus:''}
+    });
+    this.itemLists();
+  }
 
   /* To edit review details/ change status */
   handleEditData(rowIndex){
@@ -158,9 +201,45 @@ class requestLists extends Component {
     }
     this.setState({rowIndex: rowIndex, formField: formField, modal: true });
   }
+
+  handleDeleteData(rowIndex){
+    const rowInfo = this.state.dataLists[rowIndex];
+    const delFormData = {
+      "vaRequestId": rowInfo.vaRequestId,
+    };
+    this.setState( { loading: true}, () => {
+      commonService.deleteAPIWithAccessToken( `va-request`, delFormData)
+        .then( res => {
+          if ( undefined === res.data || !res.data.status ) {            
+            this.setState( { loading: false} );
+            toast.error(res.data.message);      
+            return;
+          }         
+          this.setState({ loading: false});
+          this.itemLists();        
+          toast.success(res.data.message);
+        } )
+        .catch( err => {                   
+          if(err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }else{
+            this.setState( { loading: false } );
+            toast.error(err.message);
+          }
+      } )
+    })
+  }
+
+  getFormatDate(date) {
+    var year = date.getFullYear().toString();
+    var month = (date.getMonth() + 101).toString().substring(1);
+    var day = (date.getDate() + 100).toString().substring(1);
+    return year + "-" + month + "-" + day;
+  }
   
   render() {
-    const { dataLists, loading, modal, formField, formProccessing } = this.state;
+    const { dataLists, loading, modal, formField, formProccessing, filterItem } = this.state;
     const processingBtnText = <>Submit <i className="fa fa-spinner"></i></>;
     let loaderElement = '';
     if(loading)        
@@ -183,39 +262,37 @@ class requestLists extends Component {
               </CardHeader>
               <CardBody className="item-list-section">
                 <div className="Search-filter">
-                  <form>
-                      <div className="row">
-                          <div className="col-md-3">
-                              <div className="form-group">
-                                  <select className="form-control">
-                                      <option>Type of Virtual Assistance</option>
-                                      <option value="1">Business Support</option>
-                                      <option value="2">Personal Assistance</option>
-                                  </select>
-                              </div>
-                          </div>
-                          <div className="col-md-3">
-                              <div className="form-group">
-                                  <input type="text" name="" className="form-control" placeholder="Nature of business" />
-                              </div>
-                          </div>
-                          <div className="col-md-2">
-                              <div className="form-group">
-                                  <input type="text" name="" className="form-control" placeholder="From Date" />
-                              </div>
-                          </div>
-                          <div className="col-md-2">
-                              <div className="form-group">
-                                  <input type="text" name="" className="form-control" placeholder="To Date" />
-                              </div>
-                          </div>
-                          <div className="col-md-2">
-                              <div className="form-group">
-                                  <button className="search-btn">Search</button>
-                              </div>
+                  <div className="row">
+                      <div className="col-md-3">
+                          <div className="form-group">
+                              <Input type="select" name="filterVaType" value={filterItem.filterVaType} onChange={this.changeFilterHandler}>
+                                <option value="">Type of Virtual Assistance</option>
+                                <option value="1">Business Support</option>
+                                <option value="2">Personal Assistance</option>
+                              </Input>
                           </div>
                       </div>
-                  </form>
+                      <div className="col-md-3">
+                          <div className="form-group">
+                              <Input type="text" name="filterNOB" value={filterItem.filterNOB} onChange={this.changeFilterHandler} placeholder="Nature of business" />
+                          </div>
+                      </div>
+                      <div className="col-md-2">
+                          <div className="form-group">
+                            <DatePicker className="form-control" selected={ filterItem.filterFrom } placeholderText="From Date" onChange={this.setFilterFromDate} dateFormat="MM/dd/yyyy" />
+                          </div>
+                      </div>
+                      <div className="col-md-2">
+                          <div className="form-group">
+                            <DatePicker className="form-control" selected={ filterItem.filterTo } onChange={this.setFilterToDate} dateFormat="MM/dd/yyyy" placeholderText="To Date" />
+                          </div>
+                      </div>
+                      <div className="col-md-2">
+                          <div className="form-group">
+                              <button className="search-btn" onClick={this.filterItemList}>Search</button>
+                          </div>
+                      </div>
+                  </div>
               </div>
                 <div className="card-table">
                   <table className="table table-orders">
