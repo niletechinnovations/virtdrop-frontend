@@ -16,8 +16,8 @@ body{ background: none !important;}
 .header-social ul li a i{color: #7281b8;line-height: 30px;text-align: center;font-size: 13px;}
 
 .bottom-header {padding: 15px 0;}
-.bottom-header .navbar-brand {position: absolute; left: 50%; transform: translateX(-50%); }
-
+/*.bottom-header .navbar-brand {position: absolute; left: 50%; transform: translateX(-50%); }
+*/
 .navbar-toggler{    background-color: #4dc3c6;}
 .navbar-toggler-icon:before {display: inline-block; font-family: FontAwesome; font-size: inherit; text-rendering: auto; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; content: "\f0c9"; line-height: 30px; color: #fff; }
 
@@ -32,6 +32,13 @@ body{ background: none !important;}
 .header-navigation .navbar-nav > li a.dropdown-item:hover{background-color: #f8f9fa;}
 a.Sell-btn {background: #1360fe; padding: 10px 30px 10px 20px; border-radius: 5px; color: #fff !important; }
 a.Sell-btn i {background: #fff; width: 30px; height: 30px; border-radius: 50%; line-height: 30px; font-size: 16px; font-weight: bold; position: absolute; right: -18px; color: #1360fe; top: 7px; box-shadow: 7px 0 5px #fafcff; }
+
+.footer-contact-card{display: flex; align-items: center;}
+.footer-contact-icon {width:30px; margin-right: 10px; } 
+.footer-contact-icon img{height: 30px} 
+.footer-contact-content p {color: #1360fe; font-size: 12px; line-height: 1; margin-bottom:5px; font-weight: 500; } 
+.footer-contact-content h2 {font-size: 12px; font-weight: 600; color: #c7cdd5; padding: 0; margin: 0; } 
+.footer-contact-content h2 a {color: #c7cdd5; }
 
 /* ---------------------------------- */
 /* User Menu
@@ -188,6 +195,9 @@ a.Sell-btn i {background: #fff; width: 30px; height: 30px; border-radius: 50%; l
 ------------------------*/
 
 .footer{position: relative;}
+.footer-contact {width: 70%; margin: 0 auto; padding: 20px; border: 1px solid #203650; position: relative; }
+
+
 .footer:before {content: ''; position: absolute; height: 125px; width: 100%; top: -48px; margin: 0 auto; left: 0; right: 0; background: url(/images/foot-shape.svg); }
 .top-footer{background: #182c44; padding: 2rem 0}
 

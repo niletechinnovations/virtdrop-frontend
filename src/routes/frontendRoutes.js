@@ -11,9 +11,11 @@ import FaqPage from '../views/Pages/Frontend/FAQ/FaqPage';
 import SubscriptionPlan from '../views/Pages/Subscription/SubscriptionPlan';
 import ProceedToPaymentPage from '../views/Pages/Subscription/ProceedToPaymentPage';
 import HowItWorksPage from '../views/Pages/Frontend/HowItWorks/HowItWorksPage';
-import WhyUsPage from '../views/Pages/Frontend/WhyUs/WhyUsPage';
 import ThankYouPage from '../views/Pages/Register/ThankYouPage';
 import BecomeVirtdropPage from '../views/Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage';
+import BookingPage from '../views/Pages/Frontend/BookingCalendar/BookingPage';
+import ServicesPage from '../views/Pages/Frontend/Services/ServicesPage';
+import PricingPage from '../views/Pages/Frontend/Pricing/PrcingPage';
 
 const frontendRoutes = [
   { path: '/', exact: true, name: 'Home', component: HomePage },
@@ -29,10 +31,12 @@ const frontendRoutes = [
   { path: '/terms-of-service', exact: true,  name: 'Terms of Service', component: TermsConditionsPage },
   { path: '/faq', exact: true,  name: 'Faq', component: FaqPage },
   { path: '/proceed-to-payment', exact: true,  name: 'ProceedToPayment', component: ProceedToPaymentPage },
-  { path: '/how-it-works', exact: true,  name: 'WhyUs', component: HowItWorksPage },
-  { path: '/why-us', exact: true,  name: 'WhyUs', component: WhyUsPage },
+  { path: '/how-it-works', exact: true,  name: 'HowItWorks', component: HowItWorksPage },
+  { path: '/services', exact: true,  name: 'Services', component: ServicesPage },
   { path: '/thank-you', exact:true, name: 'Thank You', component: ThankYouPage},
-  { path: '/be-a-virdrop-va', exact:true, name: 'Be a Virdrop', component: BecomeVirtdropPage}
+  { path: '/be-a-virdrop-va', exact:true, name: 'Be a Virdrop', component: BecomeVirtdropPage},
+  { path: '/booking', exact:true, name: 'Booking Calendar', component: BookingPage},  
+  { path: '/pricing', exact:true, name: 'Pricing Plan', component: PricingPage}  
   
 ];
 

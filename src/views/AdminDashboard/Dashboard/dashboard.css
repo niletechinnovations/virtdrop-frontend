@@ -1,0 +1,16 @@
+.overview-info {margin-bottom: 30px; position: relative; } 
+.card-bg-info {height: 100%; position: relative;     background: #3967d4;box-shadow: 0 0 4px 2px rgb(232, 240, 255); border-radius: 6px; padding: 20px; display: flex; align-items: center; }
+
+
+.card-bg-icon {width: 55px; height: 55px; border-radius: 4px; margin-right: 20px;text-align: center; line-height: 50px; }
+.card-bg-1 .card-bg-icon {background: #f3f8fd;}
+.card-bg-2 .card-bg-icon {background: #f3f8fd;}
+.card-bg-3 .card-bg-icon {background: #f3f8fd;}
+.card-bg-4 .card-bg-icon {background: #f3f8fd;}
+
+
+
+
+
+.card-bg-content h2 {color: #fff; font-size: 30px; padding: 0; line-height: 30px; } 
+.card-bg-content p {color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 0; }

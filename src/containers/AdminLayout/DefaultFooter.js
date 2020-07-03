@@ -15,7 +15,7 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span>Copyright  &copy; {(new Date().getFullYear())} TexQue. All Rights Reserved.</span>
+        <span>Copyright  &copy; {(new Date().getFullYear())} VirDrop. All Rights Reserved.</span>
         <span className="ml-auto">Powered by <a href="https://www.niletechnologies.com/" rel="noopener noreferrer" target="_blank">Nile Technologies</a>.</span>
       </React.Fragment>
     );

@@ -15,10 +15,6 @@ class EnquiryListData extends Component {
   }
   componentDidMount() {   
   }
-  /* Edit Enquiry Info */
-  editEnquiryItem(rowIndex){    
-    this.props.editEnquiryAction(rowIndex);
-  }
 
   /* Delete Enquiry Info */
   deleteEnquiryItem(rowIndex){    
@@ -33,17 +29,14 @@ class EnquiryListData extends Component {
     for(const [i, enquiry] of this.props.data.entries()){
       //console.log(i);
       let resInfo = {
-        organizationName: enquiry.organizationName,  
         contactPerson: enquiry.contactPerson,
-        truckName: enquiry.truckName,
-        phoneNumber: enquiry.contactNo || " ",
+        email: enquiry.email,
+        phoneNumber: enquiry.phone || " ",
         message: enquiry.message || " ",
-        numberofPerson: enquiry.numberofPerson,
-        eventDate: enquiry.eventDate,
-        status: enquiry.statusLabel ? enquiry.statusLabel : "Pending",   
+        subject: enquiry.subject,
         createdAt: (new Date(enquiry.createdAt)).toLocaleDateString("en-US"),
         indexVal: i,
-        enquiryId: enquiry.enquiryId,
+        enquiryId: enquiry.id,
       }      
       rowsItem.push(resInfo);
     }
@@ -54,30 +47,20 @@ class EnquiryListData extends Component {
           name: 'contactPerson',
         },
         {
+          label: 'Email',
+          name: 'email',
+        },
+        {
           label: 'Phone no.',
           name: 'phoneNumber',
-          options: { display: false}
+        },
+        {
+          label: 'Interested on',
+          name: 'subject',
         },
         {
           label: 'Message',
           name: 'message',
-        },
-        {
-          label: 'No. of person',
-          name: 'numberofPerson',
-          options: { display: false}
-        },
-        {
-          label: 'Event Date',
-          name: 'eventDate',
-        },
-        {
-          label: 'Truck Name',
-          name: 'truckName',
-        }, 
-        {
-          label: 'Status',
-          name: 'status',
         },
         {
           label: 'Created on',
@@ -93,14 +76,12 @@ class EnquiryListData extends Component {
             customBodyRender: (value, tableMeta, updateValue) => {
               let i = tableMeta.rowIndex;
               return (
-                <div className="actionBtnGroup"><Button className="btn-edit btn-info" size='sm' disabled={this.state.buttonProcessing} onClick={() => 
-                this.editEnquiryItem(i)} title="Edit Inquiry"><i className="fa fa-pencil"></i> </Button><Button className="btn-delete btn-danger" size='sm' disabled={this.state.buttonProcessing} onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteEnquiryItem(i) };}} title="Delete Inquiry"><i className="fa fa-trash"></i> </Button></div>
+                <div className="actionBtnGroup"><Button className="btn-delete btn-danger" size='sm' onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteEnquiryItem(i) };}} title="Delete Inquiry"><i className="fa fa-trash"></i> </Button></div>
               );
             }
           }
         },
     ];
-
     
     const options = {
       search: true,
@@ -108,7 +89,7 @@ class EnquiryListData extends Component {
       searchOpen: false,
       print: false,
       download: true,
-      downloadOptions: {filename: 'texque-enquiry-list.csv', separator: ','},
+      downloadOptions: {filename: 'contact-enquiry-list.csv', separator: ','},
       responsive: 'stacked',
       selectableRows: 'none',
       textLabels: {
@@ -124,7 +105,7 @@ class EnquiryListData extends Component {
     
     return (
       <MUIDataTable
-        title={"Food Truck Inquiries"}
+        title={"Contact Inquiries"}
         data={rowsItem}
         columns={columns}
         options={options}

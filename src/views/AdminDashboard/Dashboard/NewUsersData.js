@@ -20,6 +20,7 @@ class NewUserData extends Component{
             let userInfo = {
                 SNo:i,
                 profileId:userData.profileId,
+                organizationName: userData.organizationName,
                 userName: userData.firstName+' '+userData.lastName,  
                 userEmail: userData.email,
                 phoneNumber: userData.phoneNumber || " ",
@@ -33,12 +34,7 @@ class NewUserData extends Component{
         let list = rowsItem.map(user =>{
             return (
                 <tr key={user.SNo}>
-                    <td className="text-center">
-                        <div className="avatar">
-                            {/* <img src="/images/avtar3.jpg" className="img-avatar" alt={user.userName} /> */}
-                            <div className="profileImage userImg">{user.userName.substring(0, 1)}</div>
-                        </div>
-                    </td>
+                    <td>{user.organizationName}</td>
                     <td>{user.userName}</td>
                     <td>{user.userEmail}</td>
                     <td>{user.phoneNumber}</td>
@@ -53,15 +49,12 @@ class NewUserData extends Component{
 
         return (
             <>
-            <h5>
-                Recent Registered Users
-                <Link to="/admin/users" className="btn btn-primary view-all-btn" title="View All Users">View All</Link>
-            </h5>
-            <div className="table-responsive">
-                <table className="table-outline mb-0 d-none d-sm-table table table-hover">
+            
+            <div className="table-responsive card-table">
+                <table>
                     <thead className="thead-light">
                         <tr>
-                            <th className="text-center"><i className="icon-people"></i></th>
+                            <th>Organization</th>
                             <th>User</th>
                             <th>Email</th>
                             <th>Phone Number</th>

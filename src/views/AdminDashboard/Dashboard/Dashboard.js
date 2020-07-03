@@ -2,35 +2,36 @@ import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { Card, CardBody, Col, Row } from 'reactstrap';
-import { PeopleAlt, LocalShipping, MailOutline, SupervisorAccount } from '@material-ui/icons';
+//import { PeopleAlt, LocalShipping, MailOutline, SupervisorAccount, Link } from '@material-ui/icons';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
+import './dashboard.css'
 
 import NewUserData from './NewUsersData';
-import NewEnquiriesData from './NewEnquiriesData';
+import NewApplicationData from './NewApplicationData';
 
 const lineChartData = (labels = [], foodTruckData = [], enquiryData = [] ) =>  {
   return {
     labels: labels,
     datasets: [
       {
-        label: 'Food Truck Listings',
+        label: 'VA Request',
         fill: false,
         lineTension: 0.1,
-        backgroundColor: 'rgba(213,4,43,0.4)',
-        borderColor: 'rgba(213,4,43,1)',
+        backgroundColor: 'rgba(57,103,212,0.4)',
+        borderColor: 'rgba(57,103,212,1)',
         borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(213,4,43,1)',
-        pointBackgroundColor: '#D5042B',
+        pointBorderColor: 'rgba(26, 99, 250,1)',
+        pointBackgroundColor: '#1a63fa',
         pointBorderWidth: 1,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(213,4,43,1)',
+        pointHoverBackgroundColor: 'rgba(26, 99, 250,1)',
         pointHoverBorderColor: 'rgba(220,220,220,1)',
         pointHoverBorderWidth: 2,
         pointRadius: 1,
@@ -38,10 +39,10 @@ const lineChartData = (labels = [], foodTruckData = [], enquiryData = [] ) =>  {
         data: foodTruckData,
       },
       {
-        label: 'Food Truck Enquiries',
+        label: 'VA Applications',
         fill: false,
         lineTension: 0.1,
-        backgroundColor: 'rgba(0,33,100,0.4)',
+        backgroundColor: '#2196f3',
         borderColor: 'rgba(0,33,100,1)',
         borderCapStyle: 'butt',
         borderDash: [],
@@ -79,8 +80,7 @@ class Dashboard extends Component {
       userList: [],
       enquiryList:[],
       lineGraphLabels: [],
-      foodTruckData: [],
-      enquiryData: []
+      vaApplicationList: []
     };
   }
 
@@ -99,7 +99,7 @@ class Dashboard extends Component {
         }
         )
 
-      commonService.getAPIWithAccessToken('profile/list?pageNo=1&pageSize=10')
+      commonService.getAPIWithAccessToken('organization?pageNo=1&pageSize=10')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( {  loading: false } );
@@ -110,18 +110,17 @@ class Dashboard extends Component {
           this.setState({loading:false, userList: responseData.profileList});
         } )
         
-      commonService.getAPIWithAccessToken('food-truck/enquiry?pageNo=1&pageSize=10')
+      commonService.getAPIWithAccessToken('va-application?pageNo=1&pageSize=10')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( {  loading: false } );
             toast.error(res.data.message);    
             return;
           }
-          console.log(res.data.data);
-          this.setState({loading:false, enquiryList: res.data.data.enquiryList});
+          //console.log(res.data.data);
+          this.setState({loading:false, vaApplicationList: res.data.data.requestList});
       } )
-       
-
+      
     } )
   }
  
@@ -132,90 +131,114 @@ class Dashboard extends Component {
 
     return (
       <div className="animated fadeIn admin-dashboard">
-        <Row>
+        <div className="overview-info">
+          <Row>
           <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-info">
-              <CardBody>
-                <div className="float-right">
-                  <PeopleAlt />
-                </div>
-                <div className="text-value">{this.state.dashBoardStats.userCount}</div>
-                <div>Total Users</div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-warning">
-              <CardBody>
-                <div className="float-right">
-                  <SupervisorAccount />
-                </div>
-                <div className="text-value">{this.state.dashBoardStats.organizationCount}</div>
-                <div>Total Food Truck Owners</div>
-              </CardBody>
-            </Card>
+            <div className="card-bg-info card-bg-1">
+              <div className="card-bg-icon">
+                <img src="/images/user.svg" height="35" alt="" />
+              </div>
+              <div className="card-bg-content">
+                <h2 className="text-value">100</h2>
+                <p>Total Users</p>
+              </div>
+            </div>
           </Col>
           <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-success">
-              <CardBody>
-                <div className="float-right">
-                  <LocalShipping />
-                </div>
-                <div className="text-value">{this.state.dashBoardStats.foodTruckCount}</div>
-                <div>Total Food Truck Listings</div>
-              </CardBody>              
-            </Card>
+            <div className="card-bg-info card-bg-2">
+              <div className="card-bg-icon">
+                <img src="/images/timezone.svg" height="35" alt="" />
+              </div>
+              <div className="card-bg-content">
+                <h2 className="text-value">20</h2>
+                <p>Total Request</p>
+              </div>
+            </div>
           </Col>
           <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-danger">
-              <CardBody>
-                <div className="float-right">
-                  <MailOutline />
+            <div className="card-bg-info card-bg-3">
+              <div className="card-bg-icon">
+                <img src="/images/task.svg" height="35" alt="" />
+              </div>
+              <div className="card-bg-content">
+                <h2 className="text-value">200</h2>
+                <p>Total VA Applications</p>
+              </div>
+            </div>
+          </Col>
+          <Col xs="12" sm="6" lg="3">
+            <div className="card-bg-info card-bg-4">
+                <div className="card-bg-icon">
+                <img src="/images/payment.svg" height="35" alt="" />
                 </div>
-                <div className="text-value">{this.state.dashBoardStats.enquiryCount}</div>
-                <div>Total Enquiries</div>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Card>
-              <CardBody>
-                <div className="chart-wrapper">
-                  {/* <Line data={line} options={options} height={85} /> */}
-                  <Line data={ lineChartData( this.state.lineGraphLabels, this.state.foodTruckData, this.state.enquiryData )} options={options} height={70} />
+                <div className="card-bg-content">
+                  <h2 className="text-value">$300</h2>
+                  <p>Total Payment</p>
                 </div>
-              </CardBody>
-            </Card>
+            </div>
           </Col>
-        </Row>
+          </Row>
+        </div>
+        <div className="chart-info">
+          <Row>
+            <Col>
+              <Card className="vd-card">
+                <CardBody>
+                  <div className="chart-wrapper">
+                    {/* <Line data={line} options={options} height={85} /> */}
+                    <Line data={ lineChartData( this.state.lineGraphLabels, this.state.foodTruckData, this.state.enquiryData )} options={options} height={70} />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </div>
 
-        {/* New Enquiries Data */}
-        <Row>
-          <Col>
-            <Card>
-              <CardBody className="dashboard-card-body">
-                <NewEnquiriesData data={this.state.enquiryList} />
+        <div className="Enquiries-info">
+          {/* New Enquiries Data */}
+          <Row>
+            <Col>
+              <Card className="vd-card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h4 class="card-title"> New VA Applications</h4>
+                    </div>
+                    <div class="add-option-info">
+                      <a href="/admin/va-application" className="btn-add" title="View All Applications">View All</a>
+                    </div>
+                  </div>
+                </div>
+                <CardBody>
+                  <NewApplicationData data={this.state.vaApplicationList} />
+                </CardBody>              
+              </Card>
+            </Col>
+          </Row>
+        </div>
 
-              </CardBody>              
-            </Card>
-          </Col>
-        </Row>
-        
-        {/* New Users Data */}
-        <Row>
-          <Col>
-            <Card>
-              <CardBody className="dashboard-card-body">
-                <NewUserData data={this.state.userList} />
-
-              </CardBody>              
-            </Card>
-          </Col>
-        </Row>
-
-      
+        <div className="Users-info">
+          {/* New Users Data */}
+          <Row>
+            <Col>
+              <Card className="vd-card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+                    <div class="mr-auto">
+                        <h4 class="card-title"> Recent Joined Members</h4>
+                    </div>
+                    <div class="add-option-info">
+                      <a href="/admin/organization" className="btn-add view-all-btn" title="View All Members">View All</a>
+                    </div>
+                  </div>
+                </div>
+                <CardBody>
+                  <NewUserData data={this.state.userList} />
+                </CardBody>              
+              </Card>
+            </Col>
+          </Row>
+        </div>      
       </div>
     );
   }

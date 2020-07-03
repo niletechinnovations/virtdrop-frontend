@@ -1,37 +1,34 @@
 import Dashboard from '../views/AdminDashboard/Dashboard/Dashboard';
-import CuisineList from '../views/AdminDashboard/Category/Category';
 import organizationList from '../views/AdminDashboard/Organization/Organization';
 import UsersList from '../views/AdminDashboard/Users/Users'
 import UserDetails from '../views/AdminDashboard/Users/User';
-import foodTruckList from '../views/AdminDashboard/Organization/FoodTruck/FoodTruckListing';
-import EditFoodTruck from '../views/AdminDashboard/Organization/FoodTruck/EditFoodTruckList';
-import OrgFoodTruckList from '../views/AdminDashboard/Organization/FoodTruck/FoodTruckListing';
 import EnquiryListing from '../views/AdminDashboard/Organization/Enquiry/EnquiryListing';
 import AdvertiserPlans from '../views/AdminDashboard/Subscription/AdvertiserSubscription';
-import FoodTruckSubscription from '../views/AdminDashboard/Subscription/FoodTruckSubscription';
 import ChangePassword from '../views/AdminDashboard/ChangePassword/ChangePassword';
-import FoodTruckReviewList from '../views/AdminDashboard/Organization/FoodTruckReviews/FoodTruckReviewList';
 import AdvertiserList from '../views/AdminDashboard/Advertisers/AdvertiserList';
 import AdvertisementList from '../views/AdminDashboard/Advertisers/Advertisement/AdvertisementList';
 import UserTransactionList from '../views/AdminDashboard/UserTransactions/UserTransactionList';
 import SubscribedAdvertiserList from '../views/AdminDashboard/SubscribedUsers/SubscribedAdvertiserList';
 import SubscribedOwnerList from '../views/AdminDashboard/SubscribedUsers/SubscribedOwnerList';
+import ApplicationList from '../views/AdminDashboard/VaApplications/ApplicationLists.';
+import EditVaApplication from '../views/AdminDashboard/VaApplications/EditVaApplication';
+import VaRequestListing from '../views/AdminDashboard/Organization/VaRequest/VaRequestListing';
+import ScheduledBooking from '../views/AdminDashboard/ScheduledBooking/ScheduledBooking';
+import AssignRequest from '../views/AdminDashboard/Organization/VaRequest/AssignRequest';
 
 const adminRoutes = [
   { path: '/admin/', exact: true, name: 'Admin' },
   { path: '/admin/dashboard', exact: true, name: 'Dashboard', component: Dashboard },  
-  { path: '/admin/cuisine', exact: true, name: 'Manage Cuisine', component: CuisineList },
-  { path: '/admin/organization', exact: true, name: 'Manage Truck Owner', component: organizationList },
-  { path: '/admin/users', exact: true, name: 'Manage Users', component: UsersList },
+  { path: '/admin/organization', exact: true, name: 'Manage VA Members', component: organizationList },
+  { path: '/admin/users', exact: true, name: 'Manage Admin Users', component: UsersList },
   { path: '/admin/user/:profileId', exact: true,  name: 'User Details', component: UserDetails },
-  { path: '/admin/organization/truck-listing', exact: true, name: 'Manage Food Truck', component: foodTruckList },
-  { path: '/admin/organization/truck-listing/:organizationId', exact: true, name: 'Organization Food Truck Listings', component: OrgFoodTruckList },
-  { path: '/admin/organization/edit-truck/:foodTruckId', exact: true,  name: 'Edit Food Truck', component: EditFoodTruck },
+  { path: '/admin/va-application', exact: true, name: 'Manage VA Application', component: ApplicationList },
+  { path: '/admin/va-application/:vaApplicationId', exact: true, name: 'VA Application Details', component: EditVaApplication },
+  { path: '/admin/va-request', exact: true, name: 'Manage Request', component: VaRequestListing },
+  { path: '/admin/va-request/assign-va/:vaRequestId', exact: true, name: 'Assign VA Request', component: AssignRequest },
   { path: '/admin/enquiries', exact: true, name: 'Manage Enquiries', component: EnquiryListing },
-  { path: '/admin/reviews', exact: true, name: 'Manage Reviews', component: FoodTruckReviewList },
-  { path: '/admin/reviews/:foodtruckId', exact: true, name: 'Food Truck Reviews', component: FoodTruckReviewList },
+  { path: '/admin/scheduled-booking', exact: true, name: 'Manage Discovery Call', component: ScheduledBooking },
   { path: '/admin/subscription', exact: true, name: 'Manage Advertiser Subscription', component: AdvertiserPlans },
-  { path: '/admin/subscription/food-truck', exact: true, name: 'Manage Food Truck Subscription', component: FoodTruckSubscription },
   { path: '/admin/change-password', exact: true,  name: 'Change Password', component: ChangePassword },
   { path: '/admin/advertisers', exact: true, name: 'Manage Advertisers', component: AdvertiserList },
   { path: '/admin/advertisement', exact: true, name: 'Manage Advertisement', component: AdvertisementList },

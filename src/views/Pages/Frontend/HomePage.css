@@ -8,9 +8,14 @@
 .main-slider-content{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 30px; padding-right: 30px; position: absolute; text-align: center; z-index: 1; width: 100%; top: 30%; }
 .Main-Slider-media:after {content: ''; position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: rgba(19, 96, 254, 0.12); }
 .main-slider-content {text-align: left; width: 55%; }
-.main-slider-content h2 {font-size: 40px; color: #f8fafd; text-align: left; padding-top: 0; margin-bottom: 20px; margin-top: 0; }
-.main-slider-content h2 span{font-weight: bold;}
+.main-slider-content h1 {font-size: 40px; color: #f8fafd; text-align: left; padding-top: 0; margin-bottom: 20px; margin-top: 0; }
+.main-slider-content h1 span{font-weight: bold;}
 .explore-btn {background: #1360fe; padding: 15px 20px; border-radius: 5px; color: #fff !important; font-size: 14px; font-weight: 600; }
+
+
+.slider-content {position: absolute; display: flex;width: 80%; margin: 0 auto; align-items: center; bottom: 0; top: 0; flex-direction: column; padding: 20px; left: 0; right: 0; justify-content: center; }
+.slider-content h2 {font-size: 32px; font-weight: bold; color: #f8fafd; text-align: center; padding-top: 0; margin-bottom: 0px; margin-top: 0; }
+.slider-content h2 span{font-weight: bold;}
 
 
 #Main-Slider .owl-dots {position: absolute;left: 0;right: 16.5%;bottom:33.5%;}
@@ -33,8 +38,55 @@
 .about-content-info h1{font-size: 25px; font-weight: 700; color: #091e42; margin: 0; padding-top: 0;}
 .about-content-info p {font-size: 13px; color: #091e42; text-align: justify; margin-bottom: 10px; }
 .about-media {position: relative; z-index: 9; text-align: center; }
+/**====================================================================
+  Subscribe Newsletter popup
+====================================================================
+***/
+.subscribeNewsletter-modal {width: 450px; margin: 1.75rem auto; height: 345px; background: #fff; border: 3px solid #1360fe; border-radius:5%; }
+.subscribeNewsletter-modal .modal-content {border-radius:5%; border: none; }
 
 
+.subscribeNews-text{padding: 10px 15px; background: #f6f7f8; }
+.modal-header {border: none; padding: 10px 20px; text-align: center; }
+.modal-header h5 {padding: 0; margin: 0; font-size: 22px; color: #1360fe; text-align: center; font-weight: bold; }
+.subscribeNews-info p {font-size: 15px; font-weight: 300; color: #091e42; text-align: center; }
+.subscribeNews-group {border: 1px solid #c5ccda; border-radius: 2px; padding: 3px; display: flex; justify-content: space-between; align-items: center; position: relative; margin: 10px; background: #fff; }
+.subscribe-control {display: block; width: 100%; border: none; box-shadow: none; outline: none; padding: 10px; font-size: 13px; }
+button.submit_button {border: none; color: #fff; border-radius: 3px; padding: 8px 20px; font-weight: 600; font-size: 14px; display: inline-block; position: relative; background: #1360fe; outline: none; }
+.subscribe-text-info{font-size: 12px !important;}
+
+.Basic-pricing .price-value .amount {
+    color: #0072b0;
+}.price-value .amount {
+    font-size: 40px;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    color: #ff9d02;
+    z-index: 9;
+}
+.price-value {
+    padding: 10px;
+    align-items: center;
+    position: relative;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    height: 100%;
+}
 
 /**====================================================================
   service
@@ -117,7 +169,7 @@
 ====================================================================
 ***/
 .plan-section{padding:3rem 0 7rem 0; position: relative;}
-.plan-section .heading-title {width: 50%; margin: 0 auto 3rem auto; }
+.plan-section .heading-title {width: 50%; margin: 0 auto 0rem auto; }
 
 .plan-section .heading-title h2 {text-align: center; font-size: 25px; font-weight: 700; color: #091e42; margin: 0; padding-top: 0; }
 .plan-section .heading-title p {font-size: 14px; color: #091e42; text-align: center; margin-bottom: 10px; }
@@ -136,3 +188,40 @@
 
 .pricing-foot {padding: 15px 0px; text-align: center; } 
 .btn-conversion {background: transparent; color: #1360fe; font-size: 14px; padding: 6px 25px; border-radius: 2px; font-weight: 600; border: 1px solid #1360fe; display: inline-block; }
+
+
+.pricing-info {
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: default;
+    display: inline-block;
+    text-align: center;
+    padding: 5px 15px;
+    background: #1560fe;
+    width: 100%;
+    margin: 10px 0;
+}span.pricing-value {
+    font-size:25px;
+    color: #fff;
+    line-height: 28px;
+}span.pricing-per-value {
+    font-size: 12px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.plan-pricing-info {
+    background: #f4f7fd;
+    position: relative;
+    border: 1px solid #d2dce6;
+    width: 30%;
+    padding: 30px;
+    margin: 0 auto;
+    border-radius: 6px;
+}
+.plan-pricing-info p {
+    font-size: 18px;
+    color: #091e42;
+    font-weight: 300;
+        margin-bottom: 0;
+}

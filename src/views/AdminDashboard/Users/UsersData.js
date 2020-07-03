@@ -33,6 +33,7 @@ class UsersData extends Component {
         email: userData.email,
         phoneNumber: userData.phoneNumber || " ",
         address: userData.address || " ",
+        role: (userData.role ==='admin' ? "Super Admin" : "Admin"),
         createdAt: (new Date(userData.createdAt)).toLocaleDateString("en-US"),
         status: userData.status ? "Active" : "Inactive",   
       }      
@@ -52,8 +53,8 @@ class UsersData extends Component {
         name: 'phoneNumber',
       },
       {
-        label: 'Address',
-        name: 'address',
+        label: 'Role',
+        name: 'role',
       },
       {
         label: 'Status',
@@ -87,12 +88,12 @@ class UsersData extends Component {
       searchOpen: false,
       print: false,
       download: true,
-      downloadOptions: {filename: 'texque-users-list.csv', separator: ','},
+      downloadOptions: {filename: 'virdrop-users-list.csv', separator: ','},
       responsive: 'stacked',
       selectableRows: 'none',
       textLabels: {
         body: {
-          noMatch: this.props.dataTableLoadingStatus ? "Processing........" : "Sorry, no matching records found",
+          noMatch: this.props.dataTableLoadingStatus ? "Loading........" : "",
           toolTip: "Sort",
           columnHeaderTooltip: column => `Sort for ${column.label}`
         },
@@ -104,7 +105,7 @@ class UsersData extends Component {
     
     return (
       <MUIDataTable
-        title={"Users List"}
+        title={"Admin List"}
         data={rowsItem}
         columns={columns}
         options={options}

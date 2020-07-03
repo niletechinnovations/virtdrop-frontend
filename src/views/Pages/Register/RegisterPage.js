@@ -187,7 +187,7 @@ class RegisterPage extends React.Component {
                 <img src="/images/banner4.jpg" alt="Register Banner" />
               </div>
               <div className="banner-content">
-                <h2>The easiest way to find and hire virtual assistants</h2>
+                <h1>VirtDrop is the easiest way to find and hire Virtual Assistants.</h1>
               </div>
           </div>
         </section>
@@ -236,7 +236,7 @@ class RegisterPage extends React.Component {
                             <Label for="mobileNumber">Mobile Number *</Label>
                             <InputGroup>
                               <InputGroupAddon addonType="prepend">
-                              <Input type="text" className="phone-code" name="countryCode" placeholder="Code" value={countryCode} onChange={this.changeHandler} required invalid={errors['countryCode'] !== undefined && errors['countryCode'] !== ""} />
+                              <Input type="text" className="phone-code" name="countryCode" placeholder="+2" value={countryCode} onChange={this.changeHandler} required invalid={errors['countryCode'] !== undefined && errors['countryCode'] !== ""} />
                               </InputGroupAddon>
                               <Input type="number" name="mobileNumber" min={1} step="1" id="mobileNumber" invalid={errors['mobileNumber'] !== undefined && errors['mobileNumber'] !== ""} placeholder="Mobile no." value={mobileNumber} onChange={this.changeHandler} required />
                               <FormFeedback>{errors['mobileNumber']}</FormFeedback>
@@ -248,7 +248,7 @@ class RegisterPage extends React.Component {
                             <Label for="phoneNumber">Business Phone *</Label>
                             <InputGroup>
                               <InputGroupAddon addonType="prepend">
-                                <Input type="text" name="phoneCode" className="phone-code" placeholder="Code" value={phoneCode} onChange={this.changeHandler} required />
+                                <Input type="text" name="phoneCode" className="phone-code" placeholder="+2" value={phoneCode} onChange={this.changeHandler} required />
                               </InputGroupAddon>
                               <Input type="number" name="phoneNumber" min={1} step="1" id="phoneNumber" invalid={errors['phoneNumber'] !== undefined && errors['phoneNumber'] !== ""} placeholder="Phone no." value={phoneNumber} onChange={this.changeHandler} required />
                               <FormFeedback>{errors['phoneNumber']}</FormFeedback>
@@ -310,12 +310,13 @@ class RegisterPage extends React.Component {
                 </div>
                 <div className="col-md-7 col-lg-7 col-sm-7">
                   <div className="login-content-info">
-                    <h2>Ready to hire a virtdrop ?</h2>
+                    <h2>Ready to hire a VirtDrop VA?</h2>
                     <p><b>Get started for FREE!</b></p>
-                    <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                    <p>Simply fill out the details on the left. We’ll only ask you to do it this one time. You’re only a few steps away from being introduced to one of our amazing Virtual Assistants.</p>
+                    <p>If you already have an account:</p>
                     <Link className="btn-click" to="/login">Sign In</Link>
                     <p><b>Looking to become a Virtual Assistant?</b></p>
-                    <p>If you're interested in becoming a virtual assistant, please learn more about how to apply on this <Link to="/how-it-works">How it Works</Link> page.</p>
+                    <p>If you're interested in becoming a Virtual Assistant you can <Link to="/be-a-virdrop-va">apply here.</Link></p>
                   </div>
                 </div>
               </div>

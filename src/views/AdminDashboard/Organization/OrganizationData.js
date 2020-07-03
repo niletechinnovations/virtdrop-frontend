@@ -29,7 +29,7 @@ class OrganizationData extends Component {
     for(const [i, orgnization] of this.props.data.entries()){
       console.log(i);
       let orgInfo = {
-        organizationName: orgnization.organizationName,  
+        organizationName: orgnization.organizationName,
         authId: orgnization.authId,
         firstName: orgnization.firstName +' '+ orgnization.lastName,
         email: orgnization.email,
@@ -42,12 +42,12 @@ class OrganizationData extends Component {
     }      
     const columns = [      
       {
-        label: 'Organization',
-        name: 'organizationName',
+        label: 'User Name',
+        name: 'firstName',
       },
       {
-        label: 'Owner',
-        name: 'firstName',
+        label: 'Organization',
+        name: 'organizationName',
       },
       {
         label: 'Email ID',
@@ -81,7 +81,7 @@ class OrganizationData extends Component {
             return (
               <p><button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editOrganizationItem(i)}><i className="fa fa-pencil"></i> </button>
-                <Link className="btn-view" to={`/admin/organization/truck-listing/${rowsItem[i].authId}`}><i className="fa fa-truck"></i> </Link>
+                <Link className="btn-view" to={`/admin/organization/manage-listing/${rowsItem[i].authId}`}><i className="fa fa-list"></i> </Link>
                 <a href="#!" className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteOrganizationItem(i) };}} ><i className="fa fa-trash"></i></a></p>
             );
           }
@@ -94,12 +94,12 @@ class OrganizationData extends Component {
       searchOpen: false,
       print: false,
       download: true,
-      downloadOptions: {filename: 'texque-food-truck-owner-list.csv', separator: ','},
+      downloadOptions: {filename: 'va-member-list.csv', separator: ','},
       responsive: 'stacked',
       selectableRows: 'none',
       textLabels: {
         body: {
-          noMatch: this.props.dataTableLoadingStatus ? "Processing........" : "Sorry, no matching records found",
+          noMatch: this.props.dataTableLoadingStatus ? "Loading........" : "",
           toolTip: "Sort",
           columnHeaderTooltip: column => `Sort for ${column.label}`
         },
@@ -111,7 +111,7 @@ class OrganizationData extends Component {
     
     return (
       <MUIDataTable
-        title={"Truck Owner Lists"}
+        title={"Member Lists"}
         data={rowsItem}
         columns={columns}
         options={options}

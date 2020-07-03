@@ -188,7 +188,7 @@ class LoginPage extends Component {
                 <img src="/images/banner4.jpg" alt="Login banner" />
               </div>
               <div className="banner-content">
-                <h2>The easiest way to find and hire virtual assistants</h2>
+                <h1>VirtDrop is the easiest way to find and hire Virtual Assistants.</h1>
               </div>
           </div>
         </section>
@@ -243,12 +243,12 @@ class LoginPage extends Component {
                 </div>
                 <div className="col-md-7 col-lg-7 col-sm-7">
                   <div className="login-content-info">
-                    <h2>Ready to hire a virtdrop ?</h2>
+                    <h2>Not yet registered but ready to hire a VirtDrop VA?</h2>
                     <p><b>Get started for FREE!</b></p>
-                    <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.</p>
+                    <p>Simply fill out the details on our registration page. We’ll only ask you to do it this one time. You’re only a few steps away from being introduced to one of our amazing Virtual Assistants.</p>
                     <Link className="btn-click" to="/register">Register Now</Link>
                     <p><b>Looking to become a Virtual Assistant?</b></p>
-                    <p>If you're interested in becoming a virtual assistant, please learn more about how to apply on this <Link to="/how-it-works">How it Works</Link> page.</p>
+                    <p>If you're interested in becoming a Virtual Assistant you can <Link to="/be-a-virdrop-va">apply here.</Link> </p>
                   </div>
                 </div>      
               </div>

@@ -264,12 +264,12 @@ class requestLists extends Component {
                 <div className="Search-filter">
                   <div className="row">
                       <div className="col-md-3">
-                          <div className="form-group">
-                              <Input type="select" name="filterVaType" value={filterItem.filterVaType} onChange={this.changeFilterHandler}>
-                                <option value="">Type of Virtual Assistance</option>
-                                <option value="1">Business Support</option>
-                                <option value="2">Personal Assistance</option>
-                              </Input>
+                        <div className="form-group">
+                          <Input type="select" name="filterVaType" value={filterItem.filterVaType} onChange={this.changeFilterHandler}>
+                            <option value="">Type of Virtual Assistance</option>
+                            <option value="1">Business Support</option>
+                            <option value="2">Personal Assistance</option>
+                          </Input>
                           </div>
                       </div>
                       <div className="col-md-3">
@@ -348,27 +348,27 @@ class requestLists extends Component {
               <Row>
                 <Col md={"6"}>
                   <div className="form-group">
-                      <label htmlFor="vaType">Type of Virtual Assistance *</label>
-                      <Input type="select" name="vaType" id="vaType" className="form-control" value={formField.vaType} onChange={this.changeHandler} required>
-                        <option value="1">Business Support</option>
-                        <option value="2">Personal Assistance</option>
-                      </Input>
+                    <label htmlFor="vaType">Type of Virtual Assistance *</label>
+                    <Input type="select" name="vaType" id="vaType" className="form-control" value={formField.vaType} onChange={this.changeHandler} required>
+                      <option value="1">Business Support</option>
+                      <option value="2">Personal Assistance</option>
+                    </Input>
                   </div>
                 </Col>
                 <Col md={"6"}>
                   <FormGroup>
-                      <label htmlFor="natureOfBusiness">Nature of Business *</label>
-                      <input type="text" name="natureOfBusiness" id="natureOfBusiness" className="form-control" placeholder="Nature of Business" value={formField.natureOfBusiness} onChange={this.changeHandler} required />
-                      <FormText color="muted">e.g. E-Commerce, Real Estate, Customer Service etc.</FormText>
+                    <label htmlFor="natureOfBusiness">Nature of Business *</label>
+                    <input type="text" name="natureOfBusiness" id="natureOfBusiness" className="form-control" placeholder="Nature of Business" value={formField.natureOfBusiness} onChange={this.changeHandler} required />
+                    <FormText color="muted">e.g. E-Commerce, Real Estate, Customer Service etc.</FormText>
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>
                   <div className="form-group">
-                      <label htmlFor="engagementType">Type of Engagement *</label>
-                      <Input type="select" name="engagementType" id="engagementType" className="form-control" value={formField.engagementType} onChange={this.changeHandler} required>
-                        <option value="1">Project-Based</option>
-                        <option value="2">Ongoing Task</option>
-                      </Input>
+                    <label htmlFor="engagementType">Type of Engagement *</label>
+                    <Input type="select" name="engagementType" id="engagementType" className="form-control" value={formField.engagementType} onChange={this.changeHandler} required>
+                      <option value="1">Project-Based</option>
+                      <option value="2">Ongoing Task</option>
+                    </Input>
                   </div>
                 </Col>
                 <Col md={"6"}>

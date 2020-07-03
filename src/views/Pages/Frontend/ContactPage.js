@@ -12,7 +12,7 @@ class ContactPage extends React.Component {
     super( props );
 
     this.state = {
-      formField: { userName:'', email:'', phoneNumber:'', msg_subject:'', message:'' },
+      formField: { firstName:'', lastName:'', email:'', phoneNumber:'', interestedOn:'Business looking to hire', message:'' },
       loading: false,
       errors: {}
     };
@@ -27,14 +27,14 @@ class ContactPage extends React.Component {
   
   submitContactForm(e) {
     e.preventDefault();
-    e.target.className += " was-validated";
+    //e.target.className += " was-validated";
       if (this.validateForm()) {
         const formInputField = this.state.formField;
         const formData = {
-          contactPerson: formInputField.userName,
+          contactPerson: formInputField.firstName+' '+formInputField.lastName,
           email: formInputField.email.toLowerCase(),
-          phoneNumber: formInputField.phoneNumber,
-          subject: formInputField.msg_subject,
+          phone: formInputField.phoneNumber,
+          subject: formInputField.interestedOn,
           message: formInputField.message,
         };
         this.setState( { loading: true }, () => {
@@ -49,7 +49,7 @@ class ContactPage extends React.Component {
               this.props.history.push('/contact-us');
               toast.success(res.data.message);
               this.setState( {
-                formField: { userName:'', email:'', phoneNumber:'', msg_subject:'', message:'' },
+                formField: { firstName:'', lastName:'', email:'', phoneNumber:'', interestedOn:'', message:'' },
                 loading: false,
                 errors: {}
               } )
@@ -60,7 +60,7 @@ class ContactPage extends React.Component {
             } )
         } )
       }else{
-        //console.log("Outside validation area.");
+        console.log("Outside validation area.");
       }
   };
 
@@ -68,14 +68,14 @@ class ContactPage extends React.Component {
     let errors = {};
     let formIsValid = true;
     const formField = this.state.formField;
-    if (!formField.userName) {
+    if (!formField.firstName) {
         formIsValid = false;
-        errors["userName"] = "*Please enter name.";
+        errors["firstName"] = "*Please enter first name.";
     }
-    if (typeof formField.userName !== "undefined") {
-        if (!formField.userName.match(/^[a-zA-Z ]*$/)) {
+    if (typeof formField.firstName !== "undefined") {
+        if (!formField.firstName.match(/^[a-zA-Z ]*$/)) {
             formIsValid = false;
-            errors["userName"] = "*Please enter alphabet characters only.";
+            errors["firstName"] = "*Please enter alphabet characters only.";
         }
     }
     if (!formField.email) {
@@ -96,9 +96,9 @@ class ContactPage extends React.Component {
             errors["phoneNumber"] = "*Please enter valid mobile no.";
         }
     }
-    if (!formField.msg_subject) {
+    if (!formField.interestedOn) {
         formIsValid = false;
-        errors["msg_subject"] = "*Please enter your subject.";
+        errors["interestedOn"] = "*Please choose your interest.";
     }
     if (!formField.message) {
       formIsValid = false;
@@ -133,7 +133,7 @@ class ContactPage extends React.Component {
                 <img src="/images/banner4.jpg" alt="Contact Banner" />
               </div>
               <div className="banner-content">
-                <h2>The easiest way to find and hire virtual assistants</h2>
+                <h1>Have any questions? Use the form below to drop us a message.</h1>
               </div>
           </div>
         </section>
@@ -149,7 +149,7 @@ class ContactPage extends React.Component {
                 </Col>
                 <Col md="5" lg="5" sm="5">
                   <div className="contactus-form">
-                    <h2>Send us a Message</h2>
+                    <h2>Send Us a Message</h2>
                     <Form onSubmit={this.submitContactForm} id="contactForm" noValidate>
                       <Row>
                         <Col md="12" lg="6">
@@ -174,14 +174,14 @@ class ContactPage extends React.Component {
                         </Col>
                         <Col md="12" lg="6">
                           <FormGroup>
-                            <Label htmlFor="phoneNumber">Phone no. </Label>
+                            <Label htmlFor="phoneNumber">Contact Number</Label>
                             <Input type="number" id="phoneNumber" name="phoneNumber" invalid={errors['phoneNumber'] !== undefined && errors['phoneNumber'] !== ""} value={formField.phoneNumber} onChange={this.changeHandler} placeholder="Phone number" />
                             <FormFeedback>{errors['phoneNumber']}</FormFeedback>
                           </FormGroup>
                         </Col>
                         <Col md="12" lg="12">
                           <FormGroup>
-                            <Label htmlFor="interestedOn">interested On *</Label>
+                            <Label htmlFor="interestedOn">Interested in *</Label>
                             <Input type="select" id="interestedOn" name="interestedOn" invalid={errors['interestedOn'] !== undefined && errors['interestedOn'] !== ""} value={formField.interestedOn} onChange={this.changeHandler} required>
                               <option value="Business looking to hire">Business looking to hire</option>
                               <option value="Virtual assistant looking for work">Virtual assistant looking for work</option>
@@ -199,7 +199,7 @@ class ContactPage extends React.Component {
 
                         <Col md="12" lg="6">
                           <FormGroup>
-                            <Button className="submit-btn">Send Message</Button>
+                            <Button type="submit" className="submit-btn">Send Message</Button>
                           </FormGroup>
                         </Col>
                       </Row>
@@ -210,33 +210,33 @@ class ContactPage extends React.Component {
           </Container>
           </div>
 
-          <div class="contactus-page-info">
+          <div className="contactus-page-info">
             <Container>
-              <div class="heading-title">
-              <h2>Get in touch us</h2>
-              <p>Lorem Ipsum is composed in a pseudo-Latin language which more or less corresponds to 'proper' Latin. It contains a series of real Latin words. </p>
+              <div className="heading-title">
+              <h2>Get in Touch with Us</h2>
+              <p>You can also use any of the communication methods below to contact our team. We look forward to hearing from you!</p>
               </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="contact-info-card">
+              <div className="row">
+                <div className="col-md-3">
+                  <div className="contact-info-card">
                     <h2>Office Address</h2>
                     <ul>
                       <li>
-                        <div class="contact-text">
-                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <div className="contact-text">
+                          <i className="fa fa-map-marker" aria-hidden="true"></i>
                           <span>576 Fifth Avenue, Suite 903, New York, NY 10036</span>
                         </div>
                       </li>
                     </ul>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="contact-info-card">
+                <div className="col-md-3">
+                  <div className="contact-info-card">
                     <h2>Phone</h2>
                     <ul>
                       <li>
-                        <div class="phone-text">
-                          <i class="fa fa-phone" aria-hidden="true"></i>
+                        <div className="phone-text">
+                          <i className="fa fa-phone" aria-hidden="true"></i>
                           <span>+22 140 006 754</span>
                         </div>
                       </li>
@@ -244,13 +244,13 @@ class ContactPage extends React.Component {
                   </div>
                 </div>
 
-                <div class="col-md-3">
-                  <div class="contact-info-card">
+                <div className="col-md-3">
+                  <div className="contact-info-card">
                     <h2>Email Address</h2>
                     <ul>
                       <li>
-                        <div class="email-text ">
-                          <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <div className="email-text ">
+                          <i className="fa fa-envelope" aria-hidden="true"></i>
                           <span>support@virtdrop.com</span>
                         </div>
                       </li>
@@ -259,25 +259,25 @@ class ContactPage extends React.Component {
                   </div>
                 </div>
 
-                <div class="col-md-3">
-                  <div class="social-info-card">
+                <div className="col-md-3">
+                  <div className="social-info-card">
                     <h2>Follow us</h2>
                     <ul>
                       <li>
-                        <a class="facebook" href="https://www.facebook.com/virtdrop/" target="_blank" rel="noopener noreferrer">
-                          <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                        <a className="facebook" href="https://www.facebook.com/virtdrop/" target="_blank" rel="noopener noreferrer">
+                          <i className="fa fa-facebook-square" aria-hidden="true"></i>
                           <span>Facebook</span>
                         </a>
                       </li>
                       <li>
-                        <a class="twitter" href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
-                          <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                        <a className="twitter" href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+                          <i className="fa fa-twitter-square" aria-hidden="true"></i>
                           <span>twitter</span>
                         </a>
                       </li>
                       <li>
-                        <a class="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
-                          <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                        <a className="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                          <i className="fa fa-linkedin-square" aria-hidden="true"></i>
                           <span>linkedin</span>
                         </a>
                       </li>
@@ -288,29 +288,29 @@ class ContactPage extends React.Component {
             </Container>
           </div>
 
-          <div class="contactus-page-booking">
+          <div className="contactus-page-booking">
             <Container>
-              <div class="contactus-booking-content">
-                <div class="contactus-booking-text">
-                    <h2>Discovery Call with Booking Calendar</h2>
-                    <p>Meet Your VIRTDROP assistant today!</p>
+              <div className="contactus-booking-content">
+                <div className="contactus-booking-text">
+                  <h2>Book a Discovery Call using our Calendar</h2>
+                  <p>Learn more about your future VirtDrop Virtual Assistant today!</p>
                 </div>
-                <div class="contactus-booking-btn">
-                  <a class="get-btn" href="/">Booking Now</a>
+                <div className="contactus-booking-btn">
+                  <Link className="get-btn" to="/booking">Book Now</Link>
                 </div>
                 </div>
             </Container>
           </div>
-          <div class="getstarted-banner-section">
+          <div className="getstarted-banner-section">
             <Container>
-              <div class="getstarted-banner-content">
-                <div class="getstarted-media">
+              <div className="getstarted-banner-content">
+                <div className="getstarted-media">
                   <img src="/images/banner3.jpg" alt="Get Started" />
                 </div>
-                <div class="getstarted-content">
-                  <h2>Looking for an assistant, marketer, or simply someone to work online?</h2>
-                  <p>We have a community of passionate people who love what they do, and are looking for new opportunities</p>
-                  <Link class="get-btn" to="/register">Get Started!</Link>
+                <div className="getstarted-content">
+                  <h2>Looking for an extra pair of hands to lighten the workload?</h2>
+                  <p>We provide a community of capable Virtual Personal Assistants who are eager to help!</p>
+                  <Link className="get-btn" to="/register">Get Started!</Link>
                 </div>
               </div>
             </Container>

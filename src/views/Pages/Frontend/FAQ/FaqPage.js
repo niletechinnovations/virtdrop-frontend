@@ -28,7 +28,7 @@ class FaqPage extends React.Component {
             <img src="/images/banner4.jpg" alt="FAQ's" />
           </div>
           <div className="banner-content">
-            <h2>Lorem Ipsum is composed in a pseudo-Latin language which more or less corresponds to 'proper' Latin.</h2>
+            <h1>Lorem Ipsum is composed in a pseudo-Latin language which more or less corresponds to 'proper' Latin.</h1>
           </div>
         </div>
       </section>

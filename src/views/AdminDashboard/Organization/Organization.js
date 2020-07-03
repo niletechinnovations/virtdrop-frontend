@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import { FormErrors } from '../../Formerrors/Formerrors';
-import AutoCompletePlaces from '../../../core/google-map/AutoCompletePlaces';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -18,26 +17,19 @@ class Organization extends Component {
     this.state = {
       modal: false,      
       organizationList: [],
-      orgDocument: [],
-      organizationDocuments: [],
       loading: true,
       rowIndex: -1,
       changeStatusBtn:'',
       formProccessing: false,
-      formField: {organization_name: '', email: '', first_name: '', last_name: '', phoneNumber: '', address: '' },
+      formField: {organization_name: '', email: '', first_name: '', last_name: '', mobileNumber:'', phoneNumber: '', address: '', address2:'', city:'', state:'', country:'', postalCode:'' },
       formErrors: {organization_name: '', email: '', first_name: '', last_name: '', error: ''},
       formValid: false,
       filterItem: { filter_organization_id: '', filterOrgName: '', filterLocation: '', filterFrom:'',  filterTo:'', filterStatus:'', custom_search: ''},
-      address: '',
-      latitude:'',
-      longitude:''
     } 
     this.handleEditOrganization = this.handleEditOrganization.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
     this.handleDeleteOrganization = this.handleDeleteOrganization.bind(this);
     this.filterOragnizationList = this.filterOragnizationList.bind(this);
-    this.uploadOrgDocument = this.uploadOrgDocument.bind(this);
-    this.setLatitudeLongitude = this.setLatitudeLongitude.bind(this);
   }
   // Fetch the organization List
   componentDidMount() { 
@@ -97,18 +89,25 @@ class Organization extends Component {
         "email": formInputField.email,
         "firstName": formInputField.first_name, 
         "lastName": formInputField.last_name, 
+        "mobileNumber": formInputField.mobileNumber, 
         "phoneNumber": formInputField.phoneNumber, 
-        "organizationName": formInputField.organization_name
+        "organizationName": formInputField.organization_name,
+        "address": formInputField.address,
+        "address2": formInputField.address2,
+        "city": formInputField.city,
+        "state": formInputField.state,
+        "country": formInputField.country,
+        "postalCode": formInputField.postalCode
       };
       
       if(this.state.address)
         formData['address'] = this.state.address;
       
-      if(this.state.latitude)
-        formData['latitude'] = this.state.latitude;
+      if(this.state.address2)
+        formData['address2'] = this.state.address2;
       
-      if(this.state.longitude)
-        formData['longitude'] = this.state.longitude;
+      if(this.state.country)
+        formData['country'] = this.state.country;
       
       const rowIndex = this.state.rowIndex;
       if(rowIndex > -1) {
@@ -116,53 +115,45 @@ class Organization extends Component {
        formData['profileId'] = organizationInfo.profileId;
         commonService.putAPIWithAccessToken('organization', formData)
         .then( res => {
-          
-           
-          if ( undefined === res.data.data || !res.data.status ) {
-           
+          if ( undefined === res.data.data || !res.data.status ) {           
             this.setState( { formProccessing: false} );
             toast.error(res.data.message);
             return;
           } 
-          
           this.setState({ modal: false, formProccessing: false});
           toast.success(res.data.message);
           this.organizationList();
-         
         } )
         .catch( err => {         
           if(err.response !== undefined && err.response.status === 401) {
             localStorage.clear();
             this.props.history.push('/login');
-          }
-          else
+          }else{
             this.setState( { formProccessing: false } );
             toast.error(err.message);
+          }
         } )
       }
       else{
         commonService.postAPIWithAccessToken('organization', formData)
-        .then( res => {
-           
+        .then( res => {           
           if ( undefined === res.data.data || !res.data.status ) { 
             this.setState( { formProccessing: false} );
             toast.error(res.data.message);
             return;
           } 
-          
           this.setState({ modal: false});
           toast.success(res.data.message);
-          this.organizationList();
-         
+          this.organizationList();        
         } )
         .catch( err => {         
           if(err.response !== undefined && err.response.status === 401) {
             localStorage.clear();
             this.props.history.push('/login');
-          }
-          else
+          }else{
             this.setState( { formProccessing: false } );
             toast.error(err.message);
+          }
         } )
       }
     } );
@@ -222,7 +213,7 @@ class Organization extends Component {
       rowIndex: -1,
       changeStatusBtn: '',
       formValid: false,
-      formField: {organization_name: '', email: '', first_name: '', last_name: '', phoneNumber: '', address: '' },
+      formField: {organization_name: '', email: '', first_name: '', last_name: '', mobileNumber:'', phoneNumber: '', address: '', address2:'', city:'', state:'', country:'', postalCode:'' },
       formErrors: {organization_name: '', email: '', first_name: '', last_name: '', error: ''}
     });
   }
@@ -234,13 +225,19 @@ class Organization extends Component {
         email: organizationInfo.email, 
         first_name: organizationInfo.firstName, 
         last_name: organizationInfo.lastName, 
-        phoneNumber: organizationInfo.phoneNumber, 
-        address: organizationInfo.address, 
+        phoneNumber: organizationInfo.phoneNumber,
+        mobileNumber: organizationInfo.mobileNumber,
+        address: organizationInfo.address,
+        address2: organizationInfo.address2,
+        city: organizationInfo.city,
+        state: organizationInfo.state,
+        country: organizationInfo.country,
+        postalCode: organizationInfo.postalCode
       };
       const statusBtn = <Button type="button" size="sm" className={`changeStatusBtn `+( organizationInfo.status ? 'btn-danger' : 'btn-success' )} onClick={() => 
         this.changeProfileStatus(organizationInfo.profileId, organizationInfo.status )} >{ ( organizationInfo.status ? 'De-Activate Account' : 'Activate Account' )}</Button>
       
-      this.setState({rowIndex: rowIndex, formField: formField, organizationDocuments:organizationInfo.documents, modal: true, changeStatusBtn:statusBtn, formValid: true});
+      this.setState({rowIndex: rowIndex, formField: formField, modal: true, changeStatusBtn:statusBtn, formValid: true});
   }
 
   /* Change Profile status*/
@@ -315,57 +312,7 @@ class Organization extends Component {
     filterItem[name] = value;
     this.setState({ filterItem: filterItem });
   };
-
-  //Set organization document on change
-  onDocumentChange = event => {   
-    this.setState({
-      orgDocument: event.target.files,
-    });
-  };
   
-  //To upload organization documentes
-  uploadOrgDocument(event) {
-    event.preventDefault();
-    const rowIndex = this.state.rowIndex;
-    if( rowIndex > -1 && this.state.orgDocument.length>0){
-      const formData = new FormData();
-      for(let i =0; i < this.state.orgDocument.length; i++){
-        formData.append('documents', this.state.orgDocument[i]);
-      }
-
-      const orgInfo = this.state.organizationList[rowIndex];
-      formData.append('organizationId', orgInfo.organizationId);
-      
-       commonService.putAPIWithAccessToken('organization/documents', formData)
-       .then( res => {
-         
-         if ( undefined === res.data.data || !res.data.status ) {
-           this.setState( { formProccessing: false} );
-           toast.error(res.data.message);
-           return;
-         }
-         this.setState({ modal: false, formProccessing: false});
-         toast.success(res.data.message);
-         this.organizationList();
-       } )
-       .catch( err => {         
-         if(err.response !== undefined && err.response.status === 401) {
-           localStorage.clear();
-           this.props.history.push('/login');
-         }
-         else
-           this.setState( { formProccessing: false } );
-           toast.error(err.message);
-       } )
-    }
-  }
-
-  // Set address, latitude and longitude
-  setLatitudeLongitude(address, latLng){
-    let formField = this.state.formField;
-    formField.address = address;
-    this.setState({ latitude:latLng.lat, longitude:latLng.lng, address: address, formField: formField })
-  }
 
   setFilterFromDate = date => {
     let filterFormField = this.state.filterItem;
@@ -380,7 +327,7 @@ class Organization extends Component {
 
   resetfilterOragnization = () => {
     this.setState({
-      filterItem: { filter_organization_id: '', filterOrgName: '', filterLocation: '', filterFrom:'',  filterTo:'', filterStatus:'', custom_search: ''}
+      filterItem: { filter_organization_id: '', filterOrgName: '', filterMobile: '', filterFrom:'',  filterTo:'', filterStatus:'', custom_search: ''}
     });
     this.organizationList();
   }
@@ -394,7 +341,7 @@ class Organization extends Component {
 
   render() {
     
-    const { organizationList,organizationDocuments, loading, modal, formProccessing, changeStatusBtn, filterItem } = this.state;     
+    const { organizationList, loading, modal, formProccessing, changeStatusBtn, filterItem } = this.state;     
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -408,7 +355,7 @@ class Organization extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>Food Truck Owner List</strong>
+                <strong>VA Members List</strong>
                 {/* <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add New</Button> */}
               </CardHeader>
               <CardBody>
@@ -423,14 +370,14 @@ class Organization extends Component {
                       </Col>
                       <Col md={"2"}>
                         <FormGroup> 
-                          <Label>Email ID / Name</Label>
+                          <Label htmlFor="custom_search">Email ID / Name</Label>
                           <Input type="text" placeholder="Search By Email ID / Name" id="custom_search" name="custom_search" value={this.state.filterItem.custom_search} onChange={this.changeFilterHandler} />
                         </FormGroup>  
                       </Col>
                       <Col md={"2"}>
                         <FormGroup> 
-                          <Label>Location</Label>
-                          <Input type="text" placeholder="Search By Location" name="filterLocation" value={this.state.filterItem.filterLocation} onChange={this.changeFilterHandler} />
+                          <Label htmlFor="filterMobile">Mobile no.</Label>
+                          <Input type="text" placeholder="Search By Mobile no." name="filterMobile" value={this.state.filterItem.filterMobile} onChange={this.changeFilterHandler} />
                         </FormGroup>  
                       </Col>
                       <Col md={"1"}>
@@ -473,7 +420,7 @@ class Organization extends Component {
           </Col>
         </Row>
         <Modal isOpen={modal} toggle={this.toggle} className="full-width-modal-section organization-modal">
-          <ModalHeader toggle={this.toggle}>Food Truck Owner</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Member Info</ModalHeader>
           <Form onSubmit={this.submitHandler} noValidate>
             <ModalBody>
               <FormErrors formErrors={this.state.formErrors} />
@@ -504,38 +451,57 @@ class Organization extends Component {
                 </Col>
                 <Col md={"6"}>  
                   <FormGroup> 
-                    <Label htmlFor="phoneNumber">Contact Number</Label>            
-                    <Input type="text" placeholder="Contact Number " id="phoneNumber" name="phoneNumber" value={this.state.formField.phoneNumber} onChange={this.changeHandler}  />
+                    <Label htmlFor="mobileNumber">Mobile Number</Label>            
+                    <Input type="text" placeholder="Personal Contact Number " id="mobileNumber" name="mobileNumber" value={this.state.formField.mobileNumber} onChange={this.changeHandler}  />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>  
                   <FormGroup> 
-                    <Label htmlFor="address">Address</Label>            
-                    <AutoCompletePlaces setLatitudeLongitude={this.setLatitudeLongitude} truckAdress={ this.state.formField.address } /> 
+                    <Label htmlFor="phoneNumber">Business Phone</Label>            
+                    <Input type="text" placeholder="Business Contact Number" id="phoneNumber" name="phoneNumber" value={this.state.formField.phoneNumber} onChange={this.changeHandler}  />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>  
                   <FormGroup> 
-                    <Label htmlFor="orgDoc">Company Documents</Label>            
-                    <Input type="file" id="orgDoc" className="chooseOrgDoc" name="orgDoc" multiple onChange={this.onDocumentChange} />
-                    <Button color="info" className="uploadDocBtn" size="sm" onClick={this.uploadOrgDocument}>Upload</Button>
+                    <Label htmlFor="address">Street Address </Label>            
+                    <Input type="text" placeholder="Street Address Line 1" id="address" name="address" value={this.state.formField.address} onChange={this.changeHandler}  />
                   </FormGroup>
                 </Col>
-                <Col md={"12"} className="mt-2"> 
-                  <Row>
-                  {organizationDocuments.map((doc, index) =>
-                    <Col md="1" className="docBtnArea" key={index}>
-                      <a className="btn btn-primary btn-sm" href={doc} target="_blank" rel="noopener noreferrer" > <i className="fa fa-download"></i></a>
-                    </Col>
-                  )}
-                  </Row>
-                </Col>             
-                
+                <Col md={"6"}>  
+                  <FormGroup> 
+                    <Label htmlFor="address2">Street Address Line 2 </Label>            
+                    <Input type="text" placeholder="Street Address Line 2" id="address2" name="address2" value={this.state.formField.address2} onChange={this.changeHandler} />
+                  </FormGroup>
+                </Col>
+                <Col md={"6"}>  
+                  <FormGroup> 
+                    <Label htmlFor="city">City </Label>            
+                    <Input type="text" placeholder="City" id="city" name="city" value={this.state.formField.city} onChange={this.changeHandler}  />
+                  </FormGroup>
+                </Col>
+                <Col md={"6"}>  
+                  <FormGroup>
+                    <Label htmlFor="state">State</Label>            
+                    <Input type="text" placeholder="State" id="state" name="state" value={this.state.formField.state} onChange={this.changeHandler} />
+                  </FormGroup>
+                </Col>
+                <Col md={"6"}>  
+                  <FormGroup> 
+                    <Label htmlFor="postalCode">Postal Code </Label>            
+                    <Input type="text" placeholder="Postal Code" id="postalCode" name="postalCode" value={this.state.formField.postalCode} onChange={this.changeHandler}  />
+                  </FormGroup>
+                </Col>
+                <Col md={"6"}>  
+                  <FormGroup> 
+                    <Label htmlFor="country">Country </Label>            
+                    <Input type="text" placeholder="Country" id="country" name="country" value={this.state.formField.country} onChange={this.changeHandler} />
+                  </FormGroup>
+                </Col>
               </Row>           
             </ModalBody>
             <ModalFooter>
               {changeStatusBtn}
-              <Button color="primary" disabled={!this.state.formValid || formProccessing} type="submit">{formProccessing ? processingBtnText : 'Submit' }</Button>
+              <Button color="primary" disabled={!this.state.formValid || formProccessing} type="submit">{formProccessing ? processingBtnText : 'Save Changes' }</Button>
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>

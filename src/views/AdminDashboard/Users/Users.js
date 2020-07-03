@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, Col, Row, Button, Form, Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import { Card, CardHeader, CardBody, Col, Row, Button, Form, Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
@@ -20,17 +20,19 @@ class Users extends Component {
       rowIndex: -1,
       changeStatusBtn:'',
       formProccessing: false,
-      formField: {profileId:'', email: '', first_name: '', last_name: '', phoneNumber: '', address: '', profilePic:'' },
+      formField: {profileId:'', email: '', first_name: '', last_name: '', phoneNumber: '', userType:'' },
       formErrors: { email: '', first_name: '', last_name: '', error: ''},
       formValid: false,
       profileImage:'',
+      address: '',
+      latitude:'',
+      longitude:'',
       filterItem: { filterPhone:'', filterLocation: '', custom_search: '', filterFrom:'',  filterTo:'', filterStatus:''}
     }
     this.handleEditUser = this.handleEditUser.bind(this);
     this.filterUserList = this.filterUserList.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
     this.handleDeleteUser = this.handleDeleteUser.bind(this);
-    this.onProfileImgChange = this.onProfileImgChange.bind(this);
   }
   componentDidMount() { 
     this.userList({});
@@ -97,7 +99,7 @@ class Users extends Component {
       last_name: userInfo.lastName, 
       phoneNumber: userInfo.phoneNumber, 
       address: userInfo.address,
-      profilePic: userInfo.profilePic
+      userType: userInfo.role
     };
     const statusBtn = <Button type="button" size="sm" className={`changeStatusBtn `+( userInfo.status ? 'btn-danger' : 'btn-success' )} onClick={() => 
       this.changeProfileStatus(userInfo.profileId, userInfo.status )} >{ ( userInfo.status ? 'De-Activate Account' : 'Activate Account' )}</Button>
@@ -116,8 +118,9 @@ class Users extends Component {
         "firstName": formInputField.first_name, 
         "lastName": formInputField.last_name, 
         "phoneNumber": formInputField.phoneNumber,
-        "address": formInputField.address
+        "role": formInputField.userType,
       };
+
       
       const rowIndex = this.state.rowIndex;
       if(rowIndex > -1) {
@@ -143,45 +146,34 @@ class Users extends Component {
             this.setState( { formProccessing: false } );
             toast.error(err.message);
         } )
-      }
-    } );  
-  };
-
-  //Set profile picture on change
-  onProfileImgChange = (event) => {
-    this.setState({
-      profileImage: event.target.files[0],
-    });
-    if(event.target.files.length > 0){
-      this.setState( { loading: true}, () => {  
-        const formData = new FormData();
-        formData.append('profileImage', this.state.profileImage );
-        formData.append('profileId', this.state.formField.profileId);
-      
-        commonService.putAPIWithAccessToken('profile/picture', formData)
+      }else{
+        commonService.postAPIWithAccessToken('organization', formData)
         .then( res => {
-          if ( undefined === res.data.data || !res.data.status ) {
-            this.setState( { loading: false} );
+          if ( undefined === res.data.data || !res.data.status ) { 
+            this.setState( { formProccessing: false} );
             toast.error(res.data.message);
             return;
-          }
-          this.setState({ loading: false});
-          this.userList();
+          } 
+          this.setState({ modal: false, formProccessing: false});
           toast.success(res.data.message);
+          this.userList();        
         } )
         .catch( err => {         
           if(err.response !== undefined && err.response.status === 401) {
             localStorage.clear();
             this.props.history.push('/login');
-          }
-          else
-            this.setState( { loading: false } );
+          }else{
+            this.setState( { formProccessing: false } );
             toast.error(err.message);
+          }
         } )
-      } ) 
-    }  
-  }
+      }
 
+        
+    } );
+  };
+
+  
   /* Change Profile status*/
   changeProfileStatus(profileId,status){
     this.setState( { loading: true}, () => {
@@ -305,26 +297,24 @@ class Users extends Component {
         {loaderElement}
         
         <Card>
+          <CardHeader className="mainHeading">
+            <strong>Manage Admin Users</strong>
+            <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add User</Button>
+          </CardHeader>
           <CardBody>
             <Row>
               <Col md={12}>
                 <Row className="filterRow">                      
-                  <Col md={"2"} className="pl-3">
+                  <Col md={"3"} className="pl-3">
                     <FormGroup> 
                       <Label>Email ID / Name</Label>
                       <Input type="text" placeholder="Search By Email ID / Name" id="custom_search" name="custom_search" value={filterItem.custom_search} onChange={this.changeFilterHandler} />
                     </FormGroup>  
                   </Col>
-                  <Col md={"2"}>
+                  <Col md={"3"}>
                     <FormGroup>
                       <Label htmlFor="filterPhone">Phone no.</Label>
                       <Input id="filterPhone" name="filterPhone" placeholder="Phone no." value={filterItem.filterPhone}  onChange={this.changeFilterHandler} />
-                    </FormGroup>  
-                  </Col>
-                  <Col md={"2"}>
-                    <FormGroup>
-                      <Label htmlFor="filterLocation">Location</Label>
-                      <Input id="filterLocation" name="filterLocation" placeholder="Location" value={filterItem.filterLocation}  onChange={this.changeFilterHandler} />
                     </FormGroup>  
                   </Col>
                   <Col md={"1"}>
@@ -373,20 +363,20 @@ class Users extends Component {
               <Row>
                 <Col md={"6"}>  
                   <FormGroup> 
-                    <Label htmlFor="first_name">First Name</Label>            
-                    <Input type="text" placeholder="First Name *" id="first_name" name="first_name" value={this.state.formField.first_name} onChange={this.changeHandler} required />
+                    <Label htmlFor="first_name">First Name *</Label>            
+                    <Input type="text" placeholder="First Name" id="first_name" name="first_name" value={this.state.formField.first_name} onChange={this.changeHandler} required />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>  
                   <FormGroup> 
                     <Label htmlFor="last_name">Last Name</Label>            
-                    <Input type="text" placeholder="Last Name *" id="last_name" name="last_name" value={this.state.formField.last_name} onChange={this.changeHandler} />
+                    <Input type="text" placeholder="Last Name" id="last_name" name="last_name" value={this.state.formField.last_name} onChange={this.changeHandler} />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>  
                   <FormGroup> 
-                    <Label htmlFor="email">Email</Label>            
-                    <Input type="text" placeholder="Email *" id="email" name="email" value={this.state.formField.email} onChange={this.changeHandler} required />
+                    <Label htmlFor="email">Email *</Label>            
+                    <Input type="text" placeholder="Email" id="email" name="email" value={this.state.formField.email} onChange={this.changeHandler} required />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>  
@@ -397,18 +387,18 @@ class Users extends Component {
                 </Col>
                 <Col md={"6"}>  
                   <FormGroup> 
-                    <Label htmlFor="address">Address</Label>            
-                    <Input type="text" placeholder="Address" id="address" name="address" value={this.state.formField.address} onChange={this.changeHandler}  />
+                    <Label htmlFor="userType">Role *</Label>            
+                    <Input type="select" id="userType" name="userType" value={this.state.formField.userType} onChange={this.changeHandler}>
+                      <option value="user">Admin</option>
+                      <option value="admin">Super Admin</option>
+                    </Input>
                   </FormGroup>
-                </Col>
-                <Col md={"6"}>
-                { this.state.formField.profilePic ? <img src={this.state.formField.profilePic} alt={this.state.formField.first_name} width="100" /> : '' }
-                </Col>
+                </Col>                
               </Row>           
             </ModalBody>
             <ModalFooter>
               {changeStatusBtn}
-              <Button color="primary" disabled={!this.state.formValid || formProccessing} type="submit">{formProccessing ? processingBtnText : 'Submit' }</Button>
+              <Button color="primary" disabled={formProccessing} type="submit">{formProccessing ? processingBtnText : 'Submit' }</Button>
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>

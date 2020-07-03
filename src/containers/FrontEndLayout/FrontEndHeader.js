@@ -143,20 +143,20 @@ class FrontEndHeader extends React.Component {
                 <Collapse isOpen={this.state.toggleActive} navbar className="justify-content-end" id="navbarSupportedContent">
                   <Nav className="navbar-nav" navbar>
                     <NavItem>
-                      <Link to="/how-it-works">How it Works</Link>
+                      <Link to="/how-it-works">How it Works?</Link>
                     </NavItem>
                     <NavItem>
-                      <Link to="/why-us">Why Us?</Link>
+                      <Link to="/services">Services</Link>
                     </NavItem>
                     <NavItem>
-                      <Link to="/pricing-plan">Plans & Pricing</Link>
+                      <Link to="/pricing">Pricing</Link>
                     </NavItem>
                     <NavItem>
                       <Link to="/contact-us">Contact Us</Link>
                     </NavItem>
                   </Nav>  
 
-                  <Nav className="navbar-nav ml-auto" navbar>
+                  <Nav className="navbar-nav" navbar>
                   
                     {headerItem}
 

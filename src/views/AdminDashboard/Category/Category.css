@@ -1,5 +1,5 @@
 .mainHeading{display: flex; align-items: center; right: 0;}
-.categoryAdd {position: absolute; right: 0; top: 0; background: #ffc107; color: #fff; font-size: 12px; box-shadow: none; }
+.categoryAdd {position: relative; margin-left: auto; background: #1360fe !important; color: #fff; font-size: 12px; box-shadow: none; border: none; }
 
 .MuiToolbar-gutters {padding: 0; }
 .MuiToolbar-regular {
