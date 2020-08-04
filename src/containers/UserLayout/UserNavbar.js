@@ -46,7 +46,7 @@ class UserNavbar extends Component {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to="/user/dashboard" className="nav-link">
+              <Link to="/user/virdrop-va" className="nav-link">
                 <span className="icon-orders"><img src="/images/user.svg" height="24" alt="My Listing" /></span>
                 <span className="value-orders">Your Virtdrop VA</span>
               </Link>
@@ -58,15 +58,12 @@ class UserNavbar extends Component {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to="/user/dashboard" className="nav-link">
+              <Link to="/user/task" className="nav-link">
                 <span className="icon-orders"><img src="/images/task.svg" height="24" alt="Task Management" /></span>
                 <span className="value-orders">Task Management</span>
               </Link>
             </NavItem>
-          {/* </>
-          } */}
-
-        
+                  
           
             <NavItem>
               <Link to={ localStorage.getItem('isOrganization')=== "true" ? "/user/dashboard" : "/user/dashboard" } className="nav-link">

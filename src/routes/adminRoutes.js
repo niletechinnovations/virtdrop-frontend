@@ -15,6 +15,7 @@ import EditVaApplication from '../views/AdminDashboard/VaApplications/EditVaAppl
 import VaRequestListing from '../views/AdminDashboard/Organization/VaRequest/VaRequestListing';
 import ScheduledBooking from '../views/AdminDashboard/ScheduledBooking/ScheduledBooking';
 import AssignRequest from '../views/AdminDashboard/Organization/VaRequest/AssignRequest';
+import VaTaskListing from '../views/AdminDashboard/Organization/VaTask/VaTaskListing';
 
 const adminRoutes = [
   { path: '/admin/', exact: true, name: 'Admin' },
@@ -35,6 +36,7 @@ const adminRoutes = [
   { path: '/admin/transactions', exact: true, name: 'Manage Transactions', component: UserTransactionList },
   { path: '/admin/subscribed', exact: true, name: 'Subscribed Owner', component: SubscribedOwnerList },
   { path: '/admin/subscribed/advertisers', exact: true, name: 'Subscribed Advertiser', component: SubscribedAdvertiserList },
+  { path: '/admin/va-task', exact: true, name: 'Manage Task', component: VaTaskListing },
 ];
 
 export default adminRoutes;

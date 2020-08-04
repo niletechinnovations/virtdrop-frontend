@@ -94,7 +94,7 @@ class OrganizationData extends Component {
       searchOpen: false,
       print: false,
       download: true,
-      downloadOptions: {filename: 'va-member-list.csv', separator: ','},
+      downloadOptions: {filename: 'va-client-list.csv', separator: ','},
       responsive: 'stacked',
       selectableRows: 'none',
       textLabels: {
@@ -111,7 +111,7 @@ class OrganizationData extends Component {
     
     return (
       <MUIDataTable
-        title={"Member Lists"}
+        title={"Clients"}
         data={rowsItem}
         columns={columns}
         options={options}

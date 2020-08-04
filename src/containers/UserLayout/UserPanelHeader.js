@@ -87,9 +87,7 @@ class UserPanelHeader extends React.Component {
           <div className="">
             <div className="header-navigation">
               <Navbar expand="lg" className="static-top">
-                <div className="navbar-header">
-                  <Link to="/" className="navbar-brand"><img src={logo} height="40" alt="Logo" /></Link>
-                </div>
+                <Link to="/" className="navbar-brand"><img src={logo} height="40" alt="Logo" /></Link>
                 <NavbarToggler onClick={this.onToggle} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" />
                 <Collapse isOpen={this.state.toggleActive} navbar className="justify-content-end" id="navbarSupportedContent">
                   <Nav className="navbar-nav mr-auto" navbar>

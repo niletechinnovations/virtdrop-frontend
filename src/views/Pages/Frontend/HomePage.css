@@ -11,11 +11,26 @@
 .main-slider-content h1 {font-size: 40px; color: #f8fafd; text-align: left; padding-top: 0; margin-bottom: 20px; margin-top: 0; }
 .main-slider-content h1 span{font-weight: bold;}
 .explore-btn {background: #1360fe; padding: 15px 20px; border-radius: 5px; color: #fff !important; font-size: 14px; font-weight: 600; }
+.slider-media{position: relative;}
+.slider-media:after {content: ''; position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: rgba(27, 43, 74, 0.42); }
 
-
-.slider-content {position: absolute; display: flex;width: 80%; margin: 0 auto; align-items: center; bottom: 0; top: 0; flex-direction: column; padding: 20px; left: 0; right: 0; justify-content: center; }
+/*.slider-content {position: absolute;z-index: 9; display: flex;margin: 0 auto;  bottom: 0; top: 0; flex-direction: column; padding: 20px; justify-content: center; }
+*/
+.slider-content {position: absolute; z-index: 9; bottom: 0; top: 0%; padding: 20px; display: block; }
 .slider-content h2 {font-size: 32px; font-weight: bold; color: #f8fafd; text-align: center; padding-top: 0; margin-bottom: 0px; margin-top: 0; }
 .slider-content h2 span{font-weight: bold;}
+
+.slider1 .slider-content {right: 0; top: 30%; text-align: center; left: 0; width: 60%; margin: 0 auto; }
+.slider2 .slider-content {right: 0; top: 30%; width: 50%; }
+.slider3 .slider-content {left: 5%; top: 20%; right: 0;    width: 50%; }
+.slider4 .slider-content {left: 0; top: 25%; text-align: left;    width: 50%; }
+.slider2 .slider-content h2{text-align:left;}
+.slider3 .slider-content h2{text-align:left;}
+.slider4 .slider-content h2{text-align:left;}
+.slider-content ul {margin: 0 0px 20px 0px; list-style-position: outside; padding-left: 20px; }
+.slider-content ul li{font-size: 15px;}
+.slider-content h6 {margin: 0 0 35px 0; padding: 0; }
+.slider1 .slider-content h6 {margin: 0 0 35px 0; padding: 0; font-size: 32px; }
 
 
 #Main-Slider .owl-dots {position: absolute;left: 0;right: 16.5%;bottom:33.5%;}
@@ -105,7 +120,7 @@ button.submit_button {border: none; color: #fff; border-radius: 3px; padding: 8p
 .service-media {position: relative; z-index: 9; text-align: center; }
 .service-content-info ul {margin: 0 0 20px 0; list-style: disc; padding: 0 0 0 20px; }
 .service-content-info ul li{font-size: 13px; color: #091e42; }
-.service-content-info .learn-btn {border: 2px solid #1360fe; color: #1360fe; border-radius: 30px; padding: 8px 20px; font-weight: 600; font-size: 14px; display: inline-block; position: relative; }
+.service-content-info .learn-btn {border: 2px solid #1360fe; color: #fff; border-radius: 2px; padding: 8px 20px; font-weight: 600; font-size: 14px; display: inline-block;    background: #1360fe; position: relative; }
 
 
 /**====================================================================
@@ -225,3 +240,73 @@ button.submit_button {border: none; color: #fff; border-radius: 3px; padding: 8p
     font-weight: 300;
         margin-bottom: 0;
 }
+
+.newsletter-modal .modal-content{
+  border: 3px solid rgb(19, 96, 254);
+}
+
+
+
+@media only screen and (min-width : 480px) {
+}
+
+@media only screen and (min-width : 768px) {
+
+}
+
+
+@media only screen and (min-width : 992px) {
+
+}
+
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+
+@media only screen and (max-width : 1199px) {
+
+}
+
+@media only screen and (max-width : 991px) {
+.plan-pricing-info{width:300px;}
+.images-ssl img,
+.images-paypal img{width: 100%;    height: auto; }
+
+}
+
+@media only screen and (max-width : 767px) {
+.main-slider-section{height: auto; min-height: auto; }
+.slider1 .slider-content,.slider2 .slider-content,.slider3 .slider-content,.slider4 .slider-content{left: 0;
+    right: 0;width: 100%; display: flex; flex-direction: column; top: 0; bottom: 0;  justify-content: center; } 
+/*.slider1 .slider-content{top:20%; width: 100%; left: 0; }
+.slider2 .slider-content{top:20%; width: 100%; left: 0; } 
+.slider3 .slider-content{top:0%; width: 100%; left: 0; } 
+.slider4 .slider-content{top:20%; width: 100%; left: 0; } */
+.slider-content h6,.slider1 .slider-content h6{font-size: 14px; margin:0 0 10px;}
+.slider-content h2{font-size: 20px;padding-bottom: 0;}
+.slider3 .slider-content h2 {text-align: left; margin: 0; padding: 0; } 
+.slider-content ul li {font-size: 14px;line-height: 20px; } 
+.explore-btn {padding: 10px 20px;text-align: center; font-size: 11px; }
+.service-section .heading-title,
+.plan-section .heading-title,
+.plan-pricing-info{width: 100%;}
+.service-media img,
+.about-media img{width:100%}
+.whyus-media {margin-bottom: 40px; }
+.about-media,
+.service-media{margin-bottom: 20px;}
+.become-virdrop-section .get-btn{ font-size: 14px;padding: 10px 10px;}
+
+} 
+
+@media only screen and (max-width: 576px) {
+    .slider-content ul li{font-size: 10px;line-height: 13px;}
+    .explore-btn {padding:5px 10px; font-size: 11px; }
+
+
+}
+
+@media only screen and (max-width : 480px) {}

@@ -57,3 +57,41 @@ ul.form-checkbox-list li {display: inline-block; padding-right: 20px;width: 33%;
 .inputfile-4.has-focus + label figure,
 .inputfile-4 + label:hover figure {background-color:#ffffff; }
 .inputfile-4 + label svg {width: 100%; height: 100%; fill:#c0ceda; }
+
+@media only screen and (min-width : 480px) {
+}
+
+@media only screen and (min-width : 768px) {
+
+}
+
+
+@media only screen and (min-width : 992px) {
+
+}
+
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+
+@media only screen and (max-width : 1199px) {
+
+}
+
+@media only screen and (max-width : 991px) {
+
+}
+
+@media only screen and (max-width : 767px) {
+ul.form-checkbox-list li {vertical-align: top; width: 100%; }
+
+}
+
+@media only screen and (max-width: 576px) {
+
+}
+
+@media only screen and (max-width : 480px) {}

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 const frontEndFooter = () => {
   return (
-
+    <>
     <footer className="footer">
       <div className="footer-contact">
         <div className="row">
@@ -13,7 +13,7 @@ const frontEndFooter = () => {
                     <img src="/images/mail.svg" alt="" />
                   </div>
                   <div className="footer-contact-content">
-                    <p>Eamil Address</p>
+                    <p>Email Address</p>
                     <h2><a href="mailto:support@virtdrop.com">support@virtdrop.com</a></h2>
                   </div>
                 </div>
@@ -26,7 +26,7 @@ const frontEndFooter = () => {
                   </div>
                   <div className="footer-contact-content">
                     <p>Phone Number</p>
-                    <h2><a href="tel:+22140 006754">+22 140 006 754</a></h2>
+                    <h2><a href="tel:212-518-3183">212-518-3183</a></h2>
                   </div>
                 </div>
               </div>
@@ -38,7 +38,7 @@ const frontEndFooter = () => {
                   </div>
                   <div className="footer-contact-content">
                     <p>Office Address</p>
-                    <h2>576 Fifth Avenue,New York</h2>
+                    <h2>576 Fifth Avenue, New York</h2>
                   </div>
                 </div>
               </div>
@@ -46,7 +46,6 @@ const frontEndFooter = () => {
       </div>
       <div className="top-footer">
         <div className="container">
-            
           <div className="row">
             <div className="col-md-3 col-lg-3 col-sm-12">
               <div className="footer-about-info">
@@ -58,11 +57,9 @@ const frontEndFooter = () => {
               <div className="footer-link-info">
                 <h2>Useful Links</h2>
                 <ul className="footer-link-list">
-                  <li><Link to="/about-us">About Us</Link></li>
-                  <li><Link to="/blog">Blog</Link></li>
-                  <li><Link to="/how-it-works">How it works</Link></li>
-                  <li><Link to="/pricing-plan">Plan & Pricing</Link></li>
-                  <li><Link to="/faq">FAQ's</Link></li>
+                <li><Link to="/how-it-works">How it works</Link></li>
+                  <li><Link to="/services">Services</Link></li>
+                  <li><Link to="/pricing">Plan & Pricing</Link></li>
                   <li><Link to="/contact-us">Contact Us</Link></li>
                 </ul>
               </div>
@@ -75,7 +72,7 @@ const frontEndFooter = () => {
                   <form>
                     <div className="newsletter-group">
                       <input className="newsletter-input" type="text" name="" placeholder="Enter your email" />
-                      <button className="btn-submit">Sign In</button>
+                      <button className="btn-submit mt-2">Sign In</button>
                     </div>
                   </form>
                   <p>Looking for work? <a href="/be-a-virdrop-va">Apply here to become a Virtual Assistant</a></p>
@@ -113,9 +110,9 @@ const frontEndFooter = () => {
                 <div className="footer-nav-list">
                   <ul>
                     <li><a href="/services"> Services</a></li>
-                    <li><a href="/">Privacy Policy</a></li>
-                    <li><a href="/">Terms of Service</a></li>
-                    <li><a href="/">Sitemap</a></li>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms-of-service">Terms of Service</a></li>
+                    <li><a href="/sitemap.xml" target="_blank">Sitemap</a></li>
                   </ul>                       
                 </div>
               </div>
@@ -123,6 +120,22 @@ const frontEndFooter = () => {
           </div>
         </div>
     </footer>
+    <div className="discovery-call-info">
+      <div className="discovery-call-inner">
+        <Link to="/booking">
+          <div className="pulse">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+          </div>
+          <div className="booking-text">
+            Book Discovery Call
+          </div>
+        </Link>
+      </div>
+    </div>
+
+    
+  
+  </>
 
   );
 }

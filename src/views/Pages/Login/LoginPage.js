@@ -19,8 +19,10 @@ class LoginPage extends Component {
       modal: false,
       loggedIn: false,
       loading: false,
-      errors: {}
+      errors: {},
+      type: 'password'
     };
+    this.showHide = this.showHide.bind(this);
     
   }
   
@@ -61,7 +63,7 @@ class LoginPage extends Component {
               }else{
                 toast.error(res.data.message);
               }
-                
+              
             }else{
               if(res.data.message === 'Invalid password!'){
                 formErrors["password"] = res.data.message;
@@ -164,6 +166,14 @@ class LoginPage extends Component {
     });
   }
 
+  showHide(e){
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input'
+    })  
+  }
+
   render() {
     const { email, password, loggedIn, loading, forgotPasswordEmail, errors} = this.state;
     
@@ -213,7 +223,8 @@ class LoginPage extends Component {
                         <Col md={12}>
                           <FormGroup>
                             <Label for="password">Password:</Label>
-                            <Input type="password" name="password" id="password" value={password} placeholder="Enter Password"  onChange={this.changeHandler} invalid={errors['password'] !== undefined && errors['password'] !== ""} required />
+                            <Input type={this.state.type} name="password" id="password" value={password} placeholder="Enter Password"  onChange={this.changeHandler} invalid={errors['password'] !== undefined && errors['password'] !== ""} required />
+                            <span className="password__show" onClick={this.showHide}><i className={this.state.type === 'input' ? 'fa fa-eye' : 'fa fa-eye-slash'}></i></span>
                             <FormFeedback>{errors['password']}</FormFeedback>
                           </FormGroup>
                         </Col>

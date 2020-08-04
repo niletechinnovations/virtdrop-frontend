@@ -199,12 +199,12 @@ class Dashboard extends Component {
           <Row>
             <Col>
               <Card className="vd-card">
-                <div class="card-header">
-                  <div class="d-flex align-items-center">
-                    <div class="mr-auto">
-                        <h4 class="card-title"> New VA Applications</h4>
+                <div className="card-header">
+                  <div className="d-flex align-items-center">
+                    <div className="mr-auto">
+                        <h4 className="card-title"> New VA Applications</h4>
                     </div>
-                    <div class="add-option-info">
+                    <div className="add-option-info">
                       <a href="/admin/va-application" className="btn-add" title="View All Applications">View All</a>
                     </div>
                   </div>
@@ -222,12 +222,12 @@ class Dashboard extends Component {
           <Row>
             <Col>
               <Card className="vd-card">
-                <div class="card-header">
-                  <div class="d-flex align-items-center">
-                    <div class="mr-auto">
-                        <h4 class="card-title"> Recent Joined Members</h4>
+                <div className="card-header">
+                  <div className="d-flex align-items-center">
+                    <div className="mr-auto">
+                        <h4 className="card-title"> Recent Joined Members</h4>
                     </div>
-                    <div class="add-option-info">
+                    <div className="add-option-info">
                       <a href="/admin/organization" className="btn-add view-all-btn" title="View All Members">View All</a>
                     </div>
                   </div>

@@ -36,3 +36,55 @@
 .login-content-info p {font-size: 13px; color: #091e42; text-align: justify; margin-bottom: 10px; }
 a.btn-click {color: #ffffff !important; border: 2px solid #182c44; padding: 1px 15px; font-weight: 600; display: inline-block; margin-bottom: 20px; background: #182c44; font-size: 12px; border-radius: 4px; text-decoration: none !important; }
 .login-content-info a{text-decoration: underline;    color: #1360fe}
+.password__show{
+    cursor: pointer;
+    position: absolute;
+    bottom: 22px;
+    height: 28px;
+    right: 11px;
+    background: #091e42;
+    color: white;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1.7em;
+  }
+
+@media only screen and (min-width : 480px) {
+}
+
+@media only screen and (min-width : 768px) {
+
+}
+
+
+@media only screen and (min-width : 992px) {
+
+}
+
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+
+@media only screen and (max-width : 1199px) {
+
+}
+
+@media only screen and (max-width : 991px) {
+
+}
+
+@media only screen and (max-width : 767px) {
+.account-content-card{width: 100%;}
+.account-form{padding: 10px;}
+}
+
+@media only screen and (max-width: 576px) {
+    
+
+}
+
+@media only screen and (max-width : 480px) {}

@@ -355,7 +355,7 @@ class Organization extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>VA Members List</strong>
+                <strong>VA Clients List</strong>
                 {/* <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add New</Button> */}
               </CardHeader>
               <CardBody>

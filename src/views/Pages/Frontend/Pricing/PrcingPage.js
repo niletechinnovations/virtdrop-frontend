@@ -19,13 +19,15 @@ class PricingPage extends React.Component {
                 </div>
             </div>
         </section>
-        <section className="howitworks-page-section">
+        <section className="plan-section">
             <div className="container">
-                <div class="heading-title pb-3">
-                    <h2 className="pt-5">Pricing</h2>
-                    <p className="pb-5">Our pricing is as straight forward and stream lined as everything else we offer. Our Virtual Assistants are available at a flat-rate of <strong>$12 per hour</strong>.</p>
+                <div className="heading-title text-center">
+                    <h2>Pricing</h2>
                 </div>
-                <div class="howitworks-page-list"></div>
+                <div className="plan-pricing-info">
+                    <p className="text-center">Our pricing is as straight forward and stream lined as everything else we offer. Our Virtual Assistants are available at a flat-rate of 
+                    <div className="pricing-info"><span className="pricing-value">$12</span> <span className="pricing-per-value">per hour.</span></div></p>
+                </div>
             </div>
         </section>        
             

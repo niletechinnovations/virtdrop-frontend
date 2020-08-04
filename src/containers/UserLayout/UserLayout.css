@@ -73,3 +73,48 @@ a.btn-red i {font-size: 14px; line-height: 30px; color: #fff; }
 .Search-filter .form-group {margin-bottom: 0; }
 .Search-filter .form-control {height: 40px !important; font-size: 13px; color: #000; border: 1px solid #e5eff3; outline: none; box-shadow: none; }
 button.search-btn {background: #2196f3; color: #fff; border: none; padding: 6px 15px; font-weight: bold; border-radius: 5px; }
+button.search-btn.btn-danger{background: #dc3545; }
+button.navbar-toggler {background: #436abd; color: #fff; }
+.navbar-toggler-icon:before {display: inline-block; font-family: FontAwesome; font-size: inherit; text-rendering: auto; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; content: "\f0c9"; line-height: 30px; color: #fff; }
+
+
+@media only screen and (min-width : 480px) {
+}
+
+@media only screen and (min-width : 768px) {
+
+}
+
+
+@media only screen and (min-width : 992px) {
+
+}
+
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+
+@media only screen and (max-width : 1199px) {
+
+}
+
+@media only screen and (max-width : 991px) {
+
+}
+
+@media only screen and (max-width : 767px) {
+	.Search-filter .form-group {margin-bottom: 1rem; }
+
+}
+
+@media only screen and (max-width: 576px) {
+.dashboard-memu ul li {
+    padding: 0px 5px;
+}.react-datepicker-wrapper{width: 100%;}
+form.search-input{display: none}
+}
+
+@media only screen and (max-width : 480px) {}

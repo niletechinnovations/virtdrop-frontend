@@ -21,9 +21,21 @@ const HomeSlider = (props) => {
         </div>
       </div> */}
       <div className="item">
-        <div className="slider-item-info">
+        <div className="slider-item-info slider1">
           <div className="slider-media">
             <img src="/images/slider1.jpg" alt="Slide 1" />
+          </div>
+          <div className="slider-content">
+            <h6 style={{color:'#ffffff'}}>Achieve optimal time management and better work-life balance with our amazing Virtual Assistants</h6>
+            <Link className="explore-btn" to="/register">Find the Best Virtual Assistant Today</Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="item">
+        <div className="slider-item-info slider2">
+          <div className="slider-media">
+            <img src="/images/slider2.jpg" alt="Slide 2" />
           </div>
           <div className="slider-content">
             <h2>Why VIRTDROP?</h2>
@@ -32,14 +44,15 @@ const HomeSlider = (props) => {
           </div>
         </div>
       </div>
+
       <div className="item">
-        <div className="slider-item-info">
+        <div className="slider-item-info slider3">
           <div className="slider-media">
-            <img src="/images/slider1.jpg" alt="Slide 1" />
+            <img src="/images/slider3.jpg" alt="Slide 3" />
           </div>
           <div className="slider-content">
+              <h2>Services</h2>
             <ul style={{color:'#ffffff'}}>
-              <li style={{listStyle:'none'}}><strong style={{fontSize:'24px'}}>Services</strong></li>
               <li>Social Media Management</li>
               <li>Photo and Video Editing</li>
               <li>Web Design</li>
@@ -51,9 +64,9 @@ const HomeSlider = (props) => {
         </div>
       </div>
       <div className="item">
-        <div className="slider-item-info">
+        <div className="slider-item-info slider4">
           <div className="slider-media">
-            <img src="/images/slider1.jpg" alt="Slide 1" />
+            <img src="/images/slider4.jpg" alt="Slide 4" />
           </div>
           <div className="slider-content">
             <h2>PRICING</h2>
@@ -62,7 +75,8 @@ const HomeSlider = (props) => {
           </div>
         </div>
       </div>
-     
+
+      
       
     </OwlCarousel>
   

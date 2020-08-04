@@ -294,7 +294,7 @@ class requestLists extends Component {
                       </div>
                   </div>
               </div>
-                <div className="card-table">
+                <div className="card-table table-responsive">
                   <table className="table table-orders">
                     <thead>
                       <tr>

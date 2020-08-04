@@ -1,10 +1,3 @@
-.banner-section .container {max-width: 95%;}
-.banner-media-content {position: relative;  }
-.banner-media{width: 100%; height: 170px; display: block; background: #f8f4d9;/* border-radius: 4px; */overflow: hidden; margin-right: 20px; }
-.banner-media:after {content: ''; position: absolute; background: rgba(19, 96, 254, 0.3); left: 0; right: 0; top: 0; bottom: 0; }
-.banner-media img {width: 100%; height: 100%; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;}
-.banner-content {padding: 20px; width: 70%; position: absolute; z-index: 99; height: 100%; align-items: center; top: 0; margin: 0 auto; left: 0; right: 0; display: flex; }
-.banner-content h1 {font-size: 30px; color: #f8fafd; text-align: center; font-weight: 500; padding: 0; margin: 0; }
 
 .howitworks-page-section{padding:2rem 0;}
 .howitworks-page-section .heading-title {width: 50%; margin: 0 auto 3rem auto; }
@@ -23,12 +16,46 @@
 .howitworks-page-content ul li{font-size: 13px; color: #091e42; }
 
 
-.getstarted-banner-content{position: relative; margin-bottom: 5rem }
-.getstarted-media {width: 100%; height: 330px; display: block; background: #f8f4d9; border-radius: 4px; overflow: hidden; position: relative; }
-.getstarted-media:after {content: ''; position: absolute; background: rgba(13, 44, 107, 0.85); left: 0; right: 0; top: 0; bottom: 0; }
-.getstarted-media img {width: 100%; height: 100%; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;}
-.getstarted-content {padding: 20px; width: 70%; position: absolute; z-index: 99; height: 100%; align-items: center; top: 0; margin: 0 auto; left: 0; right: 0; display: flex; flex-direction: column; justify-content: center; }
-.getstarted-content h2 {font-size: 30px; color: #f8fafd; text-align: center; font-weight: 500;margin: 0; }
-.getstarted-content p {font-size: 13px; color: #fff; text-align: justify; margin-bottom: 10px; }
-.getstarted-content .get-btn {background: transparent; padding: 8px 20px; border-radius: 0px; color: #fff; font-size: 14px; font-weight: 600; border: 2px solid #fff; margin-top: 15px; }
-.getstarted-content .get-btn-outline {background: transparent; padding: 10px 20px; border-radius: 5px; color: #fff !important; font-size: 14px; font-weight: 600; border: 2px solid #fff; }
+
+
+
+
+@media only screen and (min-width : 480px) {
+}
+
+@media only screen and (min-width : 768px) {
+
+}
+
+
+@media only screen and (min-width : 992px) {
+
+}
+
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+
+@media only screen and (max-width : 1199px) {
+
+}
+
+@media only screen and (max-width : 991px) {
+
+}
+
+@media only screen and (max-width : 767px) {
+.howitworks-page-section .heading-title,
+.howitworks-page-list{width: 100%;}
+.howitworks-page-icon{height: auto;}
+}
+
+@media only screen and (max-width: 576px) {
+    
+
+}
+
+@media only screen and (max-width : 480px) {}

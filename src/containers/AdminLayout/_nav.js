@@ -6,7 +6,7 @@ export default {
       icon: 'icon-speedometer',
     },
     {
-      name: 'VA Members',
+      name: 'VA Clients',
       url: '/admin/organization',
       icon: 'icon-people',   
     },
@@ -19,6 +19,11 @@ export default {
       name: 'VA Applications',      
       icon: 'fa fa-file-o',
       url: '/admin/va-application',
+    },
+    {
+      name: 'VA Tasks',      
+      icon: 'fa fa-tasks',
+      url: '/admin/va-task',
     },
     {
       name: 'Discovery Call',      

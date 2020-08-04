@@ -32,9 +32,10 @@ class RegisterPage extends React.Component {
       countryCode:'',
       phoneCode:'',
       loading: false,
-      errors: {}
+      errors: {},
+      type: 'password'
     };
-
+    this.showHide = this.showHide.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.submituserRegistrationForm = this.submituserRegistrationForm.bind(this);
   }
@@ -171,6 +172,14 @@ class RegisterPage extends React.Component {
     return formIsValid;
   }
 
+  showHide(e){
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      type: this.state.type === 'input' ? 'password' : 'input'
+    })  
+  }
+
   render() {
     const { loading, firstName, lastName, email, password,mobileNumber,countryCode,phoneNumber,phoneCode,organizationName,address,address2,city,state,zipCode,errors} = this.state;
     
@@ -227,7 +236,8 @@ class RegisterPage extends React.Component {
                         <Col md={12}>
                           <FormGroup>
                             <Label for="password">Password *</Label>
-                            <Input type="password" name="password" invalid={errors['password'] !== undefined && errors['password'] !== ""} id="password" value={password} onChange={this.changeHandler} placeholder="Enter Password" required />
+                            <Input type={this.state.type} name="password" invalid={errors['password'] !== undefined && errors['password'] !== ""} id="password" value={password} onChange={this.changeHandler} placeholder="Enter Password" required />
+                            <span className="password__show" onClick={this.showHide}><i className={this.state.type === 'input' ? 'fa fa-eye' : 'fa fa-eye-slash'}></i></span>
                             <FormFeedback>{errors['password']}</FormFeedback>
                           </FormGroup>
                         </Col>

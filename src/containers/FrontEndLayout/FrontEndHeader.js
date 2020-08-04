@@ -88,7 +88,7 @@ class FrontEndHeader extends React.Component {
                     <img src="/images/mail.svg" alt="" />
                   </div>
                   <div className="header-contact-content">
-                    <p>Eamil Address</p>
+                    <p>Email Address</p>
                     <h2><a href="mailto:support@virtdrop.com">support@virtdrop.com</a></h2>
                   </div>
                 </div>
@@ -101,7 +101,7 @@ class FrontEndHeader extends React.Component {
                   </div>
                   <div className="header-contact-content">
                     <p>Phone Number</p>
-                    <h2><a href="tel:+22140 006754">+22 140 006 754</a></h2>
+                    <h2><a href="tel:212-518-3183">212-518-3183</a></h2>
                   </div>
                 </div>
               </div>

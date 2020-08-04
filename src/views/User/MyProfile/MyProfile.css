@@ -10,3 +10,46 @@ button.Submit-form-button {background: #002164;border: none;font-size: 13px;font
 .docBtnArea{ float: left;  margin-right: 10px;}
 .downloadOrgDocLabel{ float: left; width: 100%;}
 .docBtnArea{margin: 2px;}
+
+
+
+@media only screen and (min-width : 480px) {
+}
+
+@media only screen and (min-width : 768px) {
+
+}
+
+
+@media only screen and (min-width : 992px) {
+
+}
+
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+
+@media only screen and (max-width : 1199px) {
+
+}
+
+@media only screen and (max-width : 991px) {
+
+}
+
+@media only screen and (max-width : 767px) {
+.profile-form{padding: 0}
+
+
+
+} 
+
+@media only screen and (max-width: 576px) {
+    
+
+}
+
+@media only screen and (max-width : 480px) {}

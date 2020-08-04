@@ -142,12 +142,12 @@ class ContactPage extends React.Component {
           <div className="contactus-page-form">
           <Container>
             <Row>
-                <Col md="7" lg="7" sm="7">
+                <Col md="7" lg="7" sm="12">
                   <div className="contact-image">
                     <img src="/images/contact-banner.svg" height="500" alt="" />
                   </div>
                 </Col>
-                <Col md="5" lg="5" sm="5">
+                <Col md="5" lg="5" sm="12">
                   <div className="contactus-form">
                     <h2>Send Us a Message</h2>
                     <Form onSubmit={this.submitContactForm} id="contactForm" noValidate>
@@ -237,7 +237,7 @@ class ContactPage extends React.Component {
                       <li>
                         <div className="phone-text">
                           <i className="fa fa-phone" aria-hidden="true"></i>
-                          <span>+22 140 006 754</span>
+                          <span>212-518-3183</span>
                         </div>
                       </li>
                     </ul>

@@ -16,7 +16,7 @@ class EditVaApplication extends Component {
     this.state = {
       vaApplicationId: '',
       requestStatus:'',
-      formField: { firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'' },
+      formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'' },
       applicationFiles: {audioFile:'', resumeCV:'', intentLetter:'', internetSpeedScreenshot:'' },
       audioFile:'',
       resumeCV:'',
@@ -42,9 +42,8 @@ class EditVaApplication extends Component {
     if(params.vaApplicationId !== undefined && params.vaApplicationId !=="") {
       this.setState({vaApplicationId: params.vaApplicationId});
       this.getApplicationInfo(params.vaApplicationId);
-    }
-    else 
-        this.props.history.push('/admin/organization/truck-listing');
+    }else 
+      this.props.history.push('/admin/va-application');
   }
   
   
@@ -259,11 +258,87 @@ class EditVaApplication extends Component {
   }
 
   changeApplicationStatus = (requestStatus) => {
-    this.setState({
-      requestStatus: requestStatus
-    })
-  }
+    
+    this.setState( { loading: true}, () => {
+      
+      const statusFormData = {
+        "vaApplicationId": this.state.vaApplicationId,
+        "status": requestStatus,
+      };
+      
+      //create profile if not created 
+      const formField = this.state.formField;
+      const userData = {
+        "email": formField.email.toLowerCase(),
+        "firstName": formField.firstName, 
+        "lastName": formField.lastName, 
+        "mobileNumber": formField.mobileNumber,
+        "role": 'va_member'
+      }
+      let authId = this.state.formField.authId;
+      if(authId==='' && requestStatus===2){
+        commonService.postAPIWithAccessToken('organization', userData).then( res => {
+          if ( undefined === res.data.data || !res.data.status || !res.data.authInfo ) { 
+            //this.setState( { formProccessing: false} );
+            //toast.error(res.data.message);
+            //return;
+          }
+          if( res.data.authInfo ) { 
+            authId = res.data.authInfo.authId;
+            console.log(authId);
+          }else{
+            authId = res.data.data.authId;
+          }
+          
+          statusFormData.authId = authId;
+          commonService.putAPIWithAccessToken('va-application/status', statusFormData)
+          .then( res => {
+            if ( undefined === res.data.data || !res.data.status ) {           
+              this.setState( { loading: false} );
+              toast.error(res.data.message);
+              return;
+            } 
+            this.setState({ loading: false});
+            toast.success(res.data.message);
+            this.getApplicationInfo(this.state.vaApplicationId);        
+          } )
+          .catch( err => {         
+            if(err.response !== undefined && err.response.status === 401) {
+              localStorage.clear();
+              this.props.history.push('/login');
+            }else
+              this.setState( { loading: false } );
+              toast.error(err.message);
+          } )
 
+        } )
+      }else{
+
+        commonService.putAPIWithAccessToken('va-application/status', statusFormData)
+          .then( res => {
+            if ( undefined === res.data.data || !res.data.status ) {           
+              this.setState( { loading: false} );
+              toast.error(res.data.message);
+              return;
+            } 
+            this.setState({ loading: false});
+            toast.success(res.data.message);
+            this.getApplicationInfo(this.state.vaApplicationId);        
+          } )
+          .catch( err => {         
+            if(err.response !== undefined && err.response.status === 401) {
+              localStorage.clear();
+              this.props.history.push('/login');
+            }else
+              this.setState( { loading: false } );
+              toast.error(err.message);
+          } )
+
+      }
+
+      
+    } );
+  }
 
   render() {
 
@@ -429,8 +504,9 @@ class EditVaApplication extends Component {
                   <div className="form-service-listing">
                       <div className="row">
                           <div className="col-md-6">
+                            <strong>Application Status</strong> : &nbsp; 
                             <ButtonDropdown isOpen={this.state.dropDownOpen} toggle={this.toggle}>
-                              <DropdownToggle caret size="md">
+                              <DropdownToggle caret size="md" color={ (formField.status===1) ? "warning" : ((formField.status ===2 )  ? "success" : "danger") }>
                                 { (formField.status===1) ? "Pending" : ((formField.status ===2 )  ? "Approved" : "Rejected") }
                               </DropdownToggle>
                               <DropdownMenu>

@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 //import commonService from '../../../core/services/commonService';
-import {  Col, Row, Input, Button, Form, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {  Input, Button, Form, Modal, ModalHeader, ModalBody} from 'reactstrap';
 
 import HomeSlider from "../../Sliders/HomeSlider";
 import "./HomePage.css";
 import "../../../containers/CommonLayout/planSwitcher.css";
+import video from '../../../assets/video/VIRTDROP_v2.mp4';
 
 class HomePage extends React.Component {
 
@@ -15,6 +16,7 @@ class HomePage extends React.Component {
             planList: [],
             activePlanType: 1,
             modal: false,
+            videoModal: false,
             loading: true,
         } 
       }
@@ -22,7 +24,7 @@ class HomePage extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.planList();
-        this.setState({ modal: !this.state.modal  });
+        this.setState({ modal: !this.state.modal });
     }
     
         
@@ -60,14 +62,14 @@ class HomePage extends React.Component {
     }    
 
     toggle = () => {
-        this.setState({
-          modal: !this.state.modal
-        });
-      }
-
+        this.setState({ modal: !this.state.modal });
+    }
+    videoToggle = () => {
+        this.setState({ videoModal: !this.state.videoModal });
+    }
+    
     render() {
-        //planList, activePlanType
-        const { modal } = this.state;
+        const { modal, videoModal } = this.state;
 
         return (
         <>
@@ -80,8 +82,8 @@ class HomePage extends React.Component {
         
         <section className="about-section">
             <div className="container">
-                <div className="row">
-                    <div className="col-md-8 col-lg-6 col-sm-8">
+                <div className="row flex-column-reverse flex-lg-row">
+                    <div className="col-md-8 col-lg-6 col-sm-12">
                         <div className="about-content-info">
                             <h1>Searching for an excellent Virtual Assistant?</h1>
                             <p>At VirtDrop, we connect busy individuals with the very best Virtual Assistants at a competitive price. Our in-house team matches you to the perfect remote employee, depending on your specific tasks and requirements.</p>
@@ -92,7 +94,7 @@ class HomePage extends React.Component {
                             <p>Our in-house team oversee and continually train our Virtual Assistant pool, ensuring your tasks can be carried out to the highest level of proficiency.</p>
                         </div>
                     </div>
-                    <div className="col-md-4 col-lg-6 col-sm-4">
+                    <div className="col-md-4 col-lg-6 col-sm-12">
                         <div className="about-media">
                             <img src="/images/gl-media.png" alt="about-us" />
                         </div>
@@ -109,12 +111,12 @@ class HomePage extends React.Component {
 			</div>
 			<div className="service-list">
 				<div className="row">
-					<div className="col-md-5 col-lg-5 col-sm-5">
+					<div className="col-md-5 col-lg-5 col-sm-12">
 						<div className="service-media">
 							<img src="/images/ser-1.png" alt="Business Assistance" />
 						</div>
 					</div>
-					<div className="col-md-7 col-lg-7 col-sm-7">
+					<div className="col-md-7 col-lg-7 col-sm-12">
 						<div className="service-content-info">
 							<h1>Business Assistance</h1>
 							<p>Few business owners or high-level employees feel they have adequate time to achieve their daily tasks. Inboxes overflow, appointments can be incorrectly scheduled, and you’re often unable to give key details the necessary attention they deserve.</p>
@@ -128,14 +130,14 @@ class HomePage extends React.Component {
 								<li>E-Commerce Assistance</li>
 								<li>Web Design</li>
 							</ul>
-							<a className="learn-btn" href="/why-us">Learn More</a>
+							<a className="learn-btn" href="/services">Learn More</a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div className="service-list">
-				<div className="row">
-					<div className="col-md-7 col-lg-7 col-sm-7">
+				<div className="row flex-column-reverse flex-lg-row">
+					<div className="col-md-7 col-lg-7 col-sm-12">
 						<div className="service-content-info">
 							<h1>Personal Assistance</h1>
 							<p>Providing much needed administrative support, Personal Assistants are key to ensuring any business runs smoothly. Working closely with executive staff and senior management, they provide a safe pair of hands for a wide variety of tasks. Do you often find yourself swamped with smaller chores that stop you from focusing on the bigger picture? A Virtual Personal Assistant can take these tasks off of your desk, allowing you time to complete more important activities.</p>
@@ -148,11 +150,11 @@ class HomePage extends React.Component {
 								<li>Management of filing systems and databases</li>
 								<li>Filing and collating expenses</li>
 							</ul>
-							<a className="learn-btn" href="/">Learn More</a>
+							{/* <a className="learn-btn" href="/">Learn More</a> */}
 						</div>
 					</div>
 
-					<div className="col-md-5 col-lg-5 col-sm-5">
+					<div className="col-md-5 col-lg-5 col-sm-12">
 						<div className="service-media">
 							<img src="/images/ser-2.png" alt="Personal Assistance" />
 						</div>
@@ -165,7 +167,7 @@ class HomePage extends React.Component {
     <section className="whyus-section">
 		<div className="container">
 			<div className="row">
-				<div className="col-md-5 col-lg-5 col-sm-5">
+				<div className="col-md-5 col-lg-5 col-sm-12">
 					<div className="whyus-media">
 						<div className="whyus-media-1">
 							<img src="images/w1.jpg" alt="" />
@@ -178,14 +180,14 @@ class HomePage extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="col-md-7 col-lg-7 col-sm-7">
+				<div className="col-md-7 col-lg-7 col-sm-12">
 					<div className="whyus-content-info">
 						<h1>Why VirtDrop?</h1>
 						<p>VirtDrop was born out of the real-world frustrations you’ve probably encountered yourself. All too often we’d find ourselves focusing on too many time-consuming smaller tasks, inhibiting us from tackling bigger challenges and achieving larger goals. Looking for ways to streamline our business, we found Virtual Assistants allowed us to free up time and meet crucial objectives, whilst saving on the costs and admin in-house employees would incur.</p>
 						<p>Having seen the benefit of Virtual Assistants first-hand, we’ve made it our mission to introduce this time-saving, business-boosting process to as large an audience as possible.</p>
 						<p>VirtDrop caters to a diverse array of clients, all looking to maximize their business activities whilst minimizing their expenses. Many of our clients are based in New York and operate in sales, marketing, and real estate industries.</p>
 						<p>VirtDrop is a leading Virtual Assistant company registered in New York. Our goal is to help businesses become more efficient and productive, enabling them to more easily achieve their goals.</p>
-						<a className="learn-btn" href="/why-us">Learn More</a>
+						<a className="learn-btn" href="/how-it-works">Learn More</a>
 					</div>
 				</div>
 			</div>
@@ -195,7 +197,7 @@ class HomePage extends React.Component {
 	<section className="Video-section">
 		<div className="container">
 			<div className="Video-card">
-				<a href="/">
+        		<a href="#!" onClick={this.videoToggle}>
 					<img src="images/video.jpg" alt="video" />
 				</a>
 			</div>
@@ -216,69 +218,13 @@ class HomePage extends React.Component {
             </div>
             <div className="plan-pricing-info">
                 <p className="text-center">Our pricing is as straight forward and stream lined as everything else we offer. Our Virtual Assistants are available at a flat-rate of 
-                <div className="pricing-info"><span className="pricing-value">$12</span> <span className="pricing-per-value">per hour.</span></div></p>
-            </div>
-            {/* 
-            <div className="pricing-section">
-                <label className={ ( activePlanType===1 ? 'toggler toggler--is-active' : 'toggler' ) } id="filt-monthly">Monthly</label>
-                <div className="toggle">
-                <input type="checkbox" id="switcher" className="check" onClick={ () =>  this.changePlanType() } />
-                <b className="b switch"></b>
-                </div>
-                <label className={ ( activePlanType===4 ? 'toggler toggler--is-active' : 'toggler' ) } id="filt-yearly">Yearly</label>
+                <span className="pricing-info"><span className="pricing-value">$12</span> <span className="pricing-per-value">per hour.</span></span></p>
             </div>
             
-            <div className="plan-content-intro">
-                <div className="row">
-                { planList.map( (planInfo, index) =>
-
-                    <div className="col-md-4 col-lg-3"  key={index}>
-                        <div className={ ( index===1 ? 'pricing-card current-plan' : 'pricing-card' ) }>
-                            { ( index===1 ? <div className="best-strip">Best Value</div> : '' ) }
-                            <div className="pricing-head">
-                                <h2>{planInfo.planName}</h2>
-                            </div>                              
-                            <div className="pricing-body">
-                                <ul>
-                                <li>Up to {planInfo.advertisementAccess} Hours</li>
-                                {
-                                    planInfo.description.split("\n").map(function(item, idx) {
-                                        return (
-                                            <li key={idx}>
-                                                {item}
-                                            </li>
-                                        )
-                                    })
-                                }
-                                </ul>
-                            </div>
-                            
-                            <div className="pricing-foot">
-                                { (activePlanType===1) ? 
-                                    <div className="price-info">
-                                        <div className="price-value">${planInfo.planVariation[0].amount}</div>
-                                        <span className="price-per">/ Month</span>
-                                    </div>
-                                    :
-                                    <div className="price-info">
-                                        <div className="price-value">${planInfo.planVariation[1].amount}</div>
-                                        <span className="price-per">/ Year</span>
-                                    </div>
-                                }
-                                <button onClick={ ()=> this.choosePlan(planInfo.planId, index)  } className="btn-conversion">Subscribe Now</button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                </div>
-            </div>  
-        
-             */}
         </div>      
     </section>
 
-        <Modal isOpen={modal} toggle={this.toggle}  className="full-width-modal-section subscribeNewsletter-modal">
+        <Modal isOpen={modal} toggle={this.toggle}  className="modal-dialog modal-dialog-centered newsletter-modal">
           <ModalHeader toggle={this.toggle}>Subscribe Newsletter</ModalHeader>
           <Form onSubmit={this.subscribeNewsletter} noValidate>
             <ModalBody>
@@ -287,13 +233,22 @@ class HomePage extends React.Component {
                         <p>Sign up for news, deals, and time-saving ideas regarding Virtual Assistants. We know your inbox is already overflowing so we won’t send you spam!</p>
                     </div>
                     <div className="subscribeNews-group">
-                        <input placeholder="Enter your email address" className="subscribe-control"  name="email_address"  type="text" />
-                        <button className="submit_button" type="submit">Subscribe</button>
+                        <Input type="text" placeholder="Enter your email address" className="subscribe-control" name="email_address" />
+                        <Button className="submit_button" type="submit">Subscribe</Button>
                     </div>
-                    <p className="subscribe-text-info">Looking for work? <a href="/be-a-virdrop-va">Apply here to become a Virtual Assistant</a></p>
+                    <p className="subscribe-text-info">Looking for work? <Link to="/be-a-virdrop-va">Apply here to become a Virtual Assistant</Link></p>
                 </div>
             </ModalBody>
           </Form>
+        </Modal>
+
+        <Modal isOpen={videoModal} toggle={this.videoToggle}  size="lg" className="modal-dialog modal-dialog-centered newsletter-modal">
+          <ModalHeader toggle={this.videoToggle}>VirtDrop Video</ModalHeader>
+            <ModalBody>
+                <video width="100%" height="100%" controls >
+                    <source src={video} type="video/mp4"/>
+                </video>
+            </ModalBody>
         </Modal>
       
         </>
