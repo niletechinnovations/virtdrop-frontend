@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
-
+import ReactDragListView from 'react-drag-listview/lib/index.js';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -30,6 +30,7 @@ class taskList extends Component {
     this.submitHandler = this.submitHandler.bind(this);
     this.handleEditData = this.handleEditData.bind(this);
     this.handleDeleteData = this.handleDeleteData.bind(this);
+    this.dragRowItem = this.dragRowItem.bind(this);
   }
 
   componentDidMount() {
@@ -280,10 +281,25 @@ class taskList extends Component {
     var day = (date.getDate() + 100).toString().substring(1);
     return year + "-" + month + "-" + day;
   }
+
+  dragRowItem(fromIndex, toIndex) {
+    const data = this.state.dataLists;
+        const item = data.splice(fromIndex, 1)[0];
+        data.splice(toIndex, 0, item);
+        this.setState({ dataLists: data });
+  }
   
   render() {
     const { dataLists, vaLists, loading, modal, formField, formProccessing, filterItem } = this.state;
     const processingBtnText = <>Submit <i className="fa fa-spinner"></i></>;
+    const currentObj = this;
+    const dragProps = {
+      onDragEnd(fromIndex, toIndex) {        
+        currentObj.dragRowItem(fromIndex, toIndex);
+      },
+      nodeSelector: 'tr',
+      handleSelector: 'td'
+    };
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -343,48 +359,52 @@ class taskList extends Component {
               </div>
           </div>
             <div className="card-table table-responsive">
-              <table className="table table-orders">
-                <thead>
-                  <tr>
-                    <th>S.No</th>
-                    <th>Task</th>
-                    <th>Assigned Date</th>
-                    <th>Due Date</th>
-                    <th>Completion TIme</th>
-                    <th>Notes</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dataLists.map((dataInfo, index) => 
-                  <tr key={index}>
-                    <td>
-                      <span className="sno">{index+1}</span>
-                    </td>
-                    <td>{dataInfo.title}</td>
-                    <td>{(new Date(dataInfo.createdAt)).toLocaleDateString("en-US")}</td>
-                    <td>{ (dataInfo.dueDate!=='' ? (new Date(dataInfo.dueDate)).toLocaleDateString("en-US") : '') }</td>
-                    <td>{dataInfo.completionTime}</td>
-                    <td>{dataInfo.description}</td>
-                    <td>
-                    <UncontrolledDropdown>
-                      <DropdownToggle color="default" className="btn-trigger">
-                        <img src="/images/more.svg" width="20" alt="more" />
-                      </DropdownToggle>
-                      <DropdownMenu className="action-dropdown">
-                        <DropdownItem onClick={() => { this.handleEditData(index) }} className="edit-btn"><i className="fa fa-pencil"></i> Edit</DropdownItem>
-                        <DropdownItem onClick={() => {
-                        if (window.confirm('Are you sure you want to delete this record?')) this.handleDeleteData(index) }} className="delete-btn"><i className="fa fa-trash-o"></i> Delete</DropdownItem>
-                      </DropdownMenu>
-                    </UncontrolledDropdown>  
+              <ReactDragListView {...dragProps}>
+                <table className="table table-orders">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Task</th>
+                      <th>Assigned Date</th>
+                      <th>Due Date</th>
+                      <th>Completion TIme</th>
+                      <th>Notes</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                      {dataLists.map((dataInfo, index) => 
+                      <tr key={index}>
+                        <td>
+                          <span className="sno">{index+1}</span>
+                        </td>
+                        <td>{dataInfo.title}</td>
+                        <td>{(new Date(dataInfo.createdAt)).toLocaleDateString("en-US")}</td>
+                        <td>{ (dataInfo.dueDate!=='' ? (new Date(dataInfo.dueDate)).toLocaleDateString("en-US") : '') }</td>
+                        <td>{dataInfo.completionTime}</td>
+                        <td>{dataInfo.description}</td>
+                        <td>
+                        <UncontrolledDropdown>
+                          <DropdownToggle color="default" className="btn-trigger">
+                            <img src="/images/more.svg" width="20" alt="more" />
+                          </DropdownToggle>
+                          <DropdownMenu className="action-dropdown">
+                            <DropdownItem onClick={() => { this.handleEditData(index) }} className="edit-btn"><i className="fa fa-pencil"></i> Edit</DropdownItem>
+                            <DropdownItem onClick={() => {
+                            if (window.confirm('Are you sure you want to delete this record?')) this.handleDeleteData(index) }} className="delete-btn"><i className="fa fa-trash-o"></i> Delete</DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>  
+                          
+                        </td>
+                      </tr>
                       
-                    </td>
-                  </tr>
-                  
-                  )}
+                      )}
 
-                </tbody>
-              </table>
+
+                  </tbody>
+                </table>
+              </ReactDragListView>
             </div>
           </CardBody>
         </Card>
