@@ -32,7 +32,7 @@ class VaTaskData extends Component {
         projectId: Store.projectId,
         title: Store.title,
         description: Store.description,
-        completionTime: Store.completionTime || " ",
+        vaName: Store.vaName || " ",
         createdAt: (new Date(Store.createdAt)).toLocaleDateString("en-US"),
         status: Store.status ? 'Active' : 'Inactive',   
       }      
@@ -42,20 +42,20 @@ class VaTaskData extends Component {
     
     const columns = [ 
       {
+        label: 'Task name',
+        name: 'title',
+      },
+      {
         label: 'Project',
         name: 'projectId',
       },     
-      {
-        label: 'Title',
-        name: 'title',
-      },
       {
         label: 'Description',
         name: 'description',
       },
       {
-        label: 'Completion Time',
-        name: 'completionTime',
+        label: 'VA name',
+        name: 'vaName',
       },
       {
         label: 'Status',

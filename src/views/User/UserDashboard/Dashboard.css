@@ -41,7 +41,16 @@
 .user-card .user-info {color: #8094ae; } 
 .lead-text+.sub-text {font-size: 11px; } 
 .sub-text {display: block; font-size: 13px; color: #8094ae; line-height: 20px; }
-
+.user-card-body {
+    height: 120px;
+    overflow: auto;
+    position: relative;
+}
+.card-table-body {
+    height: 300px;
+    overflow: auto;
+    position: relative;
+}
 
 a.btn-green {background: #4CAF50; width: 30px; height: 30px; border-radius: 2px; display: inline-block; text-align: center; }
 a.btn-green i {font-size: 14px; line-height: 30px; color: #fff; } 

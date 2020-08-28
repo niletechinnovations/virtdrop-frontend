@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
 import { Card, CardBody, CardHeader, Col, Row, Button, Input, FormGroup, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -151,6 +152,7 @@ class ApplicationList extends Component {
             <Card>
               <CardHeader className="mainHeading">
                 <strong>VA Application List</strong>
+                <Link className="categoryAdd btn btn-sm btn-primary" to="/admin/va-application/add-new-va"><i className="fa fa-plus"></i> Add New VA</Link>
               </CardHeader>
               <CardBody>
                 

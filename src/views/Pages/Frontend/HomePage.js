@@ -1,78 +1,89 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-//import commonService from '../../../core/services/commonService';
+import commonService from '../../../core/services/commonService';
 import {  Input, Button, Form, Modal, ModalHeader, ModalBody} from 'reactstrap';
+import Loader from '../../../views/Loader/Loader';
+import { ToastContainer, toast } from 'react-toastify';
 
 import HomeSlider from "../../Sliders/HomeSlider";
 import "./HomePage.css";
 import "../../../containers/CommonLayout/planSwitcher.css";
 import video from '../../../assets/video/VIRTDROP_v2.mp4';
+import ebookFile from '../../../assets/ebook/e-Book_VirtDROP.pdf';
 
 class HomePage extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            planList: [],
-            activePlanType: 1,
             modal: false,
             videoModal: false,
-            loading: true,
-        } 
-      }
+            loading: false,
+            newsletterEmail: ''
+        }
+        this.changeHandler = this.changeHandler.bind(this);
+        this.submitNewsletterForm = this.submitNewsletterForm.bind(this);
+    }
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        this.planList();
-        this.setState({ modal: !this.state.modal });
+        if ( localStorage.getItem( 'newsletterSubscribed' ) ) 
+            this.setState({ modal: false });
+        else
+            this.setState({ modal: !this.state.modal });
     }
     
-        
-    /*Plan List API*/
-    planList() {
-        this.setState( { loading: true}, () => {
-            let data = [{"planId":"5e4d26519c854d33686c7d2e","planName":"Basic","isTrail":true,"description":"Unlimited Inquiries\nUnlimited Ratings\n24 Hour Service","planType":1,"planVariation":[{"id":"5e886e813c70762d1be26a0b","amount":9.99,"duration":"1","isActive":false},{"id":"5e886e813c70762d1be26a0a","amount":99.99,"duration":"4","isActive":false}],"advertisementAccess":20,"status":true,"isPlanActive":false,"subscriberId":""},{"planId":"5e4d26c69c854d33686c7d2f","planName":"Silver","isTrail":true,"description":"Unlimited Inquiries\nUnlimited Ratings\n24 Hour Service","planType":1,"planVariation":[{"id":"5e833838f496086caeb581fc","amount":19.99,"duration":"1","isActive":false},{"id":"5e833838f496086caeb581fb","amount":199.99,"duration":"4","isActive":false}],"advertisementAccess":50,"status":true,"isPlanActive":false,"subscriberId":""},{"planId":"5e5f6a01cf274e080880edc7","planName":"Gold","isTrail":true,"description":"Unlimited Inquiries\nUnlimited Ratings\n24 Hour Service","planType":1,"planVariation":[{"id":"5e833844f496086caeb581fe","amount":29.99,"duration":"1","isActive":false},{"id":"5e833844f496086caeb581fd","amount":299.99,"duration":"4","isActive":false}],"advertisementAccess":100,"status":true,"isPlanActive":false,"subscriberId":""},{"planId":"5e7e375ac463de186344d4f8","planName":"Platinum","isTrail":true,"description":"Unlimited Inquiries\nUnlimited Ratings\n24 Hour Service","planType":1,"numberofDisplay":0,"planVariation":[{"id":"5e83384ef496086caeb58200","amount":39.99,"duration":"1","isActive":false},{"id":"5e83384ef496086caeb581ff","amount":399.99,"duration":"4","isActive":false}],"advertisementAccess":200,"status":true,"isPlanActive":false,"subscriberId":""}]
-            this.setState({loading:false, planList: data});
-        } )
-    }
-
-    changePlanType = () => {
-        if(this.state.activePlanType===1)
-            this.setState( { activePlanType: 4 } );
-        else
-            this.setState( { activePlanType: 1 } );
-    }
-
-    choosePlan(planId, index){
-        if(planId!=='' && index!==''){
-          let choosedPlanInfo = this.state.planList[index];
-          let planVariationId = '';
-          if(this.state.activePlanType===1)
-            planVariationId = choosedPlanInfo.planVariation[0].id;
-          else
-            planVariationId = choosedPlanInfo.planVariation[1].id;
-            
-            localStorage.setItem( 'choosedPlanId', planId );
-            localStorage.setItem( 'choosedplanVariationId', planVariationId );
-            this.props.history.push('/register');
+    submitNewsletterForm(e) {
+        e.preventDefault();
+        if (this.state.newsletterEmail!=='') {
+            const formData = { email: this.state.newsletterEmail.toLowerCase() };
+            this.setState( { loading: true }, () => {
+              commonService.postAPI( `common/newsletter`, formData ).then( res => {
+                localStorage.setItem( 'newsletterSubscribed', true );
+                if ( undefined === res.data || !res.data.status ) {
+                    this.setState( { loading: false } );
+                    toast.error(res.data.message);
+                    return;
+                  }
+                  toast.success(res.data.message);
+                  this.setState( { newsletterEmail: '', modal: false, loading: false, errors: {} } );
+                  var strWindowFeatures = "location=yes,height=650,width=520,scrollbars=yes,status=yes";
+                  setTimeout(() => {
+                        window.open(ebookFile,"_blank",strWindowFeatures);
+                  }, 200);
+                } )
+                .catch( err => {
+                  toast.error(err.message);
+                  this.setState( { loading: false} );
+                } )
+            } )
         }else{
-            alert('Please choose a plan!');
-            return false;
+            toast.error("Email address should not be empty!"); return;
         }
-    }    
+    };
+
+    changeHandler = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
 
     toggle = () => {
-        this.setState({ modal: !this.state.modal });
+        this.setState({ modal: !this.state.modal, newsletterEmail:'' });
     }
     videoToggle = () => {
         this.setState({ videoModal: !this.state.videoModal });
     }
     
     render() {
-        const { modal, videoModal } = this.state;
-
+        const { loading, modal, videoModal, newsletterEmail } = this.state;
+        let loaderElement = '';
+        if(loading)
+          loaderElement = <Loader />
+    
         return (
         <>
+        <ToastContainer /> 
+        {loaderElement} 
+        
         <section className="main-slider-section">
 		    <div className="container">
                 {/* Homepage slider using owl-carousel */}
@@ -226,15 +237,15 @@ class HomePage extends React.Component {
 
         <Modal isOpen={modal} toggle={this.toggle}  className="modal-dialog modal-dialog-centered newsletter-modal">
           <ModalHeader toggle={this.toggle}>Subscribe Newsletter</ModalHeader>
-          <Form onSubmit={this.subscribeNewsletter} noValidate>
+          <Form onSubmit={this.submitNewsletterForm} noValidate>
             <ModalBody>
                 <div className="subscribeNews-info">
                     <div className="subscribeNews-text">
-                        <p>Sign up for news, deals, and time-saving ideas regarding Virtual Assistants. We know your inbox is already overflowing so we won’t send you spam!</p>
+                        <p>To get your Virtdrop eBook enter your email below.</p>
                     </div>
                     <div className="subscribeNews-group">
-                        <Input type="text" placeholder="Enter your email address" className="subscribe-control" name="email_address" />
-                        <Button className="submit_button" type="submit">Subscribe</Button>
+                        <Input type="text" placeholder="Enter your email address" className="subscribe-control" name="newsletterEmail" value={ newsletterEmail} onChange={this.changeHandler} />
+                        <Button className="submit_button" type="submit">Submit</Button>
                     </div>
                     <p className="subscribe-text-info">Looking for work? <Link to="/be-a-virdrop-va">Apply here to become a Virtual Assistant</Link></p>
                 </div>

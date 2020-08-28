@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
-import Checkbox from "../../../core/commonComponent/Checkbox";
+import Checkbox from "../../../core/commonComponent/StaticCheckbox";
 import "./../../Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage.css";
 
 const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];

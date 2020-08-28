@@ -26,6 +26,16 @@ export default {
       url: '/admin/va-task',
     },
     {
+      name: 'VA Timesheet',
+      url: '/admin/timesheet',
+      icon: 'fa fa-clock-o',
+    },
+    {
+      name: 'Billing',
+      url: '/admin/billing',
+      icon: 'fa fa-money',
+    },
+    {
       name: 'Discovery Call',      
       icon: 'fa fa-calendar-o',
       url: '/admin/scheduled-booking',
@@ -40,52 +50,10 @@ export default {
       url: '/admin/users',
       icon: 'icon-user',   
     },
-    /*{
-      name: 'Subscribed Users',
-      url: '/admin/subscribed',
-      icon: 'fa fa-list',
-      children: [{
-          name: 'Subscribed Owners',
-          url: '/admin/subscribed',
-          icon: 'fa fa-user',
-        },
-        {
-          name: 'Subscribed Advertiser',
-          url: '/admin/subscribed/advertisers',
-          icon: 'fa fa-user',
-        },
-      ]    
-    },
     {
-      name: 'Advertisements',      
-      icon: 'fa fa-picture-o',
-      url: '/admin/advertisement',
-    },
-    {
-      name: 'Transactions',      
-      icon: 'fa fa-money',
-      url: '/admin/transactions',
-    },
-    {
-      name: 'Manage Subscription',
-      url: '/admin/subscription',
-      icon: 'fa fa-credit-card-alt',
-      children: [{
-          name: 'Advertiser Plan',
-          url: '/admin/subscription',
-          icon: 'fa fa-credit-card',
-        },
-        {
-          name: 'Food Truck Plan',
-          url: '/admin/subscription/food-truck',
-          icon: 'fa fa-credit-card',
-        },
-      ]    
-    },
-    {
-      name: 'Cuisine',
-      url: '/admin/cuisine',
-      icon: 'fa fa-cutlery',
-    }*/
+      name: 'Newsletter Subscribers',      
+      icon: 'fa fa-envelope',
+      url: '/admin/newsletter',
+    }
   ],
 };

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Line } from 'react-chartjs-2';
 
 import { Card, CardBody, Col, Row } from 'reactstrap';
 //import { PeopleAlt, LocalShipping, MailOutline, SupervisorAccount, Link } from '@material-ui/icons';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,64 +11,6 @@ import './dashboard.css'
 import NewUserData from './NewUsersData';
 import NewApplicationData from './NewApplicationData';
 
-const lineChartData = (labels = [], foodTruckData = [], enquiryData = [] ) =>  {
-  return {
-    labels: labels,
-    datasets: [
-      {
-        label: 'VA Request',
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(57,103,212,0.4)',
-        borderColor: 'rgba(57,103,212,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(26, 99, 250,1)',
-        pointBackgroundColor: '#1a63fa',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(26, 99, 250,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: foodTruckData,
-      },
-      {
-        label: 'VA Applications',
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: '#2196f3',
-        borderColor: 'rgba(0,33,100,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(0,33,100,1)',
-        pointBackgroundColor: '#002164',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(0,33,100,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: enquiryData,
-      }
-    ],
-  }
-};
-
-const options = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips
-  },
-  maintainAspectRatio: true
-}
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +19,6 @@ class Dashboard extends Component {
       dashBoardStats: {organizationCount: 0, usersCount: 0, foodTruckCount: 0, enquiryCount:0 },
       userList: [],
       enquiryList:[],
-      lineGraphLabels: [],
       vaApplicationList: []
     };
   }
@@ -177,20 +116,6 @@ class Dashboard extends Component {
                 </div>
             </div>
           </Col>
-          </Row>
-        </div>
-        <div className="chart-info">
-          <Row>
-            <Col>
-              <Card className="vd-card">
-                <CardBody>
-                  <div className="chart-wrapper">
-                    {/* <Line data={line} options={options} height={85} /> */}
-                    <Line data={ lineChartData( this.state.lineGraphLabels, this.state.foodTruckData, this.state.enquiryData )} options={options} height={70} />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
           </Row>
         </div>
 

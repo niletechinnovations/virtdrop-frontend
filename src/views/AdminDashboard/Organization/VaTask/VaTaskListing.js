@@ -20,10 +20,10 @@ class VaTaskListing extends Component {
       loading: true,
       formProccessing: false,
       rowIndex: -1,
-      formField: { taskId: '', vaAuthId: '', projectId: '', title: '', description:'', completionTime:'' },
+      formField: { taskId: '', vaAuthId: '', projectId: '', title: '', description:'' },
       formErrors: { organizationId: '', vaType: '',  natureOfBusiness:'', engagementType:'', engagementDescription: '', error: ''},
       formValid: false,
-      filterItem: { filterVaAuth:'', filterProjectId:'', filterTitle: '', filterCompletionTime:'',  filterFrom:'',  filterTo:''}
+      filterItem: { filterVaAuth:'', filterProjectId:'', filterTitle: '', filterFrom:'',  filterTo:''}
     } 
     this.submitHandler = this.submitHandler.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
@@ -125,8 +125,7 @@ class VaTaskListing extends Component {
         "vaAuthId": formInputField.vaAuthId,
         "projectId": formInputField.projectId,
         "title": formInputField.title,
-        "description": formInputField.description,
-        "completionTime": formInputField.completionTime
+        "description": formInputField.description
       };
       const rowIndex = this.state.rowIndex;
       if(rowIndex > -1) {
@@ -209,11 +208,7 @@ class VaTaskListing extends Component {
         break;
       case 'vaDescription':        
         fieldValidationErrors.vaDescription = (value !== '') ? '' : ' is required';
-        break;
-      case 'completionTime':        
-        fieldValidationErrors.completionTime = (value !== '') ? '' : ' is required';
-        break;
-      
+        break;      
       default:
         break;
     }
@@ -252,7 +247,6 @@ class VaTaskListing extends Component {
       projectId: itemInfo.projectId,
       title: itemInfo.title,
       description: itemInfo.description,
-      completionTime: itemInfo.completionTime,
     };
     const statusBtn = <Button type="button" size="sm" className={`changeStatusBtn `+( itemInfo.status ? 'btn-danger' : 'btn-success' )} onClick={() => 
       this.changeProfileStatus(itemInfo.vaRequestId, itemInfo.status )} >{ ( itemInfo.status ? 'De-Activate Account' : 'Activate Account' )}</Button>
@@ -301,7 +295,7 @@ class VaTaskListing extends Component {
 
   resetfilterForm = () => {
     this.setState({
-      filterItem: { filterFrom:'',  filterTo:'', filterProjectId:'', filterTitle:'', filterCompletionTime:''}
+      filterItem: { filterFrom:'',  filterTo:'', filterProjectId:'', filterTitle:''}
     });
     this.itemList();
   }
@@ -361,7 +355,7 @@ class VaTaskListing extends Component {
                       </Col>
                       <Col md={"2"}>
                         <FormGroup> 
-                          <Label htmlFor="filterTitle">Task Title</Label>            
+                          <Label htmlFor="filterTitle">Task Name</Label>            
                           <Input type="text" name="filterTitle" id="filterTitle" value={filterItem.filterTitle} onChange={this.changeFilterHandler}>
                           </Input>
                         </FormGroup>  
@@ -435,8 +429,8 @@ class VaTaskListing extends Component {
                 </Col>
                 <Col md={"12"}>
                   <FormGroup>
-                    <label htmlFor="title">Title *</label>
-                    <input type="text" name="title" id="title" className="form-control" placeholder="Task Title" value={formField.title} onChange={this.changeHandler} required />
+                    <label htmlFor="title">Task Name *</label>
+                    <input type="text" name="title" id="title" className="form-control" placeholder="Task Name" value={formField.title} onChange={this.changeHandler} required />
                   </FormGroup>
                 </Col>
                 <Col md={"12"}>
@@ -444,12 +438,6 @@ class VaTaskListing extends Component {
                     <Label htmlFor="description">Description *</Label>
                     <Input type="textarea" name="description" className="form-control" value={formField.description} onChange={this.changeHandler} required></Input>
                   </FormGroup>
-                </Col>
-                <Col md={"6"}>
-                  <div className="form-group">
-                    <label htmlFor="completionTime">Time to Complete (in hours) *</label>
-                    <input type="number" name="completionTime" id="completionTime" className="form-control" value={formField.completionTime} onChange={this.changeHandler} required />
-                  </div>
                 </Col>
               </Row>
             </ModalBody>

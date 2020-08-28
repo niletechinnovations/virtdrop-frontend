@@ -43,7 +43,7 @@ class Dashboard extends Component {
   /* Virtdrop VA List API */
   virtdropVaLists() {
     this.setState( { loading: true}, () => {
-      commonService.getAPIWithAccessToken('va-assignment/clients-va/?pageSize=10')
+      commonService.getAPIWithAccessToken('va-assignment/clients-va/?pageSize=5')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
@@ -65,7 +65,7 @@ class Dashboard extends Component {
   /* VA Task List API */
   vaTaskLists() {
     this.setState( { loading: true}, () => {
-      commonService.getAPIWithAccessToken('va-task/?pageSize=10')
+      commonService.getAPIWithAccessToken('va-task/?pageSize=5')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
@@ -110,20 +110,21 @@ class Dashboard extends Component {
                 </div>
               </CardHeader>
               <CardBody>
-              {vaList.map((vaInfo, index) => 
-                <div className="user-card-list" key={index}>
-                  <div className="user-card">
-                    <div className="user-avatar">
-                      <span>{vaInfo.firstName.substring(0, 1)+''+vaInfo.lastName.substring(0, 1)}</span>
-                    </div>
-                    <div className="user-info">
-                      <span className="lead-text">{vaInfo.firstName+' '+vaInfo.lastName}</span>
-                      <span className="sub-text">{vaInfo.email}</span>
+              <div className="user-card-body">
+                {vaList.map((vaInfo, index) => 
+                  <div className="user-card-list" key={index}>
+                    <div className="user-card">
+                      <div className="user-avatar">
+                        <span>{vaInfo.firstName.substring(0, 1)+''+vaInfo.lastName.substring(0, 1)}</span>
+                      </div>
+                      <div className="user-info">
+                        <span className="lead-text">{vaInfo.firstName+' '+vaInfo.lastName}</span>
+                        <span className="sub-text">{vaInfo.email}</span>
+                      </div>
                     </div>
                   </div>
+                  )}
                 </div>
-                )}
-                
               </CardBody>
             </Card>
           </Col>
@@ -177,6 +178,7 @@ class Dashboard extends Component {
                 </div>
               </CardHeader>
               <CardBody>
+              <div className="card-table-body">
                 <div className="card-table table-responsive">
                   <Table size="sm" className="listing-table">
                     <thead>
@@ -196,13 +198,13 @@ class Dashboard extends Component {
                       </td>
                       <td>{taskInfo.title}</td>
                       <td>{(new Date(taskInfo.createdAt)).toLocaleDateString("en-US")}</td>
-                      <td>{taskInfo.dueDate}</td>
+                      <td>{ (taskInfo.dueDate!=='' ? (new Date(taskInfo.dueDate)).toLocaleDateString("en-US") : '') }</td>
                       <td>{taskInfo.description}</td>
                     </tr>
                     )}
-
                     </tbody>
                   </Table>
+                </div>
                 </div>
               </CardBody>
             </Card>
@@ -220,38 +222,40 @@ class Dashboard extends Component {
                 </div>
               </CardHeader>
               <CardBody>
-                <div className="card-table table-responsive">
-                  <Table size="sm" className="listing-table">
-                    <thead>
+                <div className="card-table-body">
+                  <div className="card-table table-responsive">
+                    <Table size="sm" className="listing-table">
+                      <thead>
+                        <tr>
+                          <th>S.no</th>
+                          <th>VA </th>
+                          <th>Working Hours</th>
+                          <th>Amount</th>
+                          <th>Created Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
                       <tr>
-                        <th>S.no</th>
-                        <th>VA </th>
-                        <th>Working Hours</th>
-                        <th>Amount</th>
-                        <th>Created Date</th>
+                        <td>
+                          <span className="sno">1</span>
+                        </td>
+                        <td>Abu Bin Ishtiyak</td>
+                        <td>8 Hours</td>
+                        <td>$56.00</td>
+                        <td>02/11/2020</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td>
-                        <span className="sno">1</span>
-                      </td>
-                      <td>Abu Bin Ishtiyak</td>
-                      <td>8 Hours</td>
-                      <td>$56.00</td>
-                      <td>02/11/2020</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span className="sno">2</span>
-                      </td>
-                      <td>Abu Bin Ishtiyak</td>
-                      <td>8 Hours</td>
-                      <td>$56.00</td>
-                      <td>02/11/2020</td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                      <tr>
+                        <td>
+                          <span className="sno">2</span>
+                        </td>
+                        <td>Abu Bin Ishtiyak</td>
+                        <td>8 Hours</td>
+                        <td>$56.00</td>
+                        <td>02/11/2020</td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </div>
                 </div>
               </CardBody>
             </Card>

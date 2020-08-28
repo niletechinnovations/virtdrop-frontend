@@ -23,7 +23,6 @@ class App extends Component {
               <PrivateRoute path="/admin" name="Admin" component={AdminLayout} /> */}
               <Route path="/common" name="Common" component={CommonLayout} />
               <ProtectedRoute path="/user" name="User" component={UserLayout} />
-              <Route path="/advertiser" name="Advertiser" component={UserLayout} />
               <Route path="/" name="Home" component={FrontEndLayout} />
               <Route name="Page not found" component={PageNotFound} />
             </Switch>

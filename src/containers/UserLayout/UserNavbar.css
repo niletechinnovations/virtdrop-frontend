@@ -3,7 +3,9 @@
 .dashboard-memu ul li {position: relative; padding:0px 15px;  }
 .dashboard-memu ul li a {position: relative; color: #fff; text-align: center; font-weight: 600; font-size: 12px; }
 .dashboard-memu ul li a img {margin-right: 10px; }
-
+.table-dragable tr td{ cursor: move;}
+.quickStart{ line-height: 22px;}
+.timer{ background: #f0f0f0; padding: 7.2px 10px;}
 
 @media only screen and (min-width : 480px) {
 }

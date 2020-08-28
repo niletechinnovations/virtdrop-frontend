@@ -18,7 +18,14 @@ body {font-size: 12px;font-family: 'Poppins', sans-serif; background: #f4f9fc;li
 .search-input .input-group i{position: absolute; color: #a1b1d6;top: 10px;left: 0;}
 .user-layout .header .navbar-header { width: 260px;}
 .user-layout .user-menu .dropdown-toggle::after{ color:#213051; margin-bottom: -1px;}
-.user-menu.dropdown .dropdown-item a{ color: #212529;}
+.user-menu.dropdown .dropdown-item a{ color: #212529; font-size: 12px;}
+.user-menu.dropdown .dropdown-item.active, .user-menu.dropdown .dropdown-item:active{
+	color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    outline: none;
+}
+
 .page-wrapper{ margin-top: 65px;}
 .page-wrapper .container { max-width: 95%;}
 .page-wrapper .container-fluid {padding: 25px 30px; }

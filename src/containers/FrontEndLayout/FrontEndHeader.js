@@ -48,8 +48,14 @@ class FrontEndHeader extends React.Component {
           { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() === "admin" ) && 
           <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "admin") ? `/admin/dashboard` : `/user/dashboard` } ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
           }
+          { localStorage.getItem( 'role' ).toLowerCase() === "va_member" && 
+            <DropdownItem><Link to={ `/user/va-dashboard` } ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
+          }
+          { localStorage.getItem( 'role' ).toLowerCase() === "va_member" && 
+            <DropdownItem><Link to={ `/user/va-task` } ><i className="fa fa-tasks"></i> Manage Task</Link></DropdownItem>
+          }
           { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() !== "admin" ) && 
-            <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "organization") ? `/user/my-profile` : `/advertiser/profile` } ><i className="fa fa-user"></i> My Profile</Link></DropdownItem>
+            <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "organization") ? `/user/my-profile` : `/user/va-profile` } ><i className="fa fa-user"></i> My Profile</Link></DropdownItem>
           }
           { localStorage.getItem( 'role' ).toLowerCase() === "organization"  && 
             <DropdownItem><Link to="/user/manage-request"><i className="fa fa-list-ul"></i> Manage Request</Link></DropdownItem>
@@ -113,7 +119,7 @@ class FrontEndHeader extends React.Component {
                   </div>
                   <div className="header-contact-content">
                     <p>Office Address</p>
-                    <h2>576 Fifth Avenue,New York</h2>
+                    <h2>576 Fifth Avenue, New York</h2>
                   </div>
                 </div>
               </div>
@@ -121,7 +127,7 @@ class FrontEndHeader extends React.Component {
               <div className="col-md-3">
                 <div className="header-social">
                   <ul>
-                    <li><a href="https://www.facebook.com/" ><i className="fa fa-facebook"></i></a></li>
+                    <li><a href="https://www.facebook.com/virtdrop" target="_blank" rel="noopener noreferrer"><i className="fa fa-facebook"></i></a></li>
                     <li><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-twitter"></i></a></li>
                     <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-linkedin"></i></a></li>
                     <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-instagram"></i></a></li>

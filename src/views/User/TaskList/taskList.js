@@ -12,6 +12,7 @@ import Loader from '../../Loader/Loader';
 import ReactDragListView from 'react-drag-listview/lib/index.js';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./taskList.css";
 
 class taskList extends Component {
   constructor(props){
@@ -241,7 +242,7 @@ class taskList extends Component {
       title: rowData.title,
       description: rowData.description,
       completionTime: rowData.completionTime,
-      dueDate: new Date(rowData.dueDate)
+      dueDate: (rowData.dueDate!=='' ? new Date(rowData.dueDate) :'' )
     }
     this.setState({rowIndex: rowIndex, formField: formField, modal: true });
   }
@@ -360,14 +361,14 @@ class taskList extends Component {
           </div>
             <div className="card-table table-responsive">
               <ReactDragListView {...dragProps}>
-                <table className="table table-orders">
+                <table className="table table-orders table-dragable">
                   <thead>
                     <tr>
                       <th>S.No</th>
                       <th>Task</th>
                       <th>Assigned Date</th>
                       <th>Due Date</th>
-                      <th>Completion TIme</th>
+                      <th>VA</th>
                       <th>Notes</th>
                       <th>Action</th>
                     </tr>
@@ -382,7 +383,7 @@ class taskList extends Component {
                         <td>{dataInfo.title}</td>
                         <td>{(new Date(dataInfo.createdAt)).toLocaleDateString("en-US")}</td>
                         <td>{ (dataInfo.dueDate!=='' ? (new Date(dataInfo.dueDate)).toLocaleDateString("en-US") : '') }</td>
-                        <td>{dataInfo.completionTime}</td>
+                        <td>{dataInfo.vaName}</td>
                         <td>{dataInfo.description}</td>
                         <td>
                         <UncontrolledDropdown>
@@ -439,8 +440,8 @@ class taskList extends Component {
                 </Col>
                 <Col md={"12"}>
                   <FormGroup>
-                    <label htmlFor="title">Title *</label>
-                    <input type="text" name="title" id="title" className="form-control" placeholder="Task Title" value={formField.title} onChange={this.changeHandler} required />
+                    <label htmlFor="title">Task name *</label>
+                    <input type="text" name="title" id="title" className="form-control" placeholder="Task Name" value={formField.title} onChange={this.changeHandler} required />
                   </FormGroup>
                 </Col>
                 <Col md={"12"}>
@@ -449,16 +450,10 @@ class taskList extends Component {
                     <Input type="textarea" name="description" className="form-control" value={formField.description} onChange={this.changeHandler} required></Input>
                   </FormGroup>
                 </Col>
-                <Col md={"6"}>
+                <Col md={"12"}>
                   <div className="form-group">
-                    <label htmlFor="dueDate">Due Date</label>
+                    <label htmlFor="dueDate">Due Date</label><br />
                     <DatePicker className="form-control" selected={ formField.dueDate } placeholderText="Select Due Date" onChange={this.setDueDate} dateFormat="MM/dd/yyyy" />
-                  </div>
-                </Col>
-                <Col md={"6"}>
-                  <div className="form-group">
-                    <label htmlFor="completionTime">Completion Time (in hours)</label>
-                    <input type="number" name="completionTime" id="completionTime" className="form-control" value={formField.completionTime} onChange={this.changeHandler} required />
                   </div>
                 </Col>
               </Row>

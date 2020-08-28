@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commenService from '../../../../core/services/commonService';
 import Loader from '../../../../views/Loader/Loader';
-import Checkbox from "../../../../core/commonComponent/Checkbox";
+import Checkbox from "../../../../core/commonComponent/StaticCheckbox";
 
 import "./BecomeVirtdropPage.css";
 

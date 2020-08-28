@@ -64,7 +64,7 @@
 .subscribeNews-text{padding: 10px 15px; background: #f6f7f8; }
 .modal-header {border: none; padding: 10px 20px; text-align: center; }
 .modal-header h5 {padding: 0; margin: 0; font-size: 22px; color: #1360fe; text-align: center; font-weight: bold; }
-.subscribeNews-info p {font-size: 15px; font-weight: 300; color: #091e42; text-align: center; }
+.subscribeNews-info p {font-size: 15px; font-weight: 300; color: #091e42; text-align: center; margin-bottom:0;}
 .subscribeNews-group {border: 1px solid #c5ccda; border-radius: 2px; padding: 3px; display: flex; justify-content: space-between; align-items: center; position: relative; margin: 10px; background: #fff; }
 .subscribe-control {display: block; width: 100%; border: none; box-shadow: none; outline: none; padding: 10px; font-size: 13px; }
 button.submit_button {border: none; color: #fff; border-radius: 3px; padding: 8px 20px; font-weight: 600; font-size: 14px; display: inline-block; position: relative; background: #1360fe; outline: none; }

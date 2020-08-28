@@ -128,3 +128,4 @@ h6.MuiTypography-root {font-size: 14px; font-weight: 600; padding: 0; margin: 0;
 .MuiPaper-elevation4 {box-shadow: none !important; border: 1px solid #e8edf2; }
 
 .categoryAdd.btn{ float: right;}
+.vd-datepicker .react-datepicker-wrapper{ width: 100%; }

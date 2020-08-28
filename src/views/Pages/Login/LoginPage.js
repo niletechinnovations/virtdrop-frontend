@@ -63,7 +63,6 @@ class LoginPage extends Component {
               }else{
                 toast.error(res.data.message);
               }
-              
             }else{
               if(res.data.message === 'Invalid password!'){
                 formErrors["password"] = res.data.message;
@@ -76,17 +75,12 @@ class LoginPage extends Component {
               }else{
                 toast.error(res.data.message);
               }
-              
             }
             return;
           }
   
           const loggedInfo = res.data;
-          if(loggedInfo.data.role.toLowerCase() === 'user'){
-            this.setState( { loading: false } );
-            toast.error('Your are not authorized to access! Please use our mobile application.');
-            return;
-          }
+          
           localStorage.setItem( 'accessToken', loggedInfo.data.accessToken );
           //localStorage.setItem( 'refreshToken', loggedInfo.data.refreshToken );
           localStorage.setItem( 'role', loggedInfo.data.role );
@@ -103,8 +97,8 @@ class LoginPage extends Component {
           toast.success(res.data.message);
           if(loggedInfo.data.role.toLowerCase() === 'admin'){
             this.props.history.push('/admin/dashboard');
-          }else if( localStorage.getItem( 'choosedPlanId' ) ){
-            this.props.history.push('/proceed-to-payment');
+          }else if( loggedInfo.data.role.toLowerCase() === 'va_member' ){
+            this.props.history.push('/user/va-dashboard');
           }else if(loggedInfo.data.role.toLowerCase() === 'organization'){
             if(loggedInfo.data.isActivePlan)
               this.props.history.push('/user/dashboard');

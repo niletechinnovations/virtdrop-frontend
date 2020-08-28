@@ -37,19 +37,20 @@
 a.btn-click {color: #ffffff !important; border: 2px solid #182c44; padding: 1px 15px; font-weight: 600; display: inline-block; margin-bottom: 20px; background: #182c44; font-size: 12px; border-radius: 4px; text-decoration: none !important; }
 .login-content-info a{text-decoration: underline;    color: #1360fe}
 .password__show{
-    cursor: pointer;
-    position: absolute;
-    bottom: 22px;
-    height: 28px;
-    right: 11px;
-    background: #091e42;
-    color: white;
-    padding: 1px 8px;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 1.7em;
-  }
-
+  cursor: pointer;
+  position: absolute;
+  bottom: 22px;
+  height: 28px;
+  right: 11px;
+  background: #091e42;
+  color: white;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 1.7em;
+}
+.is-invalid~.password__show{ top:32px;}
+  
 @media only screen and (min-width : 480px) {
 }
 
