@@ -79,7 +79,7 @@ class SubscribersData extends Component {
       searchOpen: false,
       print: false,
       download: true,
-      downloadOptions: {filename: 'newsletter-subscribers-list.csv', separator: ','},
+      downloadOptions: {filename: 'ebook-downloads-list.csv', separator: ','},
       responsive: 'stacked',
       selectableRows: 'none',
       textLabels: {
@@ -95,7 +95,7 @@ class SubscribersData extends Component {
     
     return (
       <MUIDataTable
-        title={"Newsletter Subscribers"}
+        title={"eBook Downloads"}
         data={rowsItem}
         columns={columns}
         options={options}
