@@ -6,7 +6,7 @@ export default {
       icon: 'icon-speedometer',
     },
     {
-      name: 'VA Clients',
+      name: 'Clients',
       url: '/admin/organization',
       icon: 'icon-people',   
     },
@@ -14,6 +14,21 @@ export default {
       name: 'VA Requests',
       url: '/admin/va-request',
       icon: 'fa fa-list',
+    },
+    {
+      name: 'Discovery Call',      
+      icon: 'fa fa-calendar-o',
+      url: '/admin/scheduled-booking',
+    },
+    {
+      name: 'eBook Downloads',      
+      icon: 'fa fa-book',
+      url: '/admin/newsletter',
+    },
+    {
+      name: 'Contact Inquiries',      
+      icon: 'icon-envelope',
+      url: '/admin/enquiries',
     },
     {
       name: 'VA Applications',      
@@ -36,24 +51,10 @@ export default {
       icon: 'fa fa-money',
     },
     {
-      name: 'Discovery Call',      
-      icon: 'fa fa-calendar-o',
-      url: '/admin/scheduled-booking',
-    },
-    {
-      name: 'Contact Inquiries',      
-      icon: 'icon-envelope',
-      url: '/admin/enquiries',
-    },
-    {
-      name: 'Manage Admins',
+      name: 'Admins',
       url: '/admin/users',
       icon: 'icon-user',   
     },
-    {
-      name: 'Newsletter Subscribers',      
-      icon: 'fa fa-envelope',
-      url: '/admin/newsletter',
-    }
+    
   ],
 };
