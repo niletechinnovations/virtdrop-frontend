@@ -70,6 +70,7 @@ class taskList extends Component {
             toast.error(res.data.message);
             return;
           }
+          
           this.setState({loading:false, dataLists: res.data.data.requestList});         
         } )
         .catch( err => {         
@@ -285,9 +286,36 @@ class taskList extends Component {
 
   dragRowItem(fromIndex, toIndex) {
     const data = this.state.dataLists;
-        const item = data.splice(fromIndex, 1)[0];
-        data.splice(toIndex, 0, item);
-        this.setState({ dataLists: data });
+    let currentTask = data[fromIndex];
+    const item = data.splice(fromIndex, 1)[0];
+    data.splice(toIndex, 0, item);
+    this.setState({ dataLists: data });
+    this.updateTaskRowOrder(currentTask, toIndex);
+  }
+
+  updateTaskRowOrder(taskInfo, updatedPosition){
+    
+    commonService.postAPIWithAccessToken('va-task/update-order', {vaTaskId: taskInfo.vaTaskId, organizationId: taskInfo.organizationId, previousPosition: taskInfo.rowOrder || 0, currentPosition: parseInt(updatedPosition) + 1})
+      .then( res => {
+        if ( undefined === res.data.data || !res.data.status ) {
+          this.setState( { loading: false} );
+          toast.error(res.data.message);
+          return;
+        }
+        
+        this.setState({ loading: false, modal: false, formProccessing: false });
+        this.itemLists({});
+        //toast.success(res.data.message);
+      } )
+      .catch( err => {
+        if(err.response !== undefined && err.response.status === 401) {
+          localStorage.clear();
+          this.props.history.push('/login');
+        }else{
+           this.setState( { loading: false } );
+           toast.error(err.message);
+        }
+      } )
   }
   
   render() {
