@@ -236,7 +236,7 @@ class HomePage extends React.Component {
     </section>
 
         <Modal isOpen={modal} toggle={this.toggle}  className="modal-dialog modal-dialog-centered newsletter-modal">
-          <ModalHeader toggle={this.toggle}>Subscribe Newsletter</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Grab your Virtdrop eBook !!</ModalHeader>
           <Form onSubmit={this.submitNewsletterForm} noValidate>
             <ModalBody>
                 <div className="subscribeNews-info">
