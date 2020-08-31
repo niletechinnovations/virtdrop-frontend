@@ -39,7 +39,7 @@ const adminRoutes = [
   { path: '/admin/subscribed/advertisers', exact: true, name: 'Subscribed Advertiser', component: SubscribedAdvertiserList },
   { path: '/admin/va-task', exact: true, name: 'Manage Task', component: VaTaskListing },
   { path: '/admin/timesheet', exact: true, name: 'Manage Timesheet', component: VaTimesheetList },
-  { path: '/admin/newsletter', exact: true, name: 'Newsletter Subscribers', component: SubscribersList },
+  { path: '/admin/newsletter', exact: true, name: 'eBook Downloads', component: SubscribersList },
   { path: '/admin/billing', exact: true, name: 'Clients Billing', component: BillingList },
 
 
