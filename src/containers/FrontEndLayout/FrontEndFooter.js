@@ -124,7 +124,7 @@ class frontEndFooter extends React.Component {
               </div>
               <div className="col-md-3 col-sm-12 col-lg-3">
                 <div className="footer-link-info">
-                  <h2>Subscribe</h2>
+                  {/* <h2>Subscribe</h2> */}
                   <div className="newsletter-form">
                     <h4>To get your Virtdrop eBook enter your email below.</h4>
                     <Form onSubmit={this.submitNewsletterForm} noValidate>
