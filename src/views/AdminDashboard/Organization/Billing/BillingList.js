@@ -31,6 +31,7 @@ class BillingList extends Component {
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
     this.filterItemList = this.filterItemList.bind(this);
     this.handleEditItem = this.handleEditItem.bind(this);
+    this.payInvoiceAdmin = this.payInvoiceAdmin.bind(this);
     this.submitInvoiceHandler = this.submitInvoiceHandler.bind(this);
     
   }
@@ -370,6 +371,42 @@ class BillingList extends Component {
     return year + "-" + month + "-" + day;
   }
 
+   /* Pay Invoice Item*/
+   payInvoiceAdmin(rowIndex){
+    const requestInfo = this.state.itemList[rowIndex];
+    
+    if(requestInfo.invoiceId!==''){
+      const formData = {
+        "invoiceId": requestInfo.invoiceId,
+      }
+      this.setState( { loading: true}, () => {
+        commonService.postAPIWithAccessToken('payment/pay', formData)
+        .then( res => {
+          if ( undefined === res.data.data || !res.data.status ) {           
+            this.setState( { loading: false} );
+            toast.error(res.data.message);
+            return;
+          }
+          if (typeof window !== 'undefined') {
+            window.location.href = res.data.data.redirectUrl;
+          }
+        })
+        .catch( err => {       
+          if(err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }else{
+            this.setState( { loading: false } );
+            toast.error(err.message);
+          }
+        } )
+      })
+    }else{
+      this.setState( { loading: false } );
+      toast.error("Invalid Invoice ID.");
+    }
+  }
+
   render() {
 
     const { itemList, loading, modal, invoiceModal, formProccessing, clientList, filterItem, formField, invoiceField } = this.state;
@@ -387,7 +424,7 @@ class BillingList extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>Clients Billing</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.invoiceToggle}><i className="fa fa-plus"></i> Create New Invoice</Button>
+                <strong>Billing</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.invoiceToggle}><i className="fa fa-plus"></i> Create New Invoice</Button>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -443,7 +480,7 @@ class BillingList extends Component {
                     </Row>
                   </Col>
                   <Col md={12}>
-                    <BillingData data={itemList} editItemAction={this.handleEditItem} deleteItemAction={this.handleDeleteItem} dataTableLoadingStatus = {this.state.loading} />
+                    <BillingData data={itemList} editItemAction={this.handleEditItem} deleteItemAction={this.handleDeleteItem} payInvoiceAction={this.payInvoiceAdmin} dataTableLoadingStatus = {this.state.loading} />
                   </Col>
                 </Row> 
               </CardBody>

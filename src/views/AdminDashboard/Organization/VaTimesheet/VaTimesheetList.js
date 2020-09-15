@@ -181,6 +181,7 @@ class VaTimesheetList extends Component {
           }
         } )
       }else{
+        formData['taskType'] = 1;
         commonService.postAPIWithAccessToken('timesheet', formData)
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) { 
@@ -353,7 +354,7 @@ class VaTimesheetList extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>VA Timesheet List</strong> {/* <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add VA Request</Button> */}
+                <strong>VA Timesheet List</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add VA</Button>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -455,7 +456,7 @@ class VaTimesheetList extends Component {
                     </Input>
                   </FormGroup> 
                 </Col>
-                <Col md={"6"}>
+                {/* <Col md={"6"}>
                   <div className="form-group">
                     <label htmlFor="projectId">Project </label>
                     <Input type="select" name="projectId" id="projectId" className="form-control" value={formField.projectId} onChange={this.changeHandler}>
@@ -465,8 +466,8 @@ class VaTimesheetList extends Component {
                       <option value="4">Project 4</option>
                     </Input>
                   </div>
-                </Col>
-                <Col md={"6"}>
+                </Col> */}
+                <Col md={"12"}>
                   <FormGroup>
                     <label htmlFor="title">Task Name *</label>
                     <input type="text" name="title" id="title" className="form-control" placeholder="Task Name" value={formField.title} onChange={this.changeHandler} required />

@@ -22,7 +22,7 @@ import AddVaApplication from '../views/AdminDashboard/VaApplications/AddVaApplic
 const adminRoutes = [
   { path: '/admin/', exact: true, name: 'Admin' },
   { path: '/admin/dashboard', exact: true, name: 'Dashboard', component: Dashboard },  
-  { path: '/admin/organization', exact: true, name: 'Manage VA Members', component: organizationList },
+  { path: '/admin/organization', exact: true, name: 'Manage Clients', component: organizationList },
   { path: '/admin/users', exact: true, name: 'Manage Admin Users', component: UsersList },
   { path: '/admin/user/:profileId', exact: true,  name: 'User Details', component: UserDetails },
   { path: '/admin/va-application', exact: true, name: 'Manage VA Application', component: ApplicationList },

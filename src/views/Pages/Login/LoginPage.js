@@ -95,15 +95,19 @@ class LoginPage extends Component {
           this.setState( { loading: false, loggedIn: true } )
           
           toast.success(res.data.message);
-          if(loggedInfo.data.role.toLowerCase() === 'admin'){
+          const userRole = loggedInfo.data.role;
+          if(userRole.toLowerCase() === 'admin' ){
             this.props.history.push('/admin/dashboard');
+          }else if( userRole === "recruitmentAdmin" ){
+            this.props.history.push('/admin/va-request');
+          }else if( userRole === "recruitmentTeam" ){
+            this.props.history.push('/admin/va-request');
+          }else if( userRole === "marketingTeam" ){
+            this.props.history.push('/admin/scheduled-booking');
           }else if( loggedInfo.data.role.toLowerCase() === 'va_member' ){
             this.props.history.push('/user/va-dashboard');
           }else if(loggedInfo.data.role.toLowerCase() === 'organization'){
-            if(loggedInfo.data.isActivePlan)
-              this.props.history.push('/user/dashboard');
-            else
-              this.props.history.push('/user/dashboard');
+            this.props.history.push('/user/dashboard');
           }else
             this.props.history.push('/');
         } )
@@ -172,8 +176,15 @@ class LoginPage extends Component {
     const { email, password, loggedIn, loading, forgotPasswordEmail, errors} = this.state;
     
     if ( loggedIn || localStorage.getItem( 'accessToken' ) ) {
-      if(localStorage.getItem( 'role' ).toLowerCase() === "admin")
+      const role = localStorage.getItem( 'role' );
+      if( role.toLowerCase() === "admin" )
 			  return ( <Redirect to={`/admin/dashboard`} noThrow /> )
+       else if(role === "recruitmentAdmin")
+        return ( <Redirect to={`/admin/va-request`} noThrow /> )
+       else if(role === "recruitmentTeam")
+        return ( <Redirect to={`/admin/va-request`} noThrow /> )
+      else if(role === "marketingTeam")
+        return ( <Redirect to={`/admin/scheduled-booking`} noThrow /> )
       else if(localStorage.getItem( 'role' ).toLowerCase() === "organization")
         return ( <Redirect to={`/user/dashboard`} noThrow /> )
       else

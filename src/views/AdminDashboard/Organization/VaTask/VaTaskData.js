@@ -46,10 +46,6 @@ class VaTaskData extends Component {
         name: 'title',
       },
       {
-        label: 'Project',
-        name: 'projectId',
-      },     
-      {
         label: 'Description',
         name: 'description',
       },

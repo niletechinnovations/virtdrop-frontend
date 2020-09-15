@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
-import Checkbox from "../../../core/commonComponent/StaticCheckbox";
 import "./../../Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage.css";
 
 const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
@@ -16,19 +15,12 @@ class EditVaApplication extends Component {
     this.state = {
       vaApplicationId: '',
       requestStatus:'',
-      formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'' },
+      formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'',skillSet1:'', skillSet2:'', skillSet3:'', rateSkill1:'', rateSkill2:'', rateSkill3:'', referenceName:'', referenceEmail:'', notes:'' },
       applicationFiles: {audioFile:'', resumeCV:'', intentLetter:'', internetSpeedScreenshot:'' },
       audioFile:'',
       resumeCV:'',
       intentLetter:'',
       internetSpeedScreenshot:'',
-      checkboxes: skillArr.reduce(
-        (options, option) => ({
-          ...options,
-          [option]: false
-        }),
-        {}
-      ),
       successMessage: '',
       dropDownOpen: '',
       loading: false,
@@ -68,17 +60,17 @@ class EditVaApplication extends Component {
           formField.platform = appDetail.platform;
           formField.portfolioLink = appDetail.portfolioLink;
           formField.status = appDetail.status;
-          
-          const listItems = appDetail.skillSet;
-          let checkboxes = this.state.checkboxes;
-          let availabilityItem = {}
-          Object.keys(checkboxes).forEach((key, value) => { 
-            if(listItems.indexOf(key) > -1 )
-              availabilityItem[key] = true;
-            else
-              availabilityItem[key] = false;
-          });
 
+          formField.skillSet1 = appDetail.skillSet1;
+          formField.skillSet2 = appDetail.skillSet2;
+          formField.skillSet3 = appDetail.skillSet3;
+          formField.rateSkill1 = appDetail.rateSkill1;
+          formField.rateSkill2 = appDetail.rateSkill2;
+          formField.rateSkill3 = appDetail.rateSkill3;
+          formField.referenceName = appDetail.referenceName;
+          formField.referenceEmail = appDetail.referenceEmail;
+          formField.notes = appDetail.notes;
+         
           let applicationFiles = this.state.applicationFiles;
           applicationFiles.audioFileName = appDetail.audioFileName;
           applicationFiles.audioFile = appDetail.audioFile;
@@ -89,13 +81,10 @@ class EditVaApplication extends Component {
           applicationFiles.internetSpeedScreenshotName = appDetail.internetSpeedScreenshotName;
           applicationFiles.internetSpeedScreenshot = appDetail.internetSpeedScreenshot;
           
-
-          this.setState({ skillSet: listItems, checkboxes: availabilityItem, applicationFiles: applicationFiles });
-
           const statusBtn = <Button type="button" size="sm" className={ ( appDetail.status ? 'btn-danger' : 'btn-success' )} onClick={() => 
             this.changeFoodTruckStatus(appDetail.vaApplicationId, appDetail.status )} >{ ( appDetail.status ? 'Un-Approve Application' : 'Approve Application' )}</Button>
           
-          this.setState({ loading: false, appDetail: appDetail, changeStatusBtn:statusBtn, formValid: true, formField: formField});
+          this.setState({ loading: false, appDetail: appDetail, changeStatusBtn:statusBtn, formValid: true, formField: formField, applicationFiles: applicationFiles});
         } )
         .catch( err => {               
           if(err.response !== undefined && err.response.status === 401) {
@@ -126,6 +115,25 @@ class EditVaApplication extends Component {
         formData.append('portfolioLink', formInputField.portfolioLink);
         formData.append('status', formInputField.status);
         
+        if(formInputField.skillSet1 !== "")
+          formData.append('skillSet1', formInputField.skillSet1);
+        if(formInputField.skillSet2 !== "")
+          formData.append('skillSet2', formInputField.skillSet2);
+        if(formInputField.skillSet3 !== "")
+          formData.append('skillSet3', formInputField.skillSet3);
+        if(formInputField.rateSkill1 !== "")
+          formData.append('rateSkill1', formInputField.rateSkill1);
+        if(formInputField.rateSkill2 !== "")
+          formData.append('rateSkill2', formInputField.rateSkill2);
+        if(formInputField.rateSkill3 !== "")
+          formData.append('rateSkill3', formInputField.rateSkill3);
+        if(formInputField.referenceName !== "")
+          formData.append('referenceName', formInputField.referenceName);
+        if(formInputField.referenceEmail !== "")
+          formData.append('referenceEmail', formInputField.referenceEmail);
+        if(formInputField.notes !== "")
+          formData.append('notes', formInputField.notes);
+        
         if(this.state.audioFile !== "")
           formData.append('audioFile', this.state.audioFile);
         if(this.state.resumeCV !== "")
@@ -135,13 +143,6 @@ class EditVaApplication extends Component {
         if(this.state.internetSpeedScreenshot !== "")
           formData.append('internetSpeedScreenshot', this.state.internetSpeedScreenshot);
         
-        Object.keys(this.state.checkboxes)
-        .filter(checkbox => this.state.checkboxes[checkbox])
-        .forEach(checkbox => {
-          formData.append('skillSet', checkbox );
-        });
-        //console.log(formData);
-
         this.setState( { loading: true }, () => {
            commonService.putAPIWithAccessToken( `va-application`, formData )
             .then( res => {
@@ -285,7 +286,6 @@ class EditVaApplication extends Component {
           }
           if( res.data.authInfo ) { 
             authId = res.data.authInfo.authId;
-            console.log(authId);
           }else{
             authId = res.data.data.authId;
           }
@@ -313,7 +313,27 @@ class EditVaApplication extends Component {
 
         } )
       }else{
-
+        if(requestStatus !== undefined && requestStatus===3){
+          let deleteFormdata = { "vaApplicationId":this.state.vaApplicationId }
+          commonService.deleteAPIWithAccessToken( 'va-application',deleteFormdata).then( res => {
+            this.setState({loading: false});
+            if ( undefined === res.data || !res.data.status ) {            
+              toast.error(res.data.message);
+              return;
+            } 
+            this.props.history.push('/admin/va-application');  
+            toast.success(res.data.message);
+          } )
+          .catch( err => {       
+            if(err.response !== undefined && err.response.status === 401) {
+              localStorage.clear();
+              this.props.history.push('/login');
+            }else{
+              this.setState( { loading: false } );
+              toast.error(err.message);
+            }
+          } )
+        }else{
         commonService.putAPIWithAccessToken('va-application/status', statusFormData)
           .then( res => {
             if ( undefined === res.data.data || !res.data.status ) {           
@@ -333,7 +353,7 @@ class EditVaApplication extends Component {
               this.setState( { loading: false } );
               toast.error(err.message);
           } )
-
+        }
       }
 
       
@@ -419,27 +439,69 @@ class EditVaApplication extends Component {
                         </Row>
                     </div>
                     <div className="form-service-listing">
-                    <h4>Skills Sets</h4>
-                    <div className="row">
-                        <div className="col-md-12">
-                        <FormGroup>
-                        <ul className="form-checkbox-list">
-                        {skillArr.map((skill, index) =>  
-                        <li key={index}>
-                        <Label check>
-                            <Checkbox
-                            label={skill}
-                            isSelected={ this.state.checkboxes[skill]}
-                            onCheckboxChange={this.handleSkillChange}
-                            key={skill}
-                            />
-                        </Label>
-                        </li>
-                            )}
-                        </ul>
-                        </FormGroup>
-                        </div>  
-                    </div>
+                      <Row>
+                        <Col md="4" sm="12">
+                          <h4>Skill Set 1</h4>
+                          <Row>
+                            <Col md="8" sm="6">
+                              <FormGroup>
+                                <Input type="select" name="skillSet1" value={formField.skillSet1} onChange={this.changeHandler} required invalid={errors['skillSet1'] !== undefined && errors['skillSet1'] !== ""}>
+                                  <option value="">Select Skill 1 *</option>
+                                  {skillArr.map((skill, index) =>
+                                  <option key={index} value={skill}>{skill}</option>
+                                  )}
+                                </Input>
+                                <FormFeedback>{errors['skillSet1']}</FormFeedback>
+                              </FormGroup>
+                            </Col>
+                            <Col md="4" sm="6">
+                              <FormGroup>
+                                <Input type="number" name="rateSkill1" value={formField.rateSkill1} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                              </FormGroup>
+                            </Col>  
+                          </Row>
+                        </Col>    
+                        <Col md="4" sm="12">
+                          <h4>Skill Set 2</h4>
+                          <Row>
+                            <Col md="8" sm="6">
+                              <FormGroup>
+                                <Input type="select" name="skillSet2" value={formField.skillSet2} onChange={this.changeHandler}>
+                                  <option value="">Select Skill 2</option>
+                                  {skillArr.map((skill, index) =>
+                                  <option key={index} value={skill}>{skill}</option>
+                                  )}
+                                </Input>
+                              </FormGroup>
+                            </Col>
+                            <Col md="4" sm="6">
+                              <FormGroup>
+                                <Input type="number" name="rateSkill2" value={formField.rateSkill2} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                              </FormGroup>
+                            </Col>  
+                          </Row>
+                        </Col>
+                        <Col md="4" sm="12">
+                          <h4>Skill Set 3</h4>
+                          <Row>
+                            <Col md="8" sm="6">
+                              <FormGroup>
+                                <Input type="select" name="skillSet3" value={formField.skillSet3} onChange={this.changeHandler}>
+                                  <option value="">Select Skill 3</option>
+                                  {skillArr.map((skill, index) =>
+                                  <option key={index} value={skill}>{skill}</option>
+                                  )}
+                                </Input>
+                              </FormGroup>
+                            </Col>
+                            <Col md="4" sm="6">
+                              <FormGroup>
+                                <Input type="number" name="rateSkill3" value={formField.rateSkill3} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                              </FormGroup>
+                            </Col>  
+                          </Row>
+                        </Col>  
+                      </Row>
                     </div>
 
                     <div className="form-service-listing">
@@ -500,6 +562,29 @@ class EditVaApplication extends Component {
                         </Col> */}
                     </div>
                   </div>
+                  <div  className="form-service-listing">
+                    <h2>References</h2>
+                    <Row>
+                      <Col md={6}>
+                        <FormGroup>
+                          <Label htmlFor="referenceName">Name</Label>
+                          <Input type="text" name="referenceName" id="referenceName" value={formField.referenceName} onChange={this.changeHandler} placeholder="Reference Name" />
+                        </FormGroup>
+                      </Col>
+                      <Col md={6}>
+                        <FormGroup>
+                          <Label htmlFor="referenceEmail">Email</Label>
+                          <Input type="email" name="referenceEmail" id="referenceEmail" value={formField.referenceEmail} onChange={this.changeHandler} placeholder="Reference Email" />
+                        </FormGroup>
+                      </Col>
+                      <Col md={12}>
+                        <FormGroup>
+                          <Label htmlFor="notes">Notes</Label>
+                          <Input type="textarea" name="notes" id="notes" value={formField.notes} onChange={this.changeHandler} placeholder="Notes" />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
                   <hr />
                   <div className="form-service-listing">
                       <div className="row">
@@ -512,7 +597,7 @@ class EditVaApplication extends Component {
                               <DropdownMenu>
                                 <DropdownItem onClick={() => this.changeApplicationStatus(2)}>Approve Application</DropdownItem>
                                 <DropdownItem onClick={() => this.changeApplicationStatus(3)}>Reject Application</DropdownItem>
-                                <DropdownItem onClick={() => this.changeApplicationStatus(1)}>Make Pending</DropdownItem>
+                                <DropdownItem onClick={() => this.changeApplicationStatus(1)}>Pending</DropdownItem>
                               </DropdownMenu>
                             </ButtonDropdown>
                           </div>

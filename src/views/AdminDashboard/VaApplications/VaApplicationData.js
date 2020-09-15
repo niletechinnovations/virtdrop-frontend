@@ -29,7 +29,9 @@ class VaApplicationData extends Component {
         userName: item.firstName+' '+item.lastName,      
         email: item.email,
         mobileNumber: item.mobileNumber || " ",
-        skypeID: item.skypeID || " ",
+        skillSet1: item.skillSet1 + (item.rateSkill1 !=='' ? " ("+item.rateSkill1+")" :''  ) || " ",
+        skillSet2: item.skillSet2 + (item.rateSkill2 !=='' ? " ("+item.rateSkill2+")" :''  ) || " ",
+        skillSet3: item.skillSet3 + (item.rateSkill3 !=='' ? " ("+item.rateSkill3+")" :''  ) || " ",
         createdAt: (new Date(item.createdAt)).toLocaleDateString("en-US"),
         status: ( item.status === 1) ? "Pending" : ((item.status === 2)  ? "Approved" : "Rejected")
       }      
@@ -42,26 +44,13 @@ class VaApplicationData extends Component {
         label: 'Name',
         name: 'userName',
       },     
-      {
-        label: 'Email',
-        name: 'email',
-      },
-      {
-        label: 'Mobile no.',
-        name: 'mobileNumber',
-      },
-      {
-        label: 'Skype ID',
-        name: 'skypeID',
-      },
-      {
-        label: 'Status',
-        name: 'status',
-      },
-      {
-        label: 'Created on',
-        name: 'createdAt',
-      },
+      { label: 'Email', name: 'email' },
+      { label: 'Mobile no.', name: 'mobileNumber'},
+      { label: 'Skill Set 1 (Rating)', name: 'skillSet1'},
+      { label: 'Skill Set 2 (Rating)', name: 'skillSet2'},
+      { label: 'Skill Set 3 (Rating)', name: 'skillSet3'},
+      { label: 'Status', name: 'status'},
+      { label: 'Created on', name: 'createdAt'},
       {
         label: 'Action',
         name: 'action',

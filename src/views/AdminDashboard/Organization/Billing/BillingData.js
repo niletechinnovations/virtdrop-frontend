@@ -23,6 +23,9 @@ class BillingData extends Component {
   deleteDataItem(rowIndex){    
     this.props.deleteItemAction(rowIndex);
   }
+  payInvoiceItem(rowIndex){    
+    this.props.payInvoiceAction(rowIndex);
+  }
 
   render() {
     let count=0;
@@ -77,11 +80,12 @@ class BillingData extends Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             let i = tableMeta.rowIndex;
             return (
-              <div className="actionBtnGroup" style={{width:'100px'}}>
+              <div className="actionBtnGroup" style={{width:'140px'}}>
                 {rowsItem[i].invoiceAttachment}&nbsp;
                 <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editDataItem(i)}><i className="fa fa-pencil"></i> </button>
                 <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => {if(window.confirm('Are you sure you want to delete this record?')){ this.deleteDataItem(i) };}} ><i className="fa fa-trash"></i></button>
+                <button className="btn-edit" title="Pay Now" onClick={() => {if(window.confirm('Are you sure you want to pay this invoice?')){ this.payInvoiceItem(i) };}} ><i className="fa fa-paypal"></i></button>
               </div>
             );
           }
@@ -110,7 +114,7 @@ class BillingData extends Component {
     
     return (
       <MUIDataTable
-        title={"Billing List"}
+        title={"Invoice List"}
         data={rowsItem}
         columns={columns}
         options={options}

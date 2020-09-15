@@ -16,7 +16,7 @@ class ApplicationList extends Component {
       itemList: [],
       loading: true,
       rowIndex: -1,
-      filterItem: { filterApplicationId: '', filterFirstName: '', filterEmail: '', filterFrom:'',  filterTo:'', filterStatus:'' },
+      filterItem: { filterApplicationId: '', filterFirstName: '', filterEmail: '', filterSkill:'', filterRating:'', filterFrom:'',  filterTo:'', filterStatus:'' },
     } 
     this.handleDeleteRecord = this.handleDeleteRecord.bind(this);
     this.filterItemList = this.filterItemList.bind(this);
@@ -32,8 +32,10 @@ class ApplicationList extends Component {
       filterQuery += (filterQuery !=="" ) ? "&firstName="+filterItem.filterFirstName: "&firstName="+filterItem.filterFirstName;
     if(filterItem.filterEmail !== undefined && filterItem.filterEmail !== "" ) 
      filterQuery += (filterQuery !=="" ) ? "&email="+filterItem.filterEmail: "&email="+filterItem.filterEmail;
-    if(filterItem.filterMobile !== undefined && filterItem.filterMobile !== "" ) 
-      filterQuery += (filterQuery !=="" ) ? "&mobileNumber="+filterItem.filterMobile: "&mobileNumber="+filterItem.filterMobile;
+    if(filterItem.filterSkill !== undefined && filterItem.filterSkill !== "" ) 
+      filterQuery += (filterQuery !=="" ) ? "&filterSkill="+filterItem.filterSkill: "&filterSkill="+filterItem.filterSkill;
+    if(filterItem.filterRating !== undefined && filterItem.filterRating !== "" ) 
+      filterQuery += (filterQuery !=="" ) ? "&filterRating="+filterItem.filterRating: "&filterRating="+filterItem.filterRating;
     if(filterItem.filterFrom !== undefined && filterItem.filterFrom !== "" ){
       let newFromDate = this.getFormatDate( filterItem.filterFrom );
       filterQuery += (filterQuery !=="" ) ? "&start_date="+newFromDate : "?start_date="+newFromDate;
@@ -124,7 +126,7 @@ class ApplicationList extends Component {
 
   resetfilterForm = () => {
     this.setState({
-      filterItem: { filterFirstName: '', filterEmail: '', filterMobile: '', filterFrom:'',  filterTo:'', filterStatus:'' }
+      filterItem: { filterFirstName: '', filterEmail: '', filterSkill:'', filterRating:'', filterFrom:'',  filterTo:'', filterStatus:'' }
     });
     this.itemList();
   }
@@ -171,19 +173,25 @@ class ApplicationList extends Component {
                           <Input type="text" placeholder="Search by Email Address" id="filterEmail" name="filterEmail" value={filterItem.filterEmail} onChange={this.changeFilterHandler} />
                         </FormGroup>  
                       </Col>
-                      <Col md={"2"}>
+                      <Col md={"1"}>
                         <FormGroup> 
-                          <Label htmlFor="filterMobile">Search by Mobile No.</Label>            
-                          <Input type="text" placeholder="Search by Mobile Number" id="filterMobile" name="filterMobile" value={filterItem.filterMobile} onChange={this.changeFilterHandler} />
+                          <Label htmlFor="filterSkill">Skill</Label>            
+                          <Input type="text" id="filterSkill" name="filterSkill" value={filterItem.filterSkill} onChange={this.changeFilterHandler} />
                         </FormGroup>  
                       </Col>
                       <Col md={"1"}>
                         <FormGroup> 
+                          <Label htmlFor="filterRating">Rating</Label>            
+                          <Input type="number" min="1" max="10" placeholder="" id="filterRating" name="filterRating" value={filterItem.filterRating} onChange={this.changeFilterHandler} />
+                        </FormGroup>  
+                      </Col>
+                      <Col md={"1"}>
+                         <FormGroup> 
                           <Label>Status</Label>
                           <Input type="select" name="filterStatus" value={filterItem.filterStatus} onChange={this.changeFilterHandler}>
                             <option value="">All</option>
-                            <option value="2">Active</option>
-                            <option value="1">Inactive</option>
+                            <option value="2">Approved</option>
+                            <option value="1">Pending</option>
                           </Input>
                         </FormGroup>  
                       </Col>

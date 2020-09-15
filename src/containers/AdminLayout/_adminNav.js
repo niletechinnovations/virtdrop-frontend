@@ -48,7 +48,12 @@ export default {
     {
       name: 'Billing',
       url: '/admin/billing',
-      icon: 'fa fa-money',
+      icon: 'fa fa-credit-card',
+    },
+    {
+      name: 'Transactions',
+      url: '/admin/transactions',
+      icon: 'fa fa-dollar',
     },
     {
       name: 'Admins',

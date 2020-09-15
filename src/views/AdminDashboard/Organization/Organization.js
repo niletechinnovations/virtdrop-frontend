@@ -142,7 +142,7 @@ class Organization extends Component {
             toast.error(res.data.message);
             return;
           } 
-          this.setState({ modal: false});
+          this.setState({ modal: false, formProccessing: false});
           toast.success(res.data.message);
           this.organizationList();        
         } )
@@ -356,7 +356,7 @@ class Organization extends Component {
             <Card>
               <CardHeader className="mainHeading">
                 <strong>VA Clients List</strong>
-                {/* <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add New</Button> */}
+                <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add New</Button>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -420,7 +420,7 @@ class Organization extends Component {
           </Col>
         </Row>
         <Modal isOpen={modal} toggle={this.toggle} className="full-width-modal-section organization-modal">
-          <ModalHeader toggle={this.toggle}>Member Info</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Client's Info</ModalHeader>
           <Form onSubmit={this.submitHandler} noValidate>
             <ModalBody>
               <FormErrors formErrors={this.state.formErrors} />
@@ -428,13 +428,13 @@ class Organization extends Component {
                 <Col md={"6"}>  
                   <FormGroup> 
                     <Label htmlFor="first_name">First Name</Label>            
-                    <Input type="text" placeholder="First Person *" id="first_name" name="first_name" value={this.state.formField.first_name} onChange={this.changeHandler} required />
+                    <Input type="text" placeholder="First Name *" id="first_name" name="first_name" value={this.state.formField.first_name} onChange={this.changeHandler} required />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>  
                   <FormGroup> 
                     <Label htmlFor="last_name">Last Name</Label>            
-                    <Input type="text" placeholder="Last Person *" id="last_name" name="last_name" value={this.state.formField.last_name} onChange={this.changeHandler} />
+                    <Input type="text" placeholder="Last Name *" id="last_name" name="last_name" value={this.state.formField.last_name} onChange={this.changeHandler} />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>
@@ -501,7 +501,7 @@ class Organization extends Component {
             </ModalBody>
             <ModalFooter>
               {changeStatusBtn}
-              <Button color="primary" disabled={!this.state.formValid || formProccessing} type="submit">{formProccessing ? processingBtnText : 'Save Changes' }</Button>
+              <Button color="primary" type="submit">{formProccessing ? processingBtnText : 'Submit' }</Button>
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>

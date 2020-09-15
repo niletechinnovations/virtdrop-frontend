@@ -12,6 +12,8 @@ import VaDashboard from '../views/VA/VaDashboard/VaDashboard';
 import VaTaskData from '../views/VA/VaTask/VaTaskData';
 import VaProfile from '../views/VA/VaProfile/VaProfile';
 import timesheetList from '../views/VA/TimeSheet/timesheetList';
+import clientBillingList from '../views/User/Billing/clientBillingList';
+import billingPaymentStatus from '../views/User/Billing/billingPaymentStatus';
 
 const userRoutes = [
   { path: '/user/', exact: true, name: 'Home' },
@@ -29,8 +31,11 @@ const userRoutes = [
   { path: '/user/va-dashboard', exact: true, name: 'VA Dashboard', component: VaDashboard },  
   { path: '/user/va-task', exact: true, name: 'VA Task List', component: VaTaskData },  
   { path: '/user/va-profile', exact: true,  name: 'Profile', component: VaProfile }, 
-  { path: '/user/va-timesheet', exact: true, name: 'VA Timesheet List', component: timesheetList },  
-  
+  { path: '/user/va-timesheet', exact: true, name: 'VA Timesheet List', component: timesheetList },
+  { path: '/user/billing', exact: true, name: "Billing", component: clientBillingList},
+  { path: '/user/payment/:status', exact: true,  name: 'Payment Status', component: billingPaymentStatus },
+  { path: '/user/transactions', exact:true, name:'Transaction Lists', component: TransactionList},
+
 ];
 
 export default userRoutes;

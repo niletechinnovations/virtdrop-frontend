@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import  { Redirect, Link } from 'react-router-dom';
 import { Card, CardBody, Col, Row } from 'reactstrap';
 //import { PeopleAlt, LocalShipping, MailOutline, SupervisorAccount, Link } from '@material-ui/icons';
 
@@ -67,105 +67,114 @@ class Dashboard extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
-
-    return (
-      <div className="animated fadeIn admin-dashboard">
-        <div className="overview-info">
-          <Row>
-          <Col xs="12" sm="6" lg="3">
-            <div className="card-bg-info card-bg-1">
-              <div className="card-bg-icon">
-                <img src="/images/user.svg" height="35" alt="" />
-              </div>
-              <div className="card-bg-content">
-                <h2 className="text-value">100</h2>
-                <p>Total Users</p>
-              </div>
-            </div>
-          </Col>
-          <Col xs="12" sm="6" lg="3">
-            <div className="card-bg-info card-bg-2">
-              <div className="card-bg-icon">
-                <img src="/images/timezone.svg" height="35" alt="" />
-              </div>
-              <div className="card-bg-content">
-                <h2 className="text-value">20</h2>
-                <p>Total Request</p>
-              </div>
-            </div>
-          </Col>
-          <Col xs="12" sm="6" lg="3">
-            <div className="card-bg-info card-bg-3">
-              <div className="card-bg-icon">
-                <img src="/images/task.svg" height="35" alt="" />
-              </div>
-              <div className="card-bg-content">
-                <h2 className="text-value">200</h2>
-                <p>Total VA Applications</p>
-              </div>
-            </div>
-          </Col>
-          <Col xs="12" sm="6" lg="3">
-            <div className="card-bg-info card-bg-4">
+    const role = localStorage.getItem( 'role' );
+    if ( role!=='admin' ) {
+      if(role === "recruitmentAdmin")
+        return ( <Redirect to={`/admin/va-request`} noThrow /> )
+      else if(role === "recruitmentTeam")
+        return ( <Redirect to={`/admin/va-request`} noThrow /> )
+      else if(role === "marketingTeam")
+        return ( <Redirect to={`/admin/scheduled-booking`} noThrow /> )
+		} else {
+      return (
+        <div className="animated fadeIn admin-dashboard">
+          <div className="overview-info">
+            <Row>
+            <Col xs="12" sm="6" lg="3">
+              <div className="card-bg-info card-bg-1">
                 <div className="card-bg-icon">
-                <img src="/images/payment.svg" height="35" alt="" />
+                  <img src="/images/user.svg" height="35" alt="" />
                 </div>
                 <div className="card-bg-content">
-                  <h2 className="text-value">$300</h2>
-                  <p>Total Payment</p>
+                  <h2 className="text-value">100</h2>
+                  <p>Total Users</p>
                 </div>
-            </div>
-          </Col>
-          </Row>
-        </div>
+              </div>
+            </Col>
+            <Col xs="12" sm="6" lg="3">
+              <div className="card-bg-info card-bg-2">
+                <div className="card-bg-icon">
+                  <img src="/images/timezone.svg" height="35" alt="" />
+                </div>
+                <div className="card-bg-content">
+                  <h2 className="text-value">20</h2>
+                  <p>Total Request</p>
+                </div>
+              </div>
+            </Col>
+            <Col xs="12" sm="6" lg="3">
+              <div className="card-bg-info card-bg-3">
+                <div className="card-bg-icon">
+                  <img src="/images/task.svg" height="35" alt="" />
+                </div>
+                <div className="card-bg-content">
+                  <h2 className="text-value">200</h2>
+                  <p>Total VA Applications</p>
+                </div>
+              </div>
+            </Col>
+            <Col xs="12" sm="6" lg="3">
+              <div className="card-bg-info card-bg-4">
+                  <div className="card-bg-icon">
+                  <img src="/images/payment.svg" height="35" alt="" />
+                  </div>
+                  <div className="card-bg-content">
+                    <h2 className="text-value">$300</h2>
+                    <p>Total Payment</p>
+                  </div>
+              </div>
+            </Col>
+            </Row>
+          </div>
 
-        <div className="Enquiries-info">
-          {/* New Enquiries Data */}
-          <Row>
-            <Col>
-              <Card className="vd-card">
-                <div className="card-header">
-                  <div className="d-flex align-items-center">
-                    <div className="mr-auto">
-                        <h4 className="card-title"> New VA Applications</h4>
-                    </div>
-                    <div className="add-option-info">
-                      <a href="/admin/va-application" className="btn-add" title="View All Applications">View All</a>
+          <div className="Enquiries-info">
+            {/* New Enquiries Data */}
+            <Row>
+              <Col>
+                <Card className="vd-card">
+                  <div className="card-header">
+                    <div className="d-flex align-items-center">
+                      <div className="mr-auto">
+                          <h4 className="card-title"> New VA Applications</h4>
+                      </div>
+                      <div className="add-option-info">
+                        <Link to="/admin/va-application" className="btn-add" title="View All Applications">View All</Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <CardBody>
-                  <NewApplicationData data={this.state.vaApplicationList} />
-                </CardBody>              
-              </Card>
-            </Col>
-          </Row>
-        </div>
+                  <CardBody>
+                    <NewApplicationData data={this.state.vaApplicationList} />
+                  </CardBody>              
+                </Card>
+              </Col>
+            </Row>
+          </div>
 
-        <div className="Users-info">
-          {/* New Users Data */}
-          <Row>
-            <Col>
-              <Card className="vd-card">
-                <div className="card-header">
-                  <div className="d-flex align-items-center">
-                    <div className="mr-auto">
-                        <h4 className="card-title"> Recent Joined Members</h4>
-                    </div>
-                    <div className="add-option-info">
-                      <a href="/admin/organization" className="btn-add view-all-btn" title="View All Members">View All</a>
+          <div className="Users-info">
+            {/* New Users Data */}
+            <Row>
+              <Col>
+                <Card className="vd-card">
+                  <div className="card-header">
+                    <div className="d-flex align-items-center">
+                      <div className="mr-auto">
+                          <h4 className="card-title"> Recent Joined Members</h4>
+                      </div>
+                      <div className="add-option-info">
+                        <Link to="/admin/organization" className="btn-add view-all-btn" title="View All Members">View All</Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <CardBody>
-                  <NewUserData data={this.state.userList} />
-                </CardBody>              
-              </Card>
-            </Col>
-          </Row>
-        </div>      
-      </div>
-    );
+                  <CardBody>
+                    <NewUserData data={this.state.userList} />
+                  </CardBody>              
+                </Card>
+              </Col>
+            </Row>
+          </div>      
+        </div>
+      );
+    }
   }
 }
 

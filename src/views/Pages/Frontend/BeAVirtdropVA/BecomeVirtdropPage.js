@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commenService from '../../../../core/services/commonService';
 import Loader from '../../../../views/Loader/Loader';
-import Checkbox from "../../../../core/commonComponent/StaticCheckbox";
 
 import "./BecomeVirtdropPage.css";
 
@@ -17,18 +16,11 @@ class BecomeVirtdropPage extends React.Component {
     super( props );
 
     this.state = {
-      formField: { firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', skillSet:'' },
+      formField: { firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', skillSet:'', skillSet1:'', skillSet2:'', skillSet3:'', referenceName:'', referenceEmail:'' },
       audioFile:'',
       resumeCV:'',
       intentLetter:'',
       internetSpeedScreenshot:'',
-      checkboxes: skillArr.reduce(
-        (options, option) => ({
-          ...options,
-          [option]: false
-        }),
-        {}
-      ),
       successMessage: '',
       loading: false,
       errors: {}
@@ -56,6 +48,17 @@ class BecomeVirtdropPage extends React.Component {
         formData.append('socialMediaID', formInputField.socialMediaID);
         formData.append('platform', formInputField.platform);
         formData.append('portfolioLink', formInputField.portfolioLink);
+
+        if(formInputField.skillSet1 !== "")
+          formData.append('skillSet1', formInputField.skillSet1);
+        if(formInputField.skillSet2 !== "")
+          formData.append('skillSet2', formInputField.skillSet2);
+        if(formInputField.skillSet3 !== "")
+          formData.append('skillSet3', formInputField.skillSet3);
+        if(formInputField.referenceName !== "")
+          formData.append('referenceName', formInputField.referenceName);
+        if(formInputField.referenceEmail !== "")
+          formData.append('referenceEmail', formInputField.referenceEmail);
         
         if(this.state.audioFile !== "")
           formData.append('audioFile', this.state.audioFile);
@@ -66,11 +69,7 @@ class BecomeVirtdropPage extends React.Component {
         if(this.state.internetSpeedScreenshot !== "")
           formData.append('internetSpeedScreenshot', this.state.internetSpeedScreenshot);
         
-        Object.keys(this.state.checkboxes)
-        .filter(checkbox => this.state.checkboxes[checkbox])
-        .forEach(checkbox => {
-          formData.append('skillSet', checkbox );
-        });
+        
         //console.log(formData);
 
         this.setState( { loading: true }, () => {
@@ -171,7 +170,11 @@ class BecomeVirtdropPage extends React.Component {
       formIsValid = false;
       errors["platform"] = "*This field is required";
     }
-
+    if (!formField.skillSet1) {
+      formIsValid = false;
+      errors["skillSet1"] = "*This field is required";
+    }
+    
     if(formIsValid=== false)
       window.scrollTo(0, 0);
     
@@ -277,27 +280,40 @@ class BecomeVirtdropPage extends React.Component {
                               </Row>
                             </div>
                           <div className="form-service-listing">
-                            <h4>Skills Sets</h4>
-                            <div className="row">
-                              <div className="col-md-12">
-                              <FormGroup>
-                                <ul className="form-checkbox-list">
-                                {skillArr.map((skill, index) =>  
-                                <li key={index}>
-                                <Label check>
-                                  <Checkbox
-                                    label={skill}
-                                    isSelected={ this.state.checkboxes[skill]}
-                                    onCheckboxChange={this.handleSkillChange}
-                                    key={skill}
-                                  />
-                                </Label>
-                                </li>
-                                 )}
-                              </ul>
-                              </FormGroup>
-                              </div>  
-                            </div>
+                            <h4>Skills Set</h4>
+                            <Row>
+                              <Col md="4" sm="12">
+                                <FormGroup>
+                                  <Input type="select" name="skillSet1" value={formField.skillSet1} onChange={this.changeHandler} required invalid={errors['skillSet1'] !== undefined && errors['skillSet1'] !== ""}>
+                                    <option value="">Select Skill 1 *</option>
+                                    {skillArr.map((skill, index) =>
+                                    <option key={index} value={skill}>{skill}</option>
+                                    )}
+                                  </Input>
+                                  <FormFeedback>{errors['skillSet1']}</FormFeedback>
+                                </FormGroup>
+                              </Col>
+                              <Col md="4" sm="12">
+                                <FormGroup>
+                                  <Input type="select" name="skillSet2" value={formField.skillSet2} onChange={this.changeHandler}>
+                                    <option value="">Select Skill 2</option>
+                                    {skillArr.map((skill, index) =>
+                                    <option key={index} value={skill}>{skill}</option>
+                                    )}
+                                  </Input>
+                                </FormGroup>
+                              </Col>
+                              <Col md="4" sm="12">
+                                <FormGroup>
+                                  <Input type="select" name="skillSet3" value={formField.skillSet3} onChange={this.changeHandler}>
+                                    <option value="">Select Skill 3</option>
+                                    {skillArr.map((skill, index) =>
+                                    <option key={index} value={skill}>{skill}</option>
+                                    )}
+                                  </Input>
+                                </FormGroup>
+                              </Col>  
+                            </Row>
                           </div>
 
                           <div className="form-service-listing">
@@ -343,7 +359,24 @@ class BecomeVirtdropPage extends React.Component {
                                   </div>
                                 </div>
                             </div>
-                        </div>
+                          </div>
+                          <div  className="form-service-listing">
+                            <h2>References</h2>
+                            <Row>
+                              <Col md={6}>
+                                <FormGroup>
+                                  <Label htmlFor="referenceName">Name</Label>
+                                  <Input type="text" name="referenceName" id="referenceName" value={formField.referenceName} onChange={this.changeHandler} placeholder="Reference Name" />
+                                </FormGroup>
+                              </Col>
+                              <Col md={6}>
+                                <FormGroup>
+                                  <Label htmlFor="referenceEmail">Email</Label>
+                                  <Input type="email" name="referenceEmail" id="referenceEmail" value={formField.referenceEmail} onChange={this.changeHandler} placeholder="Reference Email" />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                          </div>  
                           <div className="form-service-listing">
                             <div className="row">
                                 <div className="col-md-2">

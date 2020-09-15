@@ -18,7 +18,12 @@ import {
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import navigation from './_nav';
+
+import adminNavigation from './_adminNav';
+import recruitmentAdminNavigation from './_recruitmentAdminNav';
+import recruitmentTeamNavigation from './_recruitmentTeamNav';
+import marketingTeamNavigation from './_marketingTeamNav';
+
 // routes config
 import adminRoutes from '../../routes/adminRoutes';
 import './AdminLayout.css';
@@ -49,7 +54,18 @@ class AdminLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
+            { (localStorage.getItem( 'role' ).toLowerCase() === "admin" ) && 
+            <AppSidebarNav navConfig={adminNavigation} {...this.props} router={router}/>
+            }
+            { (localStorage.getItem( 'role' )=== "recruitmentAdmin" ) && 
+              <AppSidebarNav navConfig={recruitmentAdminNavigation} {...this.props} router={router}/>  
+            }
+            { (localStorage.getItem( 'role' ) === "recruitmentTeam" ) && 
+              <AppSidebarNav navConfig={recruitmentTeamNavigation} {...this.props} router={router}/>  
+            }
+            { (localStorage.getItem( 'role' ) === "marketingTeam" ) && 
+              <AppSidebarNav navConfig={marketingTeamNavigation} {...this.props} router={router}/>  
+            }
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />

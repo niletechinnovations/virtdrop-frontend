@@ -67,7 +67,7 @@ class UserNavbar extends Component {
                 <span className="value-orders">Task Management</span>
               </Link>
             </NavItem>
-            {  localStorage.getItem( 'isOrganization' )=== "false" && 
+            { (localStorage.getItem( 'role' ).toLowerCase() === "va_member") &&  
             <NavItem>
               <Link to="/user/va-timesheet" className="nav-link">
                 <span className="icon-orders"><img src="/images/timezone.svg" height="24" alt="Inquiries" /></span>
@@ -78,9 +78,9 @@ class UserNavbar extends Component {
                   
             { (localStorage.getItem( 'role' ).toLowerCase() === "organization") && 
             <NavItem>
-              <Link to={ localStorage.getItem('isOrganization')=== "true" ? "/user/dashboard" : "/user/va-dashboard" } className="nav-link">
-                <span className="icon-orders"><img src="/images/billing.svg" height="24" alt="Subscription" /></span>
-                <span className="value-orders">My Subscription</span>
+              <Link to={ "/user/billing" } className="nav-link">
+                <span className="icon-orders"><img src="/images/billing.svg" height="24" alt="Billing" /></span>
+                <span className="value-orders">Billing</span>
               </Link>
             </NavItem>
             }

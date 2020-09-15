@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {
   Row, Col, Card, CardHeader, CardBody,
-  Table
+  Table, Button
 } from 'reactstrap';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
 import './Dashboard.css';
@@ -16,7 +18,8 @@ class Dashboard extends Component {
       loading: false,
       dashBoardStats: { requestCount: 0, enquiryCount:0, taskCount:0 },
       vaList: [],
-      taskList: []
+      taskList: [],
+      invoiceList: []
     };
   }
 
@@ -24,6 +27,7 @@ class Dashboard extends Component {
     //this.dashboardData({});
     this.virtdropVaLists({});
     this.vaTaskLists({}); 
+    this.billingLists({}); 
   }
 
   /* Get Dashboard data from API */
@@ -62,6 +66,28 @@ class Dashboard extends Component {
     } )
   }
 
+  /* Billing List API */
+  billingLists() {
+    this.setState( { loading: true}, () => {
+      commonService.getAPIWithAccessToken('billing/?pageSize=5')
+        .then( res => {
+          if ( undefined === res.data.data || !res.data.status ) {
+            this.setState( { loading: false } );
+            return;
+          }   
+          this.setState({loading:false, invoiceList: res.data.data.rowList});     
+        } )
+        .catch( err => {         
+          if(err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }else {
+            this.setState( { loading: false } );
+          }
+        } )
+    } )
+  }
+
   /* VA Task List API */
   vaTaskLists() {
     this.setState( { loading: true}, () => {
@@ -84,11 +110,41 @@ class Dashboard extends Component {
     } )
   }
 
+  //pay with PayPal
+  payInvoice(invoiceId){
+    if(invoiceId){
+      const formData = {
+        "invoiceId": invoiceId,
+      }
+      this.setState( { loading:true }, () =>{
+        commonService.postAPIWithAccessToken('payment/pay', formData)
+        .then( res => {
+          if ( undefined === res.data.data || !res.data.status ) {           
+            this.setState( { loading: false} );
+            toast.error(res.data.message);
+            return;
+          }
+          if (typeof window !== 'undefined') {
+            window.location.href = res.data.data.redirectUrl;
+          }
+        })
+        .catch( err => {
+          if(err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }else{
+            this.setState( { loading: false } );
+            toast.error(err.message);
+          }
+        })
+      } );
+    }
+  }
   
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
-    const { loading, vaList, taskList }  = this.state;
+    const { loading, vaList, taskList, invoiceList }  = this.state;
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -217,7 +273,7 @@ class Dashboard extends Component {
                     <h4 className="card-title"><img src="/images/billing.svg" height="30" alt="Billing" /> Billing</h4>
                   </div>
                   <div className="add-option-info">
-                    <a className="btn-add" href="#!">More</a>
+                    <Link to="/user/billing" className="btn-add">More</Link>
                   </div>
                 </div>
               </CardHeader>
@@ -228,31 +284,29 @@ class Dashboard extends Component {
                       <thead>
                         <tr>
                           <th>S.no</th>
-                          <th>VA </th>
+                          <th>Invoice No. </th>
+                          <th>Billing Period	</th>
                           <th>Working Hours</th>
                           <th>Amount</th>
-                          <th>Created Date</th>
                         </tr>
                       </thead>
                       <tbody>
-                      <tr>
+                      {invoiceList.map((invoiceInfo, index) => 
+                      <tr key={index}>
                         <td>
-                          <span className="sno">1</span>
+                          <span className="sno">{index+1}</span>
                         </td>
-                        <td>Abu Bin Ishtiyak</td>
-                        <td>8 Hours</td>
-                        <td>$56.00</td>
-                        <td>02/11/2020</td>
+                        <td>{invoiceInfo.invoiceId}</td>
+                        <td>{ invoiceInfo.billingFrom+' - '+invoiceInfo.billingTo }</td>
+                        <td align="center">{ invoiceInfo.billingHours }</td>
+                        <td align="center">
+                          <strong>${invoiceInfo.amount}</strong> &nbsp; &nbsp;
+                          { invoiceInfo.status===0 &&
+                          <Button className="btn-edit" size="sm" color="success" onClick={() => this.payInvoice(invoiceInfo.invoiceId)} title="Pay Now"><i className="fa fa-paypal"></i></Button>
+                          }
+                          </td>
                       </tr>
-                      <tr>
-                        <td>
-                          <span className="sno">2</span>
-                        </td>
-                        <td>Abu Bin Ishtiyak</td>
-                        <td>8 Hours</td>
-                        <td>$56.00</td>
-                        <td>02/11/2020</td>
-                        </tr>
+                      )}
                       </tbody>
                     </Table>
                   </div>

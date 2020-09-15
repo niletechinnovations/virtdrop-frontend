@@ -526,12 +526,12 @@ class timesheetList extends Component {
           
           <Form onSubmit={this.quickStart} noValidate className="quick-form">
             <Row>
-              <Col md="6" className="pl-0">
+              <Col md="7" className="pl-0">
                 <FormGroup>
                   <Input type="text" name="quickTaskName" value={quickItem.quickTaskName} onChange={this.changeFilterHandler} placeholder="What task have you done?" />
                 </FormGroup>
               </Col>
-              <Col md={"2"}>
+              <Col md={"3"}>
                 <FormGroup>
                   <Input type="select" id="quickClientId" name="quickClientId" value={quickItem.quickClientId} onChange={this.changeFilterHandler} required >
                     <option value="">Select Client</option>
@@ -541,7 +541,7 @@ class timesheetList extends Component {
                   </Input>
                 </FormGroup>  
               </Col>
-              <Col md="2">
+              {/* <Col md="2">
                 <FormGroup>
                   <Input type="select" name="quickProjectId" value={quickItem.quickProjectId} onChange={this.changeFilterHandler}>
                     <option value="">Select Project</option>
@@ -551,7 +551,7 @@ class timesheetList extends Component {
                     <option value="4">Project 4</option>
                   </Input>
                 </FormGroup>
-              </Col>
+              </Col> */}
               <Col md="1" className="pr-0">
                 <FormGroup>
                   { (this.state.taskState===1) && 
@@ -681,7 +681,7 @@ class timesheetList extends Component {
                     </Input>
                   </FormGroup>  
                 </Col>
-                <Col md={"12"}>
+                {/* <Col md={"12"}>
                   <div className="form-group">
                     <label htmlFor="projectId">Project </label>
                     <Input type="select" name="projectId" id="projectId" className="form-control" value={formField.projectId} onChange={this.changeHandler}>
@@ -693,7 +693,7 @@ class timesheetList extends Component {
                     </Input>
                     <Button type="button" size="sm" color="primary" className="btn-add pull-right">+ Add New Project</Button>
                   </div>
-                </Col>
+                </Col> */}
                 <Col md={"4"}>
                   <FormGroup>
                     <Label htmlFor="description">Date *</Label>

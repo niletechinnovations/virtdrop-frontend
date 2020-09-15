@@ -16,12 +16,13 @@ class VaTaskListing extends Component {
     this.state = {
       modal: false,      
       itemList: [],
+      clientList:[],
       vaLists: [],
       loading: true,
       formProccessing: false,
       rowIndex: -1,
-      formField: { taskId: '', vaAuthId: '', projectId: '', title: '', description:'' },
-      formErrors: { organizationId: '', vaType: '',  natureOfBusiness:'', engagementType:'', engagementDescription: '', error: ''},
+      formField: { taskId: '', clientId: '', vaAuthId: '', projectId: '', title: '', description:'' },
+      formErrors: { clientId: '', projectId: '',  title:'', description: '', error: ''},
       formValid: false,
       filterItem: { filterVaAuth:'', filterProjectId:'', filterTitle: '', filterFrom:'',  filterTo:''}
     } 
@@ -42,6 +43,7 @@ class VaTaskListing extends Component {
     }
     this.itemList({filter_organization_id: organizationId});
     this.vaListItem({});
+    this.clientListItem({});
   }
 
   /*VA Request List API*/
@@ -86,6 +88,29 @@ class VaTaskListing extends Component {
     } )
   }
 
+  /* Client List API */
+  clientListItem(filterItem = {}) {
+    this.setState( { loading: true}, () => {
+      commonService.getAPIWithAccessToken('organization?pageSize=1000')
+        .then( res => {
+          if ( undefined === res.data.data || !res.data.status ) {
+            this.setState( { loading: false } );
+            toast.error(res.data.message);
+            return;
+          }
+          this.setState({loading:false, clientList: res.data.data.profileList}); 
+        } )
+        .catch( err => {         
+          if(err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }else {
+            this.setState( { loading: false } );
+            toast.error(err.message);
+          }
+        } )
+    } )
+  }  
   /* VA List API */
   vaListItem(filterItem = {}) {
     this.setState( { loading: true}, () => {
@@ -118,11 +143,17 @@ class VaTaskListing extends Component {
   /* Submit Form Handler*/
   submitHandler (event) {
     event.preventDefault();
-    event.target.className += " was-validated";
+    event.target.className = " was-validated";
+    const formInputField = this.state.formField;
+    if( formInputField.clientId==='' || formInputField.vaAuthId==='' || formInputField.title==='' || formInputField.description===''){
+      toast.error("Please fill are mandatory fields!");
+      return;
+    }
+      
     this.setState( { formProccessing: true}, () => {
-      const formInputField = this.state.formField;
       const formData = {
         "vaAuthId": formInputField.vaAuthId,
+        "organizationId": formInputField.clientId,
         "projectId": formInputField.projectId,
         "title": formInputField.title,
         "description": formInputField.description
@@ -200,14 +231,17 @@ class VaTaskListing extends Component {
     fieldValidationErrors.error = '';
    
     switch(fieldName) {      
+      case 'clientId':        
+        fieldValidationErrors.clientId = (value !== '') ? '' : ' is required';
+        break;
       case 'vaAuthId':        
         fieldValidationErrors.vaAuthId = (value !== '') ? '' : ' is required';
         break;
-      case 'vaTitle':        
-        fieldValidationErrors.vaTitle = (value !== '') ? '' : ' is required';
+      case 'title':        
+        fieldValidationErrors.title = (value !== '') ? '' : ' is required';
         break;
-      case 'vaDescription':        
-        fieldValidationErrors.vaDescription = (value !== '') ? '' : ' is required';
+      case 'description':        
+        fieldValidationErrors.description = (value !== '') ? '' : ' is required';
         break;      
       default:
         break;
@@ -221,7 +255,7 @@ class VaTaskListing extends Component {
     const formErrors = this.state.formErrors;
     const formField = this.state.formField;
     this.setState({formValid: 
-      (formErrors.truckName === "" && formField.truckName !== "") 
+      (formErrors.title === "" && formField.title !== "" && formErrors.vaAuthId === "" && formField.vaAuthId !== "") 
       ? true : false});
   }
   /* Set Error Class*/
@@ -234,14 +268,15 @@ class VaTaskListing extends Component {
       modal: !this.state.modal,
       rowIndex: -1,
       formValid: false,
-      formField: { organizationId: '', vaRequestId:'', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription: '', numberOfVA:'', skillSet:'' },
-      formErrors: {organizationId: '', vaType: '', natureOfBusiness: '', engagementType:'', error: ''}
+      formField: { taskId: '', clientId: '', vaAuthId: '', projectId: '', title: '', description:'' },
+      formErrors: {clientId: '', vaAuthId: '', projectId: '', title: '', description:'', error: ''}
     });
   }
 
   handleEditItem(rowIndex){
     const itemInfo = this.state.itemList[rowIndex];
     const formField = {
+      clientId: itemInfo.authId,
       vaAuthId: itemInfo.vaAuthId,
       vaTaskId: itemInfo.vaTaskId,
       projectId: itemInfo.projectId,
@@ -309,7 +344,7 @@ class VaTaskListing extends Component {
 
   render() {
 
-    const { itemList, loading, modal, formProccessing, vaLists, filterItem, formField } = this.state;
+    const { itemList, loading, modal, formProccessing, clientList, vaLists, filterItem, formField } = this.state;
 
     let loaderElement = '';
     if(loading)        
@@ -324,7 +359,7 @@ class VaTaskListing extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>VA Task List</strong> {/* <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add VA Request</Button> */}
+                <strong>VA Task List</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add New Task</Button>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -341,7 +376,7 @@ class VaTaskListing extends Component {
                           </Input>
                         </FormGroup> 
                       </Col>
-                      <Col md={"2"}>
+                      {/* <Col md={"2"}>
                         <FormGroup> 
                           <Label htmlFor="filterProjectId">Project</Label>
                           <Input type="select" name="filterProjectId" id="filterProjectId" value={filterItem.filterProjectId} onChange={this.changeFilterHandler}>
@@ -352,8 +387,8 @@ class VaTaskListing extends Component {
                             <option value="4">Project 4</option>
                           </Input>
                         </FormGroup>
-                      </Col>
-                      <Col md={"2"}>
+                      </Col> */}
+                      <Col md={"4"}>
                         <FormGroup> 
                           <Label htmlFor="filterTitle">Task Name</Label>            
                           <Input type="text" name="filterTitle" id="filterTitle" value={filterItem.filterTitle} onChange={this.changeFilterHandler}>
@@ -406,6 +441,17 @@ class VaTaskListing extends Component {
               <FormErrors formErrors={this.state.formErrors} />
               <Row>
                 <Col md={"6"}>
+                  <FormGroup> 
+                    <Label htmlFor="clientId">Client *</Label>            
+                    <Input type="select" id="clientId" name="clientId" value={formField.clientId} onChange={this.changeHandler} required >
+                      <option value="">Select Client</option>
+                      {clientList.map((clientInfo, index) =>
+                        <SetClientDropDownItem key={index} clientInfo={clientInfo} />
+                      )}
+                    </Input>
+                  </FormGroup> 
+                </Col>
+                <Col md={"6"}>
                   <FormGroup>
                     <Label htmlFor="vaAuthId">VirDrop VA *</Label>            
                     <Input type="select" id="vaAuthId" name="vaAuthId" value={formField.vaAuthId} onChange={this.changeHandler} required >
@@ -416,7 +462,7 @@ class VaTaskListing extends Component {
                     </Input>
                   </FormGroup>  
                 </Col>
-                <Col md={"6"}>
+                {/* <Col md={"6"}>
                   <div className="form-group">
                     <label htmlFor="projectId">Project </label>
                     <Input type="select" name="projectId" id="projectId" className="form-control" value={formField.projectId} onChange={this.changeHandler}>
@@ -426,7 +472,7 @@ class VaTaskListing extends Component {
                       <option value="4">Project 4</option>
                     </Input>
                   </div>
-                </Col>
+                </Col> */}
                 <Col md={"12"}>
                   <FormGroup>
                     <label htmlFor="title">Task Name *</label>
@@ -457,4 +503,10 @@ function SetVaDropDownItem (props) {
   const vaUserInfo = props.vaInfo;
   return (<option value={vaUserInfo.authId} >{vaUserInfo.firstName+' '+vaUserInfo.lastName}</option>)
 }
+
+function SetClientDropDownItem (props) {
+  const vaClientInfo = props.clientInfo;
+  return (<option value={vaClientInfo.authId} >{vaClientInfo.firstName+' '+vaClientInfo.lastName}</option>)
+}
+
 export default VaTaskListing;

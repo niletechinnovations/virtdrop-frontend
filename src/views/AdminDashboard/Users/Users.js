@@ -20,7 +20,7 @@ class Users extends Component {
       rowIndex: -1,
       changeStatusBtn:'',
       formProccessing: false,
-      formField: {profileId:'', email: '', first_name: '', last_name: '', phoneNumber: '', userType:'' },
+      formField: {profileId:'', email: '', first_name: '', last_name: '', phoneNumber: '', userType:'admin' },
       formErrors: { email: '', first_name: '', last_name: '', error: ''},
       formValid: false,
       profileImage:'',
@@ -40,7 +40,7 @@ class Users extends Component {
 
   /*User List API*/
   userList(filterItem = {}) {
-    let filterQuery = "?pageSize=20000";
+    let filterQuery = "?roleType=admin&pageSize=20000";
     if(filterItem.custom_search !== undefined && filterItem.custom_search !== "" ) 
       filterQuery += (filterQuery !=="" ) ? "&emailOrName="+filterItem.custom_search: "&emailOrName="+filterItem.custom_search;
     if(filterItem.filterPhone !== undefined && filterItem.filterPhone !== "" ) 
@@ -113,6 +113,11 @@ class Users extends Component {
     event.target.className += " was-validated";
     this.setState( { formProccessing: true}, () => {
       const formInputField = this.state.formField;
+      if(formInputField.email==='' || formInputField.first_name==='' || formInputField.userType===''){
+        this.setState( { formProccessing: false} );
+        toast.error("Please fill all required fields!");
+        return;
+      }
       const formData = {
         "email": formInputField.email,
         "firstName": formInputField.first_name, 
@@ -120,7 +125,6 @@ class Users extends Component {
         "phoneNumber": formInputField.phoneNumber,
         "role": formInputField.userType,
       };
-
       
       const rowIndex = this.state.rowIndex;
       if(rowIndex > -1) {
@@ -240,7 +244,7 @@ class Users extends Component {
       rowIndex: -1,
       changeStatusBtn: '',
       formValid: false,
-      formField: { profileId:'', email: '', first_name: '', last_name: '', phoneNumber: '', address: '', profilePic: '' },
+      formField: { profileId:'', email: '', first_name: '', last_name: '', phoneNumber: '', userType: 'admin' },
       formErrors: { email: '', first_name: '', last_name: '', error: ''}
     });
   }
@@ -388,9 +392,11 @@ class Users extends Component {
                 <Col md={"6"}>  
                   <FormGroup> 
                     <Label htmlFor="userType">Role *</Label>            
-                    <Input type="select" id="userType" name="userType" value={this.state.formField.userType} onChange={this.changeHandler}>
-                      <option value="user">Admin</option>
+                    <Input type="select" id="userType" name="userType" value={this.state.formField.userType} onChange={this.changeHandler} required>
                       <option value="admin">Super Admin</option>
+                      <option value="recruitmentAdmin">Recruitment Admin</option>
+                      <option value="recruitmentTeam">Recruitment Team</option>
+                      <option value="marketingTeam">Marketing Team</option>
                     </Input>
                   </FormGroup>
                 </Col>                

@@ -33,7 +33,7 @@ class UsersData extends Component {
         email: userData.email,
         phoneNumber: userData.phoneNumber || " ",
         address: userData.address || " ",
-        role: (userData.role ==='admin' ? "Super Admin" : "Admin"),
+        role: (userData.role ==='admin' ? "Super Admin" : userData.role.charAt(0).toUpperCase() + userData.role.substring(1) ),
         createdAt: (new Date(userData.createdAt)).toLocaleDateString("en-US"),
         status: userData.status ? "Active" : "Inactive",   
       }      
@@ -105,7 +105,7 @@ class UsersData extends Component {
     
     return (
       <MUIDataTable
-        title={"Admin List"}
+        title={"Users List"}
         data={rowsItem}
         columns={columns}
         options={options}

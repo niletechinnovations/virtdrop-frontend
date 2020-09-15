@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Col, Row, Button, Form, FormGroup, FormText, FormFeedback, Label, Input } from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import  { Link } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -75,12 +76,6 @@ class ResetPassword extends Component {
         formIsValid = false;
         errors["newPassword"] = "*Please enter your new password.";
     }
-    if (typeof this.state.newPassword !== "undefined") {
-        if (!this.state.newPassword.match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
-            formIsValid = false;
-            errors["newPassword"] = "*Please enter secure and strong password.";
-        }
-    }
     if (!this.state.confirmPassword) {
       formIsValid = false;
       errors["confirmPassword"] = "*Please re-enter your password.";
@@ -107,51 +102,67 @@ class ResetPassword extends Component {
         loaderElement = <Loader />
       return (
         <>
-
-        <div className="">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-7 col-lg-7 bg-image">
-
+        <section className="banner-section">
+          <div className="banner-media-content">
+              <div className="banner-media">
+                <img src="/images/banner4.jpg" alt="Login banner" />
               </div>
-              <div className="col-md-5 col-lg-5 col-sm-12 mx-auto">
-                <ToastContainer /> 
-                <div className="account-form">
-                  <h3 className="login-heading mb-4">Setup your password</h3>
-                  {loaderElement} 
-                  <Form onSubmit={this.submitHandler} noValidate>
-                    <Row form>
-                      <Col md={12}>
-                        <FormGroup>
-                          <Label for="newPassword">New password *</Label>
-                          <Input type="password" name="newPassword" id="newPassword" placeholder="New password *" value={newPassword} onChange={this.changeHandler} invalid={errors['newPassword'] !== undefined && errors['newPassword'] !== ""} required />
-                          <FormFeedback>{errors['newPassword']}</FormFeedback>
-                          <FormText>Be at least 8 characters, Upper and lowercase letter & One number</FormText>
-                        </FormGroup>
-                      </Col>
-                      <Col md={12}>
-                        <FormGroup>
-                          <Label for="confirmPassword">Confirm password *</Label>
-                          <Input type="password" name="confirmPassword" id="confirmPassword" value={confirmPassword} placeholder="Re-enter Password"  onChange={this.changeHandler} invalid={errors['confirmPassword'] !== undefined && errors['confirmPassword'] !== ""}  required />
-                          <FormFeedback>{errors['confirmPassword']}</FormFeedback>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={6}>
-                        <FormGroup>
-                          <Button className="Submit-form-button">Update Password</Button>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    
-                  </Form>
+              <div className="banner-content">
+                <h1>VirtDrop is the easiest way to find and hire Virtual Assistants.</h1>
+              </div>
+          </div>
+        </section>
+        <section className="account-page-section">
+          <div className="container">
+            <div className="account-content-card">
+              <div className="row">
+                <div className="col-md-6 col-lg-6 col-sm-6">
+                  <ToastContainer /> 
+                  <div className="account-form mb-5">
+                    <h2>Setup your password</h2>
+                    {loaderElement} 
+                    <Form onSubmit={this.submitHandler} noValidate>
+                      <Row form>
+                        <Col md={12}>
+                          <FormGroup>
+                            <Label for="newPassword">New password *</Label>
+                            <Input type="password" name="newPassword" id="newPassword" placeholder="New password *" value={newPassword} onChange={this.changeHandler} invalid={errors['newPassword'] !== undefined && errors['newPassword'] !== ""} required />
+                            <FormFeedback>{errors['newPassword']}</FormFeedback>
+                          </FormGroup>
+                        </Col>
+                        <Col md={12}>
+                          <FormGroup>
+                            <Label for="confirmPassword">Confirm password *</Label>
+                            <Input type="password" name="confirmPassword" id="confirmPassword" value={confirmPassword} placeholder="Re-enter Password"  onChange={this.changeHandler} invalid={errors['confirmPassword'] !== undefined && errors['confirmPassword'] !== ""}  required />
+                            <FormFeedback>{errors['confirmPassword']}</FormFeedback>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row form>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Button className="btn-submit">Update Password</Button>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      
+                    </Form>
+                  </div>
+                </div>
+                <div className="col-md-6 col-lg-6 col-sm-6">
+                  <div className="login-content-info">
+                    <h2>Not yet registered but ready to hire a VirtDrop VA?</h2>
+                    <p><b>Get started for FREE!</b></p>
+                    <p>Simply fill out the details on our registration page. We’ll only ask you to do it this one time. You’re only a few steps away from being introduced to one of our amazing Virtual Assistants.</p>
+                    <Link className="btn-click" to="/register">Register Now</Link>
+                    <p><b>Looking to become a Virtual Assistant?</b></p>
+                    <p>If you're interested in becoming a Virtual Assistant you can <Link to="/be-a-virdrop-va">apply here.</Link> </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        
+        </section>
         </>
       );
     

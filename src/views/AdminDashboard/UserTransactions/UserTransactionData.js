@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
 import MUIDataTable from "mui-datatables";
 
 class TransactionData extends Component {
@@ -28,30 +27,25 @@ class TransactionData extends Component {
     for(const [i, enquiry] of this.props.data.entries()){
       let resInfo = {
         userName: enquiry.userName,
-        subscriberId: enquiry.transactionProfileId,
+        subscriberId: enquiry.transactionId,
         planName: enquiry.planName,
-        planTypeLabel: enquiry.planTypeLabel,
+        invoiceId: enquiry.invoiceId,
         amount: '$'+enquiry.amount,
-        startDate: (new Date(enquiry.startDate)).toLocaleDateString("en-US"),
-        endDate: (new Date(enquiry.endDate)).toLocaleDateString("en-US"),
-        status: enquiry.statusLabel ? enquiry.statusLabel : "Pending",   
+        status: ( enquiry.isPaid ? "Success" : "Failed"),   
         createdAt: (new Date(enquiry.createdAt)).toLocaleDateString("en-US"),
         indexVal: i,
-        reviewId: enquiry.reviewId,
       }      
       rowsItem.push(resInfo);
     }
 
     const columns = [ 
         { label: 'User', name: 'userName' },
-        { label: 'Subscription ID', name: 'subscriberId' },
-        { label: 'Plan Type', name: 'planTypeLabel' },
-        { label: 'Plan', name: 'planName' },
+        { label: 'Transaction ID', name: 'subscriberId' },
+        { label: 'Invoice ID', name: 'invoiceId' },
         { label: 'Amount', name: 'amount' },
-        { label: 'Start Date', name: 'startDate' },
-        { label: 'End Date', name: 'endDate' },
         { label: 'Status', name: 'status' },
-        {
+        { label: 'Created on', name: 'createdAt' },
+        /*{
           name: "action",
           label: "Action",
           options: {
@@ -66,7 +60,7 @@ class TransactionData extends Component {
               );
             }
           }
-        },
+        },*/
     ];
 
     
@@ -76,7 +70,7 @@ class TransactionData extends Component {
       searchOpen: false,
       print: false,
       download: true,
-      downloadOptions: {filename: 'texque-transaction-list.csv', separator: ','},
+      downloadOptions: {filename: 'transaction-list.csv', separator: ','},
       responsive: 'stacked',
       selectableRows: 'none',
       textLabels: {
@@ -92,7 +86,7 @@ class TransactionData extends Component {
     
     return (
       <MUIDataTable
-        title={"Transactions"}
+        title={"Transaction List"}
         data={rowsItem}
         columns={columns}
         options={options}

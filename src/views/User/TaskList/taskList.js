@@ -353,7 +353,7 @@ class taskList extends Component {
           <CardBody className="item-list-section">
             <div className="Search-filter">
               <div className="row">
-                  <div className="col-md-3">
+                  {/* <div className="col-md-3">
                     <div className="form-group">
                       <Input type="select" name="filterProjectId" value={filterItem.filterProjectId} onChange={this.changeFilterHandler}>
                         <option value="">Filter by Project</option>
@@ -363,8 +363,8 @@ class taskList extends Component {
                         <option value="4">Project 4</option>
                       </Input>
                     </div>
-                  </div>
-                  <div className="col-md-3">
+                  </div> */}
+                  <div className="col-md-6">
                     <div className="form-group">
                       <Input type="text" name="filterTitle" value={filterItem.filterTitle} onChange={this.changeFilterHandler} placeholder="Filter by Task Title" />
                     </div>
@@ -454,7 +454,7 @@ class taskList extends Component {
                     </Input>
                   </FormGroup>  
                 </Col>
-                <Col md={"12"}>
+                {/* <Col md={"12"}>
                   <div className="form-group">
                     <label htmlFor="projectId">Project </label>
                     <Input type="select" name="projectId" id="projectId" className="form-control" value={formField.projectId} onChange={this.changeHandler}>
@@ -465,7 +465,7 @@ class taskList extends Component {
                     </Input>
                     <Button type="button" size="sm" color="primary" className="btn-add pull-right">+ Add New Project</Button>
                   </div>
-                </Col>
+                </Col> */}
                 <Col md={"12"}>
                   <FormGroup>
                     <label htmlFor="title">Task name *</label>
