@@ -4,12 +4,12 @@ import { Col, Row, Form, FormGroup,FormFeedback, Label, Input, Button, Container
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import commenService from '../../../../core/services/commonService';
+import commonService from '../../../../core/services/commonService';
 import Loader from '../../../../views/Loader/Loader';
 
 import "./BecomeVirtdropPage.css";
 
-const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
+//const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
 
 class BecomeVirtdropPage extends React.Component {
   constructor( props ){
@@ -21,6 +21,7 @@ class BecomeVirtdropPage extends React.Component {
       resumeCV:'',
       intentLetter:'',
       internetSpeedScreenshot:'',
+      skillList: [],
       successMessage: '',
       loading: false,
       errors: {}
@@ -32,6 +33,26 @@ class BecomeVirtdropPage extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.SkillListData();
+  }
+
+  /*Skill List API*/
+  SkillListData() {  
+    this.setState( { loading: true}, () => {
+      commonService.getAPI('skill')
+        .then( res => {
+          if ( undefined === res.data.data || !res.data.status ) {
+            this.setState( {  loading: false } );
+            toast.error(res.data.message);    
+            return;
+          }   
+          this.setState({loading:false, skillList: res.data.data});              
+        } )
+        .catch( err => {         
+          this.setState( { loading: false } );
+          toast.error(err.message);    
+        } )
+    } )
   }
   
   submitMemberForm(e) {
@@ -73,7 +94,7 @@ class BecomeVirtdropPage extends React.Component {
         //console.log(formData);
 
         this.setState( { loading: true }, () => {
-          commenService.postAPI( `va-application`, formData )
+          commonService.postAPI( `va-application`, formData )
             .then( res => {
               if ( undefined === res.data || !res.data.status ) {
                 this.setState( { loading: false } );
@@ -187,7 +208,7 @@ class BecomeVirtdropPage extends React.Component {
   }
 
   render() {
-    const { loading, formField, errors} = this.state;
+    const { loading, formField, skillList, errors} = this.state;
     
     let loaderElement = '';
     if(loading)
@@ -285,9 +306,9 @@ class BecomeVirtdropPage extends React.Component {
                               <Col md="4" sm="12">
                                 <FormGroup>
                                   <Input type="select" name="skillSet1" value={formField.skillSet1} onChange={this.changeHandler} required invalid={errors['skillSet1'] !== undefined && errors['skillSet1'] !== ""}>
-                                    <option value="">Select Skill 1 *</option>
-                                    {skillArr.map((skill, index) =>
-                                    <option key={index} value={skill}>{skill}</option>
+                                  <option value="">Select Skill 1 *</option>
+                                    {skillList.map((skillInfo, index) =>
+                                      <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                     )}
                                   </Input>
                                   <FormFeedback>{errors['skillSet1']}</FormFeedback>
@@ -297,8 +318,8 @@ class BecomeVirtdropPage extends React.Component {
                                 <FormGroup>
                                   <Input type="select" name="skillSet2" value={formField.skillSet2} onChange={this.changeHandler}>
                                     <option value="">Select Skill 2</option>
-                                    {skillArr.map((skill, index) =>
-                                    <option key={index} value={skill}>{skill}</option>
+                                    {skillList.map((skillInfo, index) =>
+                                      <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                     )}
                                   </Input>
                                 </FormGroup>
@@ -307,8 +328,8 @@ class BecomeVirtdropPage extends React.Component {
                                 <FormGroup>
                                   <Input type="select" name="skillSet3" value={formField.skillSet3} onChange={this.changeHandler}>
                                     <option value="">Select Skill 3</option>
-                                    {skillArr.map((skill, index) =>
-                                    <option key={index} value={skill}>{skill}</option>
+                                    {skillList.map((skillInfo, index) =>
+                                      <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                     )}
                                   </Input>
                                 </FormGroup>
@@ -403,6 +424,11 @@ class BecomeVirtdropPage extends React.Component {
         </>
       );
   }
+}
+
+function SetSkillDropDownItem (props) {
+  const skill = props.skillInfo;
+  return (<option value={skill.skillId} >{skill.skillName}</option>)
 }
 
 export default BecomeVirtdropPage;

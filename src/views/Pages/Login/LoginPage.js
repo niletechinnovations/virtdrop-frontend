@@ -101,7 +101,7 @@ class LoginPage extends Component {
           }else if( userRole === "recruitmentAdmin" ){
             this.props.history.push('/admin/va-request');
           }else if( userRole === "recruitmentTeam" ){
-            this.props.history.push('/admin/va-request');
+            this.props.history.push('/admin/va-application');
           }else if( userRole === "marketingTeam" ){
             this.props.history.push('/admin/scheduled-booking');
           }else if( loggedInfo.data.role.toLowerCase() === 'va_member' ){
@@ -182,7 +182,7 @@ class LoginPage extends Component {
        else if(role === "recruitmentAdmin")
         return ( <Redirect to={`/admin/va-request`} noThrow /> )
        else if(role === "recruitmentTeam")
-        return ( <Redirect to={`/admin/va-request`} noThrow /> )
+        return ( <Redirect to={`/admin/va-application`} noThrow /> )
       else if(role === "marketingTeam")
         return ( <Redirect to={`/admin/scheduled-booking`} noThrow /> )
       else if(localStorage.getItem( 'role' ).toLowerCase() === "organization")

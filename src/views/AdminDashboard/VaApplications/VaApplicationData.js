@@ -45,7 +45,7 @@ class VaApplicationData extends Component {
         name: 'userName',
       },     
       { label: 'Email', name: 'email' },
-      { label: 'Mobile no.', name: 'mobileNumber'},
+      //{ label: 'Mobile no.', name: 'mobileNumber'},
       { label: 'Skill Set 1 (Rating)', name: 'skillSet1'},
       { label: 'Skill Set 2 (Rating)', name: 'skillSet2'},
       { label: 'Skill Set 3 (Rating)', name: 'skillSet3'},

@@ -104,7 +104,7 @@ class timesheetList extends Component {
   /* VA List API */
   vaListItem(filterItem = {}) {
     this.setState( { loading: true}, () => {
-      commonService.getAPIWithAccessToken('organization?pageSize=1000')
+      commonService.getAPIWithAccessToken('va-assignment/assigned-clients?pageSize=1000')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );

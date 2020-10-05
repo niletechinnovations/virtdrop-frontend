@@ -30,10 +30,11 @@ class OrganizationData extends Component {
       console.log(i);
       let orgInfo = {
         organizationName: orgnization.organizationName,
+        organizationId: orgnization.organizationId,
         authId: orgnization.authId,
         firstName: orgnization.firstName +' '+ orgnization.lastName,
         email: orgnization.email,
-        phoneNumber: orgnization.phoneNumber || " ",
+        mobileNumber: orgnization.mobileNumber || " ",
         address: orgnization.address || " ",
         createdAt: (new Date(orgnization.createdAt)).toLocaleDateString("en-US"),
         status: orgnization.status ? "Active" : "Inactive",   
@@ -42,7 +43,7 @@ class OrganizationData extends Component {
     }      
     const columns = [      
       {
-        label: 'User Name',
+        label: 'Client Name',
         name: 'firstName',
       },
       {
@@ -54,12 +55,8 @@ class OrganizationData extends Component {
         name: 'email',
       },
       {
-        label: 'Phone no.',
-        name: 'phoneNumber',
-      },
-      {
-        label: 'Address',
-        name: 'address',
+        label: 'Mobile no.',
+        name: 'mobileNumber',
       },
       {
         label: 'Registered on',
@@ -81,7 +78,7 @@ class OrganizationData extends Component {
             return (
               <p><button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editOrganizationItem(i)}><i className="fa fa-pencil"></i> </button>
-                <Link className="btn-view" to={`/admin/organization/manage-listing/${rowsItem[i].authId}`}><i className="fa fa-list"></i> </Link>
+                <Link className="btn-view" to={`/admin/organization/manage-card/${rowsItem[i].authId}`} title="Manage Card"><i className="fa fa-credit-card"></i> </Link>
                 <a href="#!" className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteOrganizationItem(i) };}} ><i className="fa fa-trash"></i></a></p>
             );
           }

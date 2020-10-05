@@ -6,7 +6,7 @@ import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
 import "./../../Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage.css";
 
-const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
+//const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
 
 
 class EditVaApplication extends Component {
@@ -21,6 +21,7 @@ class EditVaApplication extends Component {
       resumeCV:'',
       intentLetter:'',
       internetSpeedScreenshot:'',
+      skillList: [],
       successMessage: '',
       dropDownOpen: '',
       loading: false,
@@ -36,8 +37,28 @@ class EditVaApplication extends Component {
       this.getApplicationInfo(params.vaApplicationId);
     }else 
       this.props.history.push('/admin/va-application');
+
+    this.SkillListData();
   }
   
+  /*Skill List API*/
+  SkillListData() {  
+    this.setState( { loading: true}, () => {
+      commonService.getAPI('skill')
+        .then( res => {
+          if ( undefined === res.data.data || !res.data.status ) {
+            this.setState( {  loading: false } );
+            toast.error(res.data.message);    
+            return;
+          }   
+          this.setState({loading:false, skillList: res.data.data});              
+        } )
+        .catch( err => {         
+          this.setState( { loading: false } );
+          toast.error(err.message);    
+        } )
+    } )
+  }
   
   getApplicationInfo(vaApplicationId){
     this.setState( { loading: true}, () => {
@@ -362,7 +383,7 @@ class EditVaApplication extends Component {
 
   render() {
 
-    const { loading, formField, applicationFiles, errors } = this.state;
+    const { loading, formField, applicationFiles, skillList, errors } = this.state;
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -447,8 +468,8 @@ class EditVaApplication extends Component {
                               <FormGroup>
                                 <Input type="select" name="skillSet1" value={formField.skillSet1} onChange={this.changeHandler} required invalid={errors['skillSet1'] !== undefined && errors['skillSet1'] !== ""}>
                                   <option value="">Select Skill 1 *</option>
-                                  {skillArr.map((skill, index) =>
-                                  <option key={index} value={skill}>{skill}</option>
+                                  {skillList.map((skillInfo, index) =>
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                   )}
                                 </Input>
                                 <FormFeedback>{errors['skillSet1']}</FormFeedback>
@@ -468,8 +489,8 @@ class EditVaApplication extends Component {
                               <FormGroup>
                                 <Input type="select" name="skillSet2" value={formField.skillSet2} onChange={this.changeHandler}>
                                   <option value="">Select Skill 2</option>
-                                  {skillArr.map((skill, index) =>
-                                  <option key={index} value={skill}>{skill}</option>
+                                  {skillList.map((skillInfo, index) =>
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                   )}
                                 </Input>
                               </FormGroup>
@@ -488,8 +509,8 @@ class EditVaApplication extends Component {
                               <FormGroup>
                                 <Input type="select" name="skillSet3" value={formField.skillSet3} onChange={this.changeHandler}>
                                   <option value="">Select Skill 3</option>
-                                  {skillArr.map((skill, index) =>
-                                  <option key={index} value={skill}>{skill}</option>
+                                  {skillList.map((skillInfo, index) =>
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                   )}
                                 </Input>
                               </FormGroup>
@@ -618,6 +639,11 @@ class EditVaApplication extends Component {
 
     )
   }
+}
+
+function SetSkillDropDownItem (props) {
+  const skill = props.skillInfo;
+  return (<option value={skill.skillId} >{skill.skillName}</option>)
 }
 
 export default EditVaApplication;

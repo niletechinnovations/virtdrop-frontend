@@ -12,8 +12,8 @@ class MyProfile extends Component {
    constructor(props){
       super(props);
       this.state = {
-         formField: { organizationName: '', email: '', firstName: '', lastName:'', mobileNumber:'', phoneNumber:'', address:'', address2:'', city:'', state:'', postalCode:'', country:'', profilePic:'' },
-         formErrors: {organization_name: '', email: '', firstName: '', lastName: '', mobileNumber:'', phoneNumber:'', address:'', city:'', state:'', postalCode:'', country:'', error: ''},
+         formField: { organizationName: '', email: '', firstName: '', lastName:'', mobileNumber:'', phoneNumber:'', skypeId:'', address:'', address2:'', city:'', state:'', postalCode:'', country:'', profilePic:'' },
+         formErrors: {organization_name: '', email: '', firstName: '', lastName: '', mobileNumber:'', address:'', city:'', state:'', postalCode:'', country:'', error: ''},
          formValid: true,
          organizationId: "",
          invalidImage:'',
@@ -46,6 +46,7 @@ class MyProfile extends Component {
               lastName: organizationInfo.lastName,
               phoneNumber: organizationInfo.phoneNumber, 
               mobileNumber: organizationInfo.mobileNumber, 
+              skypeId: organizationInfo.skypeId,
               address: organizationInfo.address, 
               address2: organizationInfo.address2, 
               profilePic: organizationInfo.profilePic,
@@ -84,6 +85,7 @@ class MyProfile extends Component {
           "lastName": formInputField.lastName, 
           "mobileNumber": formInputField.mobileNumber, 
           "phoneNumber": formInputField.phoneNumber, 
+          "skypeId": formInputField.skypeId,
           "organizationName": formInputField.organizationName,
           "address": formInputField.address, 
           "address2": formInputField.address2,
@@ -150,9 +152,6 @@ class MyProfile extends Component {
          break;               
       case 'mobileNumber':        
          fieldValidationErrors.mobileNumber = (value !== '') ? '' : ' is required';
-         break;               
-      case 'phoneNumber':        
-         fieldValidationErrors.phoneNumber = (value !== '') ? '' : ' is required';
          break;               
       case 'address':        
          fieldValidationErrors.address = (value !== '') ? '' : ' is required';
@@ -285,8 +284,8 @@ class MyProfile extends Component {
                   </div>
                   <Col md={"6"}>
                      <FormGroup>
-                        <Label htmlFor="organizationName">Organization Name *</Label>
-                        <input type="text" name="organizationName" className="form-control" placeholder="Organization Name" value={this.state.formField.organizationName} onChange={this.changeHandler} />
+                        <Label htmlFor="skypeId">Skype ID</Label>
+                        <input type="text" name="skypeId" className="form-control" placeholder="Skype ID" value={this.state.formField.skypeId} onChange={this.changeHandler} />
                      </FormGroup>
                   </Col>
                   <div className="col-md-6">
@@ -301,6 +300,12 @@ class MyProfile extends Component {
                         <input type="text" name="phoneNumber" id="phoneNumber" className="form-control" placeholder="Phone No." value={this.state.formField.phoneNumber} onChange={this.changeHandler} />
                      </div>
                   </div>
+                  <Col md={"12"}>
+                     <FormGroup>
+                        <Label htmlFor="organizationName">Organization Name *</Label>
+                        <input type="text" name="organizationName" className="form-control" placeholder="Organization Name" value={this.state.formField.organizationName} onChange={this.changeHandler} />
+                     </FormGroup>
+                  </Col>
                   <Col md={"6"}>
                      <FormGroup> 
                         <Label htmlFor="address">Address 1 *</Label>

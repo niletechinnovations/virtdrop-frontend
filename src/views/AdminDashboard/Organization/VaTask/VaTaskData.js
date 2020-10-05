@@ -54,10 +54,6 @@ class VaTaskData extends Component {
         name: 'vaName',
       },
       {
-        label: 'Status',
-        name: 'status',
-      },
-      {
         label: 'Created on',
         name: 'createdAt',
       },

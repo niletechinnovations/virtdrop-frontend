@@ -70,33 +70,41 @@ class clientBillingList extends Component {
     } )
   }
 
-  payInvoice(invoiceId){
+  payInvoice(invoiceId, creditCard){
     if(invoiceId){
       const formData = {
         "invoiceId": invoiceId,
       }
-      this.setState( { loading:true }, () =>{
-        commonService.postAPIWithAccessToken('payment/pay', formData)
-        .then( res => {
-          if ( undefined === res.data.data || !res.data.status ) {           
-            this.setState( { loading: false} );
-            toast.error(res.data.message);
-            return;
-          }
-          if (typeof window !== 'undefined') {
-            window.location.href = res.data.data.redirectUrl;
-          }
-        })
-        .catch( err => {
-          if(err.response !== undefined && err.response.status === 401) {
-            localStorage.clear();
-            this.props.history.push('/login');
-          }else{
-            this.setState( { loading: false } );
-            toast.error(err.message);
-          }
-        })
-      } );
+
+      //redirecto to credit card page if no card exist
+      if(creditCard==='no'){
+        this.props.history.push( '/user/my-card/' );       
+        toast.error('Please Add Your Credit Card Details');
+        return;
+      }else{
+        this.setState( { loading:true }, () =>{
+          commonService.postAPIWithAccessToken('payment/pay', formData)
+          .then( res => {
+            if ( undefined === res.data.data || !res.data.status ) {           
+              this.setState( { loading: false} );
+              toast.error(res.data.message);
+              return;
+            }
+            let paymentData = res.data.data;
+            if( paymentData.id !=='' )
+              this.props.history.push( '/user/transaction/'+paymentData.id );
+          })
+          .catch( err => {
+            if(err.response !== undefined && err.response.status === 401) {
+              localStorage.clear();
+              this.props.history.push('/login');
+            }else{
+              this.setState( { loading: false } );
+              toast.error(err.message);
+            }
+          })
+        } );
+      }
     }
   }
     
@@ -205,7 +213,7 @@ class clientBillingList extends Component {
                         <td>
                           <span className="sno">{index+1}</span>
                         </td>
-                        <td>{ dataInfo.invoiceId }</td>
+                        <td>#{ dataInfo.invoiceNo }</td>
                         <td>{ dataInfo.billingFrom+' - '+dataInfo.billingTo }</td>
                         <td>{ dataInfo.billingHours}</td>
                         <td>${dataInfo.amount}</td>
@@ -213,7 +221,7 @@ class clientBillingList extends Component {
                         <td>
                         { (dataInfo.invoiceAttachment!=='' ? <a href={dataInfo.invoiceAttachment} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-primary" title="Download Invoice"><i className="fa fa-file-pdf-o "></i></a>  : '') } &nbsp;
                         { dataInfo.status===0 &&
-                        <Button className="btn-edit" color="success" onClick={() => this.payInvoice(dataInfo.invoiceId)}>Pay now</Button>
+                        <Button className="btn-edit" color="success" onClick={() => this.payInvoice(dataInfo.invoiceId, dataInfo.creditCard)}>Pay now</Button>
                         }
                         </td>
                       </tr>

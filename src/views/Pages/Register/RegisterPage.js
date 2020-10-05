@@ -23,6 +23,7 @@ class RegisterPage extends React.Component {
       password: '',
       confirmPassword: '',
       organizationName: '',
+      skypeId:'',
       address: '',
       address2:'',
       city: '',
@@ -47,7 +48,7 @@ class RegisterPage extends React.Component {
   submituserRegistrationForm(e) {
     e.preventDefault();
     e.target.className += " was-validated";
-      if (this.validateForm()) {
+    if (this.validateForm()) {
         const signupData = {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
@@ -55,6 +56,7 @@ class RegisterPage extends React.Component {
           mobileNumber: this.state.countryCode+''+this.state.mobileNumber,
           phoneNumber: this.state.phoneCode+''+this.state.phoneNumber,
           password: this.state.password,
+          skypeId: this.state.skypeId,
           organizationName: this.state.organizationName,
           address: this.state.address,
           address2: this.state.address2,
@@ -63,11 +65,6 @@ class RegisterPage extends React.Component {
           postalCode: this.state.zipCode,
           role: 'organization'
         };
-
-        if( localStorage.getItem( 'choosedPlanId' ) ){
-          signupData['planId'] = localStorage.getItem( 'choosedPlanId' );
-          signupData['planVariationId'] = localStorage.getItem( 'choosedplanVariationId' );
-        }
 
         //console.log(signupData);
 
@@ -80,7 +77,7 @@ class RegisterPage extends React.Component {
                 return;
               }
               
-              this.setState({loading: false,  organizationName: "",firstName: "",lastName: "", mobileNumber:"", phoneNumber: "",password: "", address: '', address2:'',city:'',state:'',zipCode:'',errors:'' });
+              this.setState({loading: false,  organizationName: "",firstName: "", lastName: "", mobileNumber:"", phoneNumber: "", password: "", skypeId:'', address: '', address2:'',city:'',state:'',zipCode:'',errors:'' });
               this.props.history.push('/thank-you');
               //toast.success(res.data.message);
               //window.scrollTo(0, 0);
@@ -139,11 +136,7 @@ class RegisterPage extends React.Component {
           errors["mobileNumber"] = "*Please enter valid mobile no.";
       }
     }
-    if (!this.state.phoneNumber) {
-        formIsValid = false;
-        errors["phoneNumber"] = "*Please enter your phone no.";
-    }
-    if (typeof this.state.phoneNumber !== "undefined") {
+    if (this.state.phoneNumber) {
       if (!this.state.phoneNumber.match(/^[0-9]{10}$/)) {
           formIsValid = false;
           errors["phoneNumber"] = "*Please enter valid phone no.";
@@ -154,15 +147,21 @@ class RegisterPage extends React.Component {
       formIsValid = false;
       errors["countryCode"] = "*Required";
     }
-    if (!this.state.phoneCode) {
-      formIsValid = false;
-      errors["phoneCode"] = "*Required";
+    if(this.state.phoneNumber){
+      if (!this.state.phoneCode) {
+        formIsValid = false;
+        errors["phoneCode"] = "*Required";
+      }
     }
-  
     if (!this.state.password) {
         formIsValid = false;
         errors["password"] = "*Please enter your password.";
     }
+    if (!this.state.organizationName) {
+      formIsValid = false;
+      errors["organizationName"] = "*Please enter your company name.";
+    }
+    
     
     this.setState({
       loading: false,
@@ -181,7 +180,7 @@ class RegisterPage extends React.Component {
   }
 
   render() {
-    const { loading, firstName, lastName, email, password,mobileNumber,countryCode,phoneNumber,phoneCode,organizationName,address,address2,city,state,zipCode,errors} = this.state;
+    const { loading, firstName, lastName, email, password,mobileNumber,countryCode,phoneNumber,phoneCode,organizationName,skypeId,address,address2,city,state,zipCode,errors} = this.state;
     
     let loaderElement = '';
     if(loading)
@@ -255,14 +254,19 @@ class RegisterPage extends React.Component {
                         </Col>
                         <Col md={6}>
                           <FormGroup>
-                            <Label for="phoneNumber">Business Phone *</Label>
+                            <Label for="phoneNumber">Business Phone</Label>
                             <InputGroup>
                               <InputGroupAddon addonType="prepend">
-                                <Input type="text" name="phoneCode" className="phone-code" placeholder="+2" value={phoneCode} onChange={this.changeHandler} required />
+                                <Input type="text" name="phoneCode" className="phone-code" placeholder="+2" value={phoneCode} onChange={this.changeHandler} />
                               </InputGroupAddon>
-                              <Input type="number" name="phoneNumber" min={1} step="1" id="phoneNumber" invalid={errors['phoneNumber'] !== undefined && errors['phoneNumber'] !== ""} placeholder="Phone no." value={phoneNumber} onChange={this.changeHandler} required />
-                              <FormFeedback>{errors['phoneNumber']}</FormFeedback>
+                              <Input type="number" name="phoneNumber" min={1} step="1" id="phoneNumber" invalid={errors['phoneNumber'] !== undefined && errors['phoneNumber'] !== ""} placeholder="Phone no." value={phoneNumber} onChange={this.changeHandler} />
                             </InputGroup>
+                          </FormGroup>
+                        </Col>
+                        <Col md={12}>  
+                          <FormGroup>
+                            <Label for="skypeId">Skype ID</Label>
+                            <Input type="text" name="skypeId" id="skypeId" placeholder="Skype ID" value={skypeId} onChange={this.changeHandler} />
                           </FormGroup>
                         </Col>
                         <Col md={12}>  
@@ -305,7 +309,7 @@ class RegisterPage extends React.Component {
                         </Col>
                       
                         <Col md={6}>
-                          <Button className="btn-submit">Sign Up</Button>
+                          <Button type="submit" className="btn-submit">Sign Up</Button>
                         </Col>
                       </Row>
                       <FormGroup>

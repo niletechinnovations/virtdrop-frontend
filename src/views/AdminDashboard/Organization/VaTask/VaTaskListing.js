@@ -388,20 +388,10 @@ class VaTaskListing extends Component {
                           </Input>
                         </FormGroup>
                       </Col> */}
-                      <Col md={"4"}>
+                      <Col md={"5"}>
                         <FormGroup> 
                           <Label htmlFor="filterTitle">Task Name</Label>            
                           <Input type="text" name="filterTitle" id="filterTitle" value={filterItem.filterTitle} onChange={this.changeFilterHandler}>
-                          </Input>
-                        </FormGroup>  
-                      </Col>
-                      <Col md={"1"}>
-                        <FormGroup> 
-                          <Label>Status</Label>
-                          <Input type="select" name="filterStatus" value={filterItem.filterStatus} onChange={this.changeFilterHandler}>
-                            <option value="">All</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
                           </Input>
                         </FormGroup>  
                       </Col>

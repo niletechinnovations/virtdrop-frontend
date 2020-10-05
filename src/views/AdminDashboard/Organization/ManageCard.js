@@ -1,0 +1,202 @@
+import React, { Component } from 'react';
+import { Card, CardBody, CardHeader, Col, Row, Button, Form, Input, FormGroup, Label } from 'reactstrap';
+//import {Link} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import commonService from '../../../core/services/commonService';
+
+import Loader from '../../Loader/Loader';
+
+class ManageCard extends Component {
+  constructor( props ){
+    super( props );
+
+    this.state = {
+      ccField: { ccType:'', ccNumber:'', ccExpMonth:'', ccExpYear:'', ccCVV:'' },
+      ccFormProccessing: false,
+      loading: false,
+      profileId: ""
+    };
+
+    this.submitCreditCard = this.submitCreditCard.bind(this);
+  }
+  componentDidMount() {
+    const { match: { params } } = this.props;
+    if(params.profileId !== undefined && params.profileId !=="") {
+      this.setState({profileId: params.profileId});
+      this.getCreditCardInfo(params.profileId);
+    }else 
+      this.props.history.push('/admin/va-application');
+    console.log(params);
+  }
+
+  getCreditCardInfo(profileId){
+    this.setState( { loading: true}, () => {
+      commonService.getAPIWithAccessToken('profile/credit-card/'+profileId)
+        .then( res => {         
+          if ( undefined === res.data.data || !res.data.status ) {
+            this.setState( {  loading: false } );
+            toast.error(res.data.message);  
+            return;
+          }
+          const cardDetail = res.data.data;
+          let formField = this.state.ccField;
+          formField.ccType = cardDetail.ccType || "";
+          formField.ccNumber = cardDetail.ccNumber || "";
+          formField.ccExpMonth = cardDetail.expire_month || "";
+          formField.ccExpYear = cardDetail.expire_year || "";
+          formField.ccCVV = cardDetail.cvv2 || "";
+          this.setState({loading:false, ccField: formField });     
+        } )
+        .catch( err => {         
+          if(err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }
+          else {
+            this.setState( { loading: false } );
+            toast.error(err.message);    
+          }
+        } )
+    } )
+  }
+
+  changeCCHandler = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    const ccField = this.state.ccField
+    ccField[name] = value;
+    this.setState({ ccField: ccField });
+  };
+
+  submitCreditCard (e) {
+    e.preventDefault();
+    if(this.state.profileId ==='' ){
+      this.setState( {  loading:false, ccFormProccessing: false } );
+      toast.error("Invalid Profile ID");
+      return false;
+    }
+    
+    const ccInputField = this.state.ccField;
+    
+    if(ccInputField.ccType ==='' || ccInputField.ccNumber ==='' || ccInputField.ccExpMonth ==='' || ccInputField.ccExpYear ==='' || ccInputField.ccCVV ==='' ){
+      this.setState( {  loading:false, ccFormProccessing: false } );
+      toast.error("All fields are required!");
+      return false;
+    }
+    
+    this.setState( { loading: true, ccFormProccessing: true}, () => {
+      const ccFormData = {
+        "clientId": this.state.profileId,
+        "type": ccInputField.ccType,
+        "number": ccInputField.ccNumber,
+        "expire_month": ccInputField.ccExpMonth,
+        "expire_year": ccInputField.ccExpYear,
+        "cvv2": ccInputField.ccCVV
+      };
+      
+      commonService.putAPIWithAccessToken('profile/credit-card', ccFormData).then( res => {
+        if ( undefined === res.data.data || !res.data.status ) {
+          this.setState( { loading:false, ccFormProccessing: false} );
+          toast.error(res.data.message);
+          return;
+        }
+        this.setState({ loading:false, ccFormProccessing: false});
+        toast.success(res.data.message);
+        this.getCreditCardInfo(this.state.profileId); 
+      } )
+      .catch( err => {         
+        if(err.response !== undefined && err.response.status === 401) {
+          localStorage.clear();
+          this.props.history.push('/login');
+        }else{
+          this.setState( {  loading:false, ccFormProccessing: false } );
+          toast.error(err.message);
+        }
+      } ) 
+    } );    
+  };
+
+  render() {
+
+    const { loading, ccField, ccFormProccessing } = this.state; 
+    let loaderElement ='';
+      
+    if(loading)
+        loaderElement = <Loader />
+
+    return (
+      <div className="animated fadeIn">
+        <Row>
+          <Col lg={12}>
+            <Card>
+              <CardHeader>
+                <strong><i className="fa fa-credit-card pr-1"></i>Credit Card Info</strong>
+                <button className="btn btn-sm btn-secondary pull-right" onClick={() => this.props.history.goBack()}>Go Back</button>
+
+              </CardHeader>
+              <CardBody className="profileInfo">
+                {loaderElement}
+                <ToastContainer />
+                <Form onSubmit={this.submitCreditCard} noValidate>
+                  <Row>
+                    <Col md={"6"}>
+                      <FormGroup> 
+                        <Label htmlFor="ccType">Card Type *</Label>            
+                        <Input type="select" name="ccType" id="ccType" value={ccField.ccType} onChange={this.changeCCHandler} required>
+                          <option value="">Select Card Type</option>
+                          <option value="visa">Visa</option>
+                          <option value="mastercard">MasterCard</option>
+                          <option value="discover">Discover</option>
+                          <option value="amex">Amex</option>
+                        </Input>
+                      </FormGroup>  
+                    </Col>
+                    <Col md={"6"}>
+                      <FormGroup> 
+                        <Label htmlFor="ccNumber">Card Number *</Label>            
+                        <Input type="text" name="ccNumber" id="ccNumber" value={ccField.ccNumber} onChange={this.changeCCHandler} required />
+                      </FormGroup> 
+                    </Col>
+                    <Col md="6">
+                      <FormGroup>
+                        <Label htmlFor="ccExpMonth" style={ {display: "block"}}>Expiry Date *</Label>
+                        <Input type="select" name="ccExpMonth" id="ccExpMonth" value={ccField.ccExpMonth} onChange={this.changeCCHandler} required  style={ {width:"50%", display: "inline-block"}}>
+                          <option value="">Month</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                        </Input>
+                        <Input type="text" name="ccExpYear" id="ccExpYear" value={ccField.ccExpYear} onChange={this.changeCCHandler} required placeholder="Year" style={ {width:"50%", display: "inline-block"}} />
+                      </FormGroup>
+                    </Col>
+                    <Col md="6">
+                      <FormGroup> 
+                        <Label htmlFor="ccCVV">CVV *</Label>            
+                        <Input type="text" name="ccCVV" id="ccCVV" value={ccField.ccCVV} onChange={this.changeCCHandler} required />
+                      </FormGroup>
+                    </Col>
+                    <Col md="12">
+                      <Button color="primary" className="pull-right" type="submit">{ccFormProccessing ? 'Submitting...' : 'Save Card Details' }</Button>
+                    </Col>
+                  </Row>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    )
+  }
+}
+
+export default ManageCard;

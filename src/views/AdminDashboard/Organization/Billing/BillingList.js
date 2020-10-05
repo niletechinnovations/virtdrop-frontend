@@ -16,16 +16,19 @@ class BillingList extends Component {
     this.state = {
       modal: false,
       invoiceModal: false,
+      transactionModal: false,
       itemList: [],
       clientList:[],
+      transactionInfo:{transactionId:'', transactionMethod:'', transactionStatus:'', transactionDate:'', transactionAmount: '', transactionDescription:''},
       loading: true,
       formProccessing: false,
       rowIndex: -1,
-      formField: { invoiceId: '', clientName: '', notes: '', billingHours:'', billingDate:'', status:'' },
+      formField: { invoiceId: '', transactionId:'', clientName: '', notes: '', billingHours:'', billingDate:'', status:'' },
       formErrors: { vaAuthId: '', projectId: '',  title:'', error: ''},
       formValid: false,
       filterItem: { filterVaAuth:'', filterClientId:'', filterProjectId:'', filterTitle: '', filterFrom:'',  filterTo:''},
       invoiceField: { invoiceClientId:'', billingFromDate:'', billingToDate:'', billingDescription:''},
+      profileId: ''
     } 
     this.submitHandler = this.submitHandler.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
@@ -33,7 +36,6 @@ class BillingList extends Component {
     this.handleEditItem = this.handleEditItem.bind(this);
     this.payInvoiceAdmin = this.payInvoiceAdmin.bind(this);
     this.submitInvoiceHandler = this.submitInvoiceHandler.bind(this);
-    
   }
   
   componentDidMount() { 
@@ -254,11 +256,19 @@ class BillingList extends Component {
     });
   }
 
+  transactionToggle = () => {
+    this.setState({
+      transactionModal: !this.state.transactionModal,
+      transactionInfo:{transactionId:'', transactionMethod:'', transactionStatus:'', transactionDate:'', transactionAmount: '', transactionDescription:''}
+    });
+  }
+  
   handleEditItem(rowIndex){
     const itemInfo = this.state.itemList[rowIndex];
     const formField = {
       authId: itemInfo.authId,
       invoiceId: itemInfo.invoiceId,
+      transactionId: itemInfo.invoiceId,
       clientName: itemInfo.clientName,
       amount: itemInfo.amount,
       billingPeriod: itemInfo.billingTo+' - '+itemInfo.billingTo,
@@ -376,6 +386,14 @@ class BillingList extends Component {
     const requestInfo = this.state.itemList[rowIndex];
     
     if(requestInfo.invoiceId!==''){
+      
+      //redirecto to credit card page if no card exist
+      if(requestInfo.creditCard==='no'){
+        this.props.history.push( '/admin/organization/manage-card/'+requestInfo.clientId );       
+        toast.error('Please Add Credit Card Details');
+        return;
+      }
+
       const formData = {
         "invoiceId": requestInfo.invoiceId,
       }
@@ -387,9 +405,24 @@ class BillingList extends Component {
             toast.error(res.data.message);
             return;
           }
-          if (typeof window !== 'undefined') {
+
+          let paymentData = res.data.data;
+
+          const transactionData = {
+            transactionId: paymentData.id,
+            transactionMethod: paymentData.payer.payment_method,
+            transactionStatus: paymentData.state,
+            transactionDate: paymentData.create_time,
+            transactionAmount: paymentData.transactions[0].amount.details.subtotal,
+            transactionDescription: paymentData.transactions[0].description
+          };
+
+          this.setState({ transactionInfo: transactionData, loading:false, transactionModal:true });
+          toast.success(res.data.message);
+          
+          /*if (typeof window !== 'undefined') {
             window.location.href = res.data.data.redirectUrl;
-          }
+          }*/
         })
         .catch( err => {       
           if(err.response !== undefined && err.response.status === 401) {
@@ -407,9 +440,11 @@ class BillingList extends Component {
     }
   }
 
+
+
   render() {
 
-    const { itemList, loading, modal, invoiceModal, formProccessing, clientList, filterItem, formField, invoiceField } = this.state;
+    const { itemList, loading, modal, invoiceModal, formProccessing, clientList, filterItem, formField, invoiceField, transactionInfo, transactionModal } = this.state;
 
     let loaderElement = '';
     if(loading)        
@@ -513,12 +548,16 @@ class BillingList extends Component {
                     <label><strong>Amount:</strong> ${formField.amount}</label>
                   </FormGroup>
                 </Col>
-                <Col md="12">
+                <Col md="6">
                   <FormGroup>
                     <label><strong>Billing Date:</strong> {(new Date(formField.billingDate)).toLocaleDateString("en-US")}</label>
                   </FormGroup>
                 </Col>
-                
+                <Col md={"6"}>
+                  <FormGroup>
+                    <label><strong>Transaction ID:</strong> {formField.transactionId}</label>
+                  </FormGroup>
+                </Col>
                 <Col md={"6"}>
                   <FormGroup>
                     <label>Notes:</label>
@@ -542,6 +581,47 @@ class BillingList extends Component {
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>
+        </Modal>
+
+        <Modal isOpen={transactionModal} toggle={this.transactionToggle} className="full-width-modal-section store-modal">
+          <ModalHeader toggle={this.transactionToggle}>Transaction Details</ModalHeader>
+            <ModalBody>
+              <Row>
+                <Col md={"12"}>
+                  <FormGroup> 
+                    <Label><strong>Transaction ID:</strong> {transactionInfo.transactionId}</Label>            
+                  </FormGroup> 
+                </Col>
+                <Col md="6">
+                  <FormGroup>
+                    <label><strong>Amount:</strong> ${transactionInfo.transactionAmount}</label>
+                  </FormGroup>
+                </Col>
+                <Col md={"6"}>
+                  <FormGroup> 
+                    <Label><strong>Payment Method:</strong> {transactionInfo.transactionMethod}</Label>            
+                  </FormGroup> 
+                </Col>
+                <Col md="6">
+                  <FormGroup>
+                    <label><strong>Payment Status:</strong> {transactionInfo.transactionStatus}</label>
+                  </FormGroup>
+                </Col>
+                <Col md={"6"}>
+                  <FormGroup>
+                    <label><strong>Transaction Date:</strong> {transactionInfo.transactionDate}</label>
+                  </FormGroup>
+                </Col>
+                <Col md="12">
+                  <FormGroup>
+                    <label><strong>Description:</strong> {transactionInfo.transactionDescription}</label>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.transactionToggle}>Close</Button>
+            </ModalFooter>
         </Modal>
 
         <Modal isOpen={invoiceModal} toggle={this.invoiceToggle} className="full-width-modal-section store-modal">
@@ -586,6 +666,7 @@ class BillingList extends Component {
             </ModalFooter>
           </Form>
         </Modal>
+
 
       </div>
 

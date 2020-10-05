@@ -25,7 +25,7 @@ class requestLists extends Component {
       formProccessing: false,
       loading: false,
       rowIndex: -1,
-      formField: { vaRequestId: '', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription:'', numberOfVA:'', skillSet:'' },
+      formField: { vaRequestId: '', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription:'', numberOfVA:'', skillSet:'', totalWeekHours:'', weekHours:'' },
       filterItem: { filter:'', filterVaType: '', filterNOB:'',  filterFrom:'',  filterTo:''}
     } 
     this.filterItemList = this.filterItemList.bind(this);
@@ -89,7 +89,9 @@ class requestLists extends Component {
         "engagementType": formInputField.engagementType,
         "engagementDescription": formInputField.engagementDescription,
         "numberOfVA": formInputField.numberOfVA,
-        "skillSet": formInputField.skillSet
+        "skillSet": formInputField.skillSet,
+        "totalWeekHours": formInputField.totalWeekHours,
+        "weekHours": formInputField.weekHours
       };
       const rowIndex = this.state.rowIndex;
       if(rowIndex > -1) {
@@ -152,7 +154,7 @@ class requestLists extends Component {
     this.setState({
       modal: !this.state.modal,
       rowIndex: -1,
-      formField: { vaRequestId: '', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription:'', numberOfVA:'', skillSet:'' },
+      formField: { vaRequestId: '', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription:'', numberOfVA:'', skillSet:'', totalWeekHours:'', weekHours:'' },
     });
   }
 
@@ -191,13 +193,15 @@ class requestLists extends Component {
     const rowData = this.state.dataLists[rowIndex];
     //console.log(rowData); return;
     const formField = {
-        vaRequestId: rowData.vaRequestId,
-        vaType: rowData.vaType,
-        natureOfBusiness: rowData.natureOfBusiness,
-        engagementType: rowData.engagementType,
-        engagementDescription: rowData.engagementDescription,
-        numberOfVA: rowData.numberOfVA,
-        skillSet: rowData.skillSet,
+      vaRequestId: rowData.vaRequestId,
+      vaType: rowData.vaType,
+      natureOfBusiness: rowData.natureOfBusiness,
+      engagementType: rowData.engagementType,
+      engagementDescription: rowData.engagementDescription,
+      numberOfVA: rowData.numberOfVA,
+      skillSet: rowData.skillSet,
+      totalWeekHours: rowData.totalWeekHours,
+      weekHours: rowData.weekHours,
     }
     this.setState({rowIndex: rowIndex, formField: formField, modal: true });
   }
@@ -393,7 +397,19 @@ class requestLists extends Component {
                       <Label htmlFor="skillSet">Skill Sets and Other Requirements</Label>
                       <Input type="text" id="skillSet" className="form-control" name="skillSet" value={formField.skillSet} onChange={this.changeHandler}  />
                   </FormGroup>
-                </Col>              
+                </Col>
+                <Col md={"6"}>
+                  <FormGroup> 
+                    <Label htmlFor="totalWeekHours">How many hours need a day from monday-friday?</Label>            
+                    <Input type="number" id="totalWeekHours" name="totalWeekHours" value={formField.totalWeekHours} onChange={this.changeHandler} />
+                  </FormGroup>              
+                </Col>
+                <Col md={"6"}>
+                  <FormGroup> 
+                    <Label htmlFor="weekHours">What Hours?</Label>            
+                    <Input type="text" id="weekHours" name="weekHours" placeholder="2pm -6pm" value={formField.weekHours} onChange={this.changeHandler} />
+                  </FormGroup>              
+                </Col>     
               </Row>
              </ModalBody>
             <ModalFooter>

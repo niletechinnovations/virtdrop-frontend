@@ -111,33 +111,41 @@ class Dashboard extends Component {
   }
 
   //pay with PayPal
-  payInvoice(invoiceId){
+  payInvoice(invoiceId, creditCard){
     if(invoiceId){
       const formData = {
         "invoiceId": invoiceId,
       }
-      this.setState( { loading:true }, () =>{
-        commonService.postAPIWithAccessToken('payment/pay', formData)
-        .then( res => {
-          if ( undefined === res.data.data || !res.data.status ) {           
-            this.setState( { loading: false} );
-            toast.error(res.data.message);
-            return;
-          }
-          if (typeof window !== 'undefined') {
-            window.location.href = res.data.data.redirectUrl;
-          }
-        })
-        .catch( err => {
-          if(err.response !== undefined && err.response.status === 401) {
-            localStorage.clear();
-            this.props.history.push('/login');
-          }else{
-            this.setState( { loading: false } );
-            toast.error(err.message);
-          }
-        })
-      } );
+
+      //redirecto to credit card page if no card exist
+      if(creditCard==='no'){
+        this.props.history.push( '/user/my-card/' );       
+        toast.error('Please Add Your Credit Card Details');
+        return;
+      }else{
+        this.setState( { loading:true }, () =>{
+          commonService.postAPIWithAccessToken('payment/pay', formData)
+          .then( res => {
+            if ( undefined === res.data.data || !res.data.status ) {           
+              this.setState( { loading: false} );
+              toast.error(res.data.message);
+              return;
+            }
+            let paymentData = res.data.data;
+            if( paymentData.id !=='' )
+              this.props.history.push( '/user/transaction/'+paymentData.id );
+          })
+          .catch( err => {
+            if(err.response !== undefined && err.response.status === 401) {
+              localStorage.clear();
+              this.props.history.push('/login');
+            }else{
+              this.setState( { loading: false } );
+              toast.error(err.message);
+            }
+          })
+        } );
+      }
     }
   }
   
@@ -212,10 +220,10 @@ class Dashboard extends Component {
             <div className="dashboard-card">
               <div className="dashboard-card-inner">
                 <div className="dashboard-card-icon payment-bg">
-                  <img src="/images/payment.svg" height="50" alt="" />
+                  <Link to="/user/my-card"><img src="/images/payment.svg" height="50" alt="" /></Link>
                 </div>
                 <div className="dashboard-card-content">
-                  <h2>Manage Payment</h2>
+                  <h2><Link to="/user/my-card">Manage Card</Link></h2>
                 </div>
               </div>
             </div>	
@@ -296,13 +304,13 @@ class Dashboard extends Component {
                         <td>
                           <span className="sno">{index+1}</span>
                         </td>
-                        <td>{invoiceInfo.invoiceId}</td>
+                        <td>#{invoiceInfo.invoiceNo}</td>
                         <td>{ invoiceInfo.billingFrom+' - '+invoiceInfo.billingTo }</td>
                         <td align="center">{ invoiceInfo.billingHours }</td>
                         <td align="center">
                           <strong>${invoiceInfo.amount}</strong> &nbsp; &nbsp;
                           { invoiceInfo.status===0 &&
-                          <Button className="btn-edit" size="sm" color="success" onClick={() => this.payInvoice(invoiceInfo.invoiceId)} title="Pay Now"><i className="fa fa-paypal"></i></Button>
+                          <Button className="btn-edit" size="sm" color="success" onClick={() => this.payInvoice(invoiceInfo.invoiceId, invoiceInfo.creditCard)} title="Pay Now"><i className="fa fa-paypal"></i></Button>
                           }
                           </td>
                       </tr>

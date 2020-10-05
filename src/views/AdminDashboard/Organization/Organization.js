@@ -21,7 +21,7 @@ class Organization extends Component {
       rowIndex: -1,
       changeStatusBtn:'',
       formProccessing: false,
-      formField: {organization_name: '', email: '', first_name: '', last_name: '', mobileNumber:'', phoneNumber: '', address: '', address2:'', city:'', state:'', country:'', postalCode:'' },
+      formField: {organization_name: '', email: '', first_name: '', last_name: '', mobileNumber:'', phoneNumber: '', skypeId:'', address: '', address2:'', city:'', state:'', country:'', postalCode:'', sop:'' },
       formErrors: {organization_name: '', email: '', first_name: '', last_name: '', error: ''},
       formValid: false,
       filterItem: { filter_organization_id: '', filterOrgName: '', filterLocation: '', filterFrom:'',  filterTo:'', filterStatus:'', custom_search: ''},
@@ -91,13 +91,15 @@ class Organization extends Component {
         "lastName": formInputField.last_name, 
         "mobileNumber": formInputField.mobileNumber, 
         "phoneNumber": formInputField.phoneNumber, 
+        "skypeId": formInputField.skypeId,
         "organizationName": formInputField.organization_name,
         "address": formInputField.address,
         "address2": formInputField.address2,
         "city": formInputField.city,
         "state": formInputField.state,
         "country": formInputField.country,
-        "postalCode": formInputField.postalCode
+        "postalCode": formInputField.postalCode, 
+        "sop": formInputField.sop
       };
       
       if(this.state.address)
@@ -213,7 +215,7 @@ class Organization extends Component {
       rowIndex: -1,
       changeStatusBtn: '',
       formValid: false,
-      formField: {organization_name: '', email: '', first_name: '', last_name: '', mobileNumber:'', phoneNumber: '', address: '', address2:'', city:'', state:'', country:'', postalCode:'' },
+      formField: {organization_name: '', email: '', first_name: '', last_name: '', mobileNumber:'', phoneNumber: '', skypeId:'', address: '', address2:'', city:'', state:'', country:'', postalCode:'', sop:'' },
       formErrors: {organization_name: '', email: '', first_name: '', last_name: '', error: ''}
     });
   }
@@ -227,12 +229,14 @@ class Organization extends Component {
         last_name: organizationInfo.lastName, 
         phoneNumber: organizationInfo.phoneNumber,
         mobileNumber: organizationInfo.mobileNumber,
+        skypeId: organizationInfo.skypeId,
         address: organizationInfo.address,
         address2: organizationInfo.address2,
         city: organizationInfo.city,
         state: organizationInfo.state,
         country: organizationInfo.country,
-        postalCode: organizationInfo.postalCode
+        postalCode: organizationInfo.postalCode,
+        sop: organizationInfo.sop
       };
       const statusBtn = <Button type="button" size="sm" className={`changeStatusBtn `+( organizationInfo.status ? 'btn-danger' : 'btn-success' )} onClick={() => 
         this.changeProfileStatus(organizationInfo.profileId, organizationInfo.status )} >{ ( organizationInfo.status ? 'De-Activate Account' : 'Activate Account' )}</Button>
@@ -437,16 +441,16 @@ class Organization extends Component {
                     <Input type="text" placeholder="Last Name *" id="last_name" name="last_name" value={this.state.formField.last_name} onChange={this.changeHandler} />
                   </FormGroup>
                 </Col>
-                <Col md={"6"}>
-                  <FormGroup> 
-                    <Label htmlFor="organization_name">Organization Name</Label>            
-                    <Input type="text" placeholder="Organization Name *" id="organization_name" name="organization_name" value={this.state.formField.organization_name} onChange={this.changeHandler} required />
-                  </FormGroup>
-                </Col>  
                 <Col md={"6"}>  
                   <FormGroup> 
                     <Label htmlFor="email">Email</Label>            
                     <Input type="text" placeholder="Email *" id="email" name="email" value={this.state.formField.email} onChange={this.changeHandler} required />
+                  </FormGroup>
+                </Col>
+                <Col md={"6"}>  
+                  <FormGroup> 
+                    <Label htmlFor="skypeId">Skype ID</Label>            
+                    <Input type="text" placeholder="Skype ID" id="skypeId" name="skypeId" value={this.state.formField.skypeId} onChange={this.changeHandler}  />
                   </FormGroup>
                 </Col>
                 <Col md={"6"}>  
@@ -461,7 +465,19 @@ class Organization extends Component {
                     <Input type="text" placeholder="Business Contact Number" id="phoneNumber" name="phoneNumber" value={this.state.formField.phoneNumber} onChange={this.changeHandler}  />
                   </FormGroup>
                 </Col>
-                <Col md={"6"}>  
+                <Col md={"6"}>
+                  <FormGroup> 
+                    <Label htmlFor="organization_name">Organization Name</Label>            
+                    <Input type="text" placeholder="Organization Name *" id="organization_name" name="organization_name" value={this.state.formField.organization_name} onChange={this.changeHandler} required />
+                  </FormGroup>
+                </Col>  
+                <Col md={"6"}>
+                  <FormGroup> 
+                    <Label htmlFor="sop"><strong>SOPs</strong></Label>            
+                    <Input type="text" placeholder="SOPs of the task" id="sop" name="sop" value={this.state.formField.sop} onChange={this.changeHandler} />
+                  </FormGroup>
+                </Col>  
+                <Col md={"6"}>
                   <FormGroup> 
                     <Label htmlFor="address">Street Address </Label>            
                     <Input type="text" placeholder="Street Address Line 1" id="address" name="address" value={this.state.formField.address} onChange={this.changeHandler}  />

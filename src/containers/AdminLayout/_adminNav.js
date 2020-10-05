@@ -60,6 +60,11 @@ export default {
       url: '/admin/users',
       icon: 'icon-user',   
     },
+    {
+      name: 'Skills',
+      url: '/admin/skills',
+      icon: 'fa fa-file',   
+    },
     
   ],
 };

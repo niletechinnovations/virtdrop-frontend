@@ -11,6 +11,7 @@ class frontEndFooter extends React.Component {
     super(props);
     this.state = {
       loading: false,
+      newsletterName: '',
       newsletterEmail: ''
     }
     this.changeHandler = this.changeHandler.bind(this);
@@ -24,8 +25,11 @@ class frontEndFooter extends React.Component {
   submitNewsletterForm(e) {
     e.preventDefault();
     console.log(this.state);
-    if (this.state.newsletterEmail!=='') {
-        const formData = { email: this.state.newsletterEmail.toLowerCase() };
+    if (this.state.newsletterEmail!=='' && this.state.newsletterName!=='') {
+        const formData = { 
+          contactPerson: this.state.newsletterName,
+          email: this.state.newsletterEmail.toLowerCase() 
+        };
         this.setState( { loading: true }, () => {
           commonService.postAPI( `common/newsletter`, formData ).then( res => {
             localStorage.setItem( 'newsletterSubscribed', true );
@@ -48,12 +52,12 @@ class frontEndFooter extends React.Component {
             } )
         } )
     }else{
-      toast.error("Email address should not be empty!"); return;
+      toast.error("Name and Email should not be empty!"); return;
     }
   };
 
   render() {
-    const { loading, newsletterEmail } = this.state;
+    const { loading, newsletterName, newsletterEmail } = this.state;
     let loaderElement = '';
     if(loading)
       loaderElement = <Loader />
@@ -126,10 +130,11 @@ class frontEndFooter extends React.Component {
                 <div className="footer-link-info">
                   {/* <h2>Subscribe</h2> */}
                   <div className="newsletter-form">
-                    <h4>To get your Virtdrop eBook enter your email below.</h4>
+                    <h4>To get your Virtdrop eBook enter your name & email below.</h4>
                     <Form onSubmit={this.submitNewsletterForm} noValidate>
                       <div className="newsletter-group">
-                        <Input className="newsletter-input" type="text" name="newsletterEmail" placeholder="Enter your email" value={ newsletterEmail} onChange={this.changeHandler} required />
+                        <Input className="newsletter-input mb-2" type="text" name="newsletterName" placeholder="Enter your name" value={ newsletterName} onChange={this.changeHandler} required />
+                        <Input className="newsletter-input" type="email" name="newsletterEmail" placeholder="Enter your email address" value={ newsletterEmail} onChange={this.changeHandler} required />
                         <Button className="btn-submit mt-2">Submit</Button>
                       </div>
                     </Form>

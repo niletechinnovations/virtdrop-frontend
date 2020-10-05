@@ -74,7 +74,7 @@ class ScheduledBookingData extends Component {
             customBodyRender: (value, tableMeta, updateValue) => {
               let i = tableMeta.rowIndex;
               return (
-                <div className="actionBtnGroup"><Button className="btn-delete btn-danger" size='sm' onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteEnquiryItem(i) };}} title="Delete Inquiry"><i className="fa fa-trash"></i> </Button></div>
+                (localStorage.getItem( 'role' )!== "recruitmentAdmin" ? <div className="actionBtnGroup"><Button className="btn-delete btn-danger" size='sm' onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteEnquiryItem(i) };}} title="Delete Inquiry"><i className="fa fa-trash"></i> </Button></div> : '')
               );
             }
           }

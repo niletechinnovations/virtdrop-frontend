@@ -19,7 +19,8 @@ class HomePage extends React.Component {
             modal: false,
             videoModal: false,
             loading: false,
-            newsletterEmail: ''
+            newsletterEmail: '',
+            newsletterName: ''
         }
         this.changeHandler = this.changeHandler.bind(this);
         this.submitNewsletterForm = this.submitNewsletterForm.bind(this);
@@ -35,8 +36,11 @@ class HomePage extends React.Component {
     
     submitNewsletterForm(e) {
         e.preventDefault();
-        if (this.state.newsletterEmail!=='') {
-            const formData = { email: this.state.newsletterEmail.toLowerCase() };
+        if (this.state.newsletterEmail!==''  && this.state.newsletterName!=='') {
+            const formData = { 
+                contactPerson: this.state.newsletterName,
+                email: this.state.newsletterEmail.toLowerCase() 
+            };
             this.setState( { loading: true }, () => {
               commonService.postAPI( `common/newsletter`, formData ).then( res => {
                 localStorage.setItem( 'newsletterSubscribed', true );
@@ -58,7 +62,7 @@ class HomePage extends React.Component {
                 } )
             } )
         }else{
-            toast.error("Email address should not be empty!"); return;
+            toast.error("Name and Email should not be empty!"); return;
         }
     };
 
@@ -67,14 +71,14 @@ class HomePage extends React.Component {
     };
 
     toggle = () => {
-        this.setState({ modal: !this.state.modal, newsletterEmail:'' });
+        this.setState({ modal: !this.state.modal, newsletterEmail:'', newsletterName:'' });
     }
     videoToggle = () => {
         this.setState({ videoModal: !this.state.videoModal });
     }
     
     render() {
-        const { loading, modal, videoModal, newsletterEmail } = this.state;
+        const { loading, modal, videoModal, newsletterEmail, newsletterName } = this.state;
         let loaderElement = '';
         if(loading)
           loaderElement = <Loader />
@@ -241,10 +245,13 @@ class HomePage extends React.Component {
             <ModalBody>
                 <div className="subscribeNews-info">
                     <div className="subscribeNews-text">
-                        <p>To get your Virtdrop eBook enter your email below.</p>
+                        <p>To get your Virtdrop eBook enter your name and email below.</p>
                     </div>
                     <div className="subscribeNews-group">
-                        <Input type="text" placeholder="Enter your email address" className="subscribe-control" name="newsletterEmail" value={ newsletterEmail} onChange={this.changeHandler} />
+                        <Input className="subscribe-control" type="text" name="newsletterName" placeholder="Enter your name" value={ newsletterName} onChange={this.changeHandler} required />
+                    </div>    
+                    <div className="subscribeNews-group">
+                        <Input type="email" placeholder="Enter your email address" className="subscribe-control" name="newsletterEmail" value={ newsletterEmail} onChange={this.changeHandler} required />
                         <Button className="submit_button" type="submit">Submit</Button>
                     </div>
                     <p className="subscribe-text-info">Looking for work? <Link to="/be-a-virdrop-va">Apply here to become a Virtual Assistant</Link></p>

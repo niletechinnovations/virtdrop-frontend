@@ -11,7 +11,7 @@ class intakeForm extends Component {
    constructor(props){
       super(props);
       this.state = {
-         formField: { vaType: 1, natureOfBusiness: '', engagementType: 1, engagementDescription:'', numberOfVA:'', skillSet:'' },
+         formField: { vaType: 1, natureOfBusiness: '', engagementType: 1, engagementDescription:'', numberOfVA:'', skillSet:'', totalWeekHours:'', weekHours:'' },
          formErrors: {vaType: '', natureOfBusiness: '', engagementType: '', engagementDescription: '', numberOfVA:'', skillSet:'', error: ''},
          formValid: true,
          requestId: "",
@@ -36,7 +36,9 @@ class intakeForm extends Component {
           "engagementType": formInputField.engagementType, 
           "engagementDescription": formInputField.engagementDescription, 
           "numberOfVA": formInputField.numberOfVA, 
-          "skillSet": formInputField.skillSet
+          "skillSet": formInputField.skillSet,
+          "totalWeekHours": formInputField.totalWeekHours,
+          "weekHours": formInputField.weekHours
         };
         commonService.postAPIWithAccessToken('va-request', formData)
           .then( res => {
@@ -189,7 +191,19 @@ class intakeForm extends Component {
                            <Label htmlFor="skillSet">Skill Sets and Other Requirements</Label>
                            <Input type="text" id="skillSet" className="form-control" name="skillSet" value={formField.skillSet} onChange={this.changeHandler}  />
                         </FormGroup>
-                     </Col>              
+                     </Col>
+                     <Col md={"6"}>
+                        <FormGroup> 
+                           <Label htmlFor="totalWeekHours">How many hours you need a day from monday to friday?</Label>
+                           <Input type="number" id="totalWeekHours" className="form-control" name="totalWeekHours" value={formField.totalWeekHours} onChange={this.changeHandler}  />
+                        </FormGroup>
+                     </Col>
+                     <Col md={"6"}>
+                        <FormGroup> 
+                           <Label htmlFor="skillSet">What Hours?</Label>
+                           <Input type="text" id="weekHours" className="form-control" name="weekHours" placeholder="2pm -6pm" value={formField.weekHours} onChange={this.changeHandler}  />
+                        </FormGroup>
+                     </Col>        
                      <Col md={"12"}>
                         <div className="form-group pull-right">
                            <Button color="primary" className="btn btn-primary btn-lg" type="submit">Submit</Button>

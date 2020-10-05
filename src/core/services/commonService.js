@@ -1,20 +1,7 @@
 import axios from 'axios';
-const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/'; // 'http://localhost:8082/'; // 
+const API_BASE_URL = 'http://localhost:8082/'; //'https://virtdrop-api.herokuapp.com/'; //  
 const API_BASE_URL_WITH_OUT_VERSION = 'http://virtdrop-api.herokuapp.com/';
 class ApiService {
-
-    /*Get Organization Subscribe*/
-    getIsSubscribe() {
-        let isSubscribed = localStorage.getItem("isSubscribed");
-        if(isSubscribed === '' || isSubscribed === null)
-          return "";
-        else
-          return ( localStorage.getItem("isSubscribed") === "true") ? true : false;
-    }
-    setIsSubscribe(isSubscribe = "false") {
-        isSubscribe = isSubscribe.toString();
-        localStorage.setItem( 'isSubscribed');
-    }
 
     /*Get API*/
     getAPI(urlSegment) {

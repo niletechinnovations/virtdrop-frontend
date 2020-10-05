@@ -72,7 +72,7 @@ class Dashboard extends Component {
       if(role === "recruitmentAdmin")
         return ( <Redirect to={`/admin/va-request`} noThrow /> )
       else if(role === "recruitmentTeam")
-        return ( <Redirect to={`/admin/va-request`} noThrow /> )
+        return ( <Redirect to={`/admin/va-application`} noThrow /> )
       else if(role === "marketingTeam")
         return ( <Redirect to={`/admin/scheduled-booking`} noThrow /> )
 		} else {

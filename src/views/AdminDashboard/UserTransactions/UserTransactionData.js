@@ -26,10 +26,8 @@ class TransactionData extends Component {
    
     for(const [i, enquiry] of this.props.data.entries()){
       let resInfo = {
-        userName: enquiry.userName,
         subscriberId: enquiry.transactionId,
-        planName: enquiry.planName,
-        invoiceId: enquiry.invoiceId,
+        invoiceNo: '#'+enquiry.invoiceNo,
         amount: '$'+enquiry.amount,
         status: ( enquiry.isPaid ? "Success" : "Failed"),   
         createdAt: (new Date(enquiry.createdAt)).toLocaleDateString("en-US"),
@@ -39,9 +37,8 @@ class TransactionData extends Component {
     }
 
     const columns = [ 
-        { label: 'User', name: 'userName' },
         { label: 'Transaction ID', name: 'subscriberId' },
-        { label: 'Invoice ID', name: 'invoiceId' },
+        { label: 'Invoice No', name: 'invoiceNo' },
         { label: 'Amount', name: 'amount' },
         { label: 'Status', name: 'status' },
         { label: 'Created on', name: 'createdAt' },

@@ -32,7 +32,7 @@ class BillingData extends Component {
     let rowsItem = [];
     for(const [i, Store] of this.props.data.entries()){
       let orgInfo = {   
-        invoiceId: Store.invoiceId,
+        invoiceId: '#'+Store.invoiceNo,
         title: Store.taskName,
         amount: '$'+Store.amount,
         billingHours: Store.billingHours || 0,

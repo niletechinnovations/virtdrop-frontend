@@ -63,6 +63,18 @@ class VaDashboard extends Component {
           <Col sm="3" md="3" lg="3">
             <div className="dashboard-card">
               <div className="dashboard-card-inner">
+                <div className="dashboard-card-icon payment-bg">
+                <Link to="/user/dashboard"><img src="/images/dashboard.svg" height="50" alt="" /></Link>
+                </div>
+                <div className="dashboard-card-content">
+                  <h2><Link to="/user/dashboard">Dashboard</Link></h2>
+                </div>
+              </div>
+            </div>	
+          </Col>
+          <Col sm="3" md="3" lg="3">
+            <div className="dashboard-card">
+              <div className="dashboard-card-inner">
                 <div className="dashboard-card-icon card-bg">
                 <Link to="/user/va-task"><img src="/images/task.svg" height="50" alt="" /></Link>
                 </div>
@@ -96,20 +108,9 @@ class VaDashboard extends Component {
               </div>
             </div>	
           </Col>
-          <Col sm="3" md="3" lg="3">
-            <div className="dashboard-card">
-              <div className="dashboard-card-inner">
-                <div className="dashboard-card-icon payment-bg">
-                  <img src="/images/payment.svg" height="50" alt="" />
-                </div>
-                <div className="dashboard-card-content">
-                  <h2>Manage Payment</h2>
-                </div>
-              </div>
-            </div>	
-          </Col>
+          
 
-          <Col md="6" lg="6" sm="6">
+          <Col md="12" lg="12" sm="12">
             <Card className="vd-card">
               <CardHeader>
                 <div className="d-flex align-items-center">
@@ -128,8 +129,8 @@ class VaDashboard extends Component {
                       <tr>
                         <th>S.No.</th>
                         <th>Task</th>
-                        <th style={{width:'110px'}}>Assigning Date</th>
-                        <th style={{width:'80px'}}>Due Date</th>
+                        <th>Assigning Date</th>
+                        <th>Due Date</th>
                         <th>Assigned By</th>
                       </tr>
                     </thead>
@@ -145,75 +146,6 @@ class VaDashboard extends Component {
                       <td>{taskInfo.clientName}</td>
                     </tr>
                     )}
-                    </tbody>
-                  </Table>
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="6" lg="6" sm="6">
-          <Card className="vd-card">
-              <CardHeader>
-                <div className="d-flex align-items-center">
-                  <div className="mr-auto">
-                    <h4 className="card-title"><img src="/images/billing.svg" height="30" alt="Billing" /> Billing</h4>
-                  </div>
-                  <div className="add-option-info">
-                    <a className="btn-add" href="#!">More</a>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardBody>
-                <div className="card-table table-responsive">
-                  <Table size="sm" className="listing-table">
-                    <thead>
-                      <tr>
-                        <th>S.no</th>
-                        <th>VA </th>
-                        <th>Working Hours</th>
-                        <th>Amount</th>
-                        <th>Created Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                      <td><span className="sno">1</span></td>
-                      <td>Abu Bin Ishtiyak</td>
-                      <td>8 Hours</td>
-                      <td>$56.00</td>
-                      <td>02/11/2020</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span className="sno">2</span>
-                      </td>
-                      <td>Abu Bin Ishtiyak</td>
-                      <td>8 Hours</td>
-                      <td>$56.00</td>
-                      <td>02/11/2020</td>
-                    </tr>
-                    <tr>
-                      <td><span className="sno">3</span></td>
-                      <td>Abu Bin Ishtiyak</td>
-                      <td>8 Hours</td>
-                      <td>$56.00</td>
-                      <td>02/11/2020</td>
-                    </tr>
-                    <tr>
-                      <td><span className="sno">4</span></td>
-                      <td>Abu Bin Ishtiyak</td>
-                      <td>8 Hours</td>
-                      <td>$56.00</td>
-                      <td>02/11/2020</td>
-                    </tr>
-                    <tr>
-                      <td><span className="sno">5</span></td>
-                      <td>Abu Bin Ishtiyak</td>
-                      <td>8 Hours</td>
-                      <td>$56.00</td>
-                      <td>02/11/2020</td>
-                    </tr>
-                      
                     </tbody>
                   </Table>
                 </div>

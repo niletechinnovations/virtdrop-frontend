@@ -1,7 +1,6 @@
 import Dashboard from '../views/User/UserDashboard/Dashboard';
 import MyProfile from '../views/User/MyProfile/MyProfile';
 import ChangePassword from '../views/User/MyProfile/ChangePassword';
-import ListingDetails from '../views/User/MyListings/FoodTruckDetails';
 import EnquiryLists from '../views/User/Enquiries/EnquiryLists';
 import TransactionList from '../views/User/Transactions/TransactionLists';
 import intakeForm from '../views/User/ManageRequest/intakeForm';
@@ -14,13 +13,14 @@ import VaProfile from '../views/VA/VaProfile/VaProfile';
 import timesheetList from '../views/VA/TimeSheet/timesheetList';
 import clientBillingList from '../views/User/Billing/clientBillingList';
 import billingPaymentStatus from '../views/User/Billing/billingPaymentStatus';
+import MyCard from '../views/User/MyProfile/MyCard';
+import TransactionDetails from '../views/User/Transactions/TransactionDetails';
 
 const userRoutes = [
   { path: '/user/', exact: true, name: 'Home' },
   { path: '/user/dashboard', exact: true, name: 'Dashboard', component: Dashboard },  
   { path: '/user/my-profile', exact: true,  name: 'Profile', component: MyProfile }, 
   { path: '/user/change-password', exact: true,  name: 'Change Password', component: ChangePassword },
-  { path: '/user/listing-details', exact: true, name: 'My Listings', component: ListingDetails },
   { path: '/user/inquiries', exact:true, name:'Inquiry Lists', component: EnquiryLists},
   { path: '/user/transactions', exact:true, name:'Transaction Lists', component: TransactionList},
   { path: '/user/manage-request', exact:true, name:"Request List", component: requestLists},
@@ -35,7 +35,9 @@ const userRoutes = [
   { path: '/user/billing', exact: true, name: "Billing", component: clientBillingList},
   { path: '/user/payment/:status', exact: true,  name: 'Payment Status', component: billingPaymentStatus },
   { path: '/user/transactions', exact:true, name:'Transaction Lists', component: TransactionList},
-
+  { path: '/user/my-card', exact:true, name:'My Card', component: MyCard},
+  { path: '/user/transaction/:transactionId', exact:true, name:'Transaction Details', component: TransactionDetails},
+  
 ];
 
 export default userRoutes;

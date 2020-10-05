@@ -97,7 +97,7 @@ class TransactionLists extends Component {
                       <span className="sno">{index+1}</span>
                     </td>
                     <td>{ dataInfo.transactionId }</td>
-                    <td>{ dataInfo.invoiceId }</td>
+                    <td>#{ dataInfo.invoiceNo }</td>
                     <td>${dataInfo.amount}</td>
                     <td>{ (dataInfo.isPaid ? 'Paid' : 'Unpaid') }</td>
                     <td>{ (new Date(dataInfo.createdAt)).toLocaleDateString("en-US") }</td>
