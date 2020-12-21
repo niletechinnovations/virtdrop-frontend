@@ -21,7 +21,7 @@ class NewApplicationData extends Component{
                 email: userData.email,
                 mobileNumber: userData.mobileNumber,
                 skypeID: userData.skypeID || " ",
-                socialMediaID: userData.socialMediaID,
+                status: ( userData.statusText !==''  ? userData.statusText : "Pending"),
                 createdDate: (new Date(userData.createdAt)).toLocaleDateString("en-US"),
               }
               rowsItem.push(userInfo);
@@ -34,7 +34,7 @@ class NewApplicationData extends Component{
                     <td>{user.email}</td>
                     <td>{user.mobileNumber}</td>
                     <td>{user.skypeID}</td>
-                    <td>{user.socialMediaID}</td>
+                    <td>{user.status}</td>
                     <td>{user.createdDate}</td>
                 </tr>
             );
@@ -51,7 +51,7 @@ class NewApplicationData extends Component{
                             <th>Email</th>
                             <th>Mobile no.</th>
                             <th>Skype ID</th>
-                            <th>Social Media Link</th>
+                            <th>Status</th>
                             <th>Application Date</th>
                         </tr>
                     </thead>

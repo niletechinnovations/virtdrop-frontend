@@ -8,7 +8,7 @@ const HomeSlider = (props) => {
     
   return (
     
-    <OwlCarousel id="Main-Slider" className="owl-theme" loop nav={false} lazyLoad items="1" dots={false} autoplay={true} >
+    <OwlCarousel id="Main-Slider" className="owl-theme" loop nav={false} lazyLoad items="1" dots={false} autoplay={true} autoplayTimeout={20000} >
       {/* <div className="item">
         <div className="slider-item-info">
           <div className="slider-media">
@@ -27,7 +27,7 @@ const HomeSlider = (props) => {
           </div>
           <div className="slider-content">
             <h6 style={{color:'#ffffff'}}>Achieve optimal time management and better work-life balance with our amazing Virtual Assistants</h6>
-            <Link className="explore-btn" to="/register">Find the Best Virtual Assistant Today</Link>
+            <Link className="explore-btn" to="/booking">Find the Best Virtual Assistant Today</Link>
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@ const HomeSlider = (props) => {
           <div className="slider-content">
             <h2>Why VIRTDROP?</h2>
             <h6 style={{color:'#ffffff'}}>We help businesses become more efficient and productive, enabling them to more easily achieve their goals.</h6>
-            <Link className="explore-btn" to="/register">Find the Best Virtual Assistant Today</Link>
+            <Link className="explore-btn" to="/booking">Find the Best Virtual Assistant Today</Link>
           </div>
         </div>
       </div>
@@ -51,13 +51,14 @@ const HomeSlider = (props) => {
             <img src="/images/slider3.jpg" alt="Slide 3" />
           </div>
           <div className="slider-content">
-              <h2>Services</h2>
+            <h2>Services</h2>
             <ul style={{color:'#ffffff'}}>
-              <li>Social Media Management</li>
-              <li>Photo and Video Editing</li>
-              <li>Web Design</li>
-              <li>Management of filing systems and databases</li>
-              <li>Management of diaries, including organizing appointments and meetings</li>
+              <li>Administrative/data entry tasks</li>
+              <li>E-commerce related tasks</li>
+              <li>Social media management</li>
+              <li>Customer support</li>
+              <li>Graphic designing</li>
+              <li>Bookkeeping</li>
             </ul>
             <Link className="explore-btn" to="/services">Click here for more services offered</Link>
           </div>
@@ -70,8 +71,8 @@ const HomeSlider = (props) => {
           </div>
           <div className="slider-content">
             <h2>PRICING</h2>
-            <h6 style={{color:'#ffffff'}}>Our Virtual Assistants are available at a flat-rate of $12 per hour.</h6>
-            <Link className="explore-btn" to="/register">Get Started Today!</Link>
+            <h6 style={{color:'#ffffff'}}>Our pricing is as straight forward and stream lined as everything else we offer.</h6>
+            <Link className="explore-btn" to="/booking">Request a Quote</Link>
           </div>
         </div>
       </div>

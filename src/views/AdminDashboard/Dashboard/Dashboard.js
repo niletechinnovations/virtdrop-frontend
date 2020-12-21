@@ -16,7 +16,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
      loading: false,
-      dashBoardStats: {organizationCount: 0, usersCount: 0, foodTruckCount: 0, enquiryCount:0 },
+      dashBoardStats: {organizationCount: 0, vaCount: 0, bookingCount: 0, newsletterCount:0 },
       userList: [],
       enquiryList:[],
       vaApplicationList: []
@@ -34,7 +34,7 @@ class Dashboard extends Component {
             return;
           }
           const dashData = res.data.data;
-          this.setState({ loading:false, dashBoardStats:dashData, lineGraphLabels:dashData.foodTruckGraph.labels, foodTruckData:dashData.foodTruckGraph.data, enquiryData:dashData.enquiryGraph.data  })
+          this.setState({ loading:false, dashBoardStats:dashData  })
         }
         )
 
@@ -49,7 +49,7 @@ class Dashboard extends Component {
           this.setState({loading:false, userList: responseData.profileList});
         } )
         
-      commonService.getAPIWithAccessToken('va-application?pageNo=1&pageSize=10')
+      commonService.getAPIWithAccessToken('va-application/?pageNo=1&pageSize=10')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( {  loading: false } );
@@ -67,6 +67,7 @@ class Dashboard extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
+    const { dashBoardStats } = this.state;
     const role = localStorage.getItem( 'role' );
     if ( role!=='admin' ) {
       if(role === "recruitmentAdmin")
@@ -75,6 +76,10 @@ class Dashboard extends Component {
         return ( <Redirect to={`/admin/va-application`} noThrow /> )
       else if(role === "marketingTeam")
         return ( <Redirect to={`/admin/scheduled-booking`} noThrow /> )
+      else if(role === "accountingAdmin")
+        return ( <Redirect to={`/admin/organization`} noThrow /> )
+      else if(role === "teamLead")
+        return ( <Redirect to={`/admin/va-task`} noThrow /> )
 		} else {
       return (
         <div className="animated fadeIn admin-dashboard">
@@ -86,19 +91,8 @@ class Dashboard extends Component {
                   <img src="/images/user.svg" height="35" alt="" />
                 </div>
                 <div className="card-bg-content">
-                  <h2 className="text-value">100</h2>
-                  <p>Total Users</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs="12" sm="6" lg="3">
-              <div className="card-bg-info card-bg-2">
-                <div className="card-bg-icon">
-                  <img src="/images/timezone.svg" height="35" alt="" />
-                </div>
-                <div className="card-bg-content">
-                  <h2 className="text-value">20</h2>
-                  <p>Total Request</p>
+                  <h2 className="text-value">{ dashBoardStats.organizationCount}</h2>
+                  <p>Total Clients</p>
                 </div>
               </div>
             </Col>
@@ -108,19 +102,30 @@ class Dashboard extends Component {
                   <img src="/images/task.svg" height="35" alt="" />
                 </div>
                 <div className="card-bg-content">
-                  <h2 className="text-value">200</h2>
-                  <p>Total VA Applications</p>
+                  <h2 className="text-value">{ dashBoardStats.vaCount}</h2>
+                  <p>VA Applications</p>
+                </div>
+              </div>
+            </Col>
+            <Col xs="12" sm="6" lg="3">
+              <div className="card-bg-info card-bg-2">
+                <div className="card-bg-icon">
+                  <img src="/images/payment.svg" height="35" alt="" />
+                </div>
+                <div className="card-bg-content">
+                  <h2 className="text-value">{ dashBoardStats.bookingCount }</h2>
+                  <p>Discovery calls</p>
                 </div>
               </div>
             </Col>
             <Col xs="12" sm="6" lg="3">
               <div className="card-bg-info card-bg-4">
                   <div className="card-bg-icon">
-                  <img src="/images/payment.svg" height="35" alt="" />
+                  <img src="/images/task.svg" height="35" alt="" />
                   </div>
                   <div className="card-bg-content">
-                    <h2 className="text-value">$300</h2>
-                    <p>Total Payment</p>
+                    <h2 className="text-value">{ dashBoardStats.newsletterCount }</h2>
+                    <p>eBook Downloads</p>
                   </div>
               </div>
             </Col>

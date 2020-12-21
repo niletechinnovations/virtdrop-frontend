@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 class PricingPage extends React.Component {
 
@@ -26,7 +27,7 @@ class PricingPage extends React.Component {
                 </div>
                 <div className="plan-pricing-info">
                     <p className="text-center">Our pricing is as straight forward and stream lined as everything else we offer. Our Virtual Assistants are available at a flat-rate of 
-                    <div className="pricing-info"><span className="pricing-value">$12</span> <span className="pricing-per-value">per hour.</span></div></p>
+                    <div className="pricing-info"><Link className="text-white" to="/booking">Request a Quote</Link></div></p>
                 </div>
             </div>
         </section>        

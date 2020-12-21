@@ -397,6 +397,8 @@ class Users extends Component {
                       <option value="recruitmentAdmin">Recruitment Admin</option>
                       <option value="recruitmentTeam">Recruitment Team</option>
                       <option value="marketingTeam">Marketing Team</option>
+                      <option value="accountingAdmin">Accounting Admin</option>
+                      <option value="teamLead">Team Lead</option>
                     </Input>
                   </FormGroup>
                 </Col>                

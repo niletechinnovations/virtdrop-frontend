@@ -1,16 +1,29 @@
 import React from "react";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Link } from "react-router-dom";
+import video from '../../../../assets/video/VIRTDROP_v2.mp4';
 import "./ServicesPage.css";
 
 class ServicesPage extends React.Component {
-
+  constructor(props){
+	super(props);
+	this.state = {
+		videoModal: false,
+		loading: false,
+	}
+  }
   componentDidMount() {
     window.scrollTo(0, 0);
   }
   
+  videoToggle = () => {
+	this.setState({ videoModal: !this.state.videoModal });
+  }
+
   render() {
-    return (
+	const { videoModal } = this.state;
+
+	return (
       <>
     <section className="banner-section">
         <div className="banner-media-content">
@@ -27,14 +40,18 @@ class ServicesPage extends React.Component {
             <div class="heading-title">
 				<h2>Services</h2>
 			 	<p>VirtDrop offers a huge range of services. Whatever your needs, we have capable Virtual Assistants available to lighten the load.</p>
-			</div>
-			<div class="whyus-video-card">
-				<a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-					<img src="/images/video.jpg" alt="Video" />
-				</a>
-			</div>    
+			</div>  
         </Container>
     </section>
+	<section className="Video-section mb-5">
+		<div className="container">
+			<div className="whyus-video-card">
+        		<a href="#!" onClick={this.videoToggle}>
+					<img src="images/video.jpg" alt="video" />
+				</a>
+			</div>
+		</div>
+	</section>
 
     <section class="whyus-page-section">
 		<Container>
@@ -58,14 +75,13 @@ class ServicesPage extends React.Component {
 						
 				        <p><b>Some of the jobs VirtDrop Virtual Assistants can complete include:</b></p>
 						<ul>
-							<li>Research and Data Entry</li>
-							<li>Content Creation</li>
-							<li>Social Media Management</li>
-							<li>Photo and Video Editing</li>
-							<li>Organizing appointments and meetings</li>
-							<li>Controlling access to company executives or management</li>
-							<li>Email and phone correspondence</li>
-							<li>Filing and collating expenses</li>
+							<li>Administrative/data entry tasks</li>
+							<li>E-commerce related tasks</li>
+							<li>Social media management</li>
+							<li>Customer support</li>
+							<li>Graphic designing</li>
+							<li>Bookkeeping</li>
+							<li>And more!</li>
 						</ul>
 					</div>
 				</Col>
@@ -150,11 +166,20 @@ class ServicesPage extends React.Component {
 		    	<div class="getstarted-content">
 			       <h2>Do you have questions about the Virtual Assistant services we offer?</h2>
 			       <p>Maybe you’re not sure if we can handle your task? Register today and we’ll contact to let you know how we can help.</p>
-			       <Link class="get-btn" to="/register">Get Started!</Link>
+			       <Link class="get-btn" to="/booking">Get Started!</Link>
 			    </div>
 			</div>
 		</Container>
 	</section>
+
+	<Modal isOpen={videoModal} toggle={this.videoToggle}  size="lg" className="modal-dialog modal-dialog-centered newsletter-modal">
+		<ModalHeader toggle={this.videoToggle}>VirtDrop Video</ModalHeader>
+		<ModalBody>
+			<video width="100%" height="100%" controls >
+				<source src={video} type="video/mp4"/>
+			</video>
+		</ModalBody>
+	</Modal>
 
     </>
     );

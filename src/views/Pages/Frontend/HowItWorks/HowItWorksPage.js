@@ -130,7 +130,7 @@ class HowItWorksPage extends React.Component {
 		    	<div class="getstarted-content">
 			       <h2>That’s our process! So, what are you waiting for?</h2>
 			       <p>We offer a community of passionate Virtual Assistants who love what they do and are eager for new opportunities.</p>
-			       <Link class="get-btn" to="/register">Get Started!</Link>
+			       <Link class="get-btn" to="/booking">Get Started!</Link>
 			    </div>
 			</div>
 		</Container>

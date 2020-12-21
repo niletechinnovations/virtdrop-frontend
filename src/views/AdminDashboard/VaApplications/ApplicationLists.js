@@ -48,7 +48,7 @@ class ApplicationList extends Component {
       filterQuery += (filterQuery !=="" ) ? "&status="+filterItem.filterStatus: "?status="+filterItem.filterStatus;
     
     this.setState( { loading: true}, () => {
-      commonService.getAPIWithAccessToken('va-application'+filterQuery)
+      commonService.getAPIWithAccessToken('va-application/'+filterQuery)
         .then( res => {
            
           if ( undefined === res.data.data || !res.data.status ) {
@@ -192,6 +192,9 @@ class ApplicationList extends Component {
                             <option value="">All</option>
                             <option value="2">Approved</option>
                             <option value="1">Pending</option>
+                            <option value="4">Passed Initial</option>
+                            <option value="5">Passed Second Assessment</option>
+                            <option value="6">Passed Final Assessment</option>                            
                           </Input>
                         </FormGroup>  
                       </Col>

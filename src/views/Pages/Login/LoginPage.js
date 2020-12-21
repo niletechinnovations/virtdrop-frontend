@@ -89,7 +89,6 @@ class LoginPage extends Component {
           localStorage.setItem( 'userEmail', loggedInfo.data.email );
           localStorage.setItem( 'profilePic', loggedInfo.data.profilePic );
           localStorage.setItem( 'isActivePlan', loggedInfo.data.isActivePlan );
-          localStorage.setItem( 'isAdvertiser', loggedInfo.data.isAdvertiser );
           localStorage.setItem( 'isOrganization', loggedInfo.data.isOrganization );
           
           this.setState( { loading: false, loggedIn: true } )
@@ -108,6 +107,10 @@ class LoginPage extends Component {
             this.props.history.push('/user/va-dashboard');
           }else if(loggedInfo.data.role.toLowerCase() === 'organization'){
             this.props.history.push('/user/dashboard');
+          }else if( userRole === "accountingAdmin" ){
+            this.props.history.push('/admin/organization');
+          }else if( userRole === "teamLead" ){
+            this.props.history.push('/admin/va-task');
           }else
             this.props.history.push('/');
         } )

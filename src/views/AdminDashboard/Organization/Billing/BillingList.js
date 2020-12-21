@@ -19,7 +19,7 @@ class BillingList extends Component {
       transactionModal: false,
       itemList: [],
       clientList:[],
-      transactionInfo:{transactionId:'', transactionMethod:'', transactionStatus:'', transactionDate:'', transactionAmount: '', transactionDescription:''},
+      transactionInfo:{transactionId:'', transactionMethod:'', transactionStatus:'', referenceId:'', transactionAmount: '', transactionDescription:''},
       loading: true,
       formProccessing: false,
       rowIndex: -1,
@@ -259,7 +259,7 @@ class BillingList extends Component {
   transactionToggle = () => {
     this.setState({
       transactionModal: !this.state.transactionModal,
-      transactionInfo:{transactionId:'', transactionMethod:'', transactionStatus:'', transactionDate:'', transactionAmount: '', transactionDescription:''}
+      transactionInfo:{transactionId:'', transactionMethod:'', transactionStatus:'', referenceId:'', transactionAmount: '', transactionDescription:''}
     });
   }
   
@@ -398,7 +398,7 @@ class BillingList extends Component {
         "invoiceId": requestInfo.invoiceId,
       }
       this.setState( { loading: true}, () => {
-        commonService.postAPIWithAccessToken('payment/pay', formData)
+        commonService.postAPIWithAccessToken('payment/card-payment', formData)
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {           
             this.setState( { loading: false} );
@@ -409,12 +409,12 @@ class BillingList extends Component {
           let paymentData = res.data.data;
 
           const transactionData = {
-            transactionId: paymentData.id,
-            transactionMethod: paymentData.payer.payment_method,
-            transactionStatus: paymentData.state,
-            transactionDate: paymentData.create_time,
-            transactionAmount: paymentData.transactions[0].amount.details.subtotal,
-            transactionDescription: paymentData.transactions[0].description
+            transactionId: paymentData.transactionId,
+            transactionMethod: 'credit_card',
+            transactionStatus: paymentData.paymentStatus,
+            referenceId: paymentData.referenceId,
+            transactionAmount: paymentData.amount,
+            //transactionDescription: paymentData.transactions[0].description
           };
 
           this.setState({ transactionInfo: transactionData, loading:false, transactionModal:true });
@@ -592,6 +592,11 @@ class BillingList extends Component {
                     <Label><strong>Transaction ID:</strong> {transactionInfo.transactionId}</Label>            
                   </FormGroup> 
                 </Col>
+                <Col md={"6"}>
+                  <FormGroup>
+                    <label><strong>Reference Id:</strong> {transactionInfo.referenceId}</label>
+                  </FormGroup>
+                </Col>
                 <Col md="6">
                   <FormGroup>
                     <label><strong>Amount:</strong> ${transactionInfo.transactionAmount}</label>
@@ -602,21 +607,12 @@ class BillingList extends Component {
                     <Label><strong>Payment Method:</strong> {transactionInfo.transactionMethod}</Label>            
                   </FormGroup> 
                 </Col>
-                <Col md="6">
+                 <Col md="6">
                   <FormGroup>
                     <label><strong>Payment Status:</strong> {transactionInfo.transactionStatus}</label>
                   </FormGroup>
                 </Col>
-                <Col md={"6"}>
-                  <FormGroup>
-                    <label><strong>Transaction Date:</strong> {transactionInfo.transactionDate}</label>
-                  </FormGroup>
-                </Col>
-                <Col md="12">
-                  <FormGroup>
-                    <label><strong>Description:</strong> {transactionInfo.transactionDescription}</label>
-                  </FormGroup>
-                </Col>
+                
               </Row>
             </ModalBody>
             <ModalFooter>

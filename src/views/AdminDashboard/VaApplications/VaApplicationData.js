@@ -33,7 +33,7 @@ class VaApplicationData extends Component {
         skillSet2: item.skillSet2 + (item.rateSkill2 !=='' ? " ("+item.rateSkill2+")" :''  ) || " ",
         skillSet3: item.skillSet3 + (item.rateSkill3 !=='' ? " ("+item.rateSkill3+")" :''  ) || " ",
         createdAt: (new Date(item.createdAt)).toLocaleDateString("en-US"),
-        status: ( item.status === 1) ? "Pending" : ((item.status === 2)  ? "Approved" : "Rejected")
+        status: ( item.statusText !==''  ? item.statusText : "Pending")
       }      
       rowsItem.push(itemInfo);
       count = count+i;
@@ -47,8 +47,8 @@ class VaApplicationData extends Component {
       { label: 'Email', name: 'email' },
       //{ label: 'Mobile no.', name: 'mobileNumber'},
       { label: 'Skill Set 1 (Rating)', name: 'skillSet1'},
-      { label: 'Skill Set 2 (Rating)', name: 'skillSet2'},
-      { label: 'Skill Set 3 (Rating)', name: 'skillSet3'},
+      //{ label: 'Skill Set 2 (Rating)', name: 'skillSet2'},
+      //{ label: 'Skill Set 3 (Rating)', name: 'skillSet3'},
       { label: 'Status', name: 'status'},
       { label: 'Created on', name: 'createdAt'},
       {

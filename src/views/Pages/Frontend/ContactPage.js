@@ -310,7 +310,7 @@ class ContactPage extends React.Component {
                 <div className="getstarted-content">
                   <h2>Looking for an extra pair of hands to lighten the workload?</h2>
                   <p>We provide a community of capable Virtual Personal Assistants who are eager to help!</p>
-                  <Link className="get-btn" to="/register">Get Started!</Link>
+                  <Link className="get-btn" to="/booking">Get Started!</Link>
                 </div>
               </div>
             </Container>

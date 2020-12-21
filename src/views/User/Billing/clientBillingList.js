@@ -83,7 +83,7 @@ class clientBillingList extends Component {
         return;
       }else{
         this.setState( { loading:true }, () =>{
-          commonService.postAPIWithAccessToken('payment/pay', formData)
+          commonService.postAPIWithAccessToken('payment/card-payment', formData)
           .then( res => {
             if ( undefined === res.data.data || !res.data.status ) {           
               this.setState( { loading: false} );
@@ -91,8 +91,8 @@ class clientBillingList extends Component {
               return;
             }
             let paymentData = res.data.data;
-            if( paymentData.id !=='' )
-              this.props.history.push( '/user/transaction/'+paymentData.id );
+            if( paymentData.transactionId !=='' )
+              this.props.history.push( '/user/transaction/'+paymentData.transactionId );
           })
           .catch( err => {
             if(err.response !== undefined && err.response.status === 401) {

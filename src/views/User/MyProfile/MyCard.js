@@ -9,7 +9,7 @@ class MyCard extends Component {
    constructor(props){
       super(props);
       this.state = {
-         ccField: { ccType:'', ccNumber:'', ccExpMonth:'', ccExpYear:'', ccCVV: '' },
+         ccField: { ccType:'', ccNumber:'',cardNumber:'', ccExpMonth:'', ccExpYear:'', ccCVV: '' },
          ccFormProccessing: false,
          profileId: "",
          loading: true
@@ -36,7 +36,7 @@ class MyCard extends Component {
             const cardDetail = res.data.data;
             let formField = this.state.ccField;
             formField.ccType = cardDetail.ccType || "";
-            formField.ccNumber = cardDetail.ccNumber || "";
+            formField.cardNumber = cardDetail.ccNumber || "";
             formField.ccExpMonth = cardDetail.expire_month || "";
             formField.ccExpYear = cardDetail.expire_year || "";
             formField.ccCVV = cardDetail.cvv2 || "";
@@ -139,17 +139,17 @@ class MyCard extends Component {
                         <Label htmlFor="ccType">Card Type *</Label>            
                         <Input type="select" name="ccType" id="ccType" value={ccField.ccType} onChange={this.changeCCHandler} required>
                           <option value="">Select Card Type</option>
-                          <option value="visa">Visa</option>
+                          <option value="VISA">Visa</option>
                           <option value="mastercard">MasterCard</option>
-                          <option value="discover">Discover</option>
-                          <option value="amex">Amex</option>
+                          <option value="DISCOVER">Discover</option>
+                          <option value="AMEX">Amex</option>
                         </Input>
                       </FormGroup>  
                     </Col>
                     <Col md={"6"}>
                       <FormGroup> 
                         <Label htmlFor="ccNumber">Card Number *</Label>            
-                        <Input type="text" name="ccNumber" id="ccNumber" value={ccField.ccNumber} onChange={this.changeCCHandler} required />
+                        <Input type="text" name="ccNumber" id="ccNumber" value={ccField.ccNumber} placeholder={ccField.cardNumber} onChange={this.changeCCHandler} required />
                       </FormGroup> 
                     </Col>
                     <Col md="6">
@@ -157,20 +157,35 @@ class MyCard extends Component {
                         <Label htmlFor="ccExpMonth" style={ {display: "block"}}>Expiry Date *</Label>
                         <Input type="select" name="ccExpMonth" id="ccExpMonth" value={ccField.ccExpMonth} onChange={this.changeCCHandler} required  style={ {width:"50%", display: "inline-block"}}>
                           <option value="">Month</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
+                          <option value="01">01</option>
+                          <option value="02">02</option>
+                          <option value="03">03</option>
+                          <option value="04">04</option>
+                          <option value="05">05</option>
+                          <option value="06">06</option>
+                          <option value="07">07</option>
+                          <option value="08">08</option>
+                          <option value="09">09</option>
                           <option value="10">10</option>
                           <option value="11">11</option>
                           <option value="12">12</option>
                         </Input>
-                        <Input type="text" name="ccExpYear" id="ccExpYear" value={ccField.ccExpYear} onChange={this.changeCCHandler} required placeholder="Year" style={ {width:"50%", display: "inline-block"}} />
+                        {/* <Input type="text" name="ccExpYear" id="ccExpYear" value={ccField.ccExpYear} onChange={this.changeCCHandler} required placeholder="Year" style={ {width:"50%", display: "inline-block"}} /> */}
+                        <Input type="select" name="ccExpYear" id="ccExpYear" value={ccField.ccExpYear} onChange={this.changeCCHandler} required  style={ {width:"50%", display: "inline-block"}}>
+                          <option value="">Year</option>
+                          <option value={(new Date().getFullYear())}>{(new Date().getFullYear())}</option>
+                          <option value={(new Date().getFullYear()+1)}>{(new Date().getFullYear()+1)}</option>
+                          <option value={(new Date().getFullYear()+2)}>{(new Date().getFullYear()+2)}</option>
+                          <option value={(new Date().getFullYear()+3)}>{(new Date().getFullYear()+3)}</option>
+                          <option value={(new Date().getFullYear()+4)}>{(new Date().getFullYear()+4)}</option>
+                          <option value={(new Date().getFullYear()+5)}>{(new Date().getFullYear()+5)}</option>
+                          <option value={(new Date().getFullYear()+6)}>{(new Date().getFullYear()+6)}</option>
+                          <option value={(new Date().getFullYear()+7)}>{(new Date().getFullYear()+7)}</option>
+                          <option value={(new Date().getFullYear()+8)}>{(new Date().getFullYear()+8)}</option>
+                          <option value={(new Date().getFullYear()+9)}>{(new Date().getFullYear()+9)}</option>
+                          <option value={(new Date().getFullYear()+10)}>{(new Date().getFullYear()+10)}</option>
+                        </Input>  
+                        
                       </FormGroup>
                     </Col>
                     <Col md="6">

@@ -36,7 +36,7 @@ const PrivateRoute = ({ component, ...rest }) => {
   return (
     <Route {...rest} render={routeProps => {
       const role = localStorage.getItem("role");
-      return commonService.getAuth() && ( role === "admin" || role === "recruitmentAdmin" || role === "recruitmentTeam" || role === "marketingTeam" ) ? (
+      return commonService.getAuth() && ( role === "admin" || role === "recruitmentAdmin" || role === "recruitmentTeam" || role === "marketingTeam" || role === "accountingAdmin" || role === "teamLead" ) ? (
         renderMergedProps(component, routeProps, rest)
       ) : (
         <Redirect to={{

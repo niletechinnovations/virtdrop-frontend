@@ -172,7 +172,7 @@ class BookingPage extends React.Component {
         </section>
 
         <section className="contactus-page-section">
-          <div className="contactus-page-form">
+          <div className="contactus-page-form">            
             <Container>
               <div className="calendar-heading">
                   <h2>Book a FREE 15-minute consultation with our team.</h2>
@@ -182,7 +182,7 @@ class BookingPage extends React.Component {
                 <h2>Schedule a Call</h2>
                 <Row>
                     <Col md="8" lg="8" sm="8">
-                        <DatePicker selected={ this.state.startDate } monthsShown={2} onChange={this.setStartDate} dateFormat="MM/dd/yyyy" inline />
+                        <DatePicker selected={ this.state.startDate } monthsShown={2} minDate={new Date()} onChange={this.setStartDate} dateFormat="MM/dd/yyyy" inline />
                     </Col>
                     <Col md="4" lg="4" sm="4">
                       <div className="time-slots">

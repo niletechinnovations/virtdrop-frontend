@@ -20,7 +20,8 @@ class HomePage extends React.Component {
             videoModal: false,
             loading: false,
             newsletterEmail: '',
-            newsletterName: ''
+            newsletterName: '',
+            newsletterPhone: ''
         }
         this.changeHandler = this.changeHandler.bind(this);
         this.submitNewsletterForm = this.submitNewsletterForm.bind(this);
@@ -39,6 +40,7 @@ class HomePage extends React.Component {
         if (this.state.newsletterEmail!==''  && this.state.newsletterName!=='') {
             const formData = { 
                 contactPerson: this.state.newsletterName,
+                phone: this.state.newsletterPhone,
                 email: this.state.newsletterEmail.toLowerCase() 
             };
             this.setState( { loading: true }, () => {
@@ -71,14 +73,14 @@ class HomePage extends React.Component {
     };
 
     toggle = () => {
-        this.setState({ modal: !this.state.modal, newsletterEmail:'', newsletterName:'' });
+        this.setState({ modal: !this.state.modal, newsletterEmail:'', newsletterName:'', newsletterPhone:'' });
     }
     videoToggle = () => {
         this.setState({ videoModal: !this.state.videoModal });
     }
     
     render() {
-        const { loading, modal, videoModal, newsletterEmail, newsletterName } = this.state;
+        const { loading, modal, videoModal, newsletterEmail, newsletterName, newsletterPhone } = this.state;
         let loaderElement = '';
         if(loading)
           loaderElement = <Loader />
@@ -138,12 +140,13 @@ class HomePage extends React.Component {
 							<p><b>Our Virtual Assistants can take on your time-consuming tasks, leaving you to focus on the things you love.</b></p>
 							<p>Do you want more time to focus on high-level tasks? Maybe you’d like to improve your work-life balance? Whether you have a specific task in mind or aim to just free up some time, we can introduce you to a Virtual Assistant to quickly begin streamlining your tasks. If you find yourself regularly undertaking any of the following, consider putting your time to better use by hiring a Virtual Assistant:</p>
 							<ul>
-								<li>Research and Data Entry</li>
-								<li>Content Creation</li>
-								<li>Social Media Management</li>
-								<li>Photo and Video Editing</li>
-								<li>E-Commerce Assistance</li>
-								<li>Web Design</li>
+								<li>Administrative/data entry tasks</li>
+								<li>E-commerce related tasks</li>
+								<li>Social media management</li>
+								<li>Customer support</li>
+								<li>Graphic designing</li>
+								<li>Bookkeeping</li>
+                                <li>And more!</li>
 							</ul>
 							<a className="learn-btn" href="/services">Learn More</a>
 						</div>
@@ -233,7 +236,7 @@ class HomePage extends React.Component {
             </div>
             <div className="plan-pricing-info">
                 <p className="text-center">Our pricing is as straight forward and stream lined as everything else we offer. Our Virtual Assistants are available at a flat-rate of 
-                <span className="pricing-info"><span className="pricing-value">$12</span> <span className="pricing-per-value">per hour.</span></span></p>
+                <span className="pricing-info"><Link className="text-white" to="/booking">Request a Quote</Link></span></p>
             </div>
             
         </div>      
@@ -252,6 +255,9 @@ class HomePage extends React.Component {
                     </div>    
                     <div className="subscribeNews-group">
                         <Input type="email" placeholder="Enter your email address" className="subscribe-control" name="newsletterEmail" value={ newsletterEmail} onChange={this.changeHandler} required />
+                    </div>    
+                    <div className="subscribeNews-group">
+                        <Input type="tel" placeholder="Enter your phone number (optional)" className="subscribe-control" name="newsletterPhone" value={ newsletterPhone} onChange={this.changeHandler} />
                         <Button className="submit_button" type="submit">Submit</Button>
                     </div>
                     <p className="subscribe-text-info">Looking for work? <Link to="/be-a-virdrop-va">Apply here to become a Virtual Assistant</Link></p>

@@ -56,7 +56,12 @@ a.Sell-btn i {background: #fff; width: 30px; height: 30px; border-radius: 50%; l
 .footer-contact-content p {color: #1360fe; font-size: 12px; line-height: 1; margin-bottom:5px; font-weight: 500; } 
 .footer-contact-content h2 {font-size: 12px; font-weight: 600; color: #c7cdd5; padding: 0; margin: 0; } 
 .footer-contact-content h2 a {color: #c7cdd5; }
-
+.header-navigation .navbar-nav > li > a.apply-btn{
+    padding: 10px 30px 10px 20px;
+    border-radius: 5px;
+	border: solid 1px #1360fe;
+	color: #1360fe;
+}
 .discovery-call-info {
     top: 45%;
     position: fixed;

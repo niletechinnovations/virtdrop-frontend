@@ -360,7 +360,9 @@ class Organization extends Component {
             <Card>
               <CardHeader className="mainHeading">
                 <strong>VA Clients List</strong>
+                {(localStorage.getItem( 'role' )!== "teamLead" ?
                 <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add New</Button>
+                : '') }
               </CardHeader>
               <CardBody>
                 <Row>

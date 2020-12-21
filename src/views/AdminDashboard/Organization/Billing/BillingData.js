@@ -85,7 +85,9 @@ class BillingData extends Component {
                 <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editDataItem(i)}><i className="fa fa-pencil"></i> </button>
                 <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => {if(window.confirm('Are you sure you want to delete this record?')){ this.deleteDataItem(i) };}} ><i className="fa fa-trash"></i></button>
+                { rowsItem[i].status==='Unpaid' &&
                 <button className="btn-edit" title="Pay Now" onClick={() => {if(window.confirm('Are you sure you want to pay this invoice?')){ this.payInvoiceItem(i) };}} ><i className="fa fa-paypal"></i></button>
+                }
               </div>
             );
           }

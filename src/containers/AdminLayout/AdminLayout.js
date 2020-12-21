@@ -23,6 +23,8 @@ import adminNavigation from './_adminNav';
 import recruitmentAdminNavigation from './_recruitmentAdminNav';
 import recruitmentTeamNavigation from './_recruitmentTeamNav';
 import marketingTeamNavigation from './_marketingTeamNav';
+import accountingAdminNavigation from './_accountingAdminNav';
+import teamLeadNavigation from './_teamLeadNav';
 
 // routes config
 import adminRoutes from '../../routes/adminRoutes';
@@ -65,6 +67,12 @@ class AdminLayout extends Component {
             }
             { (localStorage.getItem( 'role' ) === "marketingTeam" ) && 
               <AppSidebarNav navConfig={marketingTeamNavigation} {...this.props} router={router}/>  
+            }
+            { (localStorage.getItem( 'role' )=== "accountingAdmin" ) && 
+              <AppSidebarNav navConfig={accountingAdminNavigation} {...this.props} router={router}/>  
+            }
+            { (localStorage.getItem( 'role' )=== "teamLead" ) && 
+              <AppSidebarNav navConfig={teamLeadNavigation} {...this.props} router={router}/>  
             }
             </Suspense>
             <AppSidebarFooter />

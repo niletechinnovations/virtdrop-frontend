@@ -45,7 +45,7 @@ class FrontEndHeader extends React.Component {
           <div className="user-name"><span><UserAvtar /></span>Hi, {localStorage.getItem( 'userName' )}!</div>
         </DropdownToggle>
         <DropdownMenu>
-          { (localStorage.getItem( 'role' ).toLowerCase() === "admin" || localStorage.getItem( 'role' ) === "recruitmentAdmin" || localStorage.getItem( 'role' ) === "recruitmentTeam" || localStorage.getItem( 'role' ) === "marketingTeam" ) && 
+          { (localStorage.getItem( 'role' ).toLowerCase() === "admin" || localStorage.getItem( 'role' ) === "recruitmentAdmin" || localStorage.getItem( 'role' ) === "recruitmentTeam" || localStorage.getItem( 'role' ) === "marketingTeam" || localStorage.getItem( 'role' ) === "accountingAdmin" || localStorage.getItem( 'role' ) === "teamLead"  ) && 
             <DropdownItem><Link to={ `/admin/dashboard` } ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
           }
           { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() === "va_member" ) && 
@@ -74,8 +74,11 @@ class FrontEndHeader extends React.Component {
         <NavItem>
           <Link to="/login">Login/Register</Link>
         </NavItem>
+        <NavItem className="pr-0">
+          <a href="http://landing.virtdrop.com/" className="apply-btn">Apply as VA</a>
+        </NavItem>
         <NavItem>
-          <Link className="Sell-btn" to="/register">Hire an Assistant <i className="fa fa-angle-right"></i></Link>
+          <Link className="Sell-btn" to="/booking">Hire an Assistant <i className="fa fa-angle-right"></i></Link>
         </NavItem>
       </>
     }

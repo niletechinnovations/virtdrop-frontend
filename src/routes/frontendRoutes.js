@@ -13,7 +13,7 @@ import ProceedToPaymentPage from '../views/Pages/Subscription/ProceedToPaymentPa
 import HowItWorksPage from '../views/Pages/Frontend/HowItWorks/HowItWorksPage';
 import ThankYouPage from '../views/Pages/Register/ThankYouPage';
 import BecomeVirtdropPage from '../views/Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage';
-import BookingPage from '../views/Pages/Frontend/BookingCalendar/BookingPage';
+import BookingPage from '../views/Pages/Frontend/BookingCalendar/CalendlyBookingPage';
 import ServicesPage from '../views/Pages/Frontend/Services/ServicesPage';
 import PricingPage from '../views/Pages/Frontend/Pricing/PrcingPage';
 

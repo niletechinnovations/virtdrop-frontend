@@ -31,6 +31,7 @@ class SubscribersData extends Component {
       let resInfo = {
         contactPerson: enquiry.contactPerson || " ",
         email: enquiry.email,
+        phone: enquiry.phone,
         sno: i+1,
         createdAt: (new Date(enquiry.createdAt)).toLocaleDateString("en-US"),
         indexVal: i,
@@ -51,6 +52,10 @@ class SubscribersData extends Component {
         {
           label: 'Contact Person',
           name: 'contactPerson',
+        },
+        {
+          label: 'Phone no.',
+          name: 'phone',
         },
         {
           label: 'Subscribed on',

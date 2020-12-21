@@ -36,6 +36,7 @@ class OrganizationData extends Component {
         email: orgnization.email,
         mobileNumber: orgnization.mobileNumber || " ",
         address: orgnization.address || " ",
+        ccNumber: orgnization.ccNumber || " ",
         createdAt: (new Date(orgnization.createdAt)).toLocaleDateString("en-US"),
         status: orgnization.status ? "Active" : "Inactive",   
       }      
@@ -59,6 +60,10 @@ class OrganizationData extends Component {
         name: 'mobileNumber',
       },
       {
+        label: 'Card no.',
+        name: 'ccNumber',
+      },
+      {
         label: 'Registered on',
         name: 'createdAt',
       },
@@ -78,8 +83,14 @@ class OrganizationData extends Component {
             return (
               <p><button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editOrganizationItem(i)}><i className="fa fa-pencil"></i> </button>
-                <Link className="btn-view" to={`/admin/organization/manage-card/${rowsItem[i].authId}`} title="Manage Card"><i className="fa fa-credit-card"></i> </Link>
-                <a href="#!" className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteOrganizationItem(i) };}} ><i className="fa fa-trash"></i></a></p>
+                {( (localStorage.getItem( 'role' )!== "accountingAdmin" && localStorage.getItem( 'role' )!== "teamLead" ) ?
+                <Link className="btn-view" to={`/admin/organization/card-info/${rowsItem[i].authId}`} title="Manage Card"><i className="fa fa-credit-card"></i> </Link>
+                : '') }
+                {( (localStorage.getItem( 'role' )!== "accountingAdmin" && localStorage.getItem( 'role' )!== "teamLead" ) ?
+                <a href="#!" className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if(window.confirm('Are you sure you want to delete this record?')){ this.deleteOrganizationItem(i) };}} ><i className="fa fa-trash"></i></a>
+                : '') }
+                </p>
+                
             );
           }
         }

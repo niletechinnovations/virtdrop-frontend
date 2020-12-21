@@ -15,7 +15,7 @@ class EditVaApplication extends Component {
     this.state = {
       vaApplicationId: '',
       requestStatus:'',
-      formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'',skillSet1:'', skillSet2:'', skillSet3:'', rateSkill1:'', rateSkill2:'', rateSkill3:'', referenceName:'', referenceEmail:'', notes:'' },
+      formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'',skillSet1:'', skillSet2:'', skillSet3:'', rateSkill1:'', rateSkill2:'', rateSkill3:'', referenceName:'', referenceEmail:'', notes:'', statusText:'' },
       applicationFiles: {audioFile:'', resumeCV:'', intentLetter:'', internetSpeedScreenshot:'' },
       audioFile:'',
       resumeCV:'',
@@ -81,6 +81,7 @@ class EditVaApplication extends Component {
           formField.platform = appDetail.platform;
           formField.portfolioLink = appDetail.portfolioLink;
           formField.status = appDetail.status;
+          formField.status = appDetail.statusText;
 
           formField.skillSet1 = appDetail.skillSet1;
           formField.skillSet2 = appDetail.skillSet2;
@@ -91,6 +92,7 @@ class EditVaApplication extends Component {
           formField.referenceName = appDetail.referenceName;
           formField.referenceEmail = appDetail.referenceEmail;
           formField.notes = appDetail.notes;
+          formField.statusText = appDetail.statusText;
          
           let applicationFiles = this.state.applicationFiles;
           applicationFiles.audioFileName = appDetail.audioFileName;
@@ -165,7 +167,7 @@ class EditVaApplication extends Component {
           formData.append('internetSpeedScreenshot', this.state.internetSpeedScreenshot);
         
         this.setState( { loading: true }, () => {
-           commonService.putAPIWithAccessToken( `va-application`, formData )
+           commonService.putAPIWithAccessToken( `va-application/`, formData )
             .then( res => {
               if ( undefined === res.data || !res.data.status ) {
                 this.setState( { loading: false } );
@@ -477,7 +479,7 @@ class EditVaApplication extends Component {
                             </Col>
                             <Col md="4" sm="6">
                               <FormGroup>
-                                <Input type="number" name="rateSkill1" value={formField.rateSkill1} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                                <Input type="number" name="rateSkill1" value={formField.rateSkill1} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
                               </FormGroup>
                             </Col>  
                           </Row>
@@ -497,7 +499,7 @@ class EditVaApplication extends Component {
                             </Col>
                             <Col md="4" sm="6">
                               <FormGroup>
-                                <Input type="number" name="rateSkill2" value={formField.rateSkill2} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                                <Input type="number" name="rateSkill2" value={formField.rateSkill2} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
                               </FormGroup>
                             </Col>  
                           </Row>
@@ -517,7 +519,7 @@ class EditVaApplication extends Component {
                             </Col>
                             <Col md="4" sm="6">
                               <FormGroup>
-                                <Input type="number" name="rateSkill3" value={formField.rateSkill3} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                                <Input type="number" name="rateSkill3" value={formField.rateSkill3} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
                               </FormGroup>
                             </Col>  
                           </Row>
@@ -612,13 +614,16 @@ class EditVaApplication extends Component {
                           <div className="col-md-6">
                             <strong>Application Status</strong> : &nbsp; 
                             <ButtonDropdown isOpen={this.state.dropDownOpen} toggle={this.toggle}>
-                              <DropdownToggle caret size="md" color={ (formField.status===1) ? "warning" : ((formField.status ===2 )  ? "success" : "danger") }>
-                                { (formField.status===1) ? "Pending" : ((formField.status ===2 )  ? "Approved" : "Rejected") }
+                              <DropdownToggle caret size="md" color={ (formField.status===2) ? "success" : ((formField.status ===3 )  ? "danger" : "warning") }>
+                                { (formField.statusText !== '' ? formField.statusText : "Rejected") }
                               </DropdownToggle>
                               <DropdownMenu>
                                 <DropdownItem onClick={() => this.changeApplicationStatus(2)}>Approve Application</DropdownItem>
                                 <DropdownItem onClick={() => this.changeApplicationStatus(3)}>Reject Application</DropdownItem>
                                 <DropdownItem onClick={() => this.changeApplicationStatus(1)}>Pending</DropdownItem>
+                                <DropdownItem onClick={() => this.changeApplicationStatus(4)}>Passed Initial</DropdownItem>
+                                <DropdownItem onClick={() => this.changeApplicationStatus(5)}>Passed Second Assessment</DropdownItem>
+                                <DropdownItem onClick={() => this.changeApplicationStatus(6)}>Passed Final Assessment</DropdownItem>
                               </DropdownMenu>
                             </ButtonDropdown>
                           </div>
