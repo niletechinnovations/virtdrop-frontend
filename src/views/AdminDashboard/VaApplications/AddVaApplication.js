@@ -290,7 +290,7 @@ class AddVaApplication extends Component {
                             </Col>
                             <Col md="4" sm="6">
                               <FormGroup>
-                                <Input type="number" name="rateSkill1" value={formField.rateSkill1} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                                <Input type="number" name="rateSkill1" value={formField.rateSkill1} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
                               </FormGroup>
                             </Col>  
                           </Row>
@@ -310,7 +310,7 @@ class AddVaApplication extends Component {
                             </Col>
                             <Col md="4" sm="6">
                               <FormGroup>
-                                <Input type="number" name="rateSkill2" value={formField.rateSkill2} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                                <Input type="number" name="rateSkill2" value={formField.rateSkill2} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
                               </FormGroup>
                             </Col>  
                           </Row>
@@ -330,7 +330,7 @@ class AddVaApplication extends Component {
                             </Col>
                             <Col md="4" sm="6">
                               <FormGroup>
-                                <Input type="number" name="rateSkill3" value={formField.rateSkill3} placeholder="Rating" min="1" max="10" onChange={this.changeHandler} />
+                                <Input type="number" name="rateSkill3" value={formField.rateSkill3} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
                               </FormGroup>
                             </Col>  
                           </Row>

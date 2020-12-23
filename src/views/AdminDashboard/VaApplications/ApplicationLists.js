@@ -14,6 +14,7 @@ class ApplicationList extends Component {
     super(props);
     this.state = {
       itemList: [],
+      skillList: [],
       loading: true,
       rowIndex: -1,
       filterItem: { filterApplicationId: '', filterFirstName: '', filterEmail: '', filterSkill:'', filterRating:'', filterFrom:'',  filterTo:'', filterStatus:'' },
@@ -24,6 +25,7 @@ class ApplicationList extends Component {
 
   componentDidMount() { 
     this.itemList({});
+    this.SkillListData();
   }
   /*VA Application List API*/
   itemList(filterItem = {}) {
@@ -113,6 +115,26 @@ class ApplicationList extends Component {
     })
   }
 
+  /*Skill List API*/
+  SkillListData() {  
+    this.setState( { loading: true}, () => {
+      commonService.getAPI('skill')
+        .then( res => {
+          if ( undefined === res.data.data || !res.data.status ) {
+            this.setState( {  loading: false } );
+            toast.error(res.data.message);    
+            return;
+          }   
+          this.setState({loading:false, skillList: res.data.data});              
+        } )
+        .catch( err => {         
+          this.setState( { loading: false } );
+          toast.error(err.message);    
+        } )
+    } )
+  }
+  
+
   setFilterFromDate = date => {
     let filterFormField = this.state.filterItem;
     filterFormField.filterFrom = date;
@@ -140,7 +162,7 @@ class ApplicationList extends Component {
 
   render() {
 
-    const { loading, itemList, filterItem } = this.state;
+    const { loading, itemList, skillList, filterItem } = this.state;
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -173,18 +195,23 @@ class ApplicationList extends Component {
                           <Input type="text" placeholder="Search by Email Address" id="filterEmail" name="filterEmail" value={filterItem.filterEmail} onChange={this.changeFilterHandler} />
                         </FormGroup>  
                       </Col>
-                      <Col md={"1"}>
+                      <Col md={"2"}>
                         <FormGroup> 
-                          <Label htmlFor="filterSkill">Skill</Label>            
-                          <Input type="text" id="filterSkill" name="filterSkill" value={filterItem.filterSkill} onChange={this.changeFilterHandler} />
+                          <Label htmlFor="filterSkill">Skill</Label>
+                          <Input type="select" name="filterSkill" id="filterSkill" value={filterItem.filterSkill} onChange={this.changeFilterHandler} >
+                            <option value="">Filter by Skill</option>
+                            {skillList.map((skillInfo, index) =>
+                              <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                            )}
+                          </Input>          
                         </FormGroup>  
                       </Col>
-                      <Col md={"1"}>
+                      {/* <Col md={"1"}>
                         <FormGroup> 
                           <Label htmlFor="filterRating">Rating</Label>            
                           <Input type="number" min="1" max="10" placeholder="" id="filterRating" name="filterRating" value={filterItem.filterRating} onChange={this.changeFilterHandler} />
                         </FormGroup>  
-                      </Col>
+                      </Col> */}
                       <Col md={"1"}>
                          <FormGroup> 
                           <Label>Status</Label>
@@ -231,6 +258,11 @@ class ApplicationList extends Component {
 
     )
   }
+}
+
+function SetSkillDropDownItem (props) {
+  const skill = props.skillInfo;
+  return (<option value={skill.skillId} >{skill.skillName}</option>)
 }
 
 export default ApplicationList;
