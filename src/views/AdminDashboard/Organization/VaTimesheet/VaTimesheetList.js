@@ -21,13 +21,14 @@ class VaTimesheetList extends Component {
       loading: true,
       formProccessing: false,
       rowIndex: -1,
-      formField: { taskId: '', vaAuthId: '', clientId:'', projectId: '', title: '', description:'', billingHours:'', status:'' },
+      formField: { taskId: '', vaAuthId: '', clientId:'', projectId: '', title: '', description:'', TotalWorkingTime:'', duration:'', billingHours:'', status:'' },
       formErrors: { vaAuthId: '', projectId: '',  title:'', error: ''},
       formValid: false,
       filterItem: { filterVaAuth:'', filterClientId:'', filterProjectId:'', filterTitle: '', filterFrom:'',  filterTo:''}
     } 
     this.submitHandler = this.submitHandler.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.handleApprovedItem = this.handleApprovedItem.bind(this);
     this.filterItemList = this.filterItemList.bind(this);
     this.handleEditItem = this.handleEditItem.bind(this);
   }
@@ -69,6 +70,7 @@ class VaTimesheetList extends Component {
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('timesheet'+filterQuery)
         .then( res => {
+          // console.log("VA TIMESHEET=====",res)
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);
@@ -116,6 +118,7 @@ class VaTimesheetList extends Component {
   clientListItem(filterItem = {}) {
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('organization?pageSize=1000')
+      
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
@@ -153,6 +156,8 @@ class VaTimesheetList extends Component {
         "projectId": formInputField.projectId,
         "taskName": formInputField.title,
         "notes": formInputField.description,
+        "duration": formInputField.duration,
+        "TotalWorkingTime": formInputField.TotalWorkingTime,
         "billingHours": formInputField.billingHours,
         "status": formInputField.status
       };
@@ -213,7 +218,7 @@ class VaTimesheetList extends Component {
     const formField = this.state.formField
     formField[name] = value;
     this.setState({ formField: formField },
-                  () => { this.validateField(name, value) });
+              () => { this.validateField(name, value) });
   };
 
   changeFilterHandler = event => {
@@ -261,7 +266,7 @@ class VaTimesheetList extends Component {
       modal: !this.state.modal,
       rowIndex: -1,
       formValid: false,
-      formField: { taskId: '', vaAuthId: '', clientId:'', projectId: '', title: '', description:'', billingHours:'' },
+      formField: { taskId: '', vaAuthId: '', clientId:'', projectId: '', title: '', description:'', TotalWorkingTime:'', duration:'', billingHours:'' },
       formErrors: {vaAuthId: '', projectId: '', title: '', error: ''}
     });
   }
@@ -275,6 +280,8 @@ class VaTimesheetList extends Component {
       projectId: itemInfo.projectId,
       title: itemInfo.taskName,
       description: itemInfo.notes,
+      duration: itemInfo.duration,
+      TotalWorkingTime:itemInfo.TotalWorkingTime,
       billingHours: itemInfo.billingHours,
       status: itemInfo.status
     };
@@ -282,6 +289,51 @@ class VaTimesheetList extends Component {
       this.changeProfileStatus(itemInfo.vaRequestId, itemInfo.status )} >{ ( itemInfo.status ? 'De-Activate Account' : 'Activate Account' )}</Button>
     
     this.setState({rowIndex: rowIndex, formField: formField, modal: true, changeStatusBtn:statusBtn, formValid: true});
+  }
+
+  // status change
+
+  handleApprovedItem(rowIndex){
+    const requestInfo = this.state.itemList[rowIndex];
+    let formdata = {"vaTaskId":requestInfo.vaTaskId, "authId": requestInfo.authId ,status:1};
+    this.setState( { loading: true}, () => {
+      
+      commonService.putAPIWithAccessToken( 'timesheet',formdata)
+        .then( res => {
+          this.setState({loading: false});
+          if ( undefined === res.data || !res.data.status ) {            
+             toast.error(res.data.message);      
+            return;
+          }         
+          toast.success(res.data.message);
+          this.itemList(res.data.data.status);
+        } )
+        .catch( err => {       
+          if(err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          }else{
+            this.setState( { loading: false } );
+            toast.error(err.message);
+          }
+      } )
+    })
+    // const formField = {
+    //   vaAuthId: itemInfo.authId,
+    //   vaTaskId: itemInfo.vaTaskId,
+    //   clientId: itemInfo.clientId,
+    //   projectId: itemInfo.projectId,
+    //   title: itemInfo.taskName,
+    //   description: itemInfo.notes,
+    //   duration: itemInfo.duration,
+    //   TotalWorkingTime:itemInfo.TotalWorkingTime,
+    //   billingHours: itemInfo.billingHours,
+         
+    // };
+    // const statusBtn = <Button type="button" size="sm" className={`changeStatusBtn `+( itemInfo.status ? 'btn-danger' : 'btn-success' )} onClick={() => 
+    //   this.changeProfileStatus(itemInfo.vaRequestId, itemInfo.status )} >{ ( itemInfo.status ? 'De-Activate Account' : 'Activate Account' )}</Button>
+    
+    // this.setState({rowIndex: rowIndex, formField: formField, modal: true, changeStatusBtn:statusBtn, formValid: true});
   }
   
   /* Delete Record*/
@@ -421,7 +473,7 @@ class VaTimesheetList extends Component {
                     </Row>
                   </Col>
                   <Col md={12}>
-                    <VaTimesheetData data={itemList} editItemAction={this.handleEditItem} deleteItemAction={this.handleDeleteItem} dataTableLoadingStatus = {this.state.loading} />
+                    <VaTimesheetData data={itemList} approvedItemAction={this.handleApprovedItem} editItemAction={this.handleEditItem} deleteItemAction={this.handleDeleteItem} dataTableLoadingStatus = {this.state.loading} />
                   </Col>
                 </Row> 
               </CardBody>
@@ -473,13 +525,26 @@ class VaTimesheetList extends Component {
                     <input type="text" name="title" id="title" className="form-control" placeholder="Task Name" value={formField.title} onChange={this.changeHandler} required />
                   </FormGroup>
                 </Col>
+                {/* <Col md={"12"}>
+                  <FormGroup>
+                    <label htmlFor="workingHours">Total working hours</label>
+                    <input type="text" name="duration" id="duration" className="form-control" placeholder="Total working hours, Apply formate 00:00:00" value={formField.duration} onChange={this.changeHandler} required />
+                  </FormGroup>
+                </Col> */}
+                <Col md={"12"}>
+                  <FormGroup>
+                     {/* TotalWorkingTime */}
+                    <label htmlFor="workingHours">Total working hours</label>
+                    <input type="text" name="TotalWorkingTime" id="TotalWorkingTime" className="form-control" placeholder="Total working hours, Apply formate 00:00:00" value={formField.TotalWorkingTime==="00:00:00" ?formField.duration:formField.TotalWorkingTime} onChange={this.changeHandler} required />
+                  </FormGroup>
+                </Col>
                 <Col md="6">
                   <FormGroup>
                     <label htmlFor="billingHours">Billing Hours</label>
                     <input type="number" name="billingHours" id="billingHours" className="form-control" placeholder="Total billing hours" value={formField.billingHours} onChange={this.changeHandler} />
                   </FormGroup>
                 </Col>
-                <Col md="6">
+                {/* <Col md="6">
                   <FormGroup> 
                     <Label>Status</Label>
                     <Input type="select" name="status" value={formField.status} onChange={this.changeHandler}>
@@ -488,7 +553,7 @@ class VaTimesheetList extends Component {
                       <option value="2">Completed</option>
                     </Input>
                   </FormGroup>
-                </Col>  
+                </Col>   */}
                 <Col md={"12"}>
                   <FormGroup>
                     <Label htmlFor="description">Notes</Label>

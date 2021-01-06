@@ -35,7 +35,7 @@ import DefaultHeader from './DefaultHeader';
 
 class AdminLayout extends Component {
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   signOut(e) {
     e.preventDefault();

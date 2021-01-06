@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { Navbar, Collapse, Nav, NavItem} from 'reactstrap';
-
+import path from 'path'
 import './UserNavbar.css';
-
+// import { pathToFileURL } from 'url';
+var appDir = path.dirname("/images/timezone.svg");
+console.log("PATH",appDir)
 
 class UserNavbar extends Component {
 
@@ -75,7 +77,15 @@ class UserNavbar extends Component {
               </Link>
             </NavItem>
             }
-                  
+            { (localStorage.getItem( 'role' ).toLowerCase() === "organization") && 
+            <NavItem>
+              {/* /user/timesheet, /user/va-timesheet */} 
+              <Link to={"/user/timesheet"} className="nav-link">
+                <span className="icon-orders"><img src="/images/timesheet1.png" alt="TimeSheet" height="24"/></span>
+                <span className="value-orders">TimeSheet</span>
+              </Link>
+            </NavItem>
+            }   
             { (localStorage.getItem( 'role' ).toLowerCase() === "organization") && 
             <NavItem>
               <Link to={ "/user/billing" } className="nav-link">
@@ -112,6 +122,8 @@ class UserNavbar extends Component {
             </NavItem>
             </>
             }
+
+          
 
           </Nav>
           </Collapse>

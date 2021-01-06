@@ -166,7 +166,7 @@ class Dashboard extends Component {
               <CardHeader>
                 <div className="d-flex align-items-center">
                   <div className="mr-auto">
-                      <h4 className="card-title"><img src="/images/user.svg" height="30" alt="" /> Your virtdrop VA</h4>
+                      <h4 className="card-title"><img src="/images/user.svg" height="30" alt="" />Your virtdrop VA</h4>
                   </div>
                   <div className="add-option-info">
                     <Link className="btn-add" to="/user/virdrop-va">View All</Link>
@@ -234,7 +234,7 @@ class Dashboard extends Component {
               <CardHeader>
                 <div className="d-flex align-items-center">
                   <div className="mr-auto">
-                    <h4 className="card-title"><img src="/images/task.svg" height="30" alt="Task" /> Task Management</h4>
+                    <h4 className="card-title"><img src="/images/task.svg" height="30" alt="Task" /> Task</h4>
                   </div>
                   <div className="add-option-info">
                     <Link to="/user/task" className="btn-add">More</Link>

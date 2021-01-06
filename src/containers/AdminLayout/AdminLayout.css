@@ -56,6 +56,8 @@ a.profileDropDownLink {
 footer.app-footer {background: #fff; border: none; font-size: 12px; }
 
 a.btn-edit, button.btn-edit {background: #fff; padding: 5px; width: 30px; height: 30px; border: 1px solid #3f7dfe; text-align: center; border-radius: 5px; margin: 0 2px; color: #3f7dfe; display: inline-block; }
+/* change */
+a.btn-approved, button.btn-approved {background: #fff; padding: 5px; width: 30px; height: 30px; border: 1px solid #3f7dfe; text-align: center; border-radius: 5px; margin: 0 2px; color: #3f7dfe; display: inline-block; }
 a.btn-delete, button.btn-delete {background: #fff; padding: 5px; width: 30px; height: 30px; border: 1px solid #F44336; text-align: center; border-radius: 5px; margin: 0 2px; color: #F44336; display: inline-block; }
 a.btn-view, button.btn-view {background: #fff; padding: 5px; width: 30px; height: 30px; border: 1px solid #001540; text-align: center; border-radius: 5px; margin: 0 2px; color: #001540; display: inline-block; }
 .sidebar .nav-link .nav-icon{ color: #c6c7c7;}

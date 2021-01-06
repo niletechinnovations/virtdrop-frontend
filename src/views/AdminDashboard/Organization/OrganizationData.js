@@ -81,7 +81,9 @@ class OrganizationData extends Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             let i = tableMeta.rowIndex;
             return (
-              <p><button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
+              <p>
+                {/* <Link className="btn btn-info btn-edit" to={`/admin/va-request/assign-va/${rowsItem[i].vaRequestId}`}><i className="fa fa-user-plus"></i> </Link> */}
+                <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editOrganizationItem(i)}><i className="fa fa-pencil"></i> </button>
                 {( (localStorage.getItem( 'role' )!== "accountingAdmin" && localStorage.getItem( 'role' )!== "teamLead" ) ?
                 <Link className="btn-view" to={`/admin/organization/card-info/${rowsItem[i].authId}`} title="Manage Card"><i className="fa fa-credit-card"></i> </Link>

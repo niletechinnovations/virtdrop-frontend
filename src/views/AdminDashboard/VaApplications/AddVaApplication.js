@@ -50,7 +50,6 @@ class AddVaApplication extends Component {
         } )
     } )
   }
-  
   submitFormData(e) {
     e.preventDefault();
     e.target.className += " was-validated";
@@ -281,8 +280,9 @@ class AddVaApplication extends Component {
                               <FormGroup>
                                 <Input type="select" name="skillSet1" value={formField.skillSet1} onChange={this.changeHandler} required invalid={errors['skillSet1'] !== undefined && errors['skillSet1'] !== ""}>
                                   <option value="">Select Skill 1 *</option>
+
                                   {skillList.map((skillInfo, index) =>
-                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />,  
                                   )}
                                 </Input>
                                 <FormFeedback>{errors['skillSet1']}</FormFeedback>
@@ -323,7 +323,8 @@ class AddVaApplication extends Component {
                                 <Input type="select" name="skillSet3" value={formField.skillSet3} onChange={this.changeHandler}>
                                   <option value="">Select Skill 3</option>
                                   {skillList.map((skillInfo, index) =>
-                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />,
+
                                   )}
                                 </Input>
                               </FormGroup>
@@ -440,6 +441,7 @@ class AddVaApplication extends Component {
 
 function SetSkillDropDownItem (props) {
   const skill = props.skillInfo;
+  // <ApplicationList skillInfo={skill} />
   return (<option value={skill.skillId} >{skill.skillName}</option>)
 }
 

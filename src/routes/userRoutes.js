@@ -15,6 +15,8 @@ import clientBillingList from '../views/User/Billing/clientBillingList';
 import billingPaymentStatus from '../views/User/Billing/billingPaymentStatus';
 import MyCard from '../views/User/MyProfile/MyCard';
 import TransactionDetails from '../views/User/Transactions/TransactionDetails';
+import timeSheet from '../views/User/UserTimeSheet/timeSheet'
+
 
 const userRoutes = [
   { path: '/user/', exact: true, name: 'Home' },
@@ -37,6 +39,7 @@ const userRoutes = [
   { path: '/user/transactions', exact:true, name:'Transaction Lists', component: TransactionList},
   { path: '/user/my-card', exact:true, name:'My Card', component: MyCard},
   { path: '/user/transaction/:transactionId', exact:true, name:'Transaction Details', component: TransactionDetails},
+  { path:'/user/timesheet', exact: true, name: "timeSheet", component: timeSheet}
   
 ];
 

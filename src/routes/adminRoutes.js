@@ -20,6 +20,7 @@ import Skill from '../views/AdminDashboard/Skill/Skill';
 import ActiveApplicationLists from '../views/AdminDashboard/VaApplications/ActiveApplicationLists';
 import ClientCardInfo from '../views/AdminDashboard/Organization/ClientCardInfo';
 
+
 const adminRoutes = [
   { path: '/admin/', exact: true, name: 'Admin' },
   { path: '/admin/dashboard', exact: true, name: 'Dashboard', component: Dashboard },  
@@ -42,8 +43,7 @@ const adminRoutes = [
   { path: '/admin/newsletter', exact: true, name: 'eBook Downloads', component: SubscribersList },
   { path: '/admin/billing', exact: true, name: 'Clients Billing', component: BillingList },
   { path: '/admin/skills', exact: true, name: 'Manage Skills', component: Skill },
-  { path: '/admin/active-vas', exact: true, name: 'Manage Active VAs', component: ActiveApplicationLists },
-
+  { path: '/admin/active-vas', exact: true, name: 'Manage Active VAs', component: ActiveApplicationLists }
 ];
 
 export default adminRoutes;

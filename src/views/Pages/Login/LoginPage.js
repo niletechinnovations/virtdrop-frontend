@@ -48,6 +48,7 @@ class LoginPage extends Component {
     this.setState( { loading: true }, () => {
       commenService.postAPI( `auth/sign-in`, loginData )
         .then( res => {
+          console.log("RES",res)
           if ( undefined === res.data || !res.data.status ) {
             this.setState( { loading: false } );
             if(res.data.errors){
