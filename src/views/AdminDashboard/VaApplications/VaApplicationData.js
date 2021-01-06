@@ -40,10 +40,7 @@ class VaApplicationData extends Component {
     }      
     
     const columns = [ 
-      {
-        label: 'Name',
-        name: 'userName',
-      },     
+      { label: 'Name', name: 'userName'},     
       { label: 'Email', name: 'email' },
       //{ label: 'Mobile no.', name: 'mobileNumber'},
       { label: 'Skill Set 1 (Rating)', name: 'skillSet1'},
