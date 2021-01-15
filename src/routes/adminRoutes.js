@@ -10,6 +10,7 @@ import EditVaApplication from '../views/AdminDashboard/VaApplications/EditVaAppl
 import VaRequestListing from '../views/AdminDashboard/Organization/VaRequest/VaRequestListing';
 import ScheduledBooking from '../views/AdminDashboard/ScheduledBooking/ScheduledBooking';
 import AssignRequest from '../views/AdminDashboard/Organization/VaRequest/AssignRequest';
+import AssignRequestFromClientPanel from '../views/AdminDashboard/Organization/VaRequest/AssignRequestFromClientPanel';
 import VaTaskListing from '../views/AdminDashboard/Organization/VaTask/VaTaskListing';
 import SubscribersList from '../views/AdminDashboard/NewsletterSubscriber/NewsletterSubscribersList';
 import VaTimesheetList from '../views/AdminDashboard/Organization/VaTimesheet/VaTimesheetList';
@@ -23,20 +24,23 @@ import ClientCardInfo from '../views/AdminDashboard/Organization/ClientCardInfo'
 
 const adminRoutes = [
   { path: '/admin/', exact: true, name: 'Admin' },
-  { path: '/admin/dashboard', exact: true, name: 'Dashboard', component: Dashboard },  
+  { path: '/admin/dashboard', exact: true, name: 'Dashboard', component: Dashboard },
   { path: '/admin/organization', exact: true, name: 'Manage Clients', component: organizationList },
   { path: '/admin/organization/manage-card/:profileId', exact: true, name: 'Manage Client Card', component: ManageCard },
   { path: '/admin/organization/card-info/:profileId', exact: true, name: 'Client Card Info', component: ClientCardInfo },
   { path: '/admin/users', exact: true, name: 'Manage Admin Users', component: UsersList },
-  { path: '/admin/user/:profileId', exact: true,  name: 'User Details', component: UserDetails },
+  { path: '/admin/user/:profileId', exact: true, name: 'User Details', component: UserDetails },
   { path: '/admin/va-application', exact: true, name: 'Manage VA Application', component: ApplicationList },
   { path: '/admin/va-application/add-new-va', exact: true, name: 'Add New VA Application', component: AddVaApplication },
   { path: '/admin/va-application/:vaApplicationId', exact: true, name: 'VA Application Details', component: EditVaApplication },
   { path: '/admin/va-request', exact: true, name: 'Manage Request', component: VaRequestListing },
   { path: '/admin/va-request/assign-va/:vaRequestId', exact: true, name: 'Assign VA Request', component: AssignRequest },
+  // { path: '/admin/va-request/assign-va-from-clientpanel/:vaRequestId', exact: true, name: 'Assign VA Request From Client panel', component: AssignRequestFromClientPanel },
+  { path: '/admin/organization/assign-va-from-clientpanel', exact: true, name: 'Assign VA', component: AssignRequestFromClientPanel },
+  { path: '/admin/organization/assign-va-from-clientpanel/:vaRequestId', exact: true, component: AssignRequestFromClientPanel },
   { path: '/admin/enquiries', exact: true, name: 'Manage Enquiries', component: EnquiryListing },
   { path: '/admin/scheduled-booking', exact: true, name: 'Manage Discovery Call', component: ScheduledBooking },
-  { path: '/admin/change-password', exact: true,  name: 'Change Password', component: ChangePassword },
+  { path: '/admin/change-password', exact: true, name: 'Change Password', component: ChangePassword },
   { path: '/admin/transactions', exact: true, name: 'Manage Transactions', component: UserTransactionList },
   { path: '/admin/va-task', exact: true, name: 'Manage Task', component: VaTaskListing },
   { path: '/admin/timesheet', exact: true, name: 'Manage Timesheet', component: VaTimesheetList },

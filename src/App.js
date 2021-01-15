@@ -20,7 +20,7 @@ class App extends Component {
       <Router>
           <React.Suspense fallback={loading()}>
             <Switch>
-              <PrivateRoute path="/admin" name="Admin" component={AdminLayout} /> */}
+              <PrivateRoute path="/admin" name="Admin" component={AdminLayout} />
               <Route path="/common" name="Common" component={CommonLayout} />
               <ProtectedRoute path="/user" name="User" component={UserLayout} />
               <Route path="/" name="Home" component={FrontEndLayout} />

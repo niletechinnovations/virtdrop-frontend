@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Button, Input, FormGroup, Label, FormFeedback, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+// import { Card, CardBody, CardHeader, Col, Row, Button, Input, FormGroup, Label, FormFeedback, InputGroup, InputGroupAddon } from 'reactstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../../core/services/commonService';
 import Loader from '../../../Loader/Loader';
-
 import NewApplicationData from './VaMemberList';
 //import { Link } from 'react-router-dom';
 
-
-class AssignRequest extends Component {
+class AssignRequestFromClientPanel extends Component {
   constructor(props){
     super(props);
     this.state = {
       vaRequestId: '',
+      authId:'',
       clientId: '',
       formField: { organizationId: '', organizationName:'', userName:'', vaRequestId:'', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription: '', numberOfVA:'', skillSet:'' },
       filterItem: { emailOrName: '' },
@@ -30,16 +30,18 @@ class AssignRequest extends Component {
     if(params.vaRequestId !== undefined && params.vaRequestId !=="") {
       this.setState({vaRequestId: params.vaRequestId});
       this.getRequestInfo(params.vaRequestId);
-    }else 
-      this.props.history.push('/admin/va-request');
+     
+    }else {}
 
     this.itemList();
   }
   
   getRequestInfo(vaRequestId){
     this.setState( { loading: true}, () => {
+        // va-request/assign-va-from-clientpanel/
         commonService.getAPIWithAccessToken('va-request/'+vaRequestId)
         .then( res => {
+            
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false} );
             toast.error(res.data.message);
@@ -80,6 +82,7 @@ class AssignRequest extends Component {
       filterQuery += (filterQuery !=="" ) ? "&emailOrName="+filterItem.emailOrName: "&emailOrName="+filterItem.emailOrName;
     
     this.setState( { loading: true}, () => {
+      // va-assignment/clients-va
       commonService.getAPIWithAccessToken('va-application/va-member'+filterQuery)
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
@@ -144,7 +147,8 @@ class AssignRequest extends Component {
 
   render() {
 
-    const { loading, formField, errors } = this.state;
+    const { loading} = this.state;
+    // const { loading, formField, errors } = this.state;
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -157,12 +161,12 @@ class AssignRequest extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>VA Assignment</strong>
+                {/* <strong>VA Assignment</strong> */}
               </CardHeader>
               <CardBody>
                 
                     <div  className="form-service-listing">
-                        <h2>Client Details:</h2>
+                        {/* <h2>Client Details:</h2>
                         <Row>
                         <Col md={6}>
                             <FormGroup>
@@ -222,9 +226,9 @@ class AssignRequest extends Component {
                             <Input type="text" id="skillSet" name="skillSet" value={this.state.formField.skillSet} onChange={this.changeHandler}  readOnly />
                           </FormGroup>              
                         </Col>
-                      </Row>
+                      </Row> */}
+                       <button className="btn btn-sm btn-secondary pull-right" onClick={() => this.props.history.goBack()}>Go Back</button>
                       <h2 className="mt-5">VA Assignment:</h2>
-                      
                       <div className="Enquiries-info">
                         {/* New Enquiries Data */}
                         <Row>
@@ -259,4 +263,5 @@ class AssignRequest extends Component {
   }
 }
 
-export default AssignRequest;
+export default AssignRequestFromClientPanel;
+

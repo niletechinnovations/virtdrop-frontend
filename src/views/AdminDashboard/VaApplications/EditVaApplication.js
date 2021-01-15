@@ -64,6 +64,7 @@ class EditVaApplication extends Component {
     this.setState( { loading: true}, () => {
         commonService.getAPIWithAccessToken('va-application/'+vaApplicationId)
         .then( res => {
+          console.log("Get",res)
           if ( undefined === res.data.data || !res.data.status ) {
            
             this.setState( { loading: false} );
@@ -301,7 +302,8 @@ class EditVaApplication extends Component {
       }
       let authId = this.state.formField.authId;
       if(authId==='' && requestStatus===2){
-        commonService.postAPIWithAccessToken('organization', userData).then( res => {
+        commonService.postAPIWithAccessToken('organization', userData)
+        .then( res => {
           if ( undefined === res.data.data || !res.data.status || !res.data.authInfo ) { 
             //this.setState( { formProccessing: false} );
             //toast.error(res.data.message);
@@ -338,7 +340,8 @@ class EditVaApplication extends Component {
       }else{
         if(requestStatus !== undefined && requestStatus===3){
           let deleteFormdata = { "vaApplicationId":this.state.vaApplicationId }
-          commonService.deleteAPIWithAccessToken( 'va-application',deleteFormdata).then( res => {
+          commonService.deleteAPIWithAccessToken( 'va-application',deleteFormdata)
+          .then( res => {
             this.setState({loading: false});
             if ( undefined === res.data || !res.data.status ) {            
               toast.error(res.data.message);
@@ -359,6 +362,7 @@ class EditVaApplication extends Component {
         }else{
         commonService.putAPIWithAccessToken('va-application/status', statusFormData)
           .then( res => {
+            console.log("PUT2", res)
             if ( undefined === res.data.data || !res.data.status ) {           
               this.setState( { loading: false} );
               toast.error(res.data.message);

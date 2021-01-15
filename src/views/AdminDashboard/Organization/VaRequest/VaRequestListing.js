@@ -11,7 +11,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import VaRequestData from './VaRequestData';
 import './VaRequest.css'
 
-
 class VaRequestListing extends Component {
   constructor(props){
     super(props);
@@ -91,7 +90,8 @@ class VaRequestListing extends Component {
   /*Organization List API*/
   organizationList() {
     commonService.getAPIWithAccessToken('organization?pageSize=10000')
-      .then( res => {       
+      .then( res => {   
+        console.log("VA REQUEST LISTING", res)    
         if ( undefined === res.data.data || !res.data.status ) {
           this.setState( { loading: false } );
           toast.error(res.data.message);

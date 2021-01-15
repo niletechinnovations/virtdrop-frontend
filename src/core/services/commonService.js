@@ -1,7 +1,8 @@
 import axios from 'axios';
 // const API_BASE_URL = 'https://www.virtdrop.com/api/';   //'http://localhost:8082/'; //'https://virtdrop-api.herokuapp.com/'; // 
 
-const API_BASE_URL = 'http://localhost:8082/';
+// const API_BASE_URL = 'http://localhost:8082/';
+const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/';
 // const API_BASE_URL ='herokuapp.com/';
 // const API_BASE_URL='https://www.virtdrop.com/api/'; 
 const API_BASE_URL_WITH_OUT_VERSION = 'https://www.virtdrop.com/api/';
@@ -17,7 +18,7 @@ class ApiService {
         const headers = {
             'Authorization': 'JWT '+accessToken
         }
-        // console.log("API_BASE_URL+urlSegment",API_BASE_URL+urlSegment)
+        // console.log("Get Api>>>",API_BASE_URL+urlSegment)
         return axios.get(API_BASE_URL+urlSegment, {headers: headers});
     }
     /*Post API Without Authentication header */
@@ -25,7 +26,7 @@ class ApiService {
         const headers = {
             'Content-Type': 'application/json'           
         }
-        console.log("API_BASE_URL+urlSegment",API_BASE_URL+urlSegment)
+        // console.log("API_BASE_URL+urlSegment",API_BASE_URL+urlSegment)
         return axios.post(API_BASE_URL+urlSegment, formdata, {headers: headers});
     }
     /*Post API With Authentication header */
@@ -35,7 +36,7 @@ class ApiService {
             'Content-Type': 'application/json',
             'Authorization': 'JWT '+accessToken
         }
-        console.log("API_BASE_URL+urlSegment",API_BASE_URL+urlSegment,formdata)
+        // console.log("API_BASE_URL+urlSegment",API_BASE_URL+urlSegment,formdata)
         return axios.post(API_BASE_URL+urlSegment, formdata, {headers: headers});
     } 
 

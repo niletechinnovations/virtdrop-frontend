@@ -26,9 +26,20 @@ class OrganizationData extends Component {
   render() {
    
     let rowsItem = [];    
+    // console.log("this.props.data",this.props.data.map(x=>(x.vaRequestId)))
+    const vaRequestList =this.props.data.map(x=>(x.vaRequestId)).reverse()
+  //   console.log("vaRequestList",vaRequestList.filter(function(x) {
+  //     return x !== undefined;
+  //  }))
+
+  //  const t=vaRequestList.filter(function(x) { return x !== undefined})
+  
     for(const [i, orgnization] of this.props.data.entries()){
-      console.log(i);
+      // console.log("orgnization",vaRequestList !== undefined ? vaRequestList: "")
+      // console.log("orgnization.vaRequestId ",orgnization.vaRequestId !== undefined? orgnization.vaRequestId: "" )
       let orgInfo = {
+        vaRequestId :vaRequestList[i] !== undefined? vaRequestList[i]: "",
+        // vaRequestId:t[i],
         organizationName: orgnization.organizationName,
         organizationId: orgnization.organizationId,
         authId: orgnization.authId,
@@ -41,7 +52,9 @@ class OrganizationData extends Component {
         status: orgnization.status ? "Active" : "Inactive",   
       }      
       rowsItem.push(orgInfo);
-    }      
+    }  
+     
+    
     const columns = [      
       {
         label: 'Client Name',
@@ -82,7 +95,15 @@ class OrganizationData extends Component {
             let i = tableMeta.rowIndex;
             return (
               <p>
+                {/* /admin/va-request/assign-va-from-clientpanel/:vaRequestId' */}
                 {/* <Link className="btn btn-info btn-edit" to={`/admin/va-request/assign-va/${rowsItem[i].vaRequestId}`}><i className="fa fa-user-plus"></i> </Link> */}
+                {/* <Link className="btn btn-info btn-edit" to={`/admin/va-request/assign-va-from-clientpanel/${rowsItem[i].vaRequestId !=="" ?rowsItem[i].vaRequestId: "" }`}><i className="fa fa-user-plus"></i> </Link> */}
+            
+               {rowsItem[i].vaRequestId === "" ? (<Link className="btn btn-info btn-edit" to={`/admin/organization/assign-va-from-clientpanel`}><i className="fa fa-user-plus"></i> </Link>) :
+               (<Link className="btn btn-info btn-edit" to={`/admin/organization/assign-va-from-clientpanel/${rowsItem[i].vaRequestId}`}><i className="fa fa-user-plus"></i> </Link>) }
+
+                {/* <Link className="btn btn-info btn-edit" to={`/admin/organization/assign-va-from-clientpanel/${rowsItem[i].vaRequestId} : /admin/organization/assign-va-from-clientpanel/`}><i className="fa fa-user-plus"></i> </Link> */}
+
                 <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editOrganizationItem(i)}><i className="fa fa-pencil"></i> </button>
                 {( (localStorage.getItem( 'role' )!== "accountingAdmin" && localStorage.getItem( 'role' )!== "teamLead" ) ?

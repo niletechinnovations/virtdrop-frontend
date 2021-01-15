@@ -58,7 +58,6 @@ class Organization extends Component {
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('organization'+organizationQuery)
         .then( res => {
-           
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);

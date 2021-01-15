@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MUIDataTable from "mui-datatables";
 import {Link} from "react-router-dom";
+// import OrganizationData from '../OrganizationData';
 
 class VaRequestData extends Component {
   
@@ -9,7 +10,8 @@ class VaRequestData extends Component {
     this.state = {
       buttonProcessing: false,
       rowIndex: '',
-      dataTableItem: []
+      dataTableItem: [],
+      dataItem: []
     };
     
   }
@@ -26,6 +28,7 @@ class VaRequestData extends Component {
 
   render() {
     let count=0;
+    // let dataItem= [];
     let rowsItem = [];
     for(const [i, Store] of this.props.data.entries()){
       let orgInfo = {   
@@ -39,8 +42,15 @@ class VaRequestData extends Component {
         status: Store.status ? 'Active' : 'Inactive',   
       }      
       rowsItem.push(orgInfo);
+      // dataItem.push(orgInfo)
       count = count+i;
-    }      
+      // this.setState({dataItem:rowsItem})
+    }    
+    // this.componentWillUnmount() {
+    //   this.setState({dataItem:rowsItem})
+    // }
+    
+    // this.setState({loading:false, organizationList: res.data.data.profileList});  
     
     const columns = [ 
       {
@@ -112,8 +122,9 @@ class VaRequestData extends Component {
     };
     
     return (
+      // <OrganizationData data={this.state.dataItem} />,
       <MUIDataTable
-        title={"Request lists"}
+        title={"Request Lists"}
         data={rowsItem}
         columns={columns}
         options={options}
