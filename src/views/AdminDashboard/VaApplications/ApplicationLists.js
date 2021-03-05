@@ -72,7 +72,6 @@ class ApplicationList extends Component {
             toast.error(res.data.message);
             return;
           }
-
           this.setState({ loading: false, itemList: res.data.data.requestList });
           if (this.state.itemList3.length === 0) {
             this.setState({ loading: false, itemList3: res.data.data.requestList });

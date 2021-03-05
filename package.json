@@ -1,7 +1,7 @@
 {
   "name": "virtdrop",
   "version": "0.1.0",
-  "homepage":  "https://www.virtdrop.com/",
+  "homepage": "https://www.virtdrop.com/",
   "private": true,
   "dependencies": {
     "@coreui/coreui": "^2.1.16",
@@ -19,6 +19,7 @@
     "chart.js": "^2.9.3",
     "moment": "^2.27.0",
     "mui-datatables": "^2.13.3",
+    "multiselect-react-dropdown": "^1.6.7",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-calendly": "^1.2.0",

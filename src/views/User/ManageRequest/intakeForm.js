@@ -71,7 +71,7 @@ class intakeForm extends Component {
       const formField = this.state.formField
       formField[name] = value;
       this.setState({ formField: formField },
-                    () => { this.validateField(name, value) });
+                    () => { this.validateField(name, value)});
       //console.log(this.state.formValid);
     };
 

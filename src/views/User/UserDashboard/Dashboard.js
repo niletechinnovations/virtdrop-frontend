@@ -23,7 +23,8 @@ class Dashboard extends Component {
     };
   }
 
-  componentDidMount() {     
+  componentDidMount() {   
+    const { match: { params } } = this.props;
     //this.dashboardData({});
     this.virtdropVaLists({});
     this.vaTaskLists({}); 

@@ -15,7 +15,8 @@ import clientBillingList from '../views/User/Billing/clientBillingList';
 import billingPaymentStatus from '../views/User/Billing/billingPaymentStatus';
 import MyCard from '../views/User/MyProfile/MyCard';
 import TransactionDetails from '../views/User/Transactions/TransactionDetails';
-import timeSheet from '../views/User/UserTimeSheet/timeSheet'
+import timeSheet from '../views/User/UserTimeSheet/timeSheet';
+import hireVA from '../views/User/ManageRequest/hireVA';
 
 
 const userRoutes = [
@@ -27,6 +28,7 @@ const userRoutes = [
   { path: '/user/transactions', exact:true, name:'Transaction Lists', component: TransactionList},
   { path: '/user/manage-request', exact:true, name:"Request List", component: requestLists},
   { path: '/user/intake-form', exact:true, name:'Intake Form', component:intakeForm },
+  { path: '/user/hire-va', exact:true, name:"hireVA", component:hireVA},
   { path: '/user/virdrop-va', exact:true, name:'VirDrop VA', component:VaLists },
   { path: '/user/task', exact:true, name: 'VA Task', component: taskList},
   { path: '/user/task/:vaAuthId', exact: true,  name: 'VA Task Details', component: taskList },

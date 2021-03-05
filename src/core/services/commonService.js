@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE_URL = 'https://www.virtdrop.com/api/';   //'http://localhost:8082/'; //'https://virtdrop-api.herokuapp.com/'; // 
+const API_BASE_URL = 'http://localhost:8082/';     //'https://www.virtdrop.com/api/';   //'http://localhost:8082/'; //'https://virtdrop-api.herokuapp.com/'; // 
 
 // const API_BASE_URL = 'http://localhost:8082/';
 //const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/';
@@ -18,7 +18,7 @@ class ApiService {
         const headers = {
             'Authorization': 'JWT '+accessToken
         }
-        // console.log("Get Api>>>",API_BASE_URL+urlSegment)
+        console.log("Get Api>>>",API_BASE_URL+urlSegment)
         return axios.get(API_BASE_URL+urlSegment, {headers: headers});
     }
     /*Post API Without Authentication header */

@@ -30,8 +30,8 @@ class VAMemberList extends Component {
         // let fields = this.state.fields;
         //   fields[field] = e.target.value;
         //   this.setState({fields});
-        console.log("INDEX", index)
-        console.log("e.target.value;", e.target.value)
+        // console.log("INDEX", index)
+        // console.log("e.target.value;", e.target.value)
         // e.preventDefault();
         let checkedItems = this.state.checkedItems;
         let checkAll = this.state.checkAll;

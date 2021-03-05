@@ -68,6 +68,7 @@ class VaRequestListing extends Component {
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('va-request'+filterQuery)
         .then( res => {
+          // console.log("get res",res.data.data.requestList)
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);
@@ -91,7 +92,7 @@ class VaRequestListing extends Component {
   organizationList() {
     commonService.getAPIWithAccessToken('organization?pageSize=10000')
       .then( res => {   
-        console.log("VA REQUEST LISTING", res)    
+        // console.log("VA REQUEST LISTING", res)    
         if ( undefined === res.data.data || !res.data.status ) {
           this.setState( { loading: false } );
           toast.error(res.data.message);
@@ -133,7 +134,7 @@ class VaRequestListing extends Component {
       const rowIndex = this.state.rowIndex;
       if(rowIndex > -1) {
         formData['vaRequestId'] = formInputField.vaRequestId;
-       
+              
         commonService.putAPIWithAccessToken('va-request', formData)
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
@@ -185,6 +186,7 @@ class VaRequestListing extends Component {
     const value = event.target.value;
     const formField = this.state.formField
     formField[name] = value;
+    console.log("Changes",formField)
     this.setState({ formField: formField },
                   () => { this.validateField(name, value) });
   };
@@ -352,15 +354,15 @@ class VaRequestListing extends Component {
                 <CardHeader className="mainHeading">
                   <strong>VA Request List</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add VA Request</Button>
                 </CardHeader>
+
                 <CardBody>
-                  
                   <Row>
                     <Col md={12}>
                       <Row className="filterRow">                      
                         <Col md={"2"} className="pl-3">
                           <FormGroup> 
                             <Label htmlFor="filter_organization_id">Organization</Label>            
-                            <Input type="select" placeholder="Organization *" id="filter_organization_id" name="filter_organization_id" value={filterItem.filter_organization_id} onChange={this.changeFilterHandler} >
+                            <Input type="select" placeholder="Organization *" id="filter_organization_id" name="filter_organization_id" value={filterItem.filter_organization_id} onChange={this.changeFilterHandler}>
                               <option value="">All</option>
                               {organizationList.map((organizationInfo, index) =>
                                 <SetOrganizationDropDownItem key={index} organizationInfo={organizationInfo} />
@@ -463,8 +465,8 @@ class VaRequestListing extends Component {
                     <FormGroup> 
                       <label htmlFor="engagementType">Type of Engagement *</label>
                       <Input type="select" name="engagementType" id="engagementType" value={this.state.formField.engagementType} onChange={this.changeHandler} required>
-                        <option value="1">Project-Based</option>
-                        <option value="2">Ongoing Task</option>
+                        <option key={1} value="1">Project-Based</option>
+                        <option key={2} value="2">Ongoing Task</option>
                       </Input>
                     </FormGroup>  
                   </Col>

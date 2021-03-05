@@ -34,7 +34,8 @@ class RegisterPage extends React.Component {
       phoneCode:'',
       loading: false,
       errors: {},
-      type: 'password'
+      type: 'password',
+      hearAboutUs:''
     };
     this.showHide = this.showHide.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
@@ -53,8 +54,10 @@ class RegisterPage extends React.Component {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           email: this.state.email.toLowerCase(),
-          mobileNumber: this.state.countryCode+''+this.state.mobileNumber,
-          phoneNumber: this.state.phoneCode+''+this.state.phoneNumber,
+          // mobileNumber: this.state.countryCode+''+this.state.mobileNumber,
+          // phoneNumber: this.state.phoneCode+''+this.state.phoneNumber,
+          mobileNumber:this.state.mobileNumber,
+          phoneNumber:this.state.phoneNumber,
           password: this.state.password,
           skypeId: this.state.skypeId,
           organizationName: this.state.organizationName,
@@ -63,10 +66,12 @@ class RegisterPage extends React.Component {
           city: this.state.city,
           state: this.state.state,
           postalCode: this.state.zipCode,
-          role: 'organization'
+          role: 'organization',
+          country:this.state.country,
+          hearAboutUs:this.state.hearAboutUs
         };
 
-        //console.log(signupData);
+        console.log("signupData",signupData);
 
         this.setState( { loading: true }, () => {
           commenService.postAPI( `auth/sign-up`, signupData )
@@ -77,7 +82,7 @@ class RegisterPage extends React.Component {
                 return;
               }
               
-              this.setState({loading: false,  organizationName: "",firstName: "", lastName: "", mobileNumber:"", phoneNumber: "", password: "", skypeId:'', address: '', address2:'',city:'',state:'',zipCode:'',errors:'' });
+              this.setState({loading: false,  organizationName: "",firstName: "", lastName: "", mobileNumber:"", phoneNumber: "", password: "", skypeId:'', address: '', address2:'',city:'',state:'', country:'', zipCode:'', hearAboutUs:'', errors:'' });
               this.props.history.push('/thank-you');
               //toast.success(res.data.message);
               //window.scrollTo(0, 0);
@@ -131,28 +136,28 @@ class RegisterPage extends React.Component {
       errors["mobileNumber"] = "*Please enter your mobile no.";
     }
     if (typeof this.state.mobileNumber !== "undefined") {
-      if (!this.state.mobileNumber.match(/^[0-9]{10}$/)) {
+      if (!this.state.mobileNumber.match(/^[0-9]{9}$/)) {
           formIsValid = false;
           errors["mobileNumber"] = "*Please enter valid mobile no.";
       }
     }
     if (this.state.phoneNumber) {
-      if (!this.state.phoneNumber.match(/^[0-9]{10}$/)) {
+      if (!this.state.phoneNumber.match(/^[0-9]{9}$/)) {
           formIsValid = false;
           errors["phoneNumber"] = "*Please enter valid phone no.";
       }
     }
 
-    if (!this.state.countryCode) {
-      formIsValid = false;
-      errors["countryCode"] = "*Required";
-    }
-    if(this.state.phoneNumber){
-      if (!this.state.phoneCode) {
-        formIsValid = false;
-        errors["phoneCode"] = "*Required";
-      }
-    }
+    // if (!this.state.countryCode) {
+    //   formIsValid = false;
+    //   errors["countryCode"] = "*Required";
+    // }
+    // if(this.state.phoneNumber){
+    //   if (!this.state.phoneCode) {
+    //     formIsValid = false;
+    //     errors["phoneCode"] = "*Required";
+    //   }
+    // }
     if (!this.state.password) {
         formIsValid = false;
         errors["password"] = "*Please enter your password.";
@@ -180,7 +185,7 @@ class RegisterPage extends React.Component {
   }
 
   render() {
-    const { loading, firstName, lastName, email, password,mobileNumber,countryCode,phoneNumber,phoneCode,organizationName,skypeId,address,address2,city,state,zipCode,errors} = this.state;
+    const { loading, firstName, lastName, email, password,mobileNumber,countryCode, country, phoneNumber,phoneCode,organizationName,skypeId,address,address2,city,state,zipCode, hearAboutUs, errors} = this.state;
     
     let loaderElement = '';
     if(loading)
@@ -244,9 +249,9 @@ class RegisterPage extends React.Component {
                           <FormGroup>
                             <Label for="mobileNumber">Mobile Number *</Label>
                             <InputGroup>
-                              <InputGroupAddon addonType="prepend">
+                              {/* <InputGroupAddon addonType="prepend">
                               <Input type="text" className="phone-code" name="countryCode" placeholder="+2" value={countryCode} onChange={this.changeHandler} required invalid={errors['countryCode'] !== undefined && errors['countryCode'] !== ""} />
-                              </InputGroupAddon>
+                              </InputGroupAddon> */}
                               <Input type="number" name="mobileNumber" min={1} step="1" id="mobileNumber" invalid={errors['mobileNumber'] !== undefined && errors['mobileNumber'] !== ""} placeholder="Mobile no." value={mobileNumber} onChange={this.changeHandler} required />
                               <FormFeedback>{errors['mobileNumber']}</FormFeedback>
                             </InputGroup>
@@ -256,9 +261,9 @@ class RegisterPage extends React.Component {
                           <FormGroup>
                             <Label for="phoneNumber">Business Phone</Label>
                             <InputGroup>
-                              <InputGroupAddon addonType="prepend">
+                              {/* <InputGroupAddon addonType="prepend">
                                 <Input type="text" name="phoneCode" className="phone-code" placeholder="+2" value={phoneCode} onChange={this.changeHandler} />
-                              </InputGroupAddon>
+                              </InputGroupAddon> */}
                               <Input type="number" name="phoneNumber" min={1} step="1" id="phoneNumber" invalid={errors['phoneNumber'] !== undefined && errors['phoneNumber'] !== ""} placeholder="Phone no." value={phoneNumber} onChange={this.changeHandler} />
                             </InputGroup>
                           </FormGroup>
@@ -296,6 +301,12 @@ class RegisterPage extends React.Component {
                         </Col>
                         <Col md={4}>  
                           <FormGroup>
+                            <Label for="country">Country *</Label>
+                            <Input type="text" name="country" id="country" placeholder="Country" value={country} onChange={this.changeHandler} required />
+                          </FormGroup>
+                        </Col>
+                        <Col md={4}>  
+                          <FormGroup>
                             <Label for="address2">Postal/Zip Code *</Label>
                             <Input type="text" name="zipCode" id="zipCode" placeholder="Postal/Zip Code" value={zipCode} onChange={this.changeHandler} required />
                           </FormGroup>
@@ -307,7 +318,13 @@ class RegisterPage extends React.Component {
                             <FormFeedback>{errors['organizationName']}</FormFeedback>
                           </FormGroup>
                         </Col>
-                      
+                        <Col md={12}>
+                          <FormGroup>
+                            <Label for="hearAboutUs">How did you hear about us (optional)*</Label>
+                            <Input type="text" name="hearAboutUs" id="hearAboutUs" value={hearAboutUs} placeholder="How did you hear about us ?"
+                              onChange={this.changeHandler} />
+                          </FormGroup>
+                        </Col>
                         <Col md={6}>
                           <Button type="submit" className="btn-submit">Sign Up</Button>
                         </Col>

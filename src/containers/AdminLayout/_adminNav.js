@@ -12,8 +12,13 @@ export default {
     },
     {
       name: 'VA Requests',
-      url: '/admin/va-request',
+      url: '/admin/va-request', 
       icon: 'fa fa-list',
+    },
+    {
+      name: 'Hire VA Request',
+      url: '/admin/hire-va',
+      icon: 'fa fa-hire-a-helper'
     },
     {
       name: 'Discovery Call',      
