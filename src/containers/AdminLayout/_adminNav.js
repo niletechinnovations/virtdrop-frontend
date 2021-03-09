@@ -18,7 +18,8 @@ export default {
     {
       name: 'Hire VA Request',
       url: '/admin/hire-va',
-      icon: 'fa fa-hire-a-helper'
+      icon: 'fab fa-hire-a-helper',
+      // icon: 'fa fa-book'
     },
     {
       name: 'Discovery Call',      

@@ -39,7 +39,7 @@ class ViewHireVA_List extends Component {
                 // hoursADay: '',
                 organizationName: '',
                 // selectedValues:[],
-                clientCompleteName:'',
+                clientCompleteName: '',
                 _id: '',
                 status: ''
             },
@@ -49,13 +49,6 @@ class ViewHireVA_List extends Component {
 
         }
 
-        // this.hireVaList = this.hireVaList.bind(this);
-        // this.getSkillList = this.getSkillList.bind(this);
-        // this.handleEditItem = this.handleEditItem.bind(this);
-        // this.onSelect = this.onSelect.bind(this)
-        // this.onRemove = this.onRemove.bind(this);
-        // this.addItem = this.addItem.bind(this);
-        // this.submitHandler = this.submitHandler.bind(this)
     }
 
     componentDidMount() {
@@ -65,10 +58,8 @@ class ViewHireVA_List extends Component {
             this.getHireVARequest(params.hireVARequestId);
         } else
             this.props.history.push('/admin/hire-va-request');
-
         // this.itemList();
         // getHireVARequest()
-
     }
 
     getHireVARequest(hireVARequestId) {
@@ -89,7 +80,8 @@ class ViewHireVA_List extends Component {
 
                     const itemInfo = res.data.data;
                     const formField = {
-                        clientCompleteName:itemInfo.clientCompleteName,
+                        clientCompleteName: itemInfo.firstName + " " + itemInfo.lastName,
+                        // clientCompleteName:itemInfo.clientCompleteName,
                         organizationName: itemInfo.organizationName,
                         jobDescreption: itemInfo.jobDescreption,
                         authId: itemInfo.authId,
@@ -126,14 +118,13 @@ class ViewHireVA_List extends Component {
                 <Row>
                     <Col lg={12}>
                         <Card>
-                        {/* style={{marginLeft:"500px"}}  */}
                             <CardHeader className="mainHeading">
                                 <strong> Hire VA List</strong>
-                               
+
                             </CardHeader>
                             <CardBody>
-                            <button className="btn btn-sm btn-secondary pull-right" onClick={() => this.props.history.goBack()}
-                                 >Go Back</button>
+                                <button className="btn btn-sm btn-secondary pull-right" onClick={() => this.props.history.goBack()}
+                                >Go Back</button>
                                 <div className="form-service-listing">
                                     <h2> VA Hire Information:</h2>
                                     <Row>
@@ -143,12 +134,12 @@ class ViewHireVA_List extends Component {
                                                 <Input type="text" name="industry" id="industry" value={this.state.formField.industry} onChange={this.changeHandler} placeholder="Industry" readOnly />
                                             </FormGroup>
                                         </Col>
-                                        <Col md={6}>
+                                        {/* <Col md={6}>
                                             <FormGroup>
                                                 <Label htmlFor="organizationName">Organization </Label>
                                                 <Input type="text" name="organizationName" id="organizationName" value={this.state.formField.organizationName} onChange={this.changeHandler} placeholder="Organization Name" readOnly />
                                             </FormGroup>
-                                        </Col>
+                                        </Col> */}
                                         <Col md={6}>
                                             <FormGroup>
                                                 <Label htmlFor="which_plan">Which Plan </Label>
@@ -204,7 +195,6 @@ class ViewHireVA_List extends Component {
                                                 <Input type="text" name="createdAt" id="createdAt" value={this.state.formField.createdAt} onChange={this.changeHandler} placeholder="Created At" readOnly />
                                             </FormGroup>
                                         </Col>
-
                                     </Row>
                                 </div>
                             </CardBody>
