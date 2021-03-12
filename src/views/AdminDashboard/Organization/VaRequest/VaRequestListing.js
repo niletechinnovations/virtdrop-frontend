@@ -68,7 +68,7 @@ class VaRequestListing extends Component {
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('va-request'+filterQuery)
         .then( res => {
-          // console.log("get res",res.data.data.requestList)
+          console.log("get res",res.data.data)
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);

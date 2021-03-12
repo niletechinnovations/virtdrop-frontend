@@ -51,7 +51,7 @@ export class hireVA extends Component {
     componentDidMount() {
         //this.getProfile();
         this.getSkillList();
-       console.log( localStorage.getItem("userName"),"Get Name")
+    //    console.log( localStorage.getItem("userName"),"Get Name")
 
     }
 
@@ -157,14 +157,14 @@ export class hireVA extends Component {
                                 <Col md={"10"}>
                                     <FormGroup>
                                         <Label htmlFor="industry"> Industry You'r In </Label>
-                                        <Input type="text" name="industry" id="industry" onChange={this.changeHandler} required />
+                                        <Input type="text" onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="industry" id="industry" onChange={this.changeHandler} required />
                                     </FormGroup>
                                 </Col>
                                 {/* Demo */}
                                 <Col md={"10"}>
-                                    <FormGroup>
-                                        <Multiselect
-
+                                    <FormGroup onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} >
+                                        <Multiselect 
+                                            onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}}
                                             options={skillList} // Options to display in the dropdown
                                             onSelect={this.onSelect} // Function will trigger on select event
                                             onRemove={this.onRemove} // Function will trigger on remove event
@@ -190,33 +190,33 @@ export class hireVA extends Component {
                                 <Col md={"10"}>
                                     <FormGroup>
                                         <Label htmlFor="jobDescreption"> Description Of job - Options to record</Label>
-                                        <Input type="textarea" name="jobDescreption" id="jobDescreption" onChange={this.changeHandler} required />
+                                        <Input type="textarea"  onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="jobDescreption" id="jobDescreption" onChange={this.changeHandler} required />
                                     </FormGroup>
                                 </Col>
                                 <Col md={"5"}>
                                     <FormGroup>
                                         <Label htmlFor="Hours_A_Day">How many hrs a day ?</Label>
-                                        <Input type="text" name="Hours_A_Day" id="Hours_A_Day" onChange={this.changeHandler} required />
+                                        <Input type="text"  onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="Hours_A_Day" id="Hours_A_Day" onChange={this.changeHandler} required />
                                     </FormGroup>
                                 </Col>
                                 <Col md={"5"}>
                                     <FormGroup>
                                         <Label htmlFor="Days_A_Week">How many days a week ?</Label>
-                                        <Input type="text" name="Days_A_Week" id="Days_A_Week" onChange={this.changeHandler} required />
+                                        <Input type="text"  onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="Days_A_Week" id="Days_A_Week" onChange={this.changeHandler} required />
                                     </FormGroup>
                                 </Col>
 
                                 <Col md={"5"}>
                                     <FormGroup>
                                         <Label htmlFor="which_Days_Week">Which days of the week ?</Label>
-                                        <Input type="text" name="which_Days_Week" id="which_Days_Week" onChange={this.changeHandler} required />
+                                        <Input type="text"  onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="which_Days_Week" id="which_Days_Week" onChange={this.changeHandler} required />
                                     </FormGroup>
                                 </Col>
 
                                 <Col md={"5"}>
                                     <FormGroup>
                                         <Label htmlFor="during_Those_Days">What time during those days?</Label>
-                                        <Input type="text" name="during_Those_Days" id="during_Those_Days" onChange={this.changeHandler} required />
+                                        <Input type="text"  onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="during_Those_Days" id="during_Those_Days" onChange={this.changeHandler} required />
                                     </FormGroup>
                                 </Col>
                                 {/* <Label htmlFor="Days_A_Week">Choose which plan they want for hourly?</Label> */}
@@ -225,12 +225,12 @@ export class hireVA extends Component {
                                     <FormGroup tag="fieldset">
                                         <FormGroup >
                                             <Label>Choose which plan they want for hourly?</Label></FormGroup>
-                                        <Label className="radio-inline" htmlFor="entery_Level" style={{ marginRight: "10px" }}><input type="radio" id="entery_Level"checked={formField.which_plan === 'entery_Level'} value="entery_Level" style={{ "marginRight": "5px" }}
+                                        <Label className="radio-inline" htmlFor="entery_Level" style={{ marginRight: "10px" }}><input type="radio" onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} id="entery_Level"checked={formField.which_plan === 'entery_Level'} value="entery_Level" style={{ "marginRight": "5px" }}
                                             onChange={this.changeRadioButtonHandler} />Entry Level-12$ </Label>{''}
 
-                                        <Label className="radio-inline" htmlFor="mid_Level" style={{ "marginRight": "10px" }}  ><input type="radio" id="mid_Level" checked={formField.which_plan === 'mid_Level'}  value="mid_Level" style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Mid Level-15$</Label>{' '}
+                                        <Label className="radio-inline" htmlFor="mid_Level" style={{ "marginRight": "10px" }}  ><input type="radio" onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} id="mid_Level" checked={formField.which_plan === 'mid_Level'}  value="mid_Level" style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Mid Level-15$</Label>{' '}
 
-                                        <Label className="radio-inline" htmlFor="expert_Level"><input type="radio" checked={formField.which_plan === "expert_Level"} id="expert_Level" value="expert_Level" style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Expert Level-20$</Label>
+                                        <Label className="radio-inline" htmlFor="expert_Level"><input type="radio" checked={formField.which_plan === "expert_Level"} onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} id="expert_Level" value="expert_Level" style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Expert Level-20$</Label>
                                         
 
                                         {/* {''} <Input type="radio" value  checked={formField.expert_Level === 'expert_Level'} onChange={this.changeHandler}  value={formField.expert_Level}/> */}
@@ -240,7 +240,7 @@ export class hireVA extends Component {
                                 <Col md={"5"}>
                                     <FormGroup>
                                         <Label htmlFor="quickly_Need">How quickly do you need someone?</Label>
-                                        <Input type="text" name="quickly_Need" id="quickly_Need" onChange={this.changeHandler} required />
+                                        <Input type="text" onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="quickly_Need" id="quickly_Need" onChange={this.changeHandler} required />
                                     </FormGroup>
                                 </Col>
                             </Row>

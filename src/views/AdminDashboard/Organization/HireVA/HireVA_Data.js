@@ -7,7 +7,7 @@ export class HireVA_Data extends Component {
         super(props)
         this.state = {
             rowIndex: '',
-            edit: "Edit VAAA"
+            edit: "Edit VA"
 
         }
     }
@@ -15,11 +15,7 @@ export class HireVA_Data extends Component {
     componentDidMount() {
 
     }
-    //   change Name
-    //  chahgename(edit){
-    //    console.log ( this.props.changeNameget,"hee")
-    //  }
-
+   
     // Edit Store Info 
     editHireItem(rowIndex) {
         this.props.editItemAction(rowIndex);
@@ -37,11 +33,11 @@ export class HireVA_Data extends Component {
         // let dataItem= [];
         let rowsItem = [];
         for (const [i, Store] of this.props.data.entries()) {
-            console.log("Storeeeeee------------------------", Store)
+            // console.log("Storeeeeee---------------------", Store)
             let hireInfo = {
                 // organizationName: Store.organizationName,
                 industryName: Store.industry,
-                skillName: Store.skillsFreelancer,
+                skillName: Store.skillsFreelancer.toString(),
                 choosePlan: Store.which_plan,
                 need: Store.quickly_Need,
                 weekdays: Store.which_Days_Week,
@@ -49,7 +45,8 @@ export class HireVA_Data extends Component {
                 hoursA_Day: Store.Hours_A_Day,
                 authId: Store.authId,
                 _id: Store._id,
-                client: Store.clientCompleteName
+                // client: Store.clientCompleteName,
+                client:Store.firstName + " " + Store.lastName
 
             }
 
