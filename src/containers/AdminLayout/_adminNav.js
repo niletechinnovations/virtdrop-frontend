@@ -21,6 +21,11 @@ export default {
       icon: 'fa fa-hire-a-helper'
     },
     {
+      name: 'VA Assignment',
+      url: '/admin/va-assignment',
+      icon: 'fa fa-hire-a-helper'
+    },
+    {
       name: 'Discovery Call',      
       icon: 'fa fa-calendar-o',
       url: '/admin/scheduled-booking',
