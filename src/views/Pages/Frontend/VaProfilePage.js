@@ -4,6 +4,7 @@ import { Container, Row, Col, Form, FormGroup, FormFeedback, Input, Button, Labe
 import { ToastContainer, toast } from 'react-toastify';
 import commenService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
+import "./VaProfilePage.css";
 
 class VaProfilePage extends React.Component {
   constructor( props ){
@@ -124,43 +125,150 @@ class VaProfilePage extends React.Component {
       <>        
         <ToastContainer /> 
         {loaderElement} 
-        
-        <section className="contactus-page-section">
-          <div className="contactus-page-form">
+        <div className="profile-page-section">
+          <div className="profile-info-card">
+            <Container>
+              <div className="profile-info-bg"></div>
+              <div className="profile-info-content">
+                <div className="profile-item-info">
+                  <div className="profile-media">
+                    <img src="/images/avatar.jpg" alt="user" className="profile-pic" />
+                  </div>
+                  <div className="profile-content">
+                    <h2> Arun Kumar</h2>
+                  </div>
+                </div>
+              </div>
+            </Container>
+          </div>
+          
           <Container>
             <Row>
-              <Col md="7" lg="7" sm="12">
-                <h3>VA Profile</h3>
-                <Row>
-                  <Col md="3" lg="3" sm="12">
-                    <img src="/images/avatar.jpg" alt="user" className="profile-pic" />
-                  </Col>
-                  <Col md="9" lg="9" sm="12">
-                    <p className="mb-1"><strong>Name:</strong> Arun Kumar</p>
-                    <p className="mb-1"><strong>Email ID:</strong> <a href="mailto:arun.kumar@niletechnologies.com">arun.kumar@niletechnologies.com</a></p>
-                    <p className="mb-1"><strong>Phone No.:</strong> <a href="tel:+91-8989899899">+91-8989899899</a></p>
-                    <p className="mb-1"><strong>Skype ID:</strong> nile.skype</p>
-                  </Col>
-                  <Col md="12">
-                    <p className="mt-4"><strong>Website/ Portfolio Links:</strong> https://www.niletechnologies.com/</p>
-                    <p>
-                      <strong>Platforms, Tools, Systems , CRM</strong> :VA Applcation
-                    </p>
-                    <p>
-                      <strong>Skills</strong> : Skill 1, Skill 2, Skill 3
-                    </p>
-                  </Col>
-                  <Col md="4">
-                    <Input type="date" name="kickoff_date" />
-                  </Col>
-                  <Col md="2"><Button type="submit">Start</Button></Col>
-                </Row>
+              <Col md="4" lg="4" sm="4">
+                <div className="profile-card card-sticky">
+                  <div className="profile-card-header">
+                    <div className="d-flex align-items-center">
+                      <div className="mr-auto">
+                        <h4 className="card-title">Personal Information</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="profile-card-body">
+                    <div className="profile-personal-info">
+                      <div className="profile-personal-icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                      <div className="profile-personal-text">
+                        <h2>Email ID:</h2>
+                        <p><a href="mailto:arun.kumar@niletechnologies.com">arun.kumar@niletechnologies.com</a></p>
+                      </div>
+                    </div>
+
+                    <div className="profile-personal-info">
+                      <div className="profile-personal-icon"><i className="fa fa-phone" aria-hidden="true"></i></div>
+                      <div className="profile-personal-text">
+                        <h2>Phone No.:</h2>
+                        <p><a href="tel:+91-8989899899">+91-8989899899</a></p>
+                      </div>
+                    </div>
+
+                    <div className="profile-personal-info">
+                      <div className="profile-personal-icon"><i className="fa fa-skype" aria-hidden="true"></i></div>
+                      <div className="profile-personal-text">
+                        <h2>Skype ID:</h2>
+                        <p>nile.skype</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col md="8" lg="8" sm="8">
+                <div className="profile-card">
+                  <div className="profile-card-header">
+                    <div className="d-flex align-items-center">
+                      <div className="mr-auto">
+                        <h4 className="card-title">VA Profile</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="profile-card-body">
+                    <ul className="user-info">
+                      <li>
+                          <label>Website/ Portfolio Links:</label>
+                          <p>https://www.niletechnologies.com/</p>
+                      </li>
+                      <li>
+                          <label>Platforms, Tools, Systems , CRM :</label>
+                          <p>VA Applcation</p>
+                      </li>
+
+                      <li>
+                          <label>Skills:</label>
+                          <p>Skill 1, Skill 2, Skill 3</p>
+                      </li>
+
+                      
+                    </ul> 
+                    <Row>
+                      <Col md="3" lg="3" sm="3">
+                        <div className="view-attachment-card">
+                          <div className="view-attachment-icon">
+                            <i class="fa fa-file-audio-o" aria-hidden="true"></i>
+                          </div>
+                          <div className="view-attachment-text">
+                            <h2>Audio clip editor</h2>
+                          </div>
+                        </div>    
+                      </Col>
+                      <Col md="3" lg="3" sm="3">
+                        <div className="view-attachment-card">
+                          <div className="view-attachment-icon">
+                            <i class="fa fa-file-word-o" aria-hidden="true"></i>
+                          </div>
+                          <div className="view-attachment-text">
+                            <h2>Resume</h2>
+                          </div>
+                        </div>    
+                      </Col>
+                      <Col md="3" lg="3" sm="3">
+                        <div className="view-attachment-card">
+                          <div className="view-attachment-icon">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                          </div>
+                          <div className="view-attachment-text">
+                            <h2>Intent Letter</h2>
+                          </div>
+                        </div>    
+                      </Col>
+                      <Col md="3" lg="3" sm="3">
+                        <div className="view-attachment-card">
+                          <div className="view-attachment-icon">
+                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                          </div>
+                          <div className="view-attachment-text">
+                            <h2>Internet Connection Speed</h2>
+                          </div>
+                        </div>    
+                      </Col>
+                    </Row>
+
+
+                  </div>
+                </div>
+
+                <div className="kickoff-date-card">
+                  <h2>Enter Your Kickoff Date</h2>
+                  <div className="date-form-group">
+                    <input name="kickoff_date" type="date" class="form-control" /> 
+                    <Button type="submit" className="btn-start">Start</Button>
+                  </div>
+                </div>
               </Col>
             </Row>
-          </Container>
-          </div>
 
-        </section>
+            
+
+          </Container>
+        </div>
+        
             
       </>
     );
