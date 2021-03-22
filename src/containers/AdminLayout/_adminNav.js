@@ -23,8 +23,8 @@ export default {
     },
     {
       name: 'VA Assignment',
-      url: '/admin/va-assignment',
-      icon: 'fa fa-hire-a-helper'
+      url: '/admin/hire-va-assignment-list',
+      icon: 'fa fa-task'
     },
     {
       name: 'Discovery Call',      
