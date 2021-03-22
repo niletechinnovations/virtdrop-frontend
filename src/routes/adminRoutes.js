@@ -22,6 +22,8 @@ import ActiveApplicationLists from '../views/AdminDashboard/VaApplications/Activ
 import ClientCardInfo from '../views/AdminDashboard/Organization/ClientCardInfo';
 import HireVA_Listing from '../views/AdminDashboard/Organization/HireVA/HireVA_Listing';
 import ViewHireVA_List from '../views/AdminDashboard/Organization/HireVA/ViewHireVA_List';
+import HireVaAssignmentList from '../views/AdminDashboard/Organization/HireVA/HireVaAssignmentList';
+import AssignHireVaRequest from '../views/AdminDashboard/Organization/HireVA/AssignHireVaRequest';
 
 
 const adminRoutes = [
@@ -51,7 +53,9 @@ const adminRoutes = [
   { path: '/admin/skills', exact: true, name: 'Manage Skills', component: Skill },
   { path: '/admin/active-vas', exact: true, name: 'Manage Active VAs', component: ActiveApplicationLists },
   {path:  '/admin/hire-va',exact:true, name:"Manage Hire VA Request", component: HireVA_Listing},
-  {path:  '/admin/hire-va/view-hire-va-list/:hireVARequestId', exact:true, name: "View Hire VA List", component: ViewHireVA_List }
+  {path:  '/admin/hire-va/view-hire-va-list/:hireVARequestId', exact:true, name: "View Hire VA List", component: ViewHireVA_List },
+  {path:  '/admin/hire-va-assignment-list/', exact:true, name: "Hire VA Assignment", component: HireVaAssignmentList },
+  {path:  '/admin/assign-hire-va/:hireVARequestId', exact:true, name: "Assign Hire VA", component: AssignHireVaRequest },
 ];
 
 export default adminRoutes;

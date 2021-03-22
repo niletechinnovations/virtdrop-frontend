@@ -24,6 +24,11 @@ export default {
       // icon: 'fa fa-book'
     },
     {
+      name: 'VA Assignment',
+      url: '/admin/hire-va-assignment-list',
+      icon: 'fa fa-task'
+    },
+    {
       name: 'Discovery Call',      
       icon: 'fa fa-calendar-o',
       url: '/admin/scheduled-booking',
