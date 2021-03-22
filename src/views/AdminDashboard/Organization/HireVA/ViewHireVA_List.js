@@ -18,6 +18,7 @@ class ViewHireVA_List extends Component {
             modal: false,
             selectedValues: [],
             hireVARequestId: '',
+            selectedIndustry: [],
             // selectedValues1:[],
             rowIndex: -1,
             formField: {
@@ -45,7 +46,6 @@ class ViewHireVA_List extends Component {
             },
 
             formErrors: { authId: '', modal: false, industry: '', skills: [], which_plan: '', quickly_Need: '', weekdays: '', requiredTime: '', hoursADay: '', }
-
 
         }
 
@@ -79,13 +79,16 @@ class ViewHireVA_List extends Component {
                     var monthDateYear = (month + 1) + "/" + date + "/" + year;
 
                     const itemInfo = res.data.data;
+                        // console.log("industrytype",itemInfo.industrytype)
                     const formField = {
+                        getIndustryName:itemInfo.industrytype,
                         clientCompleteName: itemInfo.firstName + " " + itemInfo.lastName,
                         // clientCompleteName:itemInfo.clientCompleteName,
                         organizationName: itemInfo.organizationName,
                         jobDescreption: itemInfo.jobDescreption,
                         authId: itemInfo.authId,
-                        industry: itemInfo.industry,
+                        // industry: itemInfo.industry,
+                        industry:itemInfo.industrytype,
                         which_plan: itemInfo.which_plan,
                         which_Days_Week: itemInfo.which_Days_Week,
                         Hours_A_Day: itemInfo.Hours_A_Day,

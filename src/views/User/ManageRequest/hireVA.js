@@ -12,10 +12,11 @@ export class hireVA extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            formField: { industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', during_Those_Days: '', quickly_Need: '', which_plan: '' },
+            formField: { industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', during_Those_Days: '', quickly_Need: '', which_plan: '',  },
             loading: false,
             skillList: [],
             selectedValues: [],
+            selectedIndustry: [],
             options: [{ skillName: 'Srigar', skillid: 1 }, { skillName: 'Sam', skillid: 2 }]
         };
         this.submitHandler = this.submitHandler.bind(this);
@@ -23,6 +24,8 @@ export class hireVA extends Component {
         this.changeRadioButtonHandler = this.changeRadioButtonHandler.bind(this);
         this.onSelect = this.onSelect.bind(this)
         this.onRemove = this.onRemove.bind(this);
+        this.onSelectIndstry = this.onSelectIndstry.bind(this);
+        this.onRemoveIndustry = this.onRemoveIndustry.bind(this);
     }
 
 
@@ -51,6 +54,7 @@ export class hireVA extends Component {
     componentDidMount() {
         //this.getProfile();
         this.getSkillList();
+        this.getIndustryList();
     //    console.log( localStorage.getItem("userName"),"Get Name")
 
     }
@@ -68,6 +72,18 @@ export class hireVA extends Component {
         // console.log("REMOVE",this.state.selectedValues)
     }
 
+    onSelectIndstry(selectedList, selectedItem) {
+        console.log("SELECTED=============************************>",selectedList)
+        this.setState({ selectedIndustry: selectedList.map(item => item) })
+
+    }
+
+    onRemoveIndustry(selectedList, removedItem) {
+        console.log("REMOVE--------------------------------",selectedList)
+        // this.setState({ selectedValues: selectedList.filter((item) => (item.skillName !== removedItem.skillName)).map(skill => skill.skillName) })
+        this.setState({ selectedIndustry: selectedList.filter((item) => (item.name !== removedItem.name)).map(industry => industry) })
+    }
+
     
     /* Submit Form Handler*/
     submitHandler(event) {
@@ -75,9 +91,13 @@ export class hireVA extends Component {
         event.target.className += " was-validated";
         this.setState({ loading: true }, () => {
             const formInputField = this.state.formField;
+
+            let getMappedIndustry =  this.state.selectedIndustry.map(element => element._id);
+      console.log("getMappedIndustry----------------",getMappedIndustry)
             
             const formData = {
-                "industry": formInputField.industry,
+                // "industry": formInputField.industry,
+                  "industryType":getMappedIndustry,
                 // "skillsFreelancer": formInputField.skillsFreelancer,
                 "skillsFreelancer": this.state.selectedValues,
                 "jobDescreption": formInputField.jobDescreption,
@@ -118,7 +138,28 @@ export class hireVA extends Component {
 
         })
     }
+    getIndustryList = () => {
+        commonService.getAPIWithAccessToken('hire/get-hire-va-Industrylist')
+            .then(res => {
+                console.log("INDDDDD",res)
+                if (undefined === res.data.data || !res.data.status) {
+                    this.setState({ loading: false });
+                    toast.error(res.data.message);
+                    return;
+                }
 
+                this.setState({ loading: false, IndustryList: res.data.data })
+            })
+            .catch(error => {
+                if (error !== undefined) {
+                    localStorage.clear()
+                    // this.props.histroy.push('/login')
+                } else {
+                    this.setState({ loading: false, })
+                    toast.error(error.message)
+                }
+            })
+    }
     // Handle Input fields
     changeHandler(event) {
         const name = event.target.name;
@@ -140,7 +181,7 @@ export class hireVA extends Component {
 
     render() {
 
-        const { loading, formField, skillList } = this.state;
+        const { loading, formField, skillList,IndustryList,selectedIndustry } = this.state;
         return (
             <div className="dashboard-section container" style={{ paddingRight: '230px' }}>
                 <Card className="vd-card ">
@@ -157,7 +198,18 @@ export class hireVA extends Component {
                                 <Col md={"10"}>
                                     <FormGroup>
                                         <Label htmlFor="industry"> Industry You'r In </Label>
-                                        <Input type="text" onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="industry" id="industry" onChange={this.changeHandler} required />
+                                        {/* <Input type="text" onKeyPress={(e)=>{e.key === 'Enter' && e.preventDefault();}} name="industry" id="industry" onChange={this.changeHandler} required /> */}
+
+                                        <Multiselect
+                                            options={IndustryList}
+                                            // groupBy="cat"
+                                            onChange={this.changeHandler}
+                                            onSelect={this.onSelectIndstry}
+                                            onRemove={this.onRemoveIndustry}
+                                            selectedValues={selectedIndustry}
+                                            displayValue="name"
+                                            showCheckbox={true}
+                                        />
                                     </FormGroup>
                                 </Col>
                                 {/* Demo */}

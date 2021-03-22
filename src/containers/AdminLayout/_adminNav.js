@@ -18,7 +18,9 @@ export default {
     {
       name: 'Hire VA Request',
       url: '/admin/hire-va',
-      icon: 'fab fa-hire-a-helper',
+      // icon: "fa fa-hire-a-helper"
+      //  icon: "../images/hire-a-helper-brands.svg"
+      icon:"fa fa-globe",
       // icon: 'fa fa-book'
     },
     {

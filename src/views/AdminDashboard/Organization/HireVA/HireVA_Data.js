@@ -33,10 +33,11 @@ export class HireVA_Data extends Component {
         // let dataItem= [];
         let rowsItem = [];
         for (const [i, Store] of this.props.data.entries()) {
-            // console.log("Storeeeeee---------------------", Store)
+            console.log("Storeeeeee---------------------", i)
             let hireInfo = {
                 // organizationName: Store.organizationName,
-                industryName: Store.industry,
+                // industryName: Store.industry,
+                industryName:Store.industrytype.toString(),
                 skillName: Store.skillsFreelancer.toString(),
                 choosePlan: Store.which_plan,
                 need: Store.quickly_Need,
@@ -69,7 +70,7 @@ export class HireVA_Data extends Component {
                 name: 'skillName',
             },
             {
-                label: 'Choosen Plan',
+                label: 'Plan',
                 name: 'choosePlan'
             },
             {

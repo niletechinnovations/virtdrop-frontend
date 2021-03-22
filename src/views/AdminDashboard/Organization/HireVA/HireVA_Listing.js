@@ -20,6 +20,7 @@ class HireVA_Listing extends Component {
             skillList: [],
             modal: false,
             selectedValues: [],
+            selectedIndustry:[],
             changeName: '',
             // selectedValues1:[],
             rowIndex: -1,
@@ -49,12 +50,30 @@ class HireVA_Listing extends Component {
                 // expert_Level:'',
                 // mid_Level:''
                 requestInfo: '',
+                industyFrom:'',
             },
 
-            formErrors: { authId: '', industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', skills: [], which_plan: '', quickly_Need: '', requiredTime: '', organizationName: '', during_Those_Days: '', requestInfo: '', },
+            formErrors: { authId: '', industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', skills: [], which_plan: '', quickly_Need: '', requiredTime: '', organizationName: '', during_Those_Days: '', requestInfo: '' },
 
             filterItem: { filter_Skills: '', filter_client: '', filter_choose: '', filterFrom: '', filterTo: '' },
-
+            IndustryList: [
+                // { industryName: "Advertising", cat: "Group 1" },
+                // { industryName: "AccountingFinance", cat: "Group 1" },
+                // { industryName: "Apparel", cat: "Group 1" },
+                // { industryName: "ConstructionArchitectureEngineering", cat: "Group 2" },
+                // { industryName: "Design", cat: "Group 2" },
+                // { industryName: "Entertainment", cat: "Group 2" },
+                // { industryName: "Education", cat: "Group 2" },
+                // { industryName: "HealthcareMedical", cat: "Group 1" },
+                // { industryName: "HospitalityCatering", cat: "Group 1" },
+                // { industryName: "LogisticsAndTransport", cat: "Group 1" },
+                // { industryName: "Management", cat: "Group 2" },
+                // { industryName: "Retail", cat: "Group 2" },
+                // { industryName: "RealEstate", cat: "Group 2" },
+                // { industryName: "Telecommunication", cat: "Group 2" },
+                // { industryName: "TravelAndLeisureAndTourism", cat: "Group 1" },
+                // { industryName: "Others", cat: "Group 1" },
+            ]
 
         }
 
@@ -69,6 +88,8 @@ class HireVA_Listing extends Component {
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         // this.onKeyDown = this.onKeyDown.bind(this);
         this.filterItemList = this.filterItemList.bind(this);
+        this.onSelectIndstry = this.onSelectIndstry.bind(this);
+        this.onRemoveIndustry = this.onRemoveIndustry.bind(this);
     }
 
     itemList(filterItem = {}) {
@@ -96,15 +117,21 @@ class HireVA_Listing extends Component {
         this.setState({ loading: true }, () => {
             commonService.getAPIWithAccessToken('hire/get-hire-va' + filterQuery)
                 .then(res => {
-                    // console.log("VA Hire32", res.data.data)
+                    console.log("VA Hire32", res.data.data)
                     if (undefined === res.data.data || !res.data.status) {
                         this.setState({ loading: false });
                         toast.error(res.data.message);
                         return;
                     }
                     const result = res.data.data.requestList.map(skill => skill.skillsFreelancer)
+                    console.log("REDSS",result)
+                    
+                    // const industryHava = res.data.data.requestList.map(industry=> industry.industrytype)
+                    const industryHava = res.data.data.requestList.map((e)=>e.industrytype);
+                    console.log("industryHava",industryHava)
+                    
 
-                    this.setState({ loading: false, hireVaListData: res.data.data.requestList, selectedValues: result });
+                    this.setState({ loading: false, hireVaListData: res.data.data.requestList, selectedValues: result, selectedIndustry:industryHava });
                 })
                 .catch(err => {
                     if (err.response !== undefined && err.response.status === 401) {
@@ -122,7 +149,7 @@ class HireVA_Listing extends Component {
     }
 
     getFormatDate(date) {
-        console.log("DDDDDDDdd", date)
+        // console.log("DDDDDDDdd", date)
         var year = date.getFullYear().toString();
         var month = (date.getMonth() + 101).toString().substring(1);
         var day = (date.getDate() + 100).toString().substring(1);
@@ -206,17 +233,40 @@ class HireVA_Listing extends Component {
                 }
             })
     }
+    getIndustryList = () => {
+        commonService.getAPIWithAccessToken('hire/get-hire-va-Industrylist')
+            .then(res => {
+                // console.log("INDDDDD",res)
+                if (undefined === res.data.data || !res.data.status) {
+                    this.setState({ loading: false });
+                    toast.error(res.data.message);
+                    return;
+                }
+
+                this.setState({ loading: false, IndustryList: res.data.data })
+            })
+            .catch(error => {
+                if (error !== undefined) {
+                    localStorage.clear()
+                    // this.props.histroy.push('/login')
+                } else {
+                    this.setState({ loading: false, })
+                    toast.error(error.message)
+                }
+            })
+    }
     componentDidMount() {
         const { match: { params } } = this.props;
         // console.log("match", this.props);
         this.getSkillList();
+        this.getIndustryList();
         // this.hireVaList();
         // this.addItem();
         this.itemList();
     }
 
     onSelect(selectedList, selectedItem) {
-        // console.log("selectedList************************>",selectedList)
+        console.log("selectedList************************>",selectedList)
         this.setState({ selectedValues: selectedList.map(item => item) })
 
     }
@@ -224,6 +274,18 @@ class HireVA_Listing extends Component {
     onRemove(selectedList, removedItem) {
         // this.setState({ selectedValues: selectedList.filter((item) => (item.skillName !== removedItem.skillName)).map(skill => skill.skillName) })
         this.setState({ selectedValues: selectedList.filter((item) => (item.skillName !== removedItem.skillName)).map(skill => skill) })
+    }
+
+    onSelectIndstry(selectedList, selectedItem) {
+        console.log("SELECTED=============************************>",selectedList)
+        this.setState({ selectedIndustry: selectedList.map(item => item) })
+
+    }
+
+    onRemoveIndustry(selectedList, removedItem) {
+        console.log("REMOVE--------------------------------",selectedList)
+        // this.setState({ selectedValues: selectedList.filter((item) => (item.skillName !== removedItem.skillName)).map(skill => skill.skillName) })
+        this.setState({ selectedIndustry: selectedList.filter((item) => (item.name !== removedItem.name)).map(industry => industry) })
     }
 
     // onKeyDown(keyEvent) {
@@ -244,19 +306,22 @@ class HireVA_Listing extends Component {
         event.preventDefault();
         event.stopPropagation();
         // if(event.which === 13 ){
-        console.warn("CAlled==============", event.key !== 'Enter')
+        // console.warn("CAlled==============", event.key !== 'Enter')
         // }
         let valid = this.state.formField;
         let getMappedSkilled = [];
         getMappedSkilled = this.state.selectedValues.map(skill => skill.skillName);
-        console.log("getMappedSkilled", getMappedSkilled)
-        console.log("VALID===", valid)
+        // console.log("getMappedSkilled", getMappedSkilled)
+        // console.log("VALID===", valid)
+
+      let getMappedIndustry =  this.state.selectedIndustry.map(element => element._id);
+      console.log("getMappedIndustry----------------",getMappedIndustry)
 
         event.target.className += "was-validated";
         // console.log("formInputField11>",this.state.formField)
 
-
-        if (valid.industry === "" || valid.getMappedSkilled === '' || valid.jobDescreption === "" || valid.Days_A_Week === '' || valid.which_Days_Week === '' || valid.which_plan === '' || valid.quickly_Need === '' || valid.requiredTime === '' || valid.Hours_A_Day === '' || valid.during_Those_Days === '' || valid.requestInfo === '') {
+        // valid.industry === "" ||
+        if ( valid.getMappedSkilled === '' || valid.jobDescreption === "" || valid.Days_A_Week === '' || valid.which_Days_Week === '' || valid.which_plan === '' || valid.quickly_Need === '' || valid.requiredTime === '' || valid.Hours_A_Day === '' || valid.during_Those_Days === '' || valid.requestInfo === '') {
             console.log("Please file the form")
             return window.confirm("Please file the form")
         }
@@ -277,6 +342,7 @@ class HireVA_Listing extends Component {
                 // skillsFreelancer: formInputField.skillsFreelancer,
                 // skillsFreelancer: this.state.selectedValues.map(skill=>skill.skillName),
                 skillsFreelancer: getMappedSkilled,
+                industryType:getMappedIndustry,
                 quickly_Need: formInputField.quickly_Need,
                 during_Those_Days: formInputField.during_Those_Days,
                 Days_A_Week: formInputField.Days_A_Week,
@@ -362,50 +428,57 @@ class HireVA_Listing extends Component {
 
     /* Validate Form Field */
     validateField(fieldName, value) {
-        console.log("fieldName======================", fieldName, "-------", value)
-        // if(value==='' || value===undefined){
-        //     return "Please file the form";
-        // }
-        // else{
-        let fieldValidationErrors = this.state.formErrors;
-        fieldValidationErrors.error = '';
-
-        switch (fieldName) {
-            //   case 'organizationId':        
-            //     fieldValidationErrors.organizationId = (value !== '') ? '' : ' is required';
-            //     break;
-            case 'industry':
-                fieldValidationErrors.industry = (value !== '') ? '' : ' is required';
-                break;
-            case 'skills':
-                fieldValidationErrors.skills = (value !== '') ? '' : ' is required';
-                break;
-            case 'choosenPlan':
-                fieldValidationErrors.choosenPlan = (value !== '') ? '' : ' is required';
-                break;
-            case 'quickly_Need':
-                fieldValidationErrors.quickly_Need = (value !== '') ? '' : ' is required';
-                break;
-            case 'Days_A_Week':
-                fieldValidationErrors.Days_A_Week = (value !== '') ? '' : ' is required';
-                break;
-            case 'requiredTime':
-                fieldValidationErrors.requiredTime = (value !== '') ? '' : ' is required';
-                break;
-            case 'Hours_A_Day':
-                fieldValidationErrors.Hours_A_Day = (value !== '') ? '' : ' is required';
-                break;
-
-            case 'during_Those_Days':
-                fieldValidationErrors.during_Those_Days = (value !== '') ? '' : ' is required';
-                break;
-            default:
-                break;
+        // console.log("fieldName======================", fieldName, "-------", value)
+        if (value === '' || value === undefined) {
+            return "Please file the form";
         }
-        this.setState({
-            formErrors: fieldValidationErrors,
-        }, this.validateForm);
+        else {
+            let fieldValidationErrors = this.state.formErrors;
+            fieldValidationErrors.error = '';
 
+
+            switch (fieldName) {
+                //   case 'organizationId':        
+                //     fieldValidationErrors.organizationId = (value !== '') ? '' : ' is required';
+                //     break;
+                case 'industry':
+                    fieldValidationErrors.industry = (value !== '') ? '' : ' is required';
+                    break;
+                case 'skills':
+                    fieldValidationErrors.skills = (value !== '') ? '' : ' is required';
+                    break;
+                case 'choosenPlan':
+                    fieldValidationErrors.choosenPlan = (value !== '') ? '' : ' is required';
+                    break;
+                case 'quickly_Need':
+                    fieldValidationErrors.quickly_Need = (value !== '') ? '' : ' is required';
+                    break;
+                case 'Days_A_Week':
+                    fieldValidationErrors.Days_A_Week = (value !== '') ? '' : ' is required';
+                    break;
+                case 'requiredTime':
+                    fieldValidationErrors.requiredTime = (value !== '') ? '' : ' is required';
+                    break;
+                case 'Hours_A_Day':
+                    fieldValidationErrors.Hours_A_Day = (value !== '') ? '' : ' is required';
+                    break;
+
+                case 'during_Those_Days':
+                    fieldValidationErrors.during_Those_Days = (value !== '') ? '' : ' is required';
+                    break;
+
+                case 'jobDescreption':
+                    fieldValidationErrors.jobDescreption = (value !== '') ? '' : ' is required';
+                    break;
+
+                default:
+                    break;
+            }
+            this.setState({
+                formErrors: fieldValidationErrors,
+            }, this.validateForm);
+
+        }
     }
 
     /* Validate Form */
@@ -413,15 +486,17 @@ class HireVA_Listing extends Component {
         const formErrors = this.state.formErrors;
         const formField = this.state.formField;
         this.setState({
-            formValid:
-                (formErrors.industry === "" && formField.industry !== "")
-                    ? true : false
+            // formValid:
+            //     (formErrors.industry === "" && formField.industry !== "")
+            //         ? true : false
         });
     }
 
     handleEditItem(rowIndex) {
         const itemInfo = this.state.hireVaListData[rowIndex];
         const selectedSkill = []
+        const selectedIndustryType = []
+
         const getSkllls = itemInfo.skillsFreelancer
         this.state.skillList.forEach(el1 => getSkllls.forEach(el2 => {
             // console.log("E1>>>>>>>>>>>",typeof((el1.skillName)),"E2========",typeof(el2))
@@ -434,11 +509,21 @@ class HireVA_Listing extends Component {
         // console.log("finalResult", selectedSkill)
         this.setState({ selectedValues: selectedSkill })
 
+    const getIndustryType = itemInfo.industrytype;
+    this.state.IndustryList.forEach(list=> getIndustryType.forEach(list1=>{
+        if(list.name===list1){
+            (selectedIndustryType.push(list))
+
+        }
+    }))
+    this.setState({ selectedIndustry: selectedIndustryType })
+
         const formField = {
+            // industyFrom: this.state.formField.industyFrom,
             organizationName: itemInfo.organizationName,
             jobDescreption: itemInfo.jobDescreption,
             authId: itemInfo.authId,
-            industry: itemInfo.industry,
+            // industry: itemInfo.industry,
             which_plan: itemInfo.which_plan,
             which_Days_Week: itemInfo.which_Days_Week,
             Hours_A_Day: itemInfo.Hours_A_Day,
@@ -502,13 +587,14 @@ class HireVA_Listing extends Component {
             // changeName:  value==="edit" ? "Edit Hire VA":"Add Hire VA",
             changeName: "Hire VA",
             selectedValues: [],
+            selectedIndustry:[],
             formField: {
                 loading: true,
                 // hireVaListData: [],
-                organizationName: '', authId: '', modal: false, industry: '', skillsFreelancer: '', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Hours_A_Day: '', Days_A_Week: '', jobDescreption: '',
+                organizationName: '', authId: '', modal: false, industry: '', skillsFreelancer: '', selectedIndustry:'', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Hours_A_Day: '', Days_A_Week: '', jobDescreption: '', industrytype:'',
             },
 
-            formErrors: { modal: false, industry: '', skills: [], skillsFreelancer: '', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Days_A_Week: '', requiredTime: '', hoursADay: '', }
+            formErrors: { modal: false, industry: '', skills: [], skillsFreelancer: '', selectedIndustry:'', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Days_A_Week: '', requiredTime: '', hoursADay: '', }
 
 
         });
@@ -542,7 +628,7 @@ class HireVA_Listing extends Component {
 
     render() {
 
-        const { loading, hireVaListData, modal, formProccessing, skillList, selectedValues, formField, filterItem } = this.state;
+        const { loading, hireVaListData, modal, formProccessing, skillList, selectedValues,  formField, filterItem, IndustryList, selectedIndustry } = this.state;
         // console.log("-----ff------", (this.state.selectedValues))
         let loaderElement = '';
         if (loading)
@@ -576,7 +662,7 @@ class HireVA_Listing extends Component {
 
                             <Col md={"2"} className="pl-3">
                                 <FormGroup>
-                                    <Label htmlFor="filter_choose" >Choose Plan</Label>
+                                    <Label htmlFor="filter_choose" >Plan</Label>
                                     <Input type="select" value={filterItem.filter_choose} placeholder="Search by Choose Plan" id="filter_choose" name="filter_choose"
                                         // value={filterItem.filter_choose} 
                                         onChange={this.changeFilterHandler}>
@@ -657,10 +743,61 @@ class HireVA_Listing extends Component {
 
                                 <Col md={"6"}>
 
-                                    <FormGroup>
+                                    {/* <FormGroup>
                                         <Label htmlFor="industry">Industry</Label>
                                         <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Industry*" id="industry" name="industry" value={this.state.formField.industry} onChange={this.changeHandler} required >
                                         </Input>
+                                    </FormGroup> */}
+
+                                    <FormGroup>
+                                        <Label htmlFor="industry">Industry1</Label>
+                                        <Multiselect
+                                            options={IndustryList}
+                                            // groupBy="cat"
+                                            onChange={this.changeHandler}
+                                            onSelect={this.onSelectIndstry}
+                                            onRemove={this.onRemoveIndustry}
+                                            selectedValues={selectedIndustry}
+                                            displayValue="name"
+                                            showCheckbox={true}
+                                        />
+                                        {/* <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Industry*" id="industry" name="industry" value={this.state.formField.industry} onChange={this.changeHandler} required > */}
+                                        {/* <option value="">All</option>
+                                        <option value="Advertising">Advertising</option>
+                                        <option value="AccountingFinance">AccountingFinance</option>
+                                        <option value="Apparel">Apparel</option>
+                                        <option value="ConstructionArchitectureEngineering">ConstructionArchitectureEngineering</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Education">Education</option>
+                                        <option value="HealthcareMedical">HealthcareMedical</option>
+                                        <option value="HospitalityCatering">HospitalityCatering</option>
+                                        <option value="LogisticsAndTransport">LogisticsAndTransport</option>
+                                        <option value="Management">Management</option>
+                                        <option value="Retail">Retail</option>
+                                        <option value="RealEstate">RealEstate</option>
+                                        <option value="Telecommunication">Telecommunication</option>
+                                        <option value="TravelAndLeisureAndTourism">TravelAndLeisureAndTourism</option>
+                                        <option value="Others">Others</option> */}
+                                        {/* <option value="">All</option>
+                                        <option value="1">Advertising</option>
+                                        <option value="2">AccountingFinance</option>
+                                        <option value="3">Apparel</option>
+                                        <option value="4">ConstructionArchitectureEngineering</option>
+                                        <option value="5">Design</option>
+                                        <option value="6">Entertainment</option>
+                                        <option value="7">Education</option>
+                                        <option value="8">HealthcareMedical</option>
+                                        <option value="9">HospitalityCatering</option>
+                                        <option value="10">LogisticsAndTransport</option>
+                                        <option value="11">Management</option>
+                                        <option value="12">Retail</option>
+                                        <option value="13">RealEstate</option>
+                                        <option value="14">Telecommunication</option>
+                                        <option value="15">TravelAndLeisureAndTourism</option>
+                                        <option value="16">Others</option>
+                                        </Input> */}
+
                                     </FormGroup>
                                 </Col>
                                 <Col md={"6"}>
@@ -681,7 +818,7 @@ class HireVA_Listing extends Component {
                                 </Col>
                                 <Col md={"6"}>
                                     <FormGroup>
-                                        <Label htmlFor="jobDescreption">JobDescreption</Label>
+                                        <Label htmlFor="jobDescreption">Job Descreption</Label>
                                         <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Job Description*" id="jobDescreption" name="jobDescreption" value={this.state.formField.jobDescreption} onChange={this.changeHandler} required >
                                         </Input>
                                     </FormGroup>
@@ -692,7 +829,7 @@ class HireVA_Listing extends Component {
                                     <FormGroup tag="fieldset">
                                         <FormGroup >
                                             {/* <Label>Choose which plan they want for hourly?</Label></FormGroup> */}
-                                            <Label>Choose plan</Label></FormGroup>
+                                            <Label>Plan</Label></FormGroup>
                                         <Label className="radio-inline" htmlFor="entery_Level" ><Input style={{ padding: "20px", marginRight: "5px" }} type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="entery_Level" name="entery_Level" value="entery_Level" checked={this.state.formField.which_plan === 'entery_Level'}
                                             onChange={this.changeRadioButtonHandler} />Entry Level-12$ </Label>{'       '}
 

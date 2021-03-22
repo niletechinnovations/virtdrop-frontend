@@ -83,8 +83,6 @@ class FrontEndHeader extends React.Component {
       </>
     }
 
-    
-
     return (
       
       <header className="header">
