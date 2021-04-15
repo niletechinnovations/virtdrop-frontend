@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MUIDataTable from "mui-datatables";
 import { Link } from "react-router-dom";
+import commonService from '../../../../core/services/commonService';
 
 export class HireVaAssignmentData extends Component {
     constructor(props) {
@@ -28,12 +29,12 @@ export class HireVaAssignmentData extends Component {
     };
 
     render() {
-
+        
         let count = 0;
         // let dataItem= [];
         let rowsItem = [];
         for (const [i, Store] of this.props.data.entries()) {
-            // console.log("Storeeeeee---------------------", Store)
+            console.log("Storeeeeee----------Authid-----------", Store)
             let hireInfo = {
                 // organizationName: Store.organizationName,
                 industryName: Store.industry,
@@ -91,9 +92,19 @@ export class HireVaAssignmentData extends Component {
 
                     customBodyRender: (value, tableMeta, updateValue) => {
                         let i = tableMeta.rowIndex;
+                        // console.log("[this.props.data[i].authId]00000000000000000000000000000",[{clientid :rowsItem[i].authId}])
+                        // this.props.history.push({
+                        //       pathname: '/admin/assign-hire-va/',
+                        //       state: [{clientid :rowsItem[i].authId}]
+                        //   })
                         return (
+                            
                             <div className="actionBtnGroup" style={{ width: '90px' }}>
-                                <Link className="btn btn-sm btn-primary" to={`/admin/assign-hire-va/${rowsItem[i]._id}`}>Assign VA</Link>
+                                {/* <Link className="btn btn-sm btn-primary" to={`/admin/assign-hire-va/${rowsItem[i]._id}`}>Assign VA</Link> */}
+                                <Link className="btn btn-sm btn-primary" to={{pathname:`/admin/assign-hire-va/${rowsItem[i]._id}`,
+                                   state: rowsItem[i].authId     
+                                }}>Assign VA</Link>
+                                
                             </div>
                         );
                     }
@@ -101,7 +112,8 @@ export class HireVaAssignmentData extends Component {
             }
 
         ];
-
+        
+                     
         const options = {
             search: true,
             filter: false,
@@ -132,6 +144,8 @@ export class HireVaAssignmentData extends Component {
                 />
             </div>
         )
+
+        
     }
 }
 

@@ -25,10 +25,10 @@ class HireVaAssignmentList extends Component {
 
         this.hireVaList = this.hireVaList.bind(this);
         this.getSkillList = this.getSkillList.bind(this);
-        this.handleEditItem = this.handleEditItem.bind(this);
+        // this.handleEditItem = this.handleEditItem.bind(this);
         this.onSelect = this.onSelect.bind(this)
         this.onRemove = this.onRemove.bind(this);
-        this.addItem = this.addItem.bind(this);
+        // this.addItem = this.addItem.bind(this);
         // this.onKeyDown = this.onKeyDown.bind(this);
         this.filterItemList = this.filterItemList.bind(this);
     }
@@ -84,7 +84,7 @@ class HireVaAssignmentList extends Component {
     }
 
     getFormatDate(date) {
-        console.log("DDDDDDDdd", date)
+        // console.log("DDDDDDDdd", date)
         var year = date.getFullYear().toString();
         var month = (date.getMonth() + 101).toString().substring(1);
         var day = (date.getDate() + 100).toString().substring(1);
@@ -183,7 +183,7 @@ class HireVaAssignmentList extends Component {
     hireVaList() {
         commonService.getAPIWithAccessToken('hire/get-hire-va')
             .then(res => {
-                console.log("VA Hire112", res.data.data)
+                // console.log("VA Hire112", res.data.data)
                 if (undefined === res.data.data || !res.data.status) {
                     this.setState({ loading: false });
                     toast.error(res.data.message);

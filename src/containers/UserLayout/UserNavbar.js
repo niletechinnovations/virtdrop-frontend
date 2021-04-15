@@ -71,6 +71,15 @@ class UserNavbar extends Component {
                   </Link>
                 </NavItem>
               }
+              {(localStorage.getItem('role').toLowerCase() === "organization") &&
+                <NavItem>
+                  <Link to="/user/hire-va1" className="nav-link">
+                    <span className="icon-orders"><img src="/images/hire-a-helper-brands.svg" height="24" alt="Inquiries" /></span>
+                    <span className="value-orders">Hire A VA1</span>
+                  </Link>
+                </NavItem>
+              }
+
               <NavItem>
                 <Link to={(localStorage.getItem('role').toLowerCase() === "organization" ? "/user/task" : "/user/va-task")} className="nav-link">
                   <span className="icon-orders"><img src="/images/task.svg" height="24" alt="Task Management" /></span>

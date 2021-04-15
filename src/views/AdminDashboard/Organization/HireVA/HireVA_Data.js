@@ -33,7 +33,7 @@ export class HireVA_Data extends Component {
         // let dataItem= [];
         let rowsItem = [];
         for (const [i, Store] of this.props.data.entries()) {
-            console.log("Storeeeeee---------------------", i)
+            // console.log("Storeeeeee---------------------", i)
             let hireInfo = {
                 // organizationName: Store.organizationName,
                 // industryName: Store.industry,

@@ -12,9 +12,10 @@ class AssignHireVaRequest extends Component {
     super(props);
     this.state = {
       clientId: '',
-      formField: { organizationId: '', organizationName:'', userName:'', vaRequestId:'', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription: '', numberOfVA:'', skillSet:'' },
-      filterItem: { emailOrName: '' },
+      formField: { organizationId: '', organizationName:'', userName:'', hireVARequestId:'', vaType: '', natureOfBusiness: '', engagementType:'', engagementDescription: '', numberOfVA:'', skillSet:'' },
+      filterItem: { emailOrName: '', filter_Skills:''  },
       vaApplicationList: [],
+      skillList:[],
       assignedVaList: [],
       loading: false,
       checkAll: false,
@@ -26,18 +27,28 @@ class AssignHireVaRequest extends Component {
   }
 
   componentDidMount() { 
-    const { match: { params } } = this.props;    
-    if(params.clientId !== undefined && params.clientId !=="") {
-      this.setState({clientId: params.clientId});
-      this.getAssignedVA(params.clientId);
+    const {history:{location:{state}}} =this.props;
+    console.log("local..............",state)
+    const client_AuthId=state;
+    const { match: { params } } = this.props;  
+    console.log("clientId-------------->",this.props) 
+    const formField =this.state.formField;
+    formField.hireVARequestId = params.hireVARequestId;
+    if(params.hireVARequestId !== undefined && params.hireVARequestId !=="") {
+      this.setState({clientId : client_AuthId, formField: formField});
+      this.getAssignedVA(params.hireVARequestId);
     }
     this.itemList();
+    this.getSkillList();
   }
-  
   getAssignedVA(clientId){
+  // getAssignedVA(hireVARequestId){
+    // console.log("hireVARequestId------------999999------>",hireVARequestId)  
+
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('va-assignment/assigned-clients/?clientId='+clientId)
       .then( res => {
+        console.log("Assignd VA---------------------",res)
         if ( undefined === res.data.data || !res.data.status ) {
           this.setState( { loading: false} );
           toast.error(res.data.message);
@@ -68,11 +79,16 @@ class AssignHireVaRequest extends Component {
     let filterQuery = "?pageSize=50";
     if(filterItem.emailOrName !== undefined && filterItem.emailOrName !== "" ) 
       filterQuery += (filterQuery !=="" ) ? "&emailOrName="+filterItem.emailOrName: "&emailOrName="+filterItem.emailOrName;
+
+      if (filterItem.filter_Skills !== undefined && filterItem.filter_Skills !== "") {
+        filterQuery += (filterQuery !== "") ? "&filterSkills=" + filterItem.filter_Skills : "&filterSkills=" + filterItem.filter_Skills;
+    }
     
     this.setState( { loading: true}, () => {
       // va-assignment/clients-va
       commonService.getAPIWithAccessToken('va-application/va-member'+filterQuery)
         .then( res => {
+          console.log("res VA MEMBER",res)
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);
@@ -91,6 +107,29 @@ class AssignHireVaRequest extends Component {
         } )
     } )
   }
+
+  getSkillList = () => {
+    commonService.getAPIWithAccessToken('skill')
+        .then(res => {
+          // console.log("Skilssss",res)
+            if (undefined === res.data.data || !res.data.status) {
+                this.setState({ loading: false });
+                toast.error(res.data.message);
+                return;
+            }
+
+            this.setState({ loading: false, skillList: res.data.data })
+        })
+        .catch(error => {
+            if (error !== undefined) {
+                localStorage.clear()
+                // this.props.histroy.push('/login')
+            } else {
+                this.setState({ loading: false, })
+                toast.error(error.message)
+            }
+        })
+}
 
   filterVaMemberList(){
     const filterItem = this.state.filterItem;
@@ -127,8 +166,10 @@ class AssignHireVaRequest extends Component {
         toast.error('Please select at least one VA User');
         return;
     }
+    console.log(this.state.formField.hireVARequestId,"hireva request")
     const formData = {
-        "clientId": this.state.clientId,
+         "clientId":this.state.clientId,
+        "hireVARequestId": this.state.formField.hireVARequestId,
         "authIds": authIds,
     };
     
@@ -158,19 +199,20 @@ class AssignHireVaRequest extends Component {
  
   render() {
     
-    const { loading,  vaApplicationList, assignedVaList } = this.state;
+    const { loading,  vaApplicationList, assignedVaList,skillList } = this.state;
     let loaderElement = '';
     if (loading)
         loaderElement = <Loader />
         
         let rowsItem = [];        
         for (const [i, userData] of vaApplicationList.entries() ) {
+          // console.log("userData.skillSet",userData)
             let userInfo = {
                 SNo: i,
                 authId: userData.authId,
                 userName: userData.firstName + ' ' + userData.lastName,
                 email: userData.email,
-                skillSet: userData.skillSet,
+                skillSet: userData.skillSet1 +','+ userData.skillSet2+','+ userData.skillSet3,
             }
             rowsItem.push(userInfo);
         }
@@ -209,7 +251,12 @@ class AssignHireVaRequest extends Component {
                                     <Input placeholder="Filter by name or email..." name="emailOrName" value={this.state.filterItem.emailOrName} onChange={this.changeFilterHandler} />
                                   </Col>
                                   <Col md="4">
-                                    <Input placeholder="Filter by skills" name="skill" value={this.state.filterItem.emailOrName} onChange={this.changeFilterHandler} />
+                                    <Input type = "select" placeholder="Filter by skills" name="filter_Skills" value={this.state.filterItem.filter_Skills} onChange={this.changeFilterHandler}>
+                                    <option value="">All</option>
+                                        {skillList.map((skillInfo, index) =>
+                                            <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                                        )}
+                                        </Input>
                                   </Col>
                                   <Col>
                                     <Button onClick={this.filterVaMemberList}><i className="fa fa-search"></i></Button>
@@ -250,6 +297,11 @@ class AssignHireVaRequest extends Component {
 
     )
   }
+}
+
+function SetSkillDropDownItem(props) {
+  const skillInfo = props.skillInfo;
+  return (<option value={skillInfo.skillId} >{skillInfo.skillName}</option>)
 }
 
 export default AssignHireVaRequest;

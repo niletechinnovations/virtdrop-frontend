@@ -12,7 +12,7 @@ export class hireVA extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            formField: { industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', during_Those_Days: '', quickly_Need: '', which_plan: '',  },
+            formField: { industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '',during_Those_Days: '', quickly_Need: '', which_plan: '',  },
             loading: false,
             skillList: [],
             selectedValues: [],

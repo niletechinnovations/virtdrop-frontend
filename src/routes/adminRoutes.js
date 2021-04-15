@@ -24,7 +24,8 @@ import HireVA_Listing from '../views/AdminDashboard/Organization/HireVA/HireVA_L
 import ViewHireVA_List from '../views/AdminDashboard/Organization/HireVA/ViewHireVA_List';
 import HireVaAssignmentList from '../views/AdminDashboard/Organization/HireVA/HireVaAssignmentList';
 import AssignHireVaRequest from '../views/AdminDashboard/Organization/HireVA/AssignHireVaRequest';
-
+import ClientVAMeeting from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
+import ClientVAMeeting1 from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
 
 const adminRoutes = [
   { path: '/admin/', exact: true, name: 'Admin' },
@@ -52,10 +53,12 @@ const adminRoutes = [
   { path: '/admin/billing', exact: true, name: 'Clients Billing', component: BillingList },
   { path: '/admin/skills', exact: true, name: 'Manage Skills', component: Skill },
   { path: '/admin/active-vas', exact: true, name: 'Manage Active VAs', component: ActiveApplicationLists },
-  {path:  '/admin/hire-va',exact:true, name:"Manage Hire VA Request", component: HireVA_Listing},
-  {path:  '/admin/hire-va/view-hire-va-list/:hireVARequestId', exact:true, name: "View Hire VA List", component: ViewHireVA_List },
-  {path:  '/admin/hire-va-assignment-list/', exact:true, name: "Hire VA Assignment", component: HireVaAssignmentList },
-  {path:  '/admin/assign-hire-va/:hireVARequestId', exact:true, name: "Assign Hire VA", component: AssignHireVaRequest },
+  { path: '/admin/hire-va', exact: true, name: "Manage Hire VA Request", component: HireVA_Listing },
+  { path: '/admin/hire-va/view-hire-va-list/:hireVARequestId', exact: true, name: "View Hire VA List", component: ViewHireVA_List },
+  { path: '/admin/hire-va-assignment-list/', exact: true, name: "Hire VA Assignment", component: HireVaAssignmentList },
+  { path: '/admin/assign-hire-va/:hireVARequestId', exact: true, name: "Assign Hire VA", component: AssignHireVaRequest },
+  { path: '/admin/schedule-meeting/', exact: true, name: 'Manage Client Meeting', component: ClientVAMeeting },
+  // { path: '/admin/schedule-meeting-new', exact: true, name: 'Manage Client Meeting', component: ClientVAMeeting1 },
 ];
 
 export default adminRoutes;

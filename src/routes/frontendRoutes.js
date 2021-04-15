@@ -38,7 +38,7 @@ const frontendRoutes = [
   { path: '/be-a-virdrop-va', exact:true, name: 'Be a Virdrop', component: BecomeVirtdropPage},
   { path: '/booking', exact:true, name: 'Booking Calendar', component: BookingPage},  
   { path: '/pricing', exact:true, name: 'Pricing Plan', component: PricingPage},
-  { path: '/va-profile/:vaProfileId', exact:true, name: 'VA Pofile', component:VaProfilePage}
+  { path: '/va-profile/:vaProfileId', exact:true, name: 'VA Profile', component:VaProfilePage}
   
 ];
 

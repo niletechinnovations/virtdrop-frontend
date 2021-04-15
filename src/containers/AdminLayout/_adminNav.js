@@ -18,15 +18,12 @@ export default {
     {
       name: 'Hire VA Request',
       url: '/admin/hire-va',
-      // icon: "fa fa-hire-a-helper"
-      //  icon: "../images/hire-a-helper-brands.svg"
-      icon:"fa fa-globe",
-      // icon: 'fa fa-book'
+      icon:"fa fa-globe"
     },
     {
       name: 'VA Assignment',
       url: '/admin/hire-va-assignment-list',
-      icon: 'fa fa-task'
+      icon: 'fa fa-tasks'
     },
     {
       name: 'Discovery Call',      
@@ -77,6 +74,11 @@ export default {
       name: 'Skills',
       url: '/admin/skills',
       icon: 'fa fa-file',   
+    },
+    {
+      name: 'Schedule Meeting',
+      url: '/admin/schedule-meeting',
+      icon: 'fa fa-meetup',   
     },
     
   ],

@@ -22,6 +22,7 @@ class HireVA_Listing extends Component {
             selectedValues: [],
             selectedIndustry:[],
             changeName: '',
+            meetingLink:'',
             // selectedValues1:[],
             rowIndex: -1,
             formField: {
@@ -158,7 +159,7 @@ class HireVA_Listing extends Component {
 
     setFilterFromDate = date => {
         let filterFormField = this.state.filterItem;
-        console.log("ToDate>>>>>", (this.state.filterItem.filterTo) < Date.parse(date))
+        // console.log("ToDate>>>>>", (this.state.filterItem.filterTo) < Date.parse(date))
         if (Date.parse(this.state.filterItem.filterTo) < Date.parse(date)) {
 
             alert("To Date should be greater than From Date");
@@ -266,7 +267,7 @@ class HireVA_Listing extends Component {
     }
 
     onSelect(selectedList, selectedItem) {
-        console.log("selectedList************************>",selectedList)
+        // console.log("selectedList************************>",selectedList)
         this.setState({ selectedValues: selectedList.map(item => item) })
 
     }
@@ -277,15 +278,15 @@ class HireVA_Listing extends Component {
     }
 
     onSelectIndstry(selectedList, selectedItem) {
-        console.log("SELECTED=============************************>",selectedList)
+        // console.log("SELECTED=============************************>",selectedList)
         this.setState({ selectedIndustry: selectedList.map(item => item) })
 
     }
 
     onRemoveIndustry(selectedList, removedItem) {
-        console.log("REMOVE--------------------------------",selectedList)
+        // console.log("REMOVE----------------------------",selectedList)
         // this.setState({ selectedValues: selectedList.filter((item) => (item.skillName !== removedItem.skillName)).map(skill => skill.skillName) })
-        this.setState({ selectedIndustry: selectedList.filter((item) => (item.name !== removedItem.name)).map(industry => industry) })
+        this.setState({ selectedIndustry: selectedList.filter((item) => (item.name !== removedItem.name)).map(industry => industry)})
     }
 
     // onKeyDown(keyEvent) {
@@ -305,21 +306,15 @@ class HireVA_Listing extends Component {
     submitHandler(event) {
         event.preventDefault();
         event.stopPropagation();
-        // if(event.which === 13 ){
-        // console.warn("CAlled==============", event.key !== 'Enter')
-        // }
+       
         let valid = this.state.formField;
         let getMappedSkilled = [];
         getMappedSkilled = this.state.selectedValues.map(skill => skill.skillName);
-        // console.log("getMappedSkilled", getMappedSkilled)
-        // console.log("VALID===", valid)
-
+      
       let getMappedIndustry =  this.state.selectedIndustry.map(element => element._id);
-      console.log("getMappedIndustry----------------",getMappedIndustry)
-
+  
         event.target.className += "was-validated";
-        // console.log("formInputField11>",this.state.formField)
-
+      
         // valid.industry === "" ||
         if ( valid.getMappedSkilled === '' || valid.jobDescreption === "" || valid.Days_A_Week === '' || valid.which_Days_Week === '' || valid.which_plan === '' || valid.quickly_Need === '' || valid.requiredTime === '' || valid.Hours_A_Day === '' || valid.during_Those_Days === '' || valid.requestInfo === '') {
             console.log("Please file the form")
@@ -542,7 +537,6 @@ class HireVA_Listing extends Component {
             {/* {
              ( itemInfo.status ? 'De-Activate Account' : 'Activate Account' )} */}
         </Button>
-
         this.setState({ rowIndex: rowIndex, formField: formField, modal: true, changeStatusBtn: statusBtn, formValid: true });
 
     }
@@ -576,10 +570,7 @@ class HireVA_Listing extends Component {
         })
     }
 
-    toggle = () => {
-
-        // e.stopPropagation();
-        // console.log("CCCCCCCCCCCCCCCCCCCCCCCCC",e.target.title)  
+    toggle = () => { 
 
         this.setState({
             modal: !this.state.modal, rowIndex: -1, formProccessing: false,
@@ -611,9 +602,6 @@ class HireVA_Listing extends Component {
                 }
                 const result = res.data.data.map(skill => skill.skillsFreelancer).map(res => res.split(","));
 
-                //  const rs1=   result.map(res=> res.split(","))
-                //  console.log("===============>",result)
-
                 this.setState({ loading: false, hireVaListData: res.data.data.requestList, selectedValues: result });
             })
             .catch(err => {
@@ -629,7 +617,6 @@ class HireVA_Listing extends Component {
     render() {
 
         const { loading, hireVaListData, modal, formProccessing, skillList, selectedValues,  formField, filterItem, IndustryList, selectedIndustry } = this.state;
-        // console.log("-----ff------", (this.state.selectedValues))
         let loaderElement = '';
         if (loading)
             loaderElement = <Loader />
@@ -679,7 +666,7 @@ class HireVA_Listing extends Component {
 
                             <Col md={"3"} className="pl-3">
                                 <FormGroup>
-                                    <Label htmlFor="filter_Skills" >Skills</Label>
+                                    <Label htmlFor="filter_Skills">Skills</Label>
                                     <Input type="select" value={filterItem.filter_Skills} placeholder="filter_Skills *" id="filter_Skills" name="filter_Skills"
                                         // value={filterItem.filter_organization_id} 
                                         onChange={this.changeFilterHandler}>
@@ -726,9 +713,11 @@ class HireVA_Listing extends Component {
                     <HireVAData data={hireVaListData} editItemAction={this.handleEditItem} deleteItemAction={this.handleDeleteItem} dataTableLoadingStatus={this.state.loading} />
                     {/* changeNameget={this.state.changeName} */}
                 </Col>
+
+
                 {/* Add Hire VA */}
                 <Modal isOpen={modal} toggle={this.toggle} className="full-width-modal-section store-modal">
-                    <ModalHeader title="getTitle" toggle={this.toggle}>Hire VA</ModalHeader>
+                    <ModalHeader title="hire VA" toggle={this.toggle}>Hire VA</ModalHeader>
                     <Form onSubmit={this.submitHandler} noValidate>
                         <ModalBody>
                             <FormErrors formErrors={this.state.formErrors} />
@@ -750,7 +739,7 @@ class HireVA_Listing extends Component {
                                     </FormGroup> */}
 
                                     <FormGroup>
-                                        <Label htmlFor="industry">Industry1</Label>
+                                        <Label htmlFor="industry">Industry</Label>
                                         <Multiselect
                                             options={IndustryList}
                                             // groupBy="cat"
