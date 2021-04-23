@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE_URL = 'http://localhost:8082/';     //'https://www.virtdrop.com/api/';   //'http://localhost:8082/'; //'https://virtdrop-api.herokuapp.com/'; // 
+const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/';     //'https://www.virtdrop.com/api/';   //'http://localhost:8082/'; //'https://virtdrop-api.herokuapp.com/'; // 
 
 // const API_BASE_URL = 'http://localhost:8082/';
 //const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/';
