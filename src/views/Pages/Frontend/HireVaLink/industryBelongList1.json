@@ -1,0 +1,76 @@
+{
+    "industries": [
+        {
+            "id": "1",
+            "name": "Advertising"
+        },
+        {
+            "id": "2",
+            "name": "Accounting / Finance"
+        },
+        {
+            "id": "3",
+            "name": "Apparel"
+        },
+        {
+            "id": "4",
+            "name": "Construction / Architecture / Engineering"
+        },
+        {
+            "id": "5",
+            "name": "Designs"
+        },
+        {
+            "id": "6",
+            "name": "Entertainment"
+        },
+        {
+            "id": "7",
+            "name": "Education"
+        },
+        {
+            "id": "8",
+            "name": "Healthcare / Medical"
+        },
+        {
+            "id": "9",
+            "name": "Hospitality / Catering"
+        },
+        {
+            "id": "10",
+            "name": "Legal / Consulting"
+        },
+        {
+            "id": "11",
+            "name": "ALogistics & Transportpparel"
+        },
+        {
+            "id": "12",
+            "name": "Management"
+        },
+        {
+            "id": "13",
+            "name": "Manufacturing"
+        },
+        {
+            "id": "14",
+            "name": "Retail"
+        },
+        {
+            "id": "15",
+            "name": "Real Estate"
+        },
+        {
+            "id": "16",
+            "name": "Telecommunication"
+        },
+        {
+            "id": "17",
+            "name": "Travel, Leisure & Tourism"
+        },
+        {
+            "id": "18",
+            "name": "ECommerce"
+        }
+    ]
+}

@@ -17,6 +17,8 @@ import BookingPage from '../views/Pages/Frontend/BookingCalendar/CalendlyBooking
 import ServicesPage from '../views/Pages/Frontend/Services/ServicesPage';
 import PricingPage from '../views/Pages/Frontend/Pricing/PrcingPage';
 import VaProfilePage from '../views/Pages/Frontend/VaProfilePage';
+// import HireVaPage  from '../views/Pages/Frontend/HireVaLink/HireVaPage';
+// import ThanksToYouPage from '../views/Pages/Frontend/HireVaLink/ThanksToYouPage';
 
 const frontendRoutes = [
   { path: '/', exact: true, name: 'Home', component: HomePage },
@@ -38,7 +40,11 @@ const frontendRoutes = [
   { path: '/be-a-virdrop-va', exact:true, name: 'Be a Virdrop', component: BecomeVirtdropPage},
   { path: '/booking', exact:true, name: 'Booking Calendar', component: BookingPage},  
   { path: '/pricing', exact:true, name: 'Pricing Plan', component: PricingPage},
-  { path: '/va-profile/:vaProfileId', exact:true, name: 'VA Profile', component:VaProfilePage}
+  { path: '/va-profile/:vaProfileId', exact:true, name: 'VA Profile', component:VaProfilePage},
+  // { path: '/va-hire-link', exact:true, name: 'Hire VA ', component:HireVaPage},
+  // { path: '/thanks-to-you', exact:true, name: 'Thank You!', component:ThanksToYouPage}        
+
+  
   
 ];
 

@@ -15,7 +15,7 @@ export class HireVA_Data extends Component {
     componentDidMount() {
 
     }
-   
+
     // Edit Store Info 
     editHireItem(rowIndex) {
         this.props.editItemAction(rowIndex);
@@ -33,21 +33,23 @@ export class HireVA_Data extends Component {
         // let dataItem= [];
         let rowsItem = [];
         for (const [i, Store] of this.props.data.entries()) {
-            // console.log("Storeeeeee---------------------", i)
+            console.log("Storeeeeee---------------------", Store)
             let hireInfo = {
                 // organizationName: Store.organizationName,
                 // industryName: Store.industry,
-                industryName:Store.industrytype.toString(),
-                skillName: Store.skillsFreelancer.toString(),
+                industryName: Store.industrytype.map(e=>e.name).toString(),
+                // skillName: Store.skillsFreelancer.toString(),
+                 skillName: Store.skillsFreelancer.map(e=>e.parentName).toString(),
                 choosePlan: Store.which_plan,
-                need: Store.quickly_Need,
-                weekdays: Store.which_Days_Week,
-                requiredTime: Store.during_Those_Days,
-                hoursA_Day: Store.Hours_A_Day,
+                need: Store.quickly_Need >1 ? Store.quickly_Need + " "+ 'days' :Store.quickly_Need + " "+ 'day' ,
+                weekdays: Store.Days_A_Week,
+                requiredTime: Store.during_Those_Days, 
+                hoursA_Day: Store.Hours_A_Day+" "+'hrs',
                 authId: Store.authId,
                 _id: Store._id,
                 // client: Store.clientCompleteName,
-                client:Store.firstName + " " + Store.lastName
+                // client: Store.firstName + " " + Store.lastName
+                client: Store.firstName
 
             }
 
@@ -82,10 +84,10 @@ export class HireVA_Data extends Component {
                 label: 'Weekdays',
                 name: 'weekdays'
             },
-            {
-                label: 'Required Time',
-                name: 'requiredTime'
-            },
+            // {
+            //     label: 'Required Time',
+            //     name: 'requiredTime'
+            // },
             {
                 label: 'Hours A Day ',
                 name: 'hoursA_Day'
@@ -105,11 +107,13 @@ export class HireVA_Data extends Component {
                         // console.log("iiiiiiiiiiiiiiii",i)
                         return (
                             <div className="actionBtnGroup" style={{ width: '110px' }}>
-                                <Link className="btn btn-info btn-edit" to={`/admin/hire-va/view-hire-va-list/${rowsItem[i]._id}`}><i className="fa fa-eye" aria-hidden="true"></i>
+
+                                {/* <Link className="btn btn-info btn-edit" to={`/admin/hire-va/view-hire-va-list/${rowsItem[i]._id}`}><i className="fa fa-eye" aria-hidden="true"></i>
                                 </Link>
-                                <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.editHireItem(i)}><i className="fa fa-pencil"></i></button>
+                                <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.editHireItem(i)}><i className="fa fa-pencil"></i></button> */}
                                 {/* , this.chahgename(this.state.edit) */}
-                                <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button></div>
+                                <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button>
+                                </div>
                         );
                     }
                 }

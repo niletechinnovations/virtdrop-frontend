@@ -25,7 +25,7 @@ import ViewHireVA_List from '../views/AdminDashboard/Organization/HireVA/ViewHir
 import HireVaAssignmentList from '../views/AdminDashboard/Organization/HireVA/HireVaAssignmentList';
 import AssignHireVaRequest from '../views/AdminDashboard/Organization/HireVA/AssignHireVaRequest';
 import ClientVAMeeting from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
-import ClientVAMeeting1 from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
+// import ClientVAMeeting1 from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
 
 const adminRoutes = [
   { path: '/admin/', exact: true, name: 'Admin' },

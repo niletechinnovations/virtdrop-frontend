@@ -57,7 +57,7 @@ class HireVA_Listing extends Component {
             formErrors: { authId: '', industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', skills: [], which_plan: '', quickly_Need: '', requiredTime: '', organizationName: '', during_Those_Days: '', requestInfo: '' },
 
             filterItem: { filter_Skills: '', filter_client: '', filter_choose: '', filterFrom: '', filterTo: '' },
-            IndustryList: [
+            // IndustryList: [
                 // { industryName: "Advertising", cat: "Group 1" },
                 // { industryName: "AccountingFinance", cat: "Group 1" },
                 // { industryName: "Apparel", cat: "Group 1" },
@@ -74,7 +74,7 @@ class HireVA_Listing extends Component {
                 // { industryName: "Telecommunication", cat: "Group 2" },
                 // { industryName: "TravelAndLeisureAndTourism", cat: "Group 1" },
                 // { industryName: "Others", cat: "Group 1" },
-            ]
+            // ]
 
         }
 
@@ -116,7 +116,8 @@ class HireVA_Listing extends Component {
         }
 
         this.setState({ loading: true }, () => {
-            commonService.getAPIWithAccessToken('hire/get-hire-va' + filterQuery)
+            // commonService.getAPIWithAccessToken('hire/get-hire-va' + filterQuery)
+            commonService.getAPIWithAccessToken('hire/get-hire-va1' + filterQuery)
                 .then(res => {
                     console.log("VA Hire32", res.data.data)
                     if (undefined === res.data.data || !res.data.status) {
@@ -257,7 +258,7 @@ class HireVA_Listing extends Component {
             })
     }
     componentDidMount() {
-        const { match: { params } } = this.props;
+        // const { match: { params } } = this.props;
         // console.log("match", this.props);
         this.getSkillList();
         this.getIndustryList();
@@ -400,7 +401,7 @@ class HireVA_Listing extends Component {
 
 
     changeRadioButtonHandler(event) {
-        const name = event.target.name;
+        // const name = event.target.name;
         const value = event.target.value;
         const formField = this.state.formField;
         // console.log("formField>>>>>>>>",formField)

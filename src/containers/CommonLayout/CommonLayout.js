@@ -3,15 +3,20 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 // routes config
 import commonRoutes from '../../routes/commonRoutes';
+import FrontEndFooter from '../FrontEndLayout/FrontEndFooter';
+// import FrontEndHeader from '../FrontEndLayout/FrontEndHeader';
+import CommonFrontEndHeader from './CommonFrontEndHeader';
+import './CommonLayout.css';
 
 class CommonLayout extends Component {
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  loading = () => <div className="animated fadeIn pt-1 text-center">Loyading...</div>
 
    render() {
     return (
       <div className="app">
-        <div className="flyout">           
+        <div className="flyout">   
+       <CommonFrontEndHeader />        
             <main>                
               <Suspense fallback={this.loading()}>
                 <Switch>
@@ -30,7 +35,8 @@ class CommonLayout extends Component {
                   <Redirect from="/common" to="/" />
                 </Switch>
               </Suspense>
-            </main>            
+            </main>     
+            <FrontEndFooter />       
         </div>
       </div>
     );

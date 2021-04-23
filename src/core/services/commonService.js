@@ -18,7 +18,7 @@ class ApiService {
         const headers = {
             'Authorization': 'JWT '+accessToken
         }
-        console.log("Get Api>>>",API_BASE_URL+urlSegment)
+        // console.log("Get Api>>>",API_BASE_URL+urlSegment)
         return axios.get(API_BASE_URL+urlSegment, {headers: headers});
     }
     /*Post API Without Authentication header */

@@ -1,0 +1,270 @@
+{
+    "clientArea": [
+        {
+            "parentId": "1",
+            "parentName": "Administrative Task DataEntry",
+            "vADesignation": [
+                {
+                    "id": "2",
+                    "profileName": "Typing, Copy, Paste"
+                },
+                {
+                    "id": "3",
+                    "profileName": "Data Collection, Data Mining, Data Cleaning"
+                },
+                {
+                    "id": "4",
+                    "profileName": "Excel, Word, Powerpoint, PDF Editor"
+                },
+                {
+                    "id": "5",
+                    "profileName": "Google Sheets, Google Doc, Google Slides"
+                },
+                {
+                    "id": "6",
+                    "profileName": "Admin Support Work"
+                },
+                {
+                    "id": "7",
+                    "profileName": "Record Information"
+                },
+                {
+                    "id": "8",
+                    "profileName": "Take Meeting Notes"
+                }
+            ]
+        },
+        {
+            "parentId": "9",
+            "parentName": "Executive Assistants",
+            "vADesignation": [
+                {
+                    "id": "10",
+                    "profileName": "Appointment Setter"
+                },
+                {
+                    "id": "11",
+                    "profileName": "Emails, Phone Calls"
+                },
+                {
+                    "id": "12",
+                    "profileName": "Book Travel & Hotels"
+                },
+                {
+                    "id": "13",
+                    "profileName": "Coordinate Meetings & Events"
+                },
+                {
+                    "id": "14",
+                    "profileName": "Perform Research"
+                }
+            ]
+        },
+        {
+            "parentId": "15",
+            "parentName": "Ecommerce related Tasks",
+            "vADesignation": [
+                {
+                    "id": "16",
+                    "profileName": "Product Listing, Sourcing"
+                },
+                {
+                    "id": "17",
+                    "profileName": "Shopify Expert"
+                },
+                {
+                    "id": "18",
+                    "profileName": "Ecommerce Customer Service Rep"
+                },
+                {
+                    "id": "19",
+                    "profileName": "Wholesale Specialist"
+                },
+                {
+                    "id": "20",
+                    "profileName": "Product Designer"
+                },
+                {
+                    "id": "21",
+                    "profileName": "Store Management"
+                },
+                {
+                    "id": "22",
+                    "profileName": "Drop Shipping"
+                },
+                {
+                    "id": "23",
+                    "profileName": "Amazon, Ebay Expert"
+                },
+                {
+                    "id": "24",
+                    "profileName": "Ecommerce Consultant"
+                }
+            ]
+        },
+        {
+            "parentId": "25",
+            "parentName": "Customer Support Service",
+            "vADesignation": [
+                {
+                    "id": "26",
+                    "profileName": "Live Chat Agent"
+                },
+                {
+                    "id": "27",
+                    "profileName": "Call Center Agent"
+                },
+                {
+                    "id": "28",
+                    "profileName": "Customer & Technical Support"
+                },
+                {
+                    "id": "29",
+                    "profileName": "Emails/Phone Calls Support"
+                },
+                {
+                    "id": "30",
+                    "profileName": "Voice Actor"
+                }
+            ]
+        },
+        {
+            "parentId": "31",
+            "parentName": "Graphic Designing",
+            "vADesignation": [
+                {
+                    "id": "32",
+                    "profileName": "Logo, Brochure, Poster, Business cards"
+                },
+                {
+                    "id": "33",
+                    "profileName": "Web & Mobile Design"
+                },
+                {
+                    "id": "34",
+                    "profileName": "Adobe Photoshop Expert"
+                },
+                {
+                    "id": "35",
+                    "profileName": "Social Media Design"
+                },
+                {
+                    "id": "36",
+                    "profileName": "Video & Animation"
+                },
+                {
+                    "id": "37",
+                    "profileName": "Digital Artist"
+                },
+                {
+                    "id": "38",
+                    "profileName": "Game Designer"
+                },
+                {
+                    "id": "39",
+                    "profileName": "Animator"
+                }
+            ]
+        },
+        {
+            "parentId": "40",
+            "parentName": "Marketing",
+            "vADesignation": [
+                {
+                    "id": "41",
+                    "profileName": "Email Marketing"
+                },
+                {
+                    "id": "42",
+                    "profileName": "Social Media Marketing"
+                },
+                {
+                    "id": "43",
+                    "profileName": "Video Marketing"
+                },
+                {
+                    "id": "44",
+                    "profileName": "Marketing Consultant"
+                },
+                {
+                    "id": "45",
+                    "profileName": "SEM Specialists"
+                },
+                {
+                    "id": "46",
+                    "profileName": "SEO Specialists"
+                }
+            ]
+        },
+        {
+            "parentId": "47",
+            "parentName": "Accounting/Bookkeeping",
+            "vADesignation": [
+                {
+                    "id": "48",
+                    "profileName": "General Bookkeeping"
+                },
+                {
+                    "id": "49",
+                    "profileName": "Quickbooks Online Expert"
+                },
+                {
+                    "id": "50",
+                    "profileName": "Tax Consultants"
+                },
+                {
+                    "id": "51",
+                    "profileName": "CPA / Accountants"
+                },
+                {
+                    "id": "52",
+                    "profileName": "Financial Analysts"
+                }
+            ]
+        },
+        {
+            "parentId": "53",
+            "parentName": "Cold Calling",
+            "vADesignation": [
+                {
+                    "id": "54",
+                    "profileName": "WordPress Development"
+                },
+                {
+                    "id": "55",
+                    "profileName": "Software Developer"
+                },
+                {
+                    "id": "56",
+                    "profileName": "Computer Programmer"
+                },
+                {
+                    "id": "57",
+                    "profileName": "Database Programmer"
+                }
+            ]
+        },
+        {
+            "parentId": "58",
+            "parentName": "Programming and Development",
+            "vADesignation": [
+                {
+                    "id": "59",
+                    "profileName": "WordPress Development"
+                },
+                {
+                    "id": "60",
+                    "profileName": "Software Developer"
+                },
+                {
+                    "id": "61",
+                    "profileName": "Computer Programmer"
+                },
+                {
+                    "id": "62",
+                    "profileName": "Database Programmer"
+                }
+            ]
+        }
+    ]
+}
