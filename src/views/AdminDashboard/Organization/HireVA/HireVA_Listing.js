@@ -124,7 +124,7 @@ class HireVA_Listing extends Component {
             // commonService.getAPIWithAccessToken('hire/get-hire-va' + filterQuery)
             commonService.getAPIWithAccessToken('hire/get-hire-va1' + filterQuery)
                 .then(res => {
-                    console.log("VA Hire32", res.data.data)
+                    // console.log("VA Hire32", res.data.data)
                     if (undefined === res.data.data || !res.data.status) {
                         this.setState({ loading: false });
                         toast.error(res.data.message);
