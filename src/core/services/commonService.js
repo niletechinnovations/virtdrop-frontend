@@ -1,11 +1,9 @@
 import axios from 'axios';
-const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/';     //'https://www.virtdrop.com/api/';   //'http://localhost:8082/'; //'https://virtdrop-api.herokuapp.com/'; // 
-
+//const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/';     //'https://www.virtdrop.com/api/';   //'http://localhost:8082/'; 
 // const API_BASE_URL = 'http://localhost:8082/';
 //const API_BASE_URL = 'https://virtdrop-api.herokuapp.com/';
-// const API_BASE_URL ='herokuapp.com/';
-// const API_BASE_URL='https://www.virtdrop.com/api/'; 
-const API_BASE_URL_WITH_OUT_VERSION = 'https://www.virtdrop.com/api/';
+const API_BASE_URL = 'https://api.virtdrop.com/api/';
+const API_BASE_URL_WITH_OUT_VERSION = 'https://api.virtdrop.com/api/';
 class ApiService {
 
     /*Get API*/
