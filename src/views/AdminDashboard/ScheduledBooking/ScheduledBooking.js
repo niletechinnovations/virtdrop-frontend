@@ -49,7 +49,7 @@ class ScheduledBooking extends Component {
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('booking'+filterQuery)
         .then( res => {       
-          console.log(res);
+          // console.log(res);
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);

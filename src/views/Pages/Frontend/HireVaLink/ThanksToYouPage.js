@@ -19,7 +19,7 @@ class ThanksToYouPage extends Component {
                         </div>
                         <div className="success-msg-content">
                             <p>Thank you for submitting your request. Our team will contact you shortly.</p>
-                            <a className="btn-ox" href="#">OK</a>
+                            {/* <a className="btn-ox" href="#">OK</a> */}
                         </div>
                     </div>
                 </div>

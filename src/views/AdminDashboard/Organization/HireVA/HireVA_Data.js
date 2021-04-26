@@ -22,6 +22,12 @@ export class HireVA_Data extends Component {
         // this.props.changeNameget()
     };
 
+    // Show Store Info 
+    showHireItem(rowIndex) {
+        this.props.showItemAction(rowIndex);
+        // this.props.changeNameget()
+    };
+
     // Edit Store Info 
     deleteHireItem(rowIndex) {
         this.props.deleteItemAction(rowIndex);
@@ -33,7 +39,7 @@ export class HireVA_Data extends Component {
         // let dataItem= [];
         let rowsItem = [];
         for (const [i, Store] of this.props.data.entries()) {
-            console.log("Storeeeeee---------------------", Store)
+            // console.log("Storeeeeee---------------------", Store)
             let hireInfo = {
                 // organizationName: Store.organizationName,
                 // industryName: Store.industry,
@@ -68,7 +74,7 @@ export class HireVA_Data extends Component {
                 name: 'client'
             },
             {
-                label: 'Skills',
+                label: 'Required Skills',
                 name: 'skillName',
             },
             {
@@ -109,10 +115,11 @@ export class HireVA_Data extends Component {
                             <div className="actionBtnGroup" style={{ width: '110px' }}>
 
                                 {/* <Link className="btn btn-info btn-edit" to={`/admin/hire-va/view-hire-va-list/${rowsItem[i]._id}`}><i className="fa fa-eye" aria-hidden="true"></i>
-                                </Link>
-                                <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.editHireItem(i)}><i className="fa fa-pencil"></i></button> */}
+                                </Link>  */}
+                                {/* <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.editHireItem(i)}><i className="fa fa-eye"></i></button> */}
+                                <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.showHireItem(i)}><i className="fa fa-eye"></i></button>
                                 {/* , this.chahgename(this.state.edit) */}
-                                <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button>
+                                {/* <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button> */}
                                 </div>
                         );
                     }

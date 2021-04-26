@@ -14,7 +14,7 @@ class NewUserData extends Component{
       }
 
     render(){
-        console.log(this.props.data);
+        // console.log(this.props.data);
         let rowsItem = []; 
         for(const [i, userData] of this.props.data.entries()){
             let userInfo = {
