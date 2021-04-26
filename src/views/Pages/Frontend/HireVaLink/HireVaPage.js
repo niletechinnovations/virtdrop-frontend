@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { FormGroup,Label,} from 'reactstrap';
+import { FormGroup, Label, } from 'reactstrap';
 // import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
 import './HireVaPage.css'
 import 'jquery-easing';
 import commonService from '../../../../core/services/commonService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import industryList1 from './clientNeedAreaList.json'
 import clientAreaNeed from './clientNeedAreaList1.json';
 import industryBelongList from './industryBelongList1.json';
 import TimeRangeSlider from 'react-time-range-slider';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-// import ThankYouPage from './ThanksToYouPage';
 
 
 class HireVaPage extends Component {
@@ -40,17 +38,13 @@ class HireVaPage extends Component {
             selectedTab: 0,
             indexChange: 1,
             needMore: "",
-            others:'',
+            others: '',
             disabledPageNew: { '1': true, '2': true, '3': true, '4': true, '5': true, '6': true, '7': true },
             disabledPage: true,
-            tabDisabled1: false, tabDisabled2: false, tabDisabled3: false, tabDisabled4: false, tabDisabled5: false, tabDisabled6: false, tabDisabled7: false, tabDisabled8: false,
             selectedVaNumberByImage: '',
             selectedTabValue: { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': [] },
             somthingAboutYou: { personName: '', companyName: '', companyAddress: '', email: '', phoneNumber: '' },
-
-            // items: { parentId: '', parentName: '', VaDesignation: [] }
         }
-        // this.inputHandler = this.inputHandler.bind(this);
         this.featureRef = React.createRef();
         this.changeStartHandler = this.changeStartHandler.bind(this);
         this.timeChangeHandler = this.timeChangeHandler.bind(this);
@@ -63,18 +57,15 @@ class HireVaPage extends Component {
         this.needSomeoneQuickly = this.needSomeoneQuickly.bind(this);
         this.somthingAboutYouHandler = this.somthingAboutYouHandler.bind(this);
         this.skillFreelancers = this.skillFreelancers.bind(this);
-        this.customTimerHandler = this.customTimerHandler.bind(this);
         this.setActiveTab = this.setActiveTab.bind(this)
         this.backButton = this.backButton.bind(this);
         this.needMoreHandler = this.needMoreHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
-        this.ThankYouPageHandler = this.ThankYouPageHandler.bind(this);
         this.othersHandler = this.othersHandler.bind(this);
     }
 
+    othersHandler(event) {
 
-    othersHandler(event){
-        console.log("event", event.target.value)
         let name = event.target.name;
         let value = event.target.value;
         let others = this.state.others;
@@ -84,18 +75,9 @@ class HireVaPage extends Component {
 
     }
 
-    ThankYouPageHandler() {
-
-        // setTimeout(() => {
-        //                     window.location.reload(false);
-        //                 windows.redirect('/ThankYouPage')
-        //                 }, 4000);
-
-    }
-
     // page 1 need more handler
     needMoreHandler(event) {
-        console.log("event", event.target.value)
+
         let name = event.target.name;
         let value = event.target.value;
         let needMore = this.state.needMore;
@@ -107,18 +89,11 @@ class HireVaPage extends Component {
 
     /* Submit Form Handler*/
     submitHandler(event) {
-        // console.log("Submit called00000000000000000000000")
         event.preventDefault();
         // event.target.className += "was-validated";
         this.setState({ loading: true }, () => {
             const somthingAboutYou = this.state.somthingAboutYou;
-            console.log("somthingAboutYou", somthingAboutYou);
-            const needMore = this.state.needMore;
-            console.log("needMore>>", needMore)
             const selectedTabValue = this.state.selectedTabValue;
-            console.log("selectedTabValue----in Submit----->", selectedTabValue[2])
-            // const result =  this.state.industryBelongList.filter((e,index)=>e.id==selectedTabValue[2][index])
-            //    console.log("Final---------->",result)
 
             //    Selected Industry 
             const selectedIndustry = []
@@ -134,7 +109,6 @@ class HireVaPage extends Component {
             });
 
             //    Area Where you need
-
             const selectedAreaNeed = []
             this.state.selectedArea.forEach((element, index) => {
 
@@ -157,20 +131,15 @@ class HireVaPage extends Component {
 
 
             const arrayHashmap = selectedAreaNeed.reduce((obj, item) => {
-                // console.log("OBj", obj, "item", item)
                 obj[item.parentId] ? obj[item.parentId].vADesignation.push(...item.vADesignation) : (obj[item.parentId] = { ...item });
                 return obj;
             }, {});
             const mergedArray = Object.values(arrayHashmap);
 
-            // console.log("mergedArray", mergedArray);
-
-
             const formData = {
-
-                HowManyVas: this.state.needMore > 0 ? this.state.needMore :  parseInt(this.state.selectedVaNumberByImage),
+                howManyVas: this.state.needMore >= parseInt(this.state.selectedVaNumberByImage) ? this.state.needMore : parseInt(this.state.selectedVaNumberByImage),
                 WhichIndustryYouBelong: selectedIndustry,
-                others:this.state.others,
+                others: this.state.others,
                 AreaAndSkillFreelancer: mergedArray,
                 giveSpecification: selectedTabValue[5],
                 completeWishTime: { completeWishTime: this.state.completeWishTime, StartAndEndTime: this.state.timer },
@@ -182,20 +151,14 @@ class HireVaPage extends Component {
             // return;
             commonService.postAPIWithAccessToken('hire/hire-va1', formData)
                 .then(res => {
-                    console.log("HireVA 1>>>", res)
-                    // return;
+                    // console.log("HireVA 1>>>", res)
                     if (undefined === res.data.data || !res.data.status) {
                         this.setState({ loading: false });
                         toast.error(res.data.message);
                         return;
                     }
-                    
-                    this.props.history.push('/common/thanks-to-you');
-                    // this.props.history.push('/thanks-to-you');
-                    // if(res.data.data !=null || res.data.data !=undefined){
-                    //     this.setState({redirect:true})
-                    // }
 
+                    this.props.history.push('/common/thanks-to-you');
 
                     // toast.success(res.data.message);
 
@@ -216,7 +179,7 @@ class HireVaPage extends Component {
 
     // back Button
     backButton(id = null) {
-        console.log("Back button", id)
+        // console.log("Back button", id)
         let selectedTab = this.state.selectedTab;
         let tabCount = this.state.tabCount;
         let indexChange = this.state.indexChange;
@@ -226,7 +189,7 @@ class HireVaPage extends Component {
     }
     // active Button
     setActiveTab(id) {
-        // console.log("next button", id)
+        // console.log("next button", parseInt(id))
         let selectedTab = this.state.selectedTab;
         let add = selectedTab + 2;
         document.getElementById('react-tabs-' + add).click();
@@ -234,7 +197,6 @@ class HireVaPage extends Component {
     }
 
     skillFreelancers(event) {
-        console.log("Skill Freelancer======", event.target.value)
 
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
@@ -247,19 +209,13 @@ class HireVaPage extends Component {
 
             selectedTabValue[4].filter((data, i, array) => {
                 if (data == value) {
-                    // selectedTabValue[5].splice(index);
                     var index = array.indexOf(data)
-                    console.log("index", index)
                     if (index > -1) {
                         selectedTabValue[4].splice(index, 1);
                     }
                 }
             });
         }
-        // this.setState({ disabledPage: true })
-        // if (selectedTabValue[4].length > 0) {
-        //     this.setState({ selectedTabValue: selectedTabValue, disabledPage: false })
-        // }
 
         var disabledPageNew = this.state.disabledPageNew;
 
@@ -273,7 +229,6 @@ class HireVaPage extends Component {
     }
 
     somthingAboutYouHandler = event => {
-        console.log("event", event.target.value)
         const name = event.target.name;
         const value = event.target.value;
         const somthingAboutYou = this.state.somthingAboutYou;
@@ -282,13 +237,11 @@ class HireVaPage extends Component {
     };
 
     choosePlanHandler(event) {
-        console.log("Choose Plan handler", event.target.value)
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
         const name = event.target.name;
         if (event.target.checked) {
             if (Object.keys(selectedTabValue[6]).length >= 0) {
-                console.log(typeof selectedTabValue[6], "getCheck")
                 if (event.target.checked == true) {
                     selectedTabValue[6].splice(0, 1, value);
 
@@ -296,27 +249,6 @@ class HireVaPage extends Component {
             }
         }
 
-        // if (event.target.checked == true) {
-
-        //     selectedTabValue[6].push(value);
-        // } else {
-
-        //     selectedTabValue[6].filter((data, i, array) => {
-        //         if (data == value) {
-        //             // selectedTabValue[5].splice(index);
-        //             var index = array.indexOf(data)
-        //             console.log("index", index)
-        //             if (index > -1) {
-        //                 selectedTabValue[6].splice(index, 1);
-        //             }
-        //         }
-        //     });
-        // }
-
-        // this.setState({ disabledPage: true })
-        // if (selectedTabValue[6].length > 0) {
-        //     this.setState({ selectedTabValue: selectedTabValue, disabledPage: false })
-        // }
         var disabledPageNew = this.state.disabledPageNew;
 
         if (selectedTabValue[6].length > 0) {
@@ -330,51 +262,40 @@ class HireVaPage extends Component {
 
     }
 
-    customTimerHandler() {
-        const userCurrentTime = this.state.timer;
-        console.log("userCurrentTime", userCurrentTime)
-
-    }
     // Time Slider
     changeStartHandler(time) {
-        console.log("Start Handler Called", time);
+        // console.log("Start Handler Called", time);
+        if (time){
+            // console.log("INSIDE IFFFFF")
+            this.setState({ timeChangeFound: true })
+        }
+           
     }
 
     timeChangeHandler(time) {
-        console.log("timeChangeHandler", time)
+        // console.log("timeChangeHandler", time)
         let get_start_am_pm = this.state.start_am_pm
         let get_end_am_pm = this.state.end_am_pm
-        // const chooseTime =  this.state.time;
-        console.log("chooseTime11", time)
         const selectedStartTime = time.start;
         const selectedEndTime = time.end;
-        console.log("selectedStartTime", selectedStartTime)
+
         //    start Time 
         const splitedStatrtTime = selectedStartTime.split(':')
-        console.log("splitedStatrtTime", splitedStatrtTime)
         var start_am_pm = splitedStatrtTime[0] >= 12 && splitedStatrtTime[1] >= 0 ? "PM" : "AM"
-        console.log("AM PM GET ===========>", start_am_pm)
         get_start_am_pm = start_am_pm;
         this.setState({ start_am_pm: get_start_am_pm })
 
         // End time
         const splitedEndTime = selectedEndTime.split(':')
-        console.log("splitedEndTime", splitedEndTime)
         var end_am_pm = splitedEndTime[0] >= 12 && splitedEndTime[1] >= 0 ? "PM" : "AM";
         get_end_am_pm = end_am_pm
-        console.log("AM PM GET ====ggggg=======>", end_am_pm)
         this.setState({ end_am_pm: get_end_am_pm })
 
-        // this.state.chooseTime = chooseTime
-        this.setState({
-            timer: time,
-            // chooseTime:chooseTime
-            // am_pm:am
-        });
+        this.setState({ timer: time });
     }
 
     changeCompleteHandler(time) {
-        console.log("Complete Handler Called", time);
+        // console.log("Complete Handler Called", time);
         let endHrs = time.end.hours
         let endMin = time.end.minutes
         let startHrs = time.start.hours
@@ -394,47 +315,23 @@ class HireVaPage extends Component {
 
 
         }
-        // var AM_PM = time.am_pm
-        // this.state({:"am"})
-        // console.log("completeWishTimecccccccccccccccccc", completeWishTime)
-        this.setState({ completeWishTime: completeWishTime })
+       
+        this.setState({ completeWishTime: completeWishTime})
     }
 
 
     needSomeoneQuickly(event) {
-        console.log("need================", this.state.selectedTabValue)
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
         const name = event.target.name;
 
         if (Object.keys(selectedTabValue[7]).length >= 0) {
-            // console.log(typeof selectedTabValue[7], "__________CCCCCCCCCCC")
             if (event.target.checked == true) {
                 selectedTabValue[7].splice(0, 1, value);
 
             }
         }
-        //  } 
-        //  else {
-
-        //     console.log("ELSE CALLED==========")
-        //         selectedTabValue[7].filter((data, i, array) => {
-        //             if (data == value) {
-        //                 // selectedTabValue[5].splice(index);
-        //                 var index = array.indexOf(data)
-        //                 console.log("index", index)
-        //                 if (index > -1) {
-        //                     selectedTabValue[7].splice(index, 1);
-        //                 }
-        //             }
-        //         });
-        //     }
-
-
-        // this.setState({ disabledPage: true })
-        // if (selectedTabValue[7].length > 0) {
-        //     this.setState({ selectedTabValue: selectedTabValue, disabledPage: false })
-        // }
+        
         var disabledPageNew = this.state.disabledPageNew;
 
         if (selectedTabValue[7].length > 0) {
@@ -449,7 +346,7 @@ class HireVaPage extends Component {
     }
 
     dayHnadler(event) {
-        console.log("eeeeeeeeeeeeeevvvvvvv", event.target.value)
+        // console.log("eeeeeeeeeeeeeevvvvvvv", event.target.value)
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
         const name = event.target.name;
@@ -463,19 +360,14 @@ class HireVaPage extends Component {
                 if (data == value) {
                     // selectedTabValue[5].splice(index);
                     var index = array.indexOf(data)
-                    console.log("index", index)
+                    // console.log("index", index)
                     if (index > -1) {
                         selectedTabValue[5].splice(index, 1);
                     }
                 }
             });
         }
-
-        // this.setState({ disabledPage: true })
-        // if (selectedTabValue[5].length > 0) {
-        //     this.setState({ selectedTabValue: selectedTabValue, disabledPage: false })
-        // }
-
+               
         var disabledPageNew = this.state.disabledPageNew;
         if (selectedTabValue[5].length > 0) {
             disabledPageNew[5] = false;
@@ -489,25 +381,17 @@ class HireVaPage extends Component {
     clientAreaNeedHandler(event) {
 
         var selectedTabValue = this.state.selectedTabValue;
-
-        // console.log("---Input Handler--->", selectedTabValue)
-
         var addValue = this.state.selectedArea;
-        console.log("---Input Handler--->", addValue)
-        console.log("event", event.target.value)
         const value = event.target.value;
         const name = event.target.name;
         let list = [];
         // const item = this.state.item
         list = this.state.clientArea;
-        console.log("NAMe", name, "value", value)
-        // console.log("this.state.clientArea-----------------", this.state.clientArea)
-        list = list[value];
-        console.log("gggggddddddddddasassaaaa-----------------", list)
 
+        list = list[value];
+      
         if (event.target.checked == true) {
             selectedTabValue[3].push(list.parentId)
-            // selectedTabValue[3].push(value);
             addValue.push(list);
         } else {
             addValue.filter((data, index) => {
@@ -517,7 +401,7 @@ class HireVaPage extends Component {
                     selectedTabValue[3].filter((element, i, array) => {
                         if (element == data.parentId) {
                             const index = array.indexOf(element)
-                            console.log("index", index)
+                            // console.log("index", index)
                             if (index > -1) {
                                 selectedTabValue[3].splice(index, 1);
                             }
@@ -550,7 +434,7 @@ class HireVaPage extends Component {
     }
 
     industryBelongHandler(event) {
-        console.log("eeeeeeeeeeeeeevvvvvvv", event.target.value)
+        // console.log("eeeeeeeeeeeeeevvvvvvv", event.target.value)
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
         const name = event.target.name;
@@ -563,7 +447,7 @@ class HireVaPage extends Component {
             selectedTabValue[2].filter((data, i, array) => {
                 if (data == value) {
                     var index = array.indexOf(data)
-                    console.log("index", index)
+                    // console.log("index", index)
                     if (index > -1) {
                         selectedTabValue[2].splice(index, 1);
                     }
@@ -613,6 +497,9 @@ class HireVaPage extends Component {
                 // console.log(typeof selectedTabValue[1], "getCheck")
                 if (event.target.checked == true) {
                     selectedTabValue[1].splice(0, 1, value);
+                    let selectedVaNumberByImage = this.state.selectedVaNumberByImage;
+                    selectedVaNumberByImage = selectedTabValue[1];
+                    this.setState({ selectedVaNumberByImage: selectedVaNumberByImage })
 
                 }
             }
@@ -638,7 +525,6 @@ class HireVaPage extends Component {
 
         // this.getIndustryList()
         this.setState({ clientArea: clientAreaNeed.clientArea })
-        // console.log("clientAreaN333333333333333333333", clientAreaNeed.clientArea)
 
         // Belonged Industres List 
         this.setState({ industryBelongList: industryBelongList.industries })
@@ -648,17 +534,11 @@ class HireVaPage extends Component {
 
     render() {
         const { loading, selectedArea, clientArea, item, tabIndex, Administrative, industryBelong, addVa, active, selectedTabValue, somthingAboutYou, selectedTab, tabCount, indexChange, needMore, industryBelongList, disabledPage, disabledPageNew, redirect } = this.state;
-        // console.log("selectedTab------------>", selectedTab,"----------tabIndex----------",tabIndex,"=========dfa==",tabIndex+selectedTab)
-        console.log( selectedTabValue, "sssssssss")
-        // console.log("nede", industryBelongList)
-        console.log("disabledPage-------------", selectedTabValue[1])
+        // console.log( selectedTabValue, "sssssssss")
+        // console.log("this//////////////",this.state.selectedVaNumberByImage)
 
         return (
             <>
-                {
-                    // redirect ==true ?  <ThankYouPage /> :<Redirect to='/thanks-to-you' /> 
-
-                }
                 <div className="dashboard-section">
                     <section className="Client-form-section">
                         <div className="Client-form-container">
@@ -805,7 +685,7 @@ class HireVaPage extends Component {
                                                       onClick={() => this.setActiveTab("1")} /> */}
                                                 {/* {selectedTabValue[2].length==0 ? */}
                                                 <input type="button" name="next" className="next action-button" value="Next" disabled={disabledPageNew[1]}
-                                                    onClick={() => this.setActiveTab()} />
+                                                    id="react-tabs-0" onClick={() => this.setActiveTab("0")} />
 
                                             </div>
                                         </TabPanel>
@@ -1086,7 +966,7 @@ class HireVaPage extends Component {
                                                                 <div className="col-md-12 form-info">
                                                                     <div className="form-group">
                                                                         <h4 className="heading-title-sm">Others</h4>
-                                                                        <input type="text" name="fname" className="form-control" placeholder="Type"  onChange={this.othersHandler} />
+                                                                        <input type="text" name="fname" className="form-control" placeholder="Type" onChange={this.othersHandler} />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1094,7 +974,7 @@ class HireVaPage extends Component {
                                                     </div>
                                                 </div>
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
-                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("2")} disabled={disabledPageNew[2]} />
+                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("2")} disabled={disabledPageNew[2]} id="react-tabs-2" />
                                             </div>
 
                                         </TabPanel>
@@ -1242,7 +1122,7 @@ class HireVaPage extends Component {
                                                     </div>
                                                 </div>
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
-                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab()} disabled={disabledPageNew[3]} />
+                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("4")} disabled={disabledPageNew[3]} id="react-tabs-4" />
                                             </div>
                                         </TabPanel>
                                         {/* close page 3 */}
@@ -1259,7 +1139,7 @@ class HireVaPage extends Component {
                                                                 {
 
                                                                     selectedArea.map((e, index) => {
-                                                                        console.log("Selected Area1", e)
+
                                                                         return (<div key={index} className="filter-Category-item-info">
 
                                                                             <h2>{e.parentName}</h2>
@@ -1283,83 +1163,13 @@ class HireVaPage extends Component {
 
                                                                     })
                                                                 }
-                                                                {/* <div className="filter-Category-item-info">
 
-                                                        <h2>Amazon</h2>
-
-                                                        <div className="filter-Category-item-body">
-                                                            <ul>
-
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="Amazon[]" id="Amazon Consultant" type="checkbox" value="" />
-                                                                        <label htmlFor="Amazon Consultant">Amazon Consultant</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="Amazon[]" id="Amazon Selling Metrics" type="checkbox" value="" />
-                                                                        <label htmlFor="Amazon Selling Metrics">Amazon Selling Metrics</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="Amazon[]" id="Amazon Merch" type="checkbox" value="" />
-                                                                        <label htmlFor="Amazon Merch">Amazon Merch</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="Amazon[]" id="Amazon PPC Specialist" type="checkbox" value="" />
-                                                                        <label htmlFor="Amazon PPC Specialist">Amazon PPC Specialist</label>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div> */}
-                                                                {/* <div className="filter-Category-item-info">
-                                                        <h2>Development & IT</h2>
-                                                        <div className="filter-Category-item-body">
-                                                            <ul>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="DevelopmentIT[]" id="Web & Mobile App Developer" type="checkbox" value="" />
-                                                                        <label htmlFor="Web & Mobile App Developer">Web & Mobile App Developer</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="DevelopmentIT[]" id="WordPress Development" type="checkbox" value="" />
-                                                                        <label htmlFor="WordPress Development">WordPress Development</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="DevelopmentIT[]" id="Software Developer" type="checkbox" value="" />
-                                                                        <label htmlFor="Software Developer">Software Developer</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="DevelopmentIT[]" id="Computer Programmer" type="checkbox" value="" />
-                                                                        <label htmlFor="Computer Programmer">Computer Programmer</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div className="filterCheckbox">
-                                                                        <input name="DevelopmentIT[]" id="Database Programmer" type="checkbox" value="" />
-                                                                        <label htmlFor="Database Programmer">Database Programmer</label>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div> */}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
-                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab()} disabled={disabledPageNew[4]} />
+                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("6")} disabled={disabledPageNew[4]} id="react-tabs-6" />
                                             </div>
                                         </TabPanel >
                                         {/* close page 4 */}
@@ -1432,7 +1242,6 @@ class HireVaPage extends Component {
                                                                             <Label >Start Time: {this.state.timer.start} {this.state.start_am_pm}
                                                                             </Label>
                                                                             <Label style={{ "marginLeft": "10px" }}>End Time :{this.state.timer.end} {this.state.end_am_pm} </Label>
-
                                                                             <TimeRangeSlider
                                                                                 disabled={false}
                                                                                 format={24}
@@ -1444,8 +1253,8 @@ class HireVaPage extends Component {
                                                                                 onChange={this.timeChangeHandler}
                                                                                 step={15}
                                                                                 value={this.state.timer}
-                                                                            // orientation={String} 
-                                                                            />
+                                                                            //    orientation={String} 
+                                                                            required />
                                                                             <div className="filter-Price-info">
                                                                                 <div className="filter-content">
                                                                                     <div id="ranged-value1"></div>
@@ -1460,7 +1269,7 @@ class HireVaPage extends Component {
                                                     </div>
                                                 </div>
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
-                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab()} disabled={disabledPageNew[5]} />
+                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("8")} disabled={disabledPageNew[5]} id="react-tabs-8" />
                                             </div>
                                         </TabPanel>
                                         {/* close page 5 */}
@@ -1612,7 +1421,7 @@ class HireVaPage extends Component {
                                                     </div>
                                                 </div>
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
-                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab()} disabled={disabledPageNew[6]} />
+                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("10")} disabled={disabledPageNew[6]} id="react-tabs-10" />
                                             </div>
                                         </TabPanel>
                                         {/* close page 6 */}
@@ -1644,7 +1453,7 @@ class HireVaPage extends Component {
                                                     </div>
                                                 </div>
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
-                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab()} disabled={disabledPageNew[7]} />
+                                                <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("12")} disabled={disabledPageNew[7]} id="react-tabs-12" />
                                             </div>
                                         </TabPanel>
                                         {/* close page 7 */}
