@@ -46,7 +46,7 @@ class LoginPage extends Component {
       return;
     }
     this.setState( { loading: true }, () => {
-      console.log("Login Page", loginData)
+      // console.log("Login Page", loginData)
       commenService.postAPI( `auth/sign-in`, loginData )
         .then( res => {
           // console.log("RES",res)

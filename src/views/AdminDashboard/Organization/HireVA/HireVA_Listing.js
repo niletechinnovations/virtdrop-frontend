@@ -495,11 +495,12 @@ class HireVA_Listing extends Component {
 
     handleShowItem(rowIndex){
         const itemInfo = this.state.hireVaListData[rowIndex];
-        console.log("itemInfo----------------->",itemInfo)
+        // console.log("itemInfo----------------->",itemInfo)
         
         const formDataShowField ={
             howManyVas: itemInfo.howManyVas,
             whichIndustry:itemInfo.industrytype.map(e=>e.name).toString(),
+            othersIndustry:itemInfo.othersIndustry,
             whichDaysOfWeek:itemInfo.Days_A_Week,
             requiredArea:itemInfo.skillsFreelancer.map(e=>e.parentName),
             freelancerSkills:itemInfo.skillsFreelancer.map(e=>e.vADesignation.map(el=>el.profileName)),
@@ -602,7 +603,7 @@ class HireVA_Listing extends Component {
     }
 
     toggle1 = () => {
-        console.log("modal",this.state.modal1)
+        // console.log("modal",this.state.modal1)
 
         this.setState({
             modal1: !this.state.modal1, 
@@ -683,15 +684,15 @@ class HireVA_Listing extends Component {
                     {loaderElement}
                     <Col lg={12}>
                         <Card>
-                            <CardHeader className="mainHeading">
+                            {/* <CardHeader className="mainHeading">
                                 <strong> Hire VA List</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i>Add Hire</Button>
-                            </CardHeader>
+                            </CardHeader> */}
                         </Card>
                     </Col>
                 </Row>
-                {/* <Col lg={12}>
+                <Col lg={12}>
                     <CardBody>
-                        <Row className="filterRow"> */}
+                        <Row className="filterRow">
                             {/* <Col md={"2"} className="pl-3">
                                 <FormGroup>
                                     <Label htmlFor="filter_client" >Client Name</Label>
@@ -713,9 +714,9 @@ class HireVA_Listing extends Component {
                                         <option value="entery_Level">Entry Level</option>
                                         <option value="mid_Level">Mid Level</option>
                                         <option value="expert_Level">Expert Level</option>
-                                        {organizationList.map((organizationInfo, index) =>
+                                     {organizatiosnList.map((organizationInfo, index) =>
                                 <SetOrganizationDropDownItem key={index} organizationInfo={organizationInfo} />
-                              )}
+                              )} 
                                     </Input>
                                 </FormGroup>
                             </Col> */}
@@ -742,8 +743,8 @@ class HireVA_Listing extends Component {
                                         maxDate={(new Date())}
                                         onChange={this.setFilterFromDate} dateFormat="MM/dd/yyyy" />
                                 </FormGroup>
-                            </Col>
-                            <Col md={"2"}>
+                            </Col> */}
+                            {/* <Col md={"2"}>
                                 <FormGroup>
                                     <Label> To Date</Label>
                                     <DatePicker className="form-control"
@@ -760,9 +761,9 @@ class HireVA_Listing extends Component {
                             <Button color="danger" type="reset" size="sm" onClick={this.resetfilterForm} title="Reset Fields"><i className="fa fa-refresh"></i></Button>
                                 </FormGroup>
                             </Col> */}
-                        {/* </Row>
+                        </Row>
                     </CardBody>
-                </Col> */}
+                </Col>
 
                 <Col md={12}>
 
@@ -973,6 +974,13 @@ class HireVA_Listing extends Component {
                                         </Input>
                                     </FormGroup>
                                 </Col>
+                                <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="others">Others Industry</Label>
+                                        <Input type="text" placeholder=" Others Industry*" id="others" name="others" value={this.state.formDataShowField.othersIndustry} onChange={this.changeHandler} readOnly={true}>
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
 
                                 <Col md={"6"}>
                                     <FormGroup>
@@ -1028,7 +1036,7 @@ class HireVA_Listing extends Component {
                                     {/* <span className="block-example border border-dark"> */}
 
                                     <FormGroup tag="fieldset">
-                                        <legend style={{"border-bottom": "2px solid grey", "margin": "1em", "margin-bottom": "-1.5rem", "padding": "1em 0.8em","font-size":"15px"}}> Client Info</legend>
+                                        <legend style={{"border-bottom":"2px solid grey", "margin": "1em", "margin-bottom": "-1.5rem", "padding": "1em 0.8em","font-size":"15px"}}> Client Info</legend>
                                        {/* Text within the box <br />
                                        Etc */}
                                        </FormGroup>
@@ -1066,7 +1074,7 @@ class HireVA_Listing extends Component {
                                             <Col md={"6"}>
                                                 <FormGroup>
                                                     <Label htmlFor="phoneNumber"> Phone Number</Label>
-                                                    <Input type="text" placeholder="Company Name" id="phoneNumber" name="phoneNumber" value={this.state.formDataShowField.phoneNumber} onChange={this.changeHandler} readOnly={true}>
+                                                    <Input type="text" placeholder="Phone Number" id="phoneNumber" name="phoneNumber" value={this.state.formDataShowField.phoneNumber} onChange={this.changeHandler} readOnly={true}>
                                                     </Input>
                                                 </FormGroup>
                                             </Col>

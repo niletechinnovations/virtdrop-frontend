@@ -42,7 +42,7 @@ class HireVaPage extends Component {
             disabledPageNew: { '1': true, '2': true, '3': true, '4': true, '5': true, '6': true, '7': true },
             disabledPage: true,
             selectedVaNumberByImage: '',
-            selectedTabValue: { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': [] },
+            selectedTabValue: { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': []},
             somthingAboutYou: { personName: '', companyName: '', companyAddress: '', email: '', phoneNumber: '' },
         }
         this.featureRef = React.createRef();
@@ -71,7 +71,7 @@ class HireVaPage extends Component {
         let others = this.state.others;
         // needMore = value;
         others = value;
-        this.setState({ others: others });
+        this.setState({ others: others});
 
     }
 
@@ -435,6 +435,7 @@ class HireVaPage extends Component {
 
     industryBelongHandler(event) {
         // console.log("eeeeeeeeeeeeeevvvvvvv", event.target.value)
+        const others =this.state.others;
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
         const name = event.target.name;
@@ -442,6 +443,7 @@ class HireVaPage extends Component {
         if (event.target.checked == true) {
 
             selectedTabValue[2].push(value);
+            // selectedTabValue[9].push(others);
 
         } else {
             selectedTabValue[2].filter((data, i, array) => {
@@ -454,11 +456,12 @@ class HireVaPage extends Component {
                 }
             });
         }
+        // console.log("selectedTabValue[9].push(others)", selectedTabValue[9])
         // this.setState({ disabledPage: true })
         var disabledPageNew = this.state.disabledPageNew;
         if (selectedTabValue[2].length > 0) {
             disabledPageNew[2] = false;
-            this.setState({ selectedTabValue: selectedTabValue, disabledPageNew: disabledPageNew })
+            this.setState({ selectedTabValue: selectedTabValue, others:others, disabledPageNew: disabledPageNew })
         } else {
             disabledPageNew[2] = true;
             this.setState({ disabledPage: true, disabledPageNew: disabledPageNew })
@@ -966,7 +969,7 @@ class HireVaPage extends Component {
                                                                 <div className="col-md-12 form-info">
                                                                     <div className="form-group">
                                                                         <h4 className="heading-title-sm">Others</h4>
-                                                                        <input type="text" name="fname" className="form-control" placeholder="Type" onChange={this.othersHandler} />
+                                                                        <input type="text" name="Others" id ="Others" value={this.state.others} className="form-control" placeholder="Type" onChange={this.othersHandler} />
                                                                     </div>
                                                                 </div>
                                                             </div>
