@@ -47,7 +47,8 @@ export class HireVA_Data extends Component {
                 // skillName: Store.skillsFreelancer.toString(),
                  skillName: Store.skillsFreelancer.map(e=>e.parentName).toString(),
                 choosePlan: Store.which_plan,
-                need: Store.quickly_Need >1 ? Store.quickly_Need + " "+ 'days' :Store.quickly_Need + " "+ 'day' ,
+                // need: Store.quickly_Need >1 ? Store.quickly_Need + " "+ 'days' :Store.quickly_Need + " "+ 'day' ,
+                need:  Store.quickly_Need == 2 ? "Under No Rush , wait best candidate":"Within 48 Hours",
                 weekdays: Store.Days_A_Week,
                 requiredTime: Store.during_Those_Days, 
                 hoursA_Day: Store.Hours_A_Day+" "+'hrs',
@@ -119,7 +120,7 @@ export class HireVA_Data extends Component {
                                 {/* <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.editHireItem(i)}><i className="fa fa-eye"></i></button> */}
                                 <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.showHireItem(i)}><i className="fa fa-eye"></i></button>
                                 {/* , this.chahgename(this.state.edit) */}
-                                {/* <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button> */}
+                                <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button>
                                 </div>
                         );
                     }

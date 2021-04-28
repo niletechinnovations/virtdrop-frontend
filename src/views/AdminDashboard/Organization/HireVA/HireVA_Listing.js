@@ -7,6 +7,7 @@ import commonService from '../../../../core/services/commonService';
 import { toast } from 'react-toastify';
 import { Multiselect } from 'multiselect-react-dropdown';
 import DatePicker from "react-datepicker";
+import ClientAreaNeed from './clientNeedAreaList.json';
 // import './HireVA_Listing.css';
 
 
@@ -87,7 +88,6 @@ class HireVA_Listing extends Component {
         this.handleEditItem = this.handleEditItem.bind(this);
         this.onSelect = this.onSelect.bind(this)
         this.onRemove = this.onRemove.bind(this);
-        this.addItem = this.addItem.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
         this.changeRadioButtonHandler = this.changeRadioButtonHandler.bind(this);
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
@@ -104,6 +104,10 @@ class HireVA_Listing extends Component {
         if (filterItem.filter_client !== undefined && filterItem.filter_client !== "") {
             filterQuery += (filterQuery !== "") ? "&clientName=" + filterItem.filter_client : "&clientName=" + filterItem.filter_client;
         }
+        if (filterItem.filter_need !== undefined && filterItem.filter_need !== "") {
+            filterQuery += (filterQuery !== "") ? "&need=" + filterItem.filter_need : "&need=" + filterItem.filter_need;
+        }
+
         if (filterItem.filter_choose !== undefined && filterItem.filter_choose !== "") {
             filterQuery += (filterQuery !== "") ? "&chooseplan=" + filterItem.filter_choose : "&chooseplan=" + filterItem.filter_choose;
         }
@@ -196,7 +200,7 @@ class HireVA_Listing extends Component {
     resetfilterForm = () => {
 
         this.setState({
-            filterItem: { filterFrom: '', filterTo: '', filter_Skills: '', filter_client: '', filter_choose: '' },
+            filterItem: { filterFrom: '', filterTo: '', filter_Skills: '', filter_client: '', filter_need:'', filter_choose: '' },
         });
         this.itemList();
     }
@@ -208,16 +212,6 @@ class HireVA_Listing extends Component {
         filterItem[name] = value;
         this.setState({ filterItem: filterItem });
     };
-
-    addItem() {
-
-
-        //  this.state.formField.selectedValues.push(this.state.formField.skills)
-        //  this.state.formField.skills.push()
-        //  console.log("this===========================",this.state.selectedValues)
-        // this.setState(formField.skills[skillsFreelancer])
-        //   this.state.formField.skills.push(this.state.hireVaListData.map(skill=>console.log("addItme",skill.skillsFreelancer)))
-    }
 
     getSkillList = () => {
         commonService.getAPIWithAccessToken('skill')
@@ -693,49 +687,68 @@ class HireVA_Listing extends Component {
                 <Col lg={12}>
                     <CardBody>
                         <Row className="filterRow">
-                            {/* <Col md={"2"} className="pl-3">
+                            <Col md={"2"} className="pl-3">
                                 <FormGroup>
                                     <Label htmlFor="filter_client" >Client Name</Label>
                                     <Input type="text" value={filterItem.filter_client} placeholder="Search by Client Name" id="filter_client" name="filter_client"
                                         // value={filterItem.filter_filter_client} 
                                         onChange={this.changeFilterHandler}>
-
+                                        
                                     </Input>
                                 </FormGroup>
-                            </Col> */}
-
-                            {/* <Col md={"2"} className="pl-3">
+                            </Col>
+                            <Col md={"2"} className="pl-3">
+                                <FormGroup>
+                                    <Label htmlFor="filter_need">Need</Label>
+                                    <Input type="select" value={filterItem.filter_need} placeholder="Search by Need" id="filter_need" name="filter_need"
+                                        onChange={this.changeFilterHandler}>
+                                                 <option value="">All</option>
+                                        <option value="1">Within 48 hours</option>
+                                        <option value="2">Under No Rush, wait best candidate</option>
+                                    </Input>
+                                </FormGroup>
+                            </Col>
+                            <Col md={"2"} className="pl-3">
                                 <FormGroup>
                                     <Label htmlFor="filter_choose" >Plan</Label>
                                     <Input type="select" value={filterItem.filter_choose} placeholder="Search by Choose Plan" id="filter_choose" name="filter_choose"
                                         // value={filterItem.filter_choose} 
                                         onChange={this.changeFilterHandler}>
                                         <option value="">All</option>
-                                        <option value="entery_Level">Entry Level</option>
-                                        <option value="mid_Level">Mid Level</option>
-                                        <option value="expert_Level">Expert Level</option>
-                                     {organizatiosnList.map((organizationInfo, index) =>
+                                        <option value="Standard">Standard</option>
+                                        <option value="Premium">Premium</option>
+                                        <option value="Gold">Gold</option>
+                                     {/* {organizatiosnList.map((organizationInfo, index) =>
                                 <SetOrganizationDropDownItem key={index} organizationInfo={organizationInfo} />
-                              )} 
+                              )}  */}
                                     </Input>
                                 </FormGroup>
-                            </Col> */}
+                            </Col>
 
-                            {/* <Col md={"3"} className="pl-3">
+                            <Col md={"3"} className="pl-3">
                                 <FormGroup>
-                                    <Label htmlFor="filter_Skills">Skills</Label>
+                                    <Label htmlFor="filter_Skills">Required Skills</Label>
                                     <Input type="select" value={filterItem.filter_Skills} placeholder="filter_Skills *" id="filter_Skills" name="filter_Skills"
                                         // value={filterItem.filter_organization_id} 
                                         onChange={this.changeFilterHandler}>
                                         <option value="">All</option>
-                                        {skillList.map((skillInfo, index) =>
+                                        {/* {return({profileName:skillInfo.profileName,id :skillInfo.id})} */}
+                                        {
+                                        // ClientAreaNeed.clientArea.map(e=>e.vADesignation.map((skillInfo,index)=><SetSkillDropDownItem key={index} skillInfo={skillInfo} />))
+                                        ClientAreaNeed.clientArea.map((skillInfo,index)=><SetSkillDropDownItem key={index} skillInfo={skillInfo} />)
+                                        // ClientAreaNeed.map((skillInfo, index) =>
+                                        //     <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                                        // )
+                                        }
+                                        {/* {skillList.map((skillInfo, index) =>
                                             <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
-                                        )}
+                                        )} */}
                                     </Input>
                                 </FormGroup>
-                            </Col> */}
+                            </Col>
                             {/* <HireVA_Data /> */}
-                            {/* <Col md={"2"}>
+
+                            <Col md={"1"}>
                                 <FormGroup>
                                     <Label>From Date</Label>
                                     <DatePicker className="form-control"
@@ -743,8 +756,8 @@ class HireVA_Listing extends Component {
                                         maxDate={(new Date())}
                                         onChange={this.setFilterFromDate} dateFormat="MM/dd/yyyy" />
                                 </FormGroup>
-                            </Col> */}
-                            {/* <Col md={"2"}>
+                            </Col>
+                            <Col md={"1"}>
                                 <FormGroup>
                                     <Label> To Date</Label>
                                     <DatePicker className="form-control"
@@ -753,14 +766,14 @@ class HireVA_Listing extends Component {
                                         onChange={this.setFilterToDate}
                                         dateFormat="MM/dd/yyyy" />
                                 </FormGroup>
-                            </Col> */}
-                            {/* <Col md={"1"} className="p-0">
+                            </Col>
+                            <Col md={"1"} className="p-0">
                                 <FormGroup>
                                     <Label>&nbsp;</Label><br />
                                     <Button color="success" type="button" size="sm" onClick={this.filterItemList} title="Filter VA Request"><i className="fa fa-search"></i></Button>&nbsp;
                             <Button color="danger" type="reset" size="sm" onClick={this.resetfilterForm} title="Reset Fields"><i className="fa fa-refresh"></i></Button>
                                 </FormGroup>
-                            </Col> */}
+                            </Col>
                         </Row>
                     </CardBody>
                 </Col>
@@ -1250,7 +1263,8 @@ class HireVA_Listing extends Component {
 
 function SetSkillDropDownItem(props) {
     const skillInfo = props.skillInfo;
-    return (<option value={skillInfo.skillName} >{skillInfo.skillName}</option>)
+    // console.log("skillInfo",skillInfo)
+    return (<option value={skillInfo.parentId} >{skillInfo.parentName}</option>)
 }
 
 export default HireVA_Listing;
