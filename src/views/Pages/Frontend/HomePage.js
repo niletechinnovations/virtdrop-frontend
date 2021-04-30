@@ -148,7 +148,8 @@ class HomePage extends React.Component {
 								<li>Bookkeeping</li>
                                 <li>And more!</li>
 							</ul>
-							<a className="learn-btn" href="/services">Learn More</a>
+							{/* <a className="learn-btn" href="/services">Learn More</a> */}
+                             <Link className="learn-btn" to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Learn More</Link>
 						</div>
 					</div>
 				</div>
@@ -205,7 +206,8 @@ class HomePage extends React.Component {
 						<p>Having seen the benefit of Virtual Assistants first-hand, we’ve made it our mission to introduce this time-saving, business-boosting process to as large an audience as possible.</p>
 						<p>VirtDrop caters to a diverse array of clients, all looking to maximize their business activities whilst minimizing their expenses. Many of our clients are based in New York and operate in sales, marketing, and real estate industries.</p>
 						<p>VirtDrop is a leading Virtual Assistant company registered in New York. Our goal is to help businesses become more efficient and productive, enabling them to more easily achieve their goals.</p>
-						<a className="learn-btn" href="/how-it-works">Learn More</a>
+						{/* <a className="learn-btn" href="/how-it-works">Learn More</a> */}
+                        <Link className="learn-btn" to={{ pathname: "https://www.virtdrop.com/how-it-works/" }} target="_blank">Learn More</Link>
 					</div>
 				</div>
 			</div>
@@ -236,7 +238,10 @@ class HomePage extends React.Component {
             </div>
             <div className="plan-pricing-info">
                 <p className="text-center">Our pricing is as straight forward and stream lined as everything else we offer. Our Virtual Assistants are available at a flat-rate of 
-                <span className="pricing-info"><Link className="text-white" to="/booking">Request a Quote</Link></span></p>
+                <span className="pricing-info">
+                    {/* <Link className="text-white" to="/booking">Request a Quote</Link> */}
+                    <Link  className="text-white" to={{ pathname: "https://www.virtdrop.com/pricing/" }} target="_blank">Request a Quote</Link>
+                </span></p>
             </div>
             
         </div>      

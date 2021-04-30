@@ -113,7 +113,7 @@ export class HireVA_Data extends Component {
                         let i = tableMeta.rowIndex;
                         // console.log("iiiiiiiiiiiiiiii",i)
                         return (
-                            <div className="actionBtnGroup" style={{ width: '110px' }}>
+                            <div className="actionBtnGroup">
 
                                 {/* <Link className="btn btn-info btn-edit" to={`/admin/hire-va/view-hire-va-list/${rowsItem[i]._id}`}><i className="fa fa-eye" aria-hidden="true"></i>
                                 </Link>  */}
@@ -121,6 +121,11 @@ export class HireVA_Data extends Component {
                                 <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => this.showHireItem(i)}><i className="fa fa-eye"></i></button>
                                 {/* , this.chahgename(this.state.edit) */}
                                 <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button>
+                               
+                                {/* <Link className="btn btn-sm btn-primary" to={{pathname:`/admin/assign-hire-va/${rowsItem[i]._id}`,
+                                   state: rowsItem[i].authId     
+                                }}><i className="fa fa-user"></i></Link> */}
+                                {/* <i className="fa fa-user"></i> */}
                                 </div>
                         );
                     }

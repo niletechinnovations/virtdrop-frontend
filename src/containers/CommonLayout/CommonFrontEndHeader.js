@@ -1,22 +1,21 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from './../../assets/images/logo.png';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
-
 import commonService from '../../core/services/commonService';
 import '../FrontEndLayout/FrontEndHeader.css';
 import UserAvtar from '../UserLayout/UserAvtar'
 
 class CommonFrontEndHeader extends React.Component {
-  constructor(props){
-      super(props);
-      this.state = {
-        collapseID: false,
-        isLoggedOut: false,
-        toggleActive: false,
-        dropdownOpen: false,
-        setDropdownOpen: false
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapseID: false,
+      isLoggedOut: false,
+      toggleActive: false,
+      dropdownOpen: false,
+      setDropdownOpen: false
+    }
     this.onToggle = this.onToggle.bind(this);
     this.toggleUserMenu = this.toggleUserMenu.bind(this);
 
@@ -24,67 +23,70 @@ class CommonFrontEndHeader extends React.Component {
   onToggle() {
     this.setState({ toggleActive: !this.state.toggleActive });
   }
-  
+
   logoutUser() {
     localStorage.clear();
-    this.setState({isLoggedOut:true});
+    this.setState({ isLoggedOut: true });
   };
 
   toggleUserMenu = () => {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
-  
 
-  render(){
-   
-    let  headerItem = '';
-    if(commonService.getAuth()) {
+
+  render() {
+
+    let headerItem = '';
+    if (commonService.getAuth()) {
       headerItem = <>
-      <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggleUserMenu} className="user-menu">
-        <DropdownToggle nav caret>
-          <div className="user-name"><span><UserAvtar /></span>Hi, {localStorage.getItem( 'userName' )}!</div>
-        </DropdownToggle>
-        <DropdownMenu>
-          { (localStorage.getItem( 'role' ).toLowerCase() === "admin" || localStorage.getItem( 'role' ) === "recruitmentAdmin" || localStorage.getItem( 'role' ) === "recruitmentTeam" || localStorage.getItem( 'role' ) === "marketingTeam" || localStorage.getItem( 'role' ) === "accountingAdmin" || localStorage.getItem( 'role' ) === "teamLead"  ) && 
-            <DropdownItem><Link to={ `/admin/dashboard` } ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
-          }
-          { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() === "va_member" ) && 
-          <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "va_member") ? `/user/va-dashboard` : `/user/dashboard` } ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
-          }
-          { localStorage.getItem( 'role' ).toLowerCase() === "va_member" && 
-            <DropdownItem><Link to={ `/user/va-task` } ><i className="fa fa-tasks"></i> Manage Task</Link></DropdownItem>
-          }
-          { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() === "va_member" ) && 
-            <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "organization") ? `/user/my-profile` : `/user/va-profile` } ><i className="fa fa-user"></i> My Profile</Link></DropdownItem>
-          }
-          { localStorage.getItem( 'role' ).toLowerCase() === "organization"  && 
-            <DropdownItem><Link to="/user/manage-request"><i className="fa fa-list-ul"></i> Manage Request</Link></DropdownItem>
-          }
-          { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() === "va_member" ) && 
-            <DropdownItem><Link to="/user/change-password"><i className="fa fa-key"></i> Change Password</Link></DropdownItem>
-          }
-          <DropdownItem><Link to= "/" onClick={() => this.logoutUser()}><i className="fa fa-sign-out"></i> Log Out</Link></DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      
+        <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggleUserMenu} className="user-menu">
+          <DropdownToggle nav caret>
+            <div className="user-name"><span><UserAvtar /></span>Hi, {localStorage.getItem('userName')}!</div>
+          </DropdownToggle>
+          <DropdownMenu>
+            {(localStorage.getItem('role').toLowerCase() === "admin" || localStorage.getItem('role') === "recruitmentAdmin" || localStorage.getItem('role') === "recruitmentTeam" || localStorage.getItem('role') === "marketingTeam" || localStorage.getItem('role') === "accountingAdmin" || localStorage.getItem('role') === "teamLead") &&
+              <DropdownItem><Link to={`/admin/dashboard`} ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
+            }
+            {(localStorage.getItem('role').toLowerCase() === "organization" || localStorage.getItem('role').toLowerCase() === "va_member") &&
+              <DropdownItem><Link to={(localStorage.getItem('role').toLowerCase() === "va_member") ? `/user/va-dashboard` : `/user/dashboard`} ><i className="fa fa-dashboard"></i> Dashboard</Link></DropdownItem>
+            }
+            {localStorage.getItem('role').toLowerCase() === "va_member" &&
+              <DropdownItem><Link to={`/user/va-task`} ><i className="fa fa-tasks"></i> Manage Task</Link></DropdownItem>
+            }
+            {(localStorage.getItem('role').toLowerCase() === "organization" || localStorage.getItem('role').toLowerCase() === "va_member") &&
+              <DropdownItem><Link to={(localStorage.getItem('role').toLowerCase() === "organization") ? `/user/my-profile` : `/user/va-profile`} ><i className="fa fa-user"></i> My Profile</Link></DropdownItem>
+            }
+            {localStorage.getItem('role').toLowerCase() === "organization" &&
+              <DropdownItem><Link to="/user/manage-request"><i className="fa fa-list-ul"></i> Manage Request</Link></DropdownItem>
+            }
+            {(localStorage.getItem('role').toLowerCase() === "organization" || localStorage.getItem('role').toLowerCase() === "va_member") &&
+              <DropdownItem><Link to="/user/change-password"><i className="fa fa-key"></i> Change Password</Link></DropdownItem>
+            }
+            <DropdownItem><Link to="/" onClick={() => this.logoutUser()}><i className="fa fa-sign-out"></i> Log Out</Link></DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+
       </>
-      }
-      else {
+    }
+    else {
       headerItem = <>
         <NavItem>
           <Link to="/login">Login/Register</Link>
         </NavItem>
         <NavItem className="pr-0">
-          <a href="http://landing.virtdrop.com/" className="apply-btn">Apply as VA</a>
+          {/* <a href="http://landing.virtdrop.com/" className="apply-btn">Apply as VA</a>   */}
+          {/* <a href="/be-a-virdrop-va" className="apply-btn">Apply as VA</a>  */}
+          {/* <Link to="/be-a-virdrop-va">Apply as VA</Link> */}
+          <Link className="apply-btn" to="/be-a-virdrop-va">Apply as VA</Link>
         </NavItem>
         <NavItem>
-          <Link className="Sell-btn" to="/booking">Hire an Assistant <i className="fa fa-angle-right"></i></Link>
+          <Link className="Sell-btn" to="/booking">Hire an Assistant<i className="fa fa-angle-right"></i></Link>
         </NavItem>
       </>
     }
 
     return (
-      
+
       <header className="header">
         <div className="top-header">
           <div className="container">
@@ -135,45 +137,69 @@ class CommonFrontEndHeader extends React.Component {
                   </ul>
                 </div>
               </div>
-				    </div>
-				
-		    	</div>
+            </div>
+          </div>
         </div>
         <div className="bottom-header">
           <div className="container">
             <div className="header-navigation">
               <Navbar expand="lg">
                 <div className="navbar-brand">
-                  <Link to="/"><img src={logo} height="60" alt="Logo" /></Link>
+                  <Link to={{ pathname: "https://www.virtdrop.com" }} target="_blank"><img src={logo} height="60" alt="Logo" /></Link>
+                  {/* <Link to="/" target="blank"><img src={logo} height="60" alt="Logo" /></Link> */}
                 </div>
                 <NavbarToggler onClick={this.onToggle} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" />
                 <Collapse isOpen={this.state.toggleActive} navbar className="justify-content-end" id="navbarSupportedContent">
-                  {/* <Nav className="navbar-nav" navbar> */}
+                  <Nav className="navbar-nav" navbar>
                     {/* <NavItem>
                       <Link to="/how-it-works">How it Works?</Link>
                     </NavItem> */}
+                    {/* https://www.virtdrop.com/our-services/ */}
                     {/* <NavItem>
                       <Link to="/services">Services</Link>
                     </NavItem>
                     <NavItem>
                       <Link to="/pricing">Pricing</Link>
                     </NavItem> */}
+
+                    {/* Links to another sites */}
+                    
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/" }} target="_blank">Home</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/how-it-works/" }} target="_blank">How it Works?</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/pricing/" }} target="_blank">Pricing</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/blog/" }} target="_blank">Blog</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/faq/" }} target="_blank">FAQ</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/contact-us/" }} target="_blank">Contact Us</Link>
+                    </NavItem>
+
                     {/* <NavItem>
                       <Link to="/contact-us">Contact Us</Link>
                     </NavItem> */}
-                  {/* </Nav>   */}
-
-                  {/* <Nav className="navbar-nav" navbar> */}
-                  
+                    {/* <Nav className="navbar-nav" navbar> */}
                     {/* {headerItem} */}
+                    {/* </Nav>   */}
 
-                  {/* </Nav> */}
+                  </Nav>
                 </Collapse>
               </Navbar>
             </div>
-          </div>  
+          </div>
         </div>
-      </header>  
+      </header>
     )
   };
 }

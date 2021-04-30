@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
 import "./../../Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage.css";
+import ClientAreaNeed from '../Organization/HireVA/clientNeedAreaList.json'
 
 //const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
 
@@ -64,7 +65,7 @@ class EditVaApplication extends Component {
     this.setState( { loading: true}, () => {
         commonService.getAPIWithAccessToken('va-application/'+vaApplicationId)
         .then( res => {
-          console.log("Get",res)
+          // console.log("Get",res)
           if ( undefined === res.data.data || !res.data.status ) {
            
             this.setState( { loading: false} );
@@ -474,9 +475,13 @@ class EditVaApplication extends Component {
                               <FormGroup>
                                 <Input type="select" name="skillSet1" value={formField.skillSet1} onChange={this.changeHandler} required invalid={errors['skillSet1'] !== undefined && errors['skillSet1'] !== ""}>
                                   <option value="">Select Skill 1 *</option>
+                                 
                                   {skillList.map((skillInfo, index) =>
                                     <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                   )}
+                                  {/* { ClientAreaNeed.clientArea.map((skillInfo, index) =>
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                                  )} */}
                                 </Input>
                                 <FormFeedback>{errors['skillSet1']}</FormFeedback>
                               </FormGroup>
@@ -498,6 +503,9 @@ class EditVaApplication extends Component {
                                   {skillList.map((skillInfo, index) =>
                                     <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                   )}
+                                  {/* { ClientAreaNeed.clientArea.map((skillInfo, index) =>
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                                  )} */}
                                 </Input>
                               </FormGroup>
                             </Col>
@@ -518,6 +526,9 @@ class EditVaApplication extends Component {
                                   {skillList.map((skillInfo, index) =>
                                     <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                   )}
+                                  {/* { ClientAreaNeed.clientArea.map((skillInfo, index) =>
+                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
+                                  )} */}
                                 </Input>
                               </FormGroup>
                             </Col>
@@ -650,8 +661,14 @@ class EditVaApplication extends Component {
   }
 }
 
+// function SetSkillDropDownItem (props) {
+//   const skill = props.skillInfo;
+//   // console.log("Skills", skill)
+//   return (<option value={skill.parentId} >{skill.parentName}</option>)
+// }
 function SetSkillDropDownItem (props) {
   const skill = props.skillInfo;
+  // console.log("Skills", skill)
   return (<option value={skill.skillId} >{skill.skillName}</option>)
 }
 

@@ -549,7 +549,7 @@ class HireVaPage extends Component {
                             <form onSubmit={(event) => this.submitHandler(event)} id="msform">
                                 {/* <Tabs  selectedIndex={tabIndex} onSelect={tabIndex => this.setState({tabIndex:tabIndex,selectedTab:selectedTab+tabIndex })} > */}
 
-                                <Tabs selectedIndex={tabIndex} onSelect={tabIndex => this.setState({ selectedTab: tabIndex + tabIndex, tabIndex: tabIndex, disabledPage: !disabledPage })} >
+                                <Tabs selectedIndex={tabIndex} onSelect={tabIndex => this.setState({ selectedTab: 2*tabIndex, tabIndex: tabIndex, disabledPage: !disabledPage })} >
                                     {/* id ="progressbar"  */}
                                     <TabList className="Client-form-nav-tabs ">
                                         <Tab id="tabid-1" tabfor="0" ></Tab>
@@ -568,7 +568,7 @@ class HireVaPage extends Component {
                                             <div className="Client-form-step">
                                                 <div className="Client-form-step-content">
                                                     <div className="Client-form-question">
-                                                        <h2>How may VA's you need?</h2>
+                                                        <h2>How may VA's do you need?</h2>
                                                     </div>
                                                     <div className="Client-form-answer">
                                                         <div className="form-radio-group">
@@ -712,7 +712,7 @@ class HireVaPage extends Component {
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
                                                                                 <a href="#">
-                                                                                    <img src="/images/advertisingi.svg" height="60" />
+                                                                                    <img src="/images/advertisingi.svg" height="60"  alt ="Advertising"/>
                                                                                 </a>
 
                                                                             </div>
@@ -727,7 +727,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="2" value="2" name="2" checked={selectedTabValue[2].indexOf("2") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/accounting_finance.svg" height="60" /></a>
+                                                                                <a href="#"><img src="/images/accounting_finance.svg" alt ="Accounting / Finance" height="60"  /></a>
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Accounting / Finance
@@ -1102,7 +1102,7 @@ class HireVaPage extends Component {
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Cold Calling
-                                                               	</div>
+                                                                    	</div>
                                                                         </div>
                                                                     </label>
                                                                 </li>
@@ -1112,11 +1112,11 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="8" checked={selectedTabValue[3].indexOf("59") >= 0 ? true : false} value="8" name="8" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/icons/programming_development.svg" height="60" /> </a>
+                                                                                <a href="#"><img src="/images/icons/programming_development.svg" height="60"/></a>
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Programming and Development
-                                                               	</div>
+                                                                         	</div>
                                                                         </div>
                                                                     </label>
                                                                 </li>
@@ -1298,18 +1298,39 @@ class HireVaPage extends Component {
                                                                                         $12<span className="subscript">/mo</span>
                                                                                     </h1>
                                                                                     <small>1 month FREE trial</small>
+                                                         
                                                                                 </div>
                                                                                 <table className="table">
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td>
-                                                                                                1 Account
-									                                               </td>
+                                                                                            Entry Level Tasks
+									                                                         </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Tight Budgets
+									                                                         </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            VAH’s For Business
+									                                                         </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Under Budget
+									                                                         </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Support Team
+									                                                         </td>
                                                                                         </tr>
                                                                                         <tr className="active">
                                                                                             <td>
-                                                                                                1 Project
-									                                                 </td>
+                                                                                                {/* 1 Project  */}
+                                                                                            </td> 
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1343,21 +1364,49 @@ class HireVaPage extends Component {
                                                                                 <div className="the-price">
                                                                                     <h1>
                                                                                         $15
-																																																																																                                                                        <span className="subscript">/mo</span>
+																																				                                             <span className="subscript">/mo</span>
                                                                                     </h1>
                                                                                     <small>1 month FREE trial</small>
+                                                                                    
                                                                                 </div>
                                                                                 <table className="table">
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td>
-                                                                                                2 Account
-									                            </td>
+                                                                                            Mid-level Freelancers
+									                                                        </td>
                                                                                         </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Video Editing
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Graphic Design
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Demanding Projects
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Complex Tasks
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Content Creation
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        
+
                                                                                         <tr className="active">
                                                                                             <td>
-                                                                                                5 Project
-									                            </td>
+                                                                                                {/* 5 Project */}
+									                                                         </td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1388,17 +1437,38 @@ class HireVaPage extends Component {
                                                                                         $20<span className="subscript">/mo</span>
                                                                                     </h1>
                                                                                     <small>1 month FREE trial</small>
+                                                                       
                                                                                 </div>
                                                                                 <table className="table">
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td>
-                                                                                                5 Account
-									                                                 </td>
+                                                                                            Expert Level Tasks
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Complicated Tasks
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            New Strategies
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Product Consulting
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Cold Calling
+									                                                        </td>
                                                                                         </tr>
                                                                                         <tr className="active">
                                                                                             <td>
-                                                                                                20 Project
+                                                                                                {/* 20 Project */}
 									                                                    </td>
                                                                                         </tr>
                                                                                     </tbody>
@@ -1448,7 +1518,7 @@ class HireVaPage extends Component {
                                                                     <div className="SRRadio">
                                                                         <input name="question1[]" id="question6[No Rush, wait best candidate]" type="radio"
                                                                             value="2" checked={selectedTabValue[7].indexOf("2") >= 0 ? true : false} onChange={this.needSomeoneQuickly} />
-                                                                        <label htmlFor="question6[No Rush, wait best candidate]">Under No Rush, wait best candidate</label>
+                                                                        <label htmlFor="question6[No Rush, wait best candidate]">Under No Rush, wait for best candidate</label>
                                                                     </div>
                                                                 </li>
                                                             </ul>

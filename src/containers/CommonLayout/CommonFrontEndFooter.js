@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import commonService from '../../core/services/commonService';
 import ebookFile from '../../assets/ebook/e-Book_VirtDROP.pdf';
 
-class frontEndFooter extends React.Component {
+class CommonFrontEndFooter extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -142,7 +142,7 @@ class frontEndFooter extends React.Component {
                         <Button className="btn-submit mt-2">Submit</Button>
                       </div>
                     </Form>
-                    <p>Looking for work? <a href="/be-a-virdrop-va">Apply here to become a Virtual Assistant</a></p>
+                   <br/><br/> <p>Looking for work? <a href="/be-a-virdrop-va">Apply here to become a Virtual Assistant</a></p>
                   </div> 
                 </div>
               </div>
@@ -176,10 +176,12 @@ class frontEndFooter extends React.Component {
                 <div className="col-md-6 col-sm-6 col-lg-6">
                   <div className="footer-nav-list">
                     <ul>
-                    <li> <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link></li>
                       {/* <li><a href="/services"> Services</a></li>
                       <li><a href="/privacy-policy">Privacy Policy</a></li>
                       <li><a href="/terms-of-service">Terms of Service</a></li> */}
+                     
+
+                      <li> <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link></li>
                       <li><a href="/sitemap.xml" target="_blank">Sitemap</a></li>
                     </ul>                       
                   </div>
@@ -205,4 +207,4 @@ class frontEndFooter extends React.Component {
   }
 }
 
-export default frontEndFooter;
+export default CommonFrontEndFooter;

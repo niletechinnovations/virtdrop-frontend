@@ -3,10 +3,11 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 // routes config
 import commonRoutes from '../../routes/commonRoutes';
-import FrontEndFooter from '../FrontEndLayout/FrontEndFooter';
+import CommonFrontEndFooter from './CommonFrontEndFooter';
 // import FrontEndHeader from '../FrontEndLayout/FrontEndHeader';
 import CommonFrontEndHeader from './CommonFrontEndHeader';
 import './CommonLayout.css';
+// import '../CommonLayout/CommonLayout.css';
 
 class CommonLayout extends Component {
 
@@ -36,7 +37,7 @@ class CommonLayout extends Component {
                 </Switch>
               </Suspense>
             </main>     
-            <FrontEndFooter />       
+            <CommonFrontEndFooter/>       
         </div>
       </div>
     );

@@ -75,7 +75,8 @@ class FrontEndHeader extends React.Component {
           <Link to="/login">Login/Register</Link>
         </NavItem>
         <NavItem className="pr-0">
-          <a href="http://landing.virtdrop.com/" className="apply-btn">Apply as VA</a>
+          {/* <a href="http://landing.virtdrop.com/" className="apply-btn">Apply as VA</a> */}
+          <Link className="apply-btn" to="/be-a-virdrop-va">Apply as VA</Link>
         </NavItem>
         <NavItem>
           <Link className="Sell-btn" to="/booking">Hire an Assistant <i className="fa fa-angle-right"></i></Link>
@@ -144,12 +145,13 @@ class FrontEndHeader extends React.Component {
             <div className="header-navigation">
               <Navbar expand="lg">
                 <div className="navbar-brand">
-                  <Link to="/"><img src={logo} height="60" alt="Logo" /></Link>
+                  {/* <Link to="/"><img src={logo} height="60" alt="Logo" /></Link> */}
+                  <Link to={{ pathname: "https://www.virtdrop.com" }} target="_blank"><img src={logo} height="60" alt="Logo" /></Link>
                 </div>
                 <NavbarToggler onClick={this.onToggle} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" />
                 <Collapse isOpen={this.state.toggleActive} navbar className="justify-content-end" id="navbarSupportedContent">
                   <Nav className="navbar-nav" navbar>
-                    <NavItem>
+                    {/* <NavItem>
                       <Link to="/how-it-works">How it Works?</Link>
                     </NavItem>
                     <NavItem>
@@ -160,6 +162,28 @@ class FrontEndHeader extends React.Component {
                     </NavItem>
                     <NavItem>
                       <Link to="/contact-us">Contact Us</Link>
+                    </NavItem> */}
+
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/" }} target="_blank">Home</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/how-it-works/" }} target="_blank">How it Works?</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/pricing/" }} target="_blank">Pricing</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/blog/" }} target="_blank">Blog</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/faq/" }} target="_blank">FAQ</Link>
+                    </NavItem>
+                    <NavItem>
+                      <Link to={{ pathname: "https://www.virtdrop.com/contact-us/" }} target="_blank">Contact Us</Link>
                     </NavItem>
                   </Nav>  
 

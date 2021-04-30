@@ -1,0 +1,274 @@
+{
+    "clientArea": [
+        {
+            "value": "1",
+            "label": "Administrative Task DataEntry",
+            "children": [
+                {
+                    "value": "2",
+                    "label": "Typing, Copy, Paste"
+                },
+                {
+                    "value": "3",
+                    "label": "Data Collection, Data Mining, Data Cleaning"
+                },
+                {
+                    "value": "4",
+                    "label": "Excel, Word, Powerpoint, PDF Editor"
+                },
+                {
+                    "value": "5",
+                    "label": "Google Sheets, Google Doc, Google Slides"
+                },
+                {
+                    "value": "6",
+                    "label": "Admin Support Work"
+                },
+                {
+                    "value": "7",
+                    "label": "Record Information"
+                },
+                {
+                    "value": "8",
+                    "label": "Take Meeting Notes"
+                }
+            ]
+        },
+        {
+            "value": "9",
+            "label": "Executive Assistants",
+            "children": [
+                {
+                    "value": "10",
+                    "label": "Appointment Setter"
+                },
+                {
+                    "value": "11",
+                    "label": "Emails, Phone Calls"
+                },
+                {
+                    "value": "12",
+                    "label": "Book Travel & Hotels"
+                },
+                {
+                    "value": "13",
+                    "label": "Coordinate Meetings & Events"
+                },
+                {
+                    "value": "14",
+                    "label": "Perform Research"
+                }
+            ]
+        },
+        {
+            "value": "15",
+            "label": "Ecommerce related Tasks",
+            "children": [
+                {
+                    "value": "16",
+                    "label": "Product Listing, Sourcing"
+                },
+                {
+                    "value": "17",
+                    "label": "Shopify Expert"
+                },
+                {
+                    "value": "18",
+                    "label": "Ecommerce Customer Service Rep"
+                },
+                {
+                    "value": "19",
+                    "label": "Wholesale Specialist"
+                },
+                {
+                    "value": "20",
+                    "label": "Product Designer"
+                },
+                {
+                    "value": "21",
+                    "label": "Store Management"
+                },
+                {
+                    "value": "22",
+                    "label": "Drop Shipping"
+                },
+                {
+                    "value": "23",
+                    "label": "Amazon, Ebay Expert"
+                },
+                {
+                    "value": "24",
+                    "label": "Ecommerce Consultant"
+                }
+            ]
+        },
+        {
+            "value": "25",
+            "label": "Customer Support Service",
+            "children": [
+                {
+                    "value": "26",
+                    "label": "Live Chat Agent"
+                },
+                {
+                    "value": "27",
+                    "label": "Call Center Agent"
+                },
+                {
+                    "value": "28",
+                    "label": "Customer & Technical Support"
+                },
+                {
+                    "value": "29",
+                    "label": "Emails/Phone Calls Support"
+                },
+                {
+                    "value": "30",
+                    "label": "Voice Actor"
+                }
+            ]
+        },
+        {
+            "value": "31",
+            "label": "Graphic Designing",
+            "children": [
+                {
+                    "value": "32",
+                    "label": "Logo, Brochure, Poster, Business cards"
+                },
+                {
+                    "value": "33",
+                    "label": "Web & Mobile Design"
+                },
+                {
+                    "value": "34",
+                    "label": "Adobe Photoshop Expert"
+                },
+                {
+                    "value": "35",
+                    "label": "Social Media Design"
+                },
+                {
+                    "value": "36",
+                    "label": "Video & Animation"
+                },
+                {
+                    "value": "37",
+                    "label": "Digital Artist"
+                },
+                {
+                    "value": "38",
+                    "label": "Game Designer"
+                },
+                {
+                    "value": "39",
+                    "label": "Animator"
+                }
+            ]
+        },
+        {
+            "value": "40",
+            "label": "Marketing",
+            "children": [
+                {
+                    "value": "41",
+                    "label": "Email Marketing"
+                },
+                {
+                    "value": "42",
+                    "label": "Social Media Marketing"
+                },
+                {
+                    "value": "43",
+                    "label": "Video Marketing"
+                },
+                {
+                    "value": "44",
+                    "label": "Marketing Consultant"
+                },
+                {
+                    "value": "45",
+                    "label": "SEM Specialists"
+                },
+                {
+                    "value": "46",
+                    "label": "SEO Specialists"
+                }
+            ]
+        },
+        {
+            "value": "47",
+            "label": "Accounting/Bookkeeping",
+            "children": [
+                {
+                    "value": "48",
+                    "label": "General Bookkeeping"
+                },
+                {
+                    "value": "49",
+                    "label": "Quickbooks Online Expert"
+                },
+                {
+                    "value": "50",
+                    "label": "Tax Consultants"
+                },
+                {
+                    "value": "51",
+                    "label": "CPA / Accountants"
+                },
+                {
+                    "value": "52",
+                    "label": "Financial Analysts"
+                }
+            ]
+        },
+        {
+            "value": "53",
+            "label": "Cold Calling",
+            "children": [
+                {
+                    "value": "54",
+                    "label": "Live Chat Agent"
+                },
+                {
+                    "value": "55",
+                    "label": "Call Center Agent"
+                },
+                {
+                    "value": "56",
+                    "label": "Customer & Technical Support"
+                },
+                {
+                    "value": "57",
+                    "label": "Emails/Phone Calls Support"
+                },
+                {
+                    "value": "58",
+                    "label": "Voice Actor"
+                }
+            ]
+        },
+        {
+            "value": "59",
+            "label": "Programming and Development",
+            "children": [
+                {
+                    "value": "60",
+                    "label": "WordPress Development"
+                },
+                {
+                    "value": "61",
+                    "label": "Software Developer"
+                },
+                {
+                    "value": "62",
+                    "label": "Computer Programmer"
+                },
+                {
+                    "value": "63",
+                    "label": "Database Programmer"
+                }
+            ]
+        }
+    ]
+}
