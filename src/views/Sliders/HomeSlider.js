@@ -61,7 +61,7 @@ const HomeSlider = (props) => {
               <li>Bookkeeping</li>
             </ul>
             {/* <Link className="explore-btn" to="/services">Click here for more services offered</Link> */}
-            <li> <Link className="explore-btn" to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Click here for more services offered</Link></li>
+            <li> <a className="explore-btn" href= "https://www.virtdrop.com/our-services/">Click here for more services offered</a></li>
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@ const HomeSlider = (props) => {
             <h2>PRICING</h2>
             <h6 style={{color:'#ffffff'}}>Our pricing is as straight forward and stream lined as everything else we offer.</h6>
             {/* <Link className="explore-btn" to="/booking">Request a Quote</Link> */}
-            <Link className="explore-btn" to={{ pathname: "https://www.virtdrop.com/pricing/" }} target="_blank">Request a Quote</Link>
+            <a className="explore-btn" href="https://www.virtdrop.com/pricing/" >Request a Quote</a>
           </div>
         </div>
       </div>

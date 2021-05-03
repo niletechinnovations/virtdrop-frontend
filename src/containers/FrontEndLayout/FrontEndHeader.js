@@ -146,7 +146,7 @@ class FrontEndHeader extends React.Component {
               <Navbar expand="lg">
                 <div className="navbar-brand">
                   {/* <Link to="/"><img src={logo} height="60" alt="Logo" /></Link> */}
-                  <Link to={{ pathname: "https://www.virtdrop.com" }} target="_blank"><img src={logo} height="60" alt="Logo" /></Link>
+                  <a href= "https://www.virtdrop.com" ><img src={logo} height="60" alt="Logo" /></a>
                 </div>
                 <NavbarToggler onClick={this.onToggle} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" />
                 <Collapse isOpen={this.state.toggleActive} navbar className="justify-content-end" id="navbarSupportedContent">
@@ -165,25 +165,25 @@ class FrontEndHeader extends React.Component {
                     </NavItem> */}
 
                     <NavItem>
-                      <Link to={{ pathname: "https://www.virtdrop.com/" }} target="_blank">Home</Link>
+                      <a href= "https://www.virtdrop.com">Home</a>
                     </NavItem>
                     <NavItem>
-                      <Link to={{ pathname: "https://www.virtdrop.com/how-it-works/" }} target="_blank">How it Works?</Link>
+                      <a href= "https://www.virtdrop.com/how-it-works/">How it Works?</a>
                     </NavItem>
                     <NavItem>
-                      <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link>
+                      <a href= "https://www.virtdrop.com/our-services/">Our Services</a>
                     </NavItem>
                     <NavItem>
-                      <Link to={{ pathname: "https://www.virtdrop.com/pricing/" }} target="_blank">Pricing</Link>
+                      <a href= "https://www.virtdrop.com/pricing/">Pricing</a>
                     </NavItem>
                     <NavItem>
-                      <Link to={{ pathname: "https://www.virtdrop.com/blog/" }} target="_blank">Blog</Link>
+                      <a href= "https://www.virtdrop.com/blog/">Blog</a>
                     </NavItem>
                     <NavItem>
-                      <Link to={{ pathname: "https://www.virtdrop.com/faq/" }} target="_blank">FAQ</Link>
+                      <a href="https://www.virtdrop.com/faq/">FAQ</a>
                     </NavItem>
                     <NavItem>
-                      <Link to={{ pathname: "https://www.virtdrop.com/contact-us/" }} target="_blank">Contact Us</Link>
+                      <a href= "https://www.virtdrop.com/contact-us/">Contact Us</a>
                     </NavItem>
                   </Nav>  
 

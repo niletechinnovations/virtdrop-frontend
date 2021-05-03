@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 // routes config
 import frontendRoutes from '../../routes/frontendRoutes.js';
-
 import FrontEndHeader from './FrontEndHeader';
 import FrontEndFooter from './FrontEndFooter';
 import '../CommonLayout/CommonLayout.css';

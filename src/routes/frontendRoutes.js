@@ -3,7 +3,7 @@ import AboutPage from '../views/Pages/Frontend/AboutPage';
 import ContactPage from '../views/Pages/Frontend/ContactPage';
 import LoginPage from '../views/Pages/Login/LoginPage';
 import ResetPassword from '../views/Pages/Login/ResetPassword';
-import RegisterPage from '../views/Pages/Register/RegisterPage';
+// import RegisterPage from '../views/Pages/Register/RegisterPage';
 import VerifyEmailPage from '../views/Pages/Login/VerifyEmailPage';
 import PrivacyPolicyPage from '../views/Pages/Frontend/PrivacyPolicyPage';
 import TermsConditionsPage from '../views/Pages/Frontend/TermsConditionsPage';
@@ -27,7 +27,7 @@ const frontendRoutes = [
   { path: '/contact-us', exact: true,  name: 'Contact us', component: ContactPage },
   { path: '/subscription-plan', exact: true,  name: 'Subscription Plan', component: SubscriptionPlan },
   { path: '/login', exact: true, name: 'Login', component: LoginPage },
-  { path: '/register', exact: true,  name: 'Register', component: RegisterPage },
+  // { path: '/register', exact: true,  name: 'Register', component: RegisterPage },
   { path: '/verify-email/:token', exact: true,  name: 'Verify Email', component: VerifyEmailPage },
   { path: '/reset-password/:token', exact: true,  name: 'Reset Password', component: ResetPassword },
   { path: '/privacy-policy', exact: true,  name: 'Privacy Policy', component: PrivacyPolicyPage },

@@ -11,12 +11,12 @@ import './CommonLayout.css';
 
 class CommonLayout extends Component {
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loyading...</div>
+  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
    render() {
     return (
       <div className="app">
-        <div className="flyout">   
+        <div className="flyout">  
        <CommonFrontEndHeader />        
             <main>                
               <Suspense fallback={this.loading()}>

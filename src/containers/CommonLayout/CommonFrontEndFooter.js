@@ -123,10 +123,10 @@ class CommonFrontEndFooter extends React.Component {
                     <li><Link to="/services">Services</Link></li>
                     <li><Link to="/pricing">Plan & Pricing</Link></li>
                     <li><Link to="/contact-us">Contact Us</Link></li> */}
-                    <li> <Link to={{ pathname: "https://www.virtdrop.com/how-it-works/" }} target="_blank">How it works?</Link></li>
-                    <li> <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link></li>
-                    <li> <Link to={{ pathname: "https://www.virtdrop.com/pricing/" }} target="_blank">Pricing</Link></li>
-                    <li> <Link to={{ pathname: "https://www.virtdrop.com/contact-us/" }} target="_blank">Contact Us</Link></li>
+                    <li><a href="https://www.virtdrop.com/how-it-works/">How it works?</a></li>
+                    <li><a href="https://www.virtdrop.com/our-services/">Our Services</a></li>
+                    <li><a href="https://www.virtdrop.com/pricing/">Pricing</a></li>
+                    <li><a href="https://www.virtdrop.com/contact-us/">Contact Us</a></li>
                   </ul>
                 </div>
               </div>
@@ -181,7 +181,7 @@ class CommonFrontEndFooter extends React.Component {
                       <li><a href="/terms-of-service">Terms of Service</a></li> */}
                      
 
-                      <li> <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link></li>
+                      <li> <a href="https://www.virtdrop.com/our-services/" >Our Services</a></li>
                       <li><a href="/sitemap.xml" target="_blank">Sitemap</a></li>
                     </ul>                       
                   </div>

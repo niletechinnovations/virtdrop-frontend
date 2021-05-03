@@ -43,7 +43,7 @@ class HireVaPage extends Component {
             disabledPage: true,
             selectedVaNumberByImage: '',
             selectedTabValue: { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': []},
-            somthingAboutYou: { personName: '', companyName: '', companyAddress: '', email: '', phoneNumber: '' },
+            somthingAboutYou: { firstPersonName: '', lastPersonName:'', companyName: '', companyAddress: '', email: '', phoneNumber: '' },
         }
         this.featureRef = React.createRef();
         this.changeStartHandler = this.changeStartHandler.bind(this);
@@ -1309,22 +1309,37 @@ class HireVaPage extends Component {
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Tight Budgets
+                                                                                            Virtual Assistant
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            VAH’s For Business
+                                                                                            Customer Service
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Under Budget
+                                                                                            Email Support
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Support Team
+                                                                                            Basic Social Media
+									                                                         </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Bookeeping
+									                                                         </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Admin Tasks
+									                                                         </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            And More ..
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr className="active">
@@ -1373,7 +1388,7 @@ class HireVaPage extends Component {
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Mid-level Freelancers
+                                                                                            Mid Level Tasks
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
@@ -1383,22 +1398,42 @@ class HireVaPage extends Component {
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
+                                                                                            Content Creation
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
                                                                                             Graphic Design
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Demanding Projects
+                                                                                            Client Relations
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Complex Tasks
+                                                                                            Project Management
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Content Creation
+                                                                                            Web Development
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            Accounting
+									                                                        </td>
+                                                                                        </tr>
+                                                                                         <tr>
+                                                                                            <td>
+                                                                                            Executive Assistant
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            And More...
 									                                                        </td>
                                                                                         </tr>
                                                                                         
@@ -1448,22 +1483,32 @@ class HireVaPage extends Component {
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Complicated Tasks
+                                                                                            Brand Strategist
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            New Strategies
+                                                                                            Amazon Admin
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Product Consulting
+                                                                                            Sales/Cold Calling
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Cold Calling
+                                                                                            Product Design/Development
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            PPC/Social Media Advertising
+									                                                        </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                            And More...
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr className="active">
@@ -1540,10 +1585,22 @@ class HireVaPage extends Component {
                                                     <div className="Client-form-answer">
                                                         <div className="mt-3">
                                                             <div className="row">
+                                                                {/* <div className="col-md-6 form-info">
+                                                                    <div className="form-group">
+                                                                        <h4 className="heading-title-sm">First Name of the person</h4>
+                                                                        <input type="text" name="personName" value={somthingAboutYou.personName} className="form-control" placeholder="Enter Person Name" onChange={this.somthingAboutYouHandler} required />
+                                                                    </div>
+                                                                </div> */}
+                                                                 <div className="col-md-6 form-info">
+                                                                    <div className="form-group">
+                                                                        <h4 className="heading-title-sm">First name of the person</h4>
+                                                                        <input type="text" name="firstPersonName" value={somthingAboutYou.firstPersonName} className="form-control" placeholder="Enter  First Name Of the Person" onChange={this.somthingAboutYouHandler} required />
+                                                                    </div>
+                                                                </div>
                                                                 <div className="col-md-6 form-info">
                                                                     <div className="form-group">
-                                                                        <h4 className="heading-title-sm">Name of the person</h4>
-                                                                        <input type="text" name="personName" value={somthingAboutYou.personName} className="form-control" placeholder="Enter Person Name" onChange={this.somthingAboutYouHandler} required />
+                                                                        <h4 className="heading-title-sm">Last name of the person</h4>
+                                                                        <input type="text" name="lastPersonName" value={somthingAboutYou.lastPersonName} className="form-control" placeholder="Enter  Last Name Of the Person" onChange={this.somthingAboutYouHandler} required />
                                                                     </div>
                                                                 </div>
                                                                 <div className="col-md-6 form-info">
@@ -1552,7 +1609,7 @@ class HireVaPage extends Component {
                                                                         <input type="text" name="companyName" value={somthingAboutYou.companyName} onChange={this.somthingAboutYouHandler} className="form-control" placeholder="Enter Company Name" required />
                                                                     </div>
                                                                 </div>
-                                                                <div className="col-md-12 form-info">
+                                                                <div className="col-md-6 form-info">
                                                                     <div className="form-group">
                                                                         <h4 className="heading-title-sm">Company Address</h4>
                                                                         <input type="text" name="companyAddress" value={somthingAboutYou.companyAddress} onChange={this.somthingAboutYouHandler} className="form-control" placeholder="Enter Company Address" required />
