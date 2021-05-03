@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import commonService from '../../core/services/commonService';
 import ebookFile from '../../assets/ebook/e-Book_VirtDROP.pdf';
 
+
 class CommonFrontEndFooter extends React.Component {
   constructor(props){
     super(props);
@@ -67,62 +68,23 @@ class CommonFrontEndFooter extends React.Component {
       <ToastContainer /> 
       {loaderElement} 
       <footer className="footer">
-        <div className="footer-contact">
-          <div className="row">
-                <div className="col-md-4">
-                  <div className="footer-contact-card">
-                    <div className="footer-contact-icon">
-                      <img src="/images/mail.svg" alt="" />
-                    </div>
-                    <div className="footer-contact-content">
-                      <p>Email Address</p>
-                      <h2><a href="mailto:support@virtdrop.com">support@virtdrop.com</a></h2>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-md-4">
-                  <div className="footer-contact-card">
-                    <div className="footer-contact-icon">
-                      <img src="/images/phone.svg" alt="phone" />
-                    </div>
-                    <div className="footer-contact-content">
-                      <p>Phone Number</p>
-                      <h2><a href="tel:212-518-3183">212-518-3183</a></h2>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-md-4">
-                  <div className="footer-contact-card">
-                    <div className="footer-contact-icon">
-                      <img src="/images/location.svg" alt="Location" />
-                    </div>
-                    <div className="footer-contact-content">
-                      <p>Office Address</p>
-                      <h2>576 Fifth Avenue, New York</h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        </div>
         <div className="top-footer">
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-lg-3 col-sm-12">
                 <div className="footer-about-info">
-                  <h2>About VirtDrop</h2>
+                  <div className="footer-logo">
+                    <a href="https://www.virtdrop.com/">
+                      <img  height="33" src="../images/wh-logo.png" className="attachment-large size-large" alt="" loading="lazy" />                
+                    </a>
+                  </div>
                   <p>VirtDrop is a Virtual Assistant company registered in New York. We supply high-quality Virtual Assistant services to individual clients and major businesses alike. VirtDrop provides ongoing training and support for our Virtual Assistants, guaranteeing our client’s goals can always be achieved. VirtDrop began operations in 2019.</p>
                 </div>
               </div>
-              <div className="col-md-2 col-lg-2 col-sm-4">
+              <div className="col-md-2 col-lg-2 col-sm-12">
                 <div className="footer-link-info">
                   <h2>Useful Links</h2>
                   <ul className="footer-link-list">
-                  {/* <li><Link to="/how-it-works">How it works</Link></li>
-                    <li><Link to="/services">Services</Link></li>
-                    <li><Link to="/pricing">Plan & Pricing</Link></li>
-                    <li><Link to="/contact-us">Contact Us</Link></li> */}
                     <li> <Link to={{ pathname: "https://www.virtdrop.com/how-it-works/" }} target="_blank">How it works?</Link></li>
                     <li> <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link></li>
                     <li> <Link to={{ pathname: "https://www.virtdrop.com/pricing/" }} target="_blank">Pricing</Link></li>
@@ -130,65 +92,62 @@ class CommonFrontEndFooter extends React.Component {
                   </ul>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-12 col-lg-3">
+              <div className="col-md-4 col-lg-4 col-sm-12">
                 <div className="footer-link-info">
-                  {/* <h2>Subscribe</h2> */}
-                  <div className="newsletter-form">
-                    <h4>To get your Virtdrop eBook enter your name & email below.</h4>
-                    <Form onSubmit={this.submitNewsletterForm} noValidate>
-                      <div className="newsletter-group">
-                        <Input className="newsletter-input mb-2" type="text" name="newsletterName" placeholder="Enter your name" value={ newsletterName} onChange={this.changeHandler} required />
-                        <Input className="newsletter-input" type="email" name="newsletterEmail" placeholder="Enter your email address" value={ newsletterEmail} onChange={this.changeHandler} required />
-                        <Button className="btn-submit mt-2">Submit</Button>
-                      </div>
-                    </Form>
-                   <br/><br/> <p>Looking for work? <a href="/be-a-virdrop-va">Apply here to become a Virtual Assistant</a></p>
-                  </div> 
+                  <h2>Tags</h2>
+                  <ul className="footer-tags-list">
+                    <li>Virtual Assistant</li>
+                    <li>Consulting Agency</li>
+                    <li>Virtdrop</li>
+                    <li>Freelancer</li>
+                    <li>Virtually Drop</li>
+                    <li>Dedicated Professionals</li>
+                    <li>Virtual Employee</li>
+                  </ul>
                 </div>
               </div>
-              <div className="col-md-4 col-sm-4 col-lg-4">
-                <div className="footer-info-images">
-                  <div className="footer-images-top">
-                    <div className="images-ssl">	
-                      <img src="/images/positivessl_trust_seal_lg_222x54.png" alt="SSL" />
-                    </div>
-                    <div className="images-satisfaction">
-                      <img src="/images/satisfaction.png" height="90" alt="" />
-                    </div>
-                  </div>
-                  <div className="images-paypal">
-                    <img src="/images/logo-center-solution-graphics.png"  width="319" height="110" alt="" />
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              <div className="col-md-3 col-lg-3 col-sm-12">
+                <div className="footer-link-info">
+                  <h2>Address</h2>
+                  <ul className="footer-contact-list">
+                    <li>
+                      <i aria-hidden="true" className="fa fa-map-marker"></i>
+                      <span className="footer-contact-text">576 Fifth Avenue, New York</span>
+                    </li>
+                    <li>
+                      <a href="tel:212-518-3183">
+                        <i aria-hidden="true" className="fa fa-phone"></i>           
+                        <span className="footer-contact-text">212-518-3183</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="mailto:support@virtdrop.com">            
+                        <i aria-hidden="true" className="fa fa-envelope"></i>
+                        <span className="footer-contact-text">support@virtdrop.com</span>
+                      </a>
+                    </li>
+                  </ul> 
 
-          <div className="bottom-footer">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6 col-sm-6 col-lg-6">
-                  <div className="footer-copyright">
-                    <p>© VIRTDROP. All rights reserved. Powered By: <a href="http://niletechnologies.com/" target="_blank" rel="noopener noreferrer">Nile Technologies</a></p>
-                  </div>
-                </div>
-                <div className="col-md-6 col-sm-6 col-lg-6">
-                  <div className="footer-nav-list">
+                  <div className="footer-social">
                     <ul>
-                      {/* <li><a href="/services"> Services</a></li>
-                      <li><a href="/privacy-policy">Privacy Policy</a></li>
-                      <li><a href="/terms-of-service">Terms of Service</a></li> */}
-                     
-
-                      <li> <Link to={{ pathname: "https://www.virtdrop.com/our-services/" }} target="_blank">Our Services</Link></li>
-                      <li><a href="/sitemap.xml" target="_blank">Sitemap</a></li>
-                    </ul>                       
+                      <li><a className="facebook" href="https://www.facebook.com/virtdrop" target="_blank" rel="noopener noreferrer"><i className="fa fa-facebook"></i></a></li>
+                      <li><a className="twitter" href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-twitter"></i></a></li>
+                      <li><a className="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-linkedin"></i></a></li>
+                      <li><a className="instagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-instagram"></i></a></li>
+                      <li><a className="youtube" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-youtube-play"></i></a></li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="bottom-footer">
+          <div className="container">
+            <div className="copyright-text">© VIRTDROP. All rights reserved.</div>
+          </div>
+        </div>
       </footer>
       <div className="discovery-call-info">
         <div className="discovery-call-inner">
