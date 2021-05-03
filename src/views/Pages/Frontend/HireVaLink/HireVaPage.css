@@ -98,7 +98,7 @@ button.Apply-btn {outline: none; background:#ffaf02; cursor: pointer; color: #ff
 .form-input-group textarea.form-control{border-radius: 2px; font-size: 13px; padding: 10px; height: 70px; color: #393e40; }
 
 .width80{width: 80%}
-ul.filter-field-list1{list-style: none; margin: 0; padding: 0; }
+ul.filter-field-list1{list-style: none; margin: 0; padding: 0; text-align: left; }
 ul.filter-field-list1 li{display: inline-block; }
 
 
@@ -309,6 +309,53 @@ span.SRRadio-value-text {position: absolute; bottom: 5px; text-align: center; le
 .Client-form-nav-tabs li.react-tabs__tab--selected:after{background:#143477; color: white; }
 
 
+
+@media only screen and (min-width : 480px) {
+}
+
+@media only screen and (min-width : 768px) {
+
+}
+
+
+@media only screen and (min-width : 992px) {
+
+}
+
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+
+@media only screen and (max-width : 1199px) {
+
+}
+
+@media only screen and (max-width : 991px) {
+
+
+}
+
+@media only screen and (max-width : 767px) {
+.Client-form-section .Client-form-container {max-width:95%;}
+ul.filter-field-list1{text-align: center;}
+ul.filter-field-list1 li{width: auto !important;}
+.Client-form-answer {padding: 15px; }
+.Client-form-answer .panel {margin-bottom: 20px; }
+
+
+} 
+
+@media only screen and (max-width: 576px) {
+   
+.filter-field-list li{width: 49%}
+
+
+}
+
+@media only screen and (max-width : 480px) {}
 
 
 

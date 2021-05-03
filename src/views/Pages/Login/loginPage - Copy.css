@@ -1,7 +1,7 @@
 .banner-section .container {max-width: 95%;}
 .banner-media-content {position: relative;  }
 .banner-media{width: 100%; height: 170px; display: block; background: #f8f4d9;/* border-radius: 4px; */overflow: hidden; margin-right: 20px; }
-.banner-media:after {content: ''; position: absolute; background:rgb(19 96 254 / 88%); left: 0; right: 0; top: 0; bottom: 0; }
+.banner-media:after {content: ''; position: absolute; background: rgba(19, 96, 254, 0.3); left: 0; right: 0; top: 0; bottom: 0; }
 .banner-media img {width: 100%; height: 100%; -o-object-fit: cover; object-fit: cover; -o-object-position: center; object-position: center;}
 .banner-content {padding: 20px; width: 70%; position: absolute; z-index: 99; height: 100%; align-items: center; top: 0; margin: 0 auto; left: 0; right: 0; display: flex; }
 .banner-content h1 {font-size: 30px; color: #f8fafd; text-align: center; font-weight: 500; padding: 0; margin: 0; }
@@ -9,8 +9,8 @@
 
 .account-page-section{padding:2rem 0 5rem;}
 .register-content-card{background: #FFFFFF; border-radius: 6px; position: relative; margin: 0 auto; border: 1px solid #e5eaec; }
-.account-content-card {background-image: linear-gradient(99deg ,#FFFFFF 43%,#1360FE 43%);border-radius:4px; position: relative; width: 80%; margin: 0 auto; border:3px solid #1360fe; }
-.account-form {position: relative; padding: 24px 0px 24px 24px; border-radius: 6px; /*background: #fff; */height: 100%; }
+.account-content-card {background: #FFFFFF; border-radius: 6px; position: relative; width: 80%; margin: 0 auto; border: 1px solid #e5eaec; }
+.account-form {position: relative; padding: 24px 0px 24px 24px; border-radius: 6px; background: #fff; height: 100%; }
 .account-form form {-ms-flex-positive: 1; flex-grow: 1; display: -ms-flexbox; display: flex; -ms-flex-direction: column; flex-direction: column; -ms-flex-pack: distribute; justify-content: space-around; }
 .account-form h2 {font-size: 18px; font-weight: bold; color: #182c44; padding: 15px 0; border-radius: 2px; }
 .account-form form .row{margin-left: -5px; margin-right: -5px;}
@@ -30,10 +30,10 @@
  button.btn-submit {background: #1360fe; padding: 8px 20px; border-radius: 3px; color: #fff; position: relative; text-align: center; font-weight: 600; font-size: 14px; border: none; box-shadow: none; }
 
 
-.login-content-info {border-radius: 0px 6px 6px 0; height: 100%; padding: 2rem  2rem 2rem 4rem; position: relative; /*background: #f4f9fc; background: -moz-linear-gradient(top, #f4f9fc 0%, #ffffff 99%); background: -webkit-linear-gradient(top, #f4f9fc 0%,#ffffff 99%); background: linear-gradient(to bottom, #f4f9fc 0%,#ffffff 99%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9fc', endColorstr='#ffffff',GradientType=0 );*/ }
+.login-content-info {border-radius: 0px 6px 6px 0; height: 100%; padding: 24px; position: relative; background: #f4f9fc; background: -moz-linear-gradient(top, #f4f9fc 0%, #ffffff 99%); background: -webkit-linear-gradient(top, #f4f9fc 0%,#ffffff 99%); background: linear-gradient(to bottom, #f4f9fc 0%,#ffffff 99%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f9fc', endColorstr='#ffffff',GradientType=0 ); }
 
-.login-content-info h2{font-size: 18px; font-weight: 700; color: #fff; margin: 0; padding-top: 0;}
-.login-content-info p {font-size: 13px; color: #fff; text-align: justify; margin-bottom: 10px; }
+.login-content-info h2{font-size: 18px; font-weight: 700; color: #091e42; margin: 0; padding-top: 0;}
+.login-content-info p {font-size: 13px; color: #091e42; text-align: justify; margin-bottom: 10px; }
 a.btn-click {color: #ffffff !important; border: 2px solid #182c44; padding: 1px 15px; font-weight: 600; display: inline-block; margin-bottom: 20px; background: #182c44; font-size: 12px; border-radius: 4px; text-decoration: none !important; }
 .login-content-info a{text-decoration: underline;    color: #1360fe}
 .password__show{
@@ -77,9 +77,8 @@ a.btn-click {color: #ffffff !important; border: 2px solid #182c44; padding: 1px 
 }
 
 @media only screen and (max-width : 767px) {
-.account-content-card{width: 100%;background-image: linear-gradient( 180deg ,#FFFFFF 47%,#1360FE 43%);}
+.account-content-card{width: 100%;}
 .account-form{padding: 10px;}
-.login-content-info{padding:1rem;}
 }
 
 @media only screen and (max-width: 576px) {

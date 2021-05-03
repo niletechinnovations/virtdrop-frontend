@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from './../../assets/images/logo.png';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import commonService from '../../core/services/commonService';
-import '../FrontEndLayout/FrontEndHeader.css';
+import './CommonFrontEndHeader.css';
 import UserAvtar from '../UserLayout/UserAvtar'
 
 class CommonFrontEndHeader extends React.Component {
@@ -91,49 +91,29 @@ class CommonFrontEndHeader extends React.Component {
         <div className="top-header">
           <div className="container">
             <div className="row">
-              <div className="col-md-3">
-                <div className="header-contact-card">
-                  <div className="header-contact-icon">
-                    <img src="/images/mail.svg" alt="" />
-                  </div>
-                  <div className="header-contact-content">
-                    <p>Email Address</p>
-                    <h2><a href="mailto:support@virtdrop.com">support@virtdrop.com</a></h2>
-                  </div>
-                </div>
+              <div className="col-md-9">
+                <ul className="header-contact-list">
+                  <li>
+                  <a href="mailto:support@virtdrop.com">            
+                    <i aria-hidden="true" className="far fa-envelope"></i>
+                    <span className="elementor-icon-list-text">support@virtdrop.com</span>
+                  </a>
+                  </li>
+                  <li>
+                    <a href="tel:212-518-3183">           
+                      <i aria-hidden="true" className="fa fa-phone"></i> 
+                      <span className="elementor-icon-list-text">212-518-3183</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
-
-              <div className="col-md-3">
-                <div className="header-contact-card">
-                  <div className="header-contact-icon">
-                    <img src="/images/phone.svg" alt="phone" />
-                  </div>
-                  <div className="header-contact-content">
-                    <p>Phone Number</p>
-                    <h2><a href="tel:212-518-3183">212-518-3183</a></h2>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3">
-                <div className="header-contact-card">
-                  <div className="header-contact-icon">
-                    <img src="/images/location.svg" alt="Location" />
-                  </div>
-                  <div className="header-contact-content">
-                    <p>Office Address</p>
-                    <h2>576 Fifth Avenue, New York</h2>
-                  </div>
-                </div>
-              </div>
-
               <div className="col-md-3">
                 <div className="header-social">
                   <ul>
-                    <li><a href="https://www.facebook.com/virtdrop" target="_blank" rel="noopener noreferrer"><i className="fa fa-facebook"></i></a></li>
-                    <li><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-twitter"></i></a></li>
-                    <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-linkedin"></i></a></li>
-                    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-instagram"></i></a></li>
+                    <li><a className="facebook" href="https://www.facebook.com/virtdrop" target="_blank" rel="noopener noreferrer"><i className="fa fa-facebook"></i></a></li>
+                    <li><a className="linkedin" href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-twitter"></i></a></li>
+                    <li><a className="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-linkedin"></i></a></li>
+                    <li><a className="instagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-instagram"></i></a></li>
                   </ul>
                 </div>
               </div>

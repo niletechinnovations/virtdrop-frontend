@@ -573,7 +573,7 @@ class HireVaPage extends Component {
                                                     <div className="Client-form-answer">
                                                         <div className="form-radio-group">
                                                             <h4 className="heading-title-sm">How many VA do you need?</h4>
-                                                            <ul className="filter-field-list1 text-left">
+                                                            <ul className="filter-field-list1">
                                                                 <li style={{ "width": "19%" }}>
                                                                     <div className="SRcheckbox">
                                                                         <input name="1" id="1" checked={selectedTabValue[1].indexOf("1") >= 0 ? true : false} type="checkbox" value="1" onChange={this.addManyVaHnadler} />
