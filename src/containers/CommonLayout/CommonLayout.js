@@ -4,10 +4,12 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 // routes config
 import commonRoutes from '../../routes/commonRoutes';
 import CommonFrontEndFooter from './CommonFrontEndFooter';
-// import FrontEndHeader from '../FrontEndLayout/FrontEndHeader';
 import CommonFrontEndHeader from './CommonFrontEndHeader';
 import './CommonLayout.css';
-// import '../CommonLayout/CommonLayout.css';
+import '../CommonLayout/CommonLayout.css';
+// import '../FrontEndLayout/FrontEndHeader.css';
+// import './CommonFrontEndHeader.css'
+// import './CommonFrontEndHeader.css';
 
 class CommonLayout extends Component {
 

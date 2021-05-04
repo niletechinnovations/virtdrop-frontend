@@ -3,8 +3,11 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 // routes config
 import frontendRoutes from '../../routes/frontendRoutes.js';
-import FrontEndHeader from './FrontEndHeader';
+import FrontEndHeader from '../CommonLayout/CommonFrontEndHeader';
 import FrontEndFooter from './FrontEndFooter';
+import CommonFrontEndFooter from '../CommonLayout/CommonFrontEndFooter';
+import '../CommonLayout/CommonFrontEndHeader.css';
+// import './FrontEndHeader.css'
 import '../CommonLayout/CommonLayout.css';
 
 
@@ -42,7 +45,8 @@ class FrontEndLayout extends Component {
                 </Switch>
               </Suspense>
             </main>
-            <FrontEndFooter />
+            {/* <FrontEndFooter /> */}
+            <CommonFrontEndFooter/>
         </div>
       </div>
     );

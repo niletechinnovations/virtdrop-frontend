@@ -49,8 +49,8 @@ body{ background: none !important;}
 .header-navigation .navbar-nav > li a.dropdown-item:active,
 .header-navigation .navbar-nav > li a.dropdown-item:focus, 
 .header-navigation .navbar-nav > li a.dropdown-item:hover{background-color: #f8f9fa;}
-a.Sell-btn {background: #1360fe; padding: 10px 30px 10px 20px; border-radius: 5px; color: #fff !important; }
-a.Sell-btn i {background: #fff; width: 30px; height: 30px; border-radius: 50%; line-height: 30px; font-size: 16px; font-weight: bold; position: absolute; text-align: center; right: -10px; color: #1360fe; top: 7px; box-shadow: 7px 0 5px #fafcff; }
+a.Sell-btn {background: #1360fe;white-space: nowrap; padding: 10px 30px 10px 20px; border-radius: 5px; color: #fff !important; }
+a.Sell-btn i {background: #fff;white-space: nowrap; width: 30px; height: 30px; border-radius: 50%; line-height: 30px; font-size: 16px; font-weight: bold; position: absolute; text-align: center; right: -10px; color: #1360fe; top: 7px; box-shadow: 7px 0 5px #fafcff; }
 
 .footer-contact-card{display: flex; align-items: center;}
 .footer-contact-icon {width:30px; margin-right: 10px; } 
@@ -63,6 +63,7 @@ a.Sell-btn i {background: #fff; width: 30px; height: 30px; border-radius: 50%; l
     border-radius: 5px;
 	border: solid 1px #1360fe;
 	color: #1360fe;
+	white-space: nowrap;
 }
 .discovery-call-info {
     top: 45%;
@@ -325,12 +326,14 @@ backface-visibility: hidden;
 
 
 @media only screen and (max-width : 1199px) {
+	.header-navigation .navbar-nav > li > a { font-size:10px; } 
+	.header-navigation .navbar-nav > li{padding: 10px 5px;}
 
 }
 
 @media only screen and (max-width : 991px) {
 .header-navigation .navbar-nav > li{padding:0px 0;    margin-left: 0;}
-.header-navigation .navbar-nav > li > a {text-align: left; display: block; margin: 0; padding: 0.7rem 0.5rem; color: #495057; font-size: 11px; font-weight: normal; border-bottom: 1px solid #d7ddec;} 
+.header-navigation .navbar-nav > li > a { color: #495057; font-size:10px; font-weight: normal; border-bottom: 1px solid #d7ddec;} 
 .header-navigation .navbar-nav li .dropdown-menu{width: 100%;}
 .header-navigation .navbar-nav > li .dropdown-menu {border: 1px solid #dcf5f7; border-radius: 0; padding: 0; position: relative !important; transform: none !important; }
 .header-navigation .navbar-nav > li a.dropdown-item {position: relative; color: #495057; text-align: left; font-size: 12px; }
@@ -340,6 +343,7 @@ backface-visibility: hidden;
 .numbers .card-category,
 .numbers .card-title{text-align: center !important;}
 .numbers { margin-top: 10px;}
+
 }
 
 @media only screen and (max-width : 767px) {
@@ -375,48 +379,6 @@ backface-visibility: hidden;
 }
 
 @media only screen and (max-width : 480px) {}
-
-/* Mobile Fixes for User Menu */
-/*@media only screen and (max-width: 1366px) and (min-width: 1240px) {
-	.user-menu .user-name {
-	    max-width: 110px;
-	}
-}
-
-@media (min-width: 992px) and (max-width: 1239px) {
-	.header-widget {
-	    height: auto;
-	    position: absolute;
-	    right: 0;
-	    width: 150%;
-	}
-
-	.header-style-2 .header-widget {
-	    position: relative;
-	    width: auto;
-	}
-
-	.user-menu { top: 12px; }
-	.right-side { position: relative; }
-}
-
-@media (max-width: 992px) {
-	.user-menu ul {
-	    right: -60px;
-	    float: right;
-	}
-}
-
-@media (max-width: 480px) {
-	.header-widget .user-menu {
-		top: 0;
-		margin-top: 7px;
-		margin-bottom: 20px;
-		float: left;
-	}
-}
-*/
-
 
 
 

@@ -525,12 +525,16 @@ class HireVaPage extends Component {
     }
 
     componentDidMount() {
-
+        // window.scrollTo({ bottom: 0, left: 0,  behavior: 'smooth' })
         // this.getIndustryList()
         this.setState({ clientArea: clientAreaNeed.clientArea })
 
         // Belonged Industres List 
         this.setState({ industryBelongList: industryBelongList.industries })
+
+    
+            // window.scrollTo(500, 800)
+        
 
 
     }
@@ -687,6 +691,7 @@ class HireVaPage extends Component {
                                             //  className={this.state.isActive === item.id ? 'nav-active' : ''}
                                                       onClick={() => this.setActiveTab("1")} /> */}
                                                 {/* {selectedTabValue[2].length==0 ? */}
+                                                
                                                 <input type="button" name="next" className="next action-button" value="Next" disabled={disabledPageNew[1]}
                                                     id="react-tabs-0" onClick={() => this.setActiveTab("0")} />
 
@@ -976,6 +981,7 @@ class HireVaPage extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
+                                               
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
                                                 <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("2")} disabled={disabledPageNew[2]} id="react-tabs-2" />
                                             </div>

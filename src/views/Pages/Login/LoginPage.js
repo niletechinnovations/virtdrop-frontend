@@ -267,7 +267,8 @@ class LoginPage extends Component {
                     <p><b>Get started for FREE!</b></p>
                     <p>Simply fill out the details on our registration page. We’ll only ask you to do it this one time. You’re only a few steps away from being introduced to one of our amazing Virtual Assistants.</p>
                     {/* <Link className="btn-click" to="/register">Register Now</Link> */}
-                    <a className="btn-click" href= "https:app.virtdrop.com/common/va-hire-link">Register Now</a>
+                    <a className="btn-click" href= "https://app.virtdrop.com/common/va-hire-link">Register Now</a>
+                    {/* <a className="btn-click" href= "http://localhost:3000/common/va-hire-link">Register Now</a> */}
                     <p><b>Looking to become a Virtual Assistant?</b></p>
                     <p>If you're interested in becoming a Virtual Assistant you can <Link to="/be-a-virdrop-va">apply here.</Link> </p>
                   </div>

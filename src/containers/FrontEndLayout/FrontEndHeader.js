@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import logo from './../../assets/images/logo.png';
+// import logo from './../../assets/images/logo.png';
+import logo from './../../assets/images/virtlogo-2.png';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 import commonService from '../../core/services/commonService';
@@ -146,7 +147,7 @@ class FrontEndHeader extends React.Component {
               <Navbar expand="lg">
                 <div className="navbar-brand">
                   {/* <Link to="/"><img src={logo} height="60" alt="Logo" /></Link> */}
-                  <a href= "https://www.virtdrop.com" ><img src={logo} height="60" alt="Logo" /></a>
+                  <a href= "https://www.virtdrop.com" ><img src={logo} height="40" alt="Logo" /></a>
                 </div>
                 <NavbarToggler onClick={this.onToggle} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" />
                 <Collapse isOpen={this.state.toggleActive} navbar className="justify-content-end" id="navbarSupportedContent">

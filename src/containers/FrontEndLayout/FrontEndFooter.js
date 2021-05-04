@@ -123,10 +123,13 @@ class frontEndFooter extends React.Component {
                     <li><Link to="/services">Services</Link></li>
                     <li><Link to="/pricing">Plan & Pricing</Link></li>
                     <li><Link to="/contact-us">Contact Us</Link></li> */}
+                      <li> <a href="https://www.virtdrop.com/" >Home</a></li>
                       <li> <a href="https://www.virtdrop.com/how-it-works/" >How it works?</a></li>
                       <li> <a href="https://www.virtdrop.com/our-services/" >Our Services</a></li>
                       <li> <a href="https://www.virtdrop.com/pricing/" >Pricing</a></li>
-                      <li> <a href="https://www.virtdrop.com/contact-us/" >Contact Us</a></li>
+                      <li><a href="https://www.virtdrop.com/blog/">Blog</a></li>
+                      <li><a href="https://www.virtdrop.com/faq/">FAQ</a></li>
+                      <li><a href="https://www.virtdrop.com/contact-us/">Contact Us</a></li>
                     </ul>
                   </div>
                 </div>
@@ -164,7 +167,6 @@ class frontEndFooter extends React.Component {
               </div>
             </div>
           </div>
-
           <div className="bottom-footer">
             <div className="container">
               <div className="row">

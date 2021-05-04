@@ -267,13 +267,16 @@ button.submit_button {border: none; color: #fff; border-radius: 3px; padding: 8p
 
 
 @media only screen and (max-width : 1199px) {
-
+  .service-media img {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width : 991px) {
 .plan-pricing-info{width:300px;}
 .images-ssl img,
 .images-paypal img{width: 100%;    height: auto; }
+
 
 }
 

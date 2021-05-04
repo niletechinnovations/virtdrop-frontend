@@ -94,14 +94,14 @@ class CommonFrontEndHeader extends React.Component {
               <div className="col-md-9">
                 <ul className="header-contact-list">
                   <li>
-                  <a href="mailto:support@virtdrop.com">            
-                    <i aria-hidden="true" className="far fa-envelope"></i>
-                    <span className="elementor-icon-list-text">support@virtdrop.com</span>
-                  </a>
+                    <a href="mailto:support@virtdrop.com">
+                      <i aria-hidden="true" className="far fa-envelope"></i>
+                      <span className="elementor-icon-list-text">support@virtdrop.com</span>
+                    </a>
                   </li>
                   <li>
-                    <a href="tel:212-518-3183">           
-                      <i aria-hidden="true" className="fa fa-phone"></i> 
+                    <a href="tel:212-518-3183">
+                      <i aria-hidden="true" className="fa fa-phone"></i>
                       <span className="elementor-icon-list-text">212-518-3183</span>
                     </a>
                   </li>
@@ -143,27 +143,27 @@ class CommonFrontEndHeader extends React.Component {
                     </NavItem> */}
 
                     {/* Links to another sites */}
-                    
+
                     <NavItem>
-                      <a href= "https://www.virtdrop.com/">Home</a>
+                      <a href="https://www.virtdrop.com/">Home</a>
                     </NavItem>
                     <NavItem>
-                      <a href= "https://www.virtdrop.com/how-it-works/">How it Works?</a>
+                      <a href="https://www.virtdrop.com/how-it-works/">How it Works?</a>
                     </NavItem>
                     <NavItem>
-                      <a href= "https://www.virtdrop.com/our-services/">Our Services</a>
+                      <a href="https://www.virtdrop.com/our-services/">Our Services</a>
                     </NavItem>
                     <NavItem>
-                      <a href= "https://www.virtdrop.com/pricing/">Pricing</a>
+                      <a href="https://www.virtdrop.com/pricing/">Pricing</a>
                     </NavItem>
                     <NavItem>
-                      <a href= "https://www.virtdrop.com/blog/">Blog</a>
+                      <a href="https://www.virtdrop.com/blog/">Blog</a>
                     </NavItem>
                     <NavItem>
-                      <a href= "https://www.virtdrop.com/faq/">FAQ</a>
+                      <a href="https://www.virtdrop.com/faq/">FAQ</a>
                     </NavItem>
                     <NavItem>
-                      <a href= "https://www.virtdrop.com/contact-us/">Contact Us</a>
+                      <a href="https://www.virtdrop.com/contact-us/">Contact Us</a>
                     </NavItem>
 
                     {/* <NavItem>
