@@ -20,7 +20,7 @@ class AssignHireVaRequest extends Component {
     this.state = {
       clientId: '',
       formField: { organizationId: '', organizationName: '', userName: '', hireVARequestId: '', vaType: '', natureOfBusiness: '', engagementType: '', engagementDescription: '', numberOfVA: '', skillSet: '' },
-      filterItem: { emailOrName: '', filter_Skills: '' },
+      filterItem: { emailOrName: '', filter_Parent_Skills: '', filter_Skills: '' },
       vaApplicationList: [],
       skillList: [],
       assignedVaList: [],
@@ -33,8 +33,9 @@ class AssignHireVaRequest extends Component {
       nodes: [],
       SelectedClientAreaNeed: [],
       vADesignation: [],
-      childList:[],
-      childSelectedItem:[]
+      childList: [],
+      childSelectedItem: [],
+      selectedParentSkill: [],
       // showDropdown: "always"
     }
     this.myRef = React.createRef()
@@ -114,52 +115,47 @@ class AssignHireVaRequest extends Component {
   //   console.log('onAction::>>>>>>>>', action, node)
   // }
 
-  onSelectSubIndstry(selectedList, selectedItem){
-    console.log("LLLLL",selectedList,"---------------",selectedItem)
+  onSelectSubIndstry(selectedList, selectedItem) {
+    console.log("LLLLL", selectedList, "---------------", selectedItem)
     const childList = this.state.childList;
-    this.setState({childSelectedItem:selectedItem})
-    
+    this.setState({ childSelectedItem: selectedItem })
+
 
 
   }
-  onRemoveSubIndustry(selectedList, removedItem){
-    const result =  this.state.childList.filter(el=>el.parentName!==removedItem.parentName)
-    console.log("Rwsult",result)
+  onRemoveSubIndustry(selectedList, removedItem) {
+    // const result =  this.state.childList.filter(el=>el.parentName!==removedItem.parentName)
+    // console.log("Rwsult",result)
+    console.log("child oN Sub REmove", selectedList)
+    this.setState({ childSelectedItem: selectedList })
 
   }
 
   onSelectIndstry(selectedList, selectedItem) {
-    console.log("selectedList************************>", selectedList)
-    
-    // let arr=[]
-      let seletedVaList = ClientAreaNeed.clientArea.filter(item =>selectedList.some(o=>item.parentId===o.parentId)).map(skill =>skill.vADesignation.map(e=>{return({profileName:e.profileName,id:e.id,parentId:skill.parentId,parentName:skill.parentName})}))
-      var merged = [].concat.apply([], seletedVaList);
+    console.log("selectedList****yuyuy********************>", selectedList)
 
-              console.log("merged",merged);   
-              this.setState({childList:merged})
+    // let arr=[]
+    let seletedVaList = ClientAreaNeed.clientArea.filter(item => selectedList.some(o => item.parentId === o.parentId)).map(skill => skill.vADesignation.map(e => { return ({ profileName: e.profileName, id: e.id, parentId: skill.parentId, parentName: skill.parentName }) }))
+    var merged = [].concat.apply([], seletedVaList);
+
+    console.log("merged", merged);
+    this.setState({ childList: merged, selectedParentSkill: selectedList })
   }
 
   onRemoveIndustry(selectedList, removedItem) {
     console.log("remove", selectedList)
-    let childList= this.state.childList;
+    let childList = this.state.childList;
     let childSelectedItem = this.state.childSelectedItem;
-    // this.setState({ SelectedClientAreaNeed: selectedList.filter((item) => (item.parentId !== removedItem.skillName)).map(skill => skill.skillName) })
-    // this.setState({ SelectedClientAreaNeed: selectedList.filter((item) => (item.skillName !== removedItem.skillName)).map(skill => skill) })
-    console.log("Chield",childSelectedItem.parentId,"-------REVOVE-------",removedItem.parentId)
-    if(childSelectedItem.parentId===removedItem.parentId){
-      console.log("childSelectedItem=IFIIFFI=",childSelectedItem)
-      this.setState({childSelectedItem:''})
-    }
-    // ClientAreaNeed.clientArea.filter(e=> childList.some(el=>el.id===e.vADesignation))
-  //   this.setState({ selectedList: selectedList.filter((item) => (item.parentName !== removedItem.parentName)).map(skill => skill) })
-  // }
-        const result =  childList.filter(el=>el.parentName!==removedItem.parentName)
-                         
-        // const removeChildSelected =childSelectedItem.filter(el=>el.parentId!==removedItem.parentId)
-        console.log("Rwsult",result)
-        // childSelectedItem:removeChildSelected,
 
-    this.setState({childList:result, selectedList: selectedList.filter((item) => (item.parentName !== removedItem.parentName)).map(skill => skill) })
+    // console.log("Chield", childSelectedItem.parentId, "-------REVOVE-------", removedItem.parentId)
+    // if (childSelectedItem.parentId === removedItem.parentId) {
+    // console.log("childSelectedItem=IFIIFFI=", childSelectedItem)
+    // this.setState({ childSelectedItem: '' })
+    // }
+    const result = childList.filter(el => { return (el.parentId !== removedItem.parentId) })
+    console.log("Rwsult", result)
+
+    this.setState({ childList: result, selectedParentSkill: selectedList })
   }
 
   // tree View
@@ -242,10 +238,20 @@ class AssignHireVaRequest extends Component {
     if (filterItem.emailOrName !== undefined && filterItem.emailOrName !== "")
       filterQuery += (filterQuery !== "") ? "&emailOrName=" + filterItem.emailOrName : "&emailOrName=" + filterItem.emailOrName;
 
-    if (filterItem.filter_Skills !== undefined && filterItem.filter_Skills !== "") {
-      filterQuery += (filterQuery !== "") ? "&filterSkills=" + filterItem.filter_Skills : "&filterSkills=" + filterItem.filter_Skills;
+    // if (filterItem.filter_Skills !== undefined && filterItem.filter_Skills !== "") {
+    //   filterQuery += (filterQuery !== "") ? "&filterSkills=" + filterItem.filter_Skills : "&filterSkills=" + filterItem.filter_Skills;
+    //   console.log("filterQuery+++",filterQuery)
+    // }
+
+    if (filterItem.filter_Parent_Skills !== undefined && filterItem.filter_Parent_Skills !== "") {
+      filterQuery += (filterQuery !== "") ? "&filterParentSkills=" + filterItem.filter_Parent_Skills : "&filterParentSkills=" + filterItem.filter_Parent_Skills;
+      console.log("filterQuery+++", filterQuery)
     }
 
+    if (filterItem.filter_Skills !== undefined && filterItem.filter_Skills !== "") {
+      filterQuery += (filterQuery !== "") ? "&filterSkills=" + filterItem.filter_Skills : "&filterSkills=" + filterItem.filter_Skills;
+      console.log("filterQuery+++", filterQuery)
+    }
     this.setState({ loading: true }, () => {
       // va-assignment/clients-va
       commonService.getAPIWithAccessToken('va-application/va-member' + filterQuery)
@@ -295,6 +301,10 @@ class AssignHireVaRequest extends Component {
 
   filterVaMemberList() {
     const filterItem = this.state.filterItem;
+    const skillSearch = this.state.childSelectedItem;
+    filterItem.filter_Parent_Skills = this.state.selectedParentSkill.length > 0 ? this.state.selectedParentSkill[0].parentId : [];
+    filterItem.filter_Skills = this.state.childSelectedItem.id;
+    console.log("Test Search************", filterItem.filter_Parent_Skills)
     this.itemList(filterItem);
   }
 
@@ -361,23 +371,26 @@ class AssignHireVaRequest extends Component {
 
   render() {
 
-    const { loading, vaApplicationList, assignedVaList, skillList, checked, expanded, nodes, SelectedClientAreaNeed, vADesignation, showDropdown, childList,childSelectedItem } = this.state;
+    const { loading, vaApplicationList, assignedVaList, skillList, checked, expanded, nodes, SelectedClientAreaNeed, vADesignation, showDropdown, childList, childSelectedItem } = this.state;
     let loaderElement = '';
-    console.log("childSelectedItem****RENSD*********", childSelectedItem)
-    // console.log("Noderrrrrrrr",nodes)
-    // console.log("NODEs*************", nodes.map(item => { return ({ parentName: item.label, parentId: item.value, vaDetails: item.children.map(el => { return ({ profileName: el.label, id: el.value }) }) }) }))
+    // console.log("childSelectedItem****RENSD*********", childSelectedItem)
+
     if (loading)
       loaderElement = <Loader />
 
     let rowsItem = [];
+
     for (const [i, userData] of vaApplicationList.entries()) {
-      // console.log("userData.skillSet",userData)
+      // console.log("userData.skillSet",userData.ParentSkillSet)
+
       let userInfo = {
         SNo: i,
         authId: userData.authId,
         userName: userData.firstName + ' ' + userData.lastName,
         email: userData.email,
-        skillSet: userData.skillSet1 + ',' + userData.skillSet2 + ',' + userData.skillSet3,
+        // Area: userData.ParentSkillSet1.map(e=>e.parentName) + ',' + userData.ParentSkillSet2.map(e=>e.parentName)  + ',' + userData.ParentSkillSet3.map(e=>e.parentName),
+        Area: userData.ParentSkillSet.map(e => e.parentName).toString(),
+        skillSet: userData.skillSet1.map(e => e.profileName) + ',' + userData.skillSet2.map(e => e.profileName) + ',' + userData.skillSet3.map(e => e.profileName),
       }
       rowsItem.push(userInfo);
     }
@@ -389,6 +402,7 @@ class AssignHireVaRequest extends Component {
           <td>{user.SNo + 1}</td>
           <td>{user.userName}</td>
           <td>{user.email}</td>
+          <td>{user.Area}</td>
           <td>{user.skillSet}</td>
         </tr>)
     }
@@ -412,11 +426,11 @@ class AssignHireVaRequest extends Component {
                         <Card className="vd-card">
                           <div className="card-header">
                             <Row className="mr-auto">
-                              <Col md="4">
-                              <Label htmlFor="vaNameEmail">Name or Email</Label>
-                                <Input  id="vaNameEmail" placeholder="Filter by name or email..." name="emailOrName" value={this.state.filterItem.emailOrName} onChange={this.changeFilterHandler} />
+                              <Col md="3">
+                                <Label htmlFor="vaNameEmail">Name or Email</Label>
+                                <Input id="vaNameEmail" placeholder="Filter by name or email..." name="emailOrName" value={this.state.filterItem.emailOrName} onChange={this.changeFilterHandler} />
                               </Col>
-                              <Col className="dropdown-scrollbar" md="3">
+                              <Col className="dropdown-scrollbar" md="4">
                                 {/* <Input type = "select" placeholder="Filter by skills" name="filter_Skills" value={this.state.filterItem.filter_Skills} onChange={this.changeFilterHandler}>
                                     <option value="">All</option>
                                         {skillList.map((skillInfo, index) =>
@@ -440,11 +454,17 @@ class AssignHireVaRequest extends Component {
                                 {/* 
                                         <Input type = "select" placeholder="Filter by skills" name="filter_Skills" value={this.state.filterItem.filter_Skills} onChange={this.changeFilterHandler}>
                                        <option value="">All</option> */}
-                                       <Label htmlFor="area">Area</Label>
+                                <Label htmlFor="area">Area</Label>
                                 <Multiselect
                                   options={SelectedClientAreaNeed}
                                   // groupBy="cat"
                                   onChange={this.changeHandler}
+                                  singleSelect
+                                  id="css_custom"
+                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "border-bottom": "1px solid grey", "border-radius": "0px" } }}
+                                               
+
+                                  // .searchBox#css_custom_input::placeholder {{color: red} }
                                   onSelect={this.onSelectIndstry}
                                   onRemove={this.onRemoveIndustry}
                                   // groupBy="parentName"
@@ -452,17 +472,20 @@ class AssignHireVaRequest extends Component {
                                   displayValue="parentName"
                                   showCheckbox={true}
                                 />
-                                 </Col>
+                              </Col>
                               <Col md={4}>
-                              <Label htmlFor="skills">Skills</Label>
+                                <Label htmlFor="skills">Skills</Label>
                                 <Multiselect
                                   options={childList}
                                   // groupBy="cat"
                                   onChange={this.changeHandler}
+                                  singleSelect
                                   onSelect={this.onSelectSubIndstry}
                                   onRemove={this.onRemoveSubIndustry}
                                   groupBy="parentName"
                                   // selectedValues={SelectedClientAreaNeed}
+                                  id="css_custom"
+                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "border-bottom": "1px solid grey", "border-radius": "0px" } }}
                                   displayValue="profileName"
                                   showCheckbox={true}
                                 />
@@ -482,7 +505,7 @@ class AssignHireVaRequest extends Component {
 
                               </Col>
                               <Col md={1}>
-                              <Label htmlFor="area">Search</Label>
+                                <Label htmlFor="area">Search</Label>
                                 <Button onClick={this.filterVaMemberList}><i className="fa fa-search"></i></Button>
                               </Col>
                             </Row>
@@ -496,6 +519,7 @@ class AssignHireVaRequest extends Component {
                                     <th>S&nbsp;no.</th>
                                     <th>User</th>
                                     <th>Email</th>
+                                    <th>Area</th>
                                     <th>Skills</th>
                                   </tr>
                                 </thead>
@@ -518,7 +542,6 @@ class AssignHireVaRequest extends Component {
           </Col>
         </Row>
       </div>
-
     )
   }
 }

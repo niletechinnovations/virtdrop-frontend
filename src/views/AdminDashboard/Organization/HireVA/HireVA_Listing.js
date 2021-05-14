@@ -128,7 +128,7 @@ class HireVA_Listing extends Component {
             // commonService.getAPIWithAccessToken('hire/get-hire-va' + filterQuery)
             commonService.getAPIWithAccessToken('hire/get-hire-va1' + filterQuery)
                 .then(res => {
-                    // console.log("VA Hire32", res.data.data)
+                    console.log("VA Hire32", res.data.data)
                     if (undefined === res.data.data || !res.data.status) {
                         this.setState({ loading: false });
                         toast.error(res.data.message);
@@ -678,9 +678,9 @@ class HireVA_Listing extends Component {
                     {loaderElement}
                     <Col lg={12}>
                         <Card>
-                            {/* <CardHeader className="mainHeading">
+                            <CardHeader className="mainHeading">
                                 <strong> Hire VA List</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i>Add Hire</Button>
-                            </CardHeader> */}
+                            </CardHeader>
                         </Card>
                     </Col>
                 </Row>
@@ -1049,7 +1049,7 @@ class HireVA_Listing extends Component {
                                     {/* <span className="block-example border border-dark"> */}
 
                                     <FormGroup tag="fieldset">
-                                        <legend style={{"border-bottom":"2px solid grey", "margin": "1em", "margin-bottom": "-1.5rem", "padding": "1em 0.8em","font-size":"15px"}}> Client Info</legend>
+                                        <legend style={{"borderBottom":"2px solid grey", "margin": "1em", "marginBottom": "-1.5rem", "padding": "1em 0.8em","fontSize":"15px"}}> Client Info</legend>
                                        {/* Text within the box <br />
                                        Etc */}
                                        </FormGroup>

@@ -21,8 +21,8 @@ class HireVaPage extends Component {
             IndustryList: [],
             clientArea: [],
             timer: {
-                start: "00:00",
-                end: "23:59"
+                start: "10:00",
+                end: "18:00"
             },
             redirect: false,
             tabIndex: 0,
@@ -1254,8 +1254,8 @@ class HireVaPage extends Component {
                                                                             <TimeRangeSlider
                                                                                 disabled={false}
                                                                                 format={24}
-                                                                                maxValue={"23:59"}
-                                                                                minValue={"00:00"}
+                                                                                maxValue={"18:00"}
+                                                                                minValue={"10:00"}
                                                                                 name={"time_range"}
                                                                                 onChangeStart={this.changeStartHandler}
                                                                                 onChangeComplete={this.changeCompleteHandler}

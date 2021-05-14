@@ -122,9 +122,10 @@ export class HireVA_Data extends Component {
                                 {/* , this.chahgename(this.state.edit) */}
                                 <button className="btn-delete" disabled={this.state.buttonProcessing} onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteHireItem(i) }; }} ><i className="fa fa-trash"></i></button>
                                
-                                {/* <Link className="btn btn-sm btn-primary" to={{pathname:`/admin/assign-hire-va/${rowsItem[i]._id}`,
+                                <Link className="btn btn-sm btn-primary" to={{pathname:`/admin/assign-hire-va/${rowsItem[i]._id}`,
                                    state: rowsItem[i].authId     
-                                }}><i className="fa fa-user"></i></Link> */}
+                                }}><i className="fa fa-user"></i></Link>
+
                                 {/* <i className="fa fa-user"></i> */}
                                 </div>
                         );
