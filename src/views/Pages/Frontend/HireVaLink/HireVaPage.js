@@ -129,23 +129,43 @@ class HireVaPage extends Component {
 
             });
 
+// console.log("selectedAreaNeed444-------->",selectedAreaNeed)
+            // const arrayHashmap = selectedAreaNeed.reduce((obj, item) => {
+            //     obj[item.parentId] ? obj[item.parentId].vADesignation.push(...item.vADesignation) : (obj[item.parentId] = { ...item });
+            //     return obj;
+            // }, {});
 
-            const arrayHashmap = selectedAreaNeed.reduce((obj, item) => {
-                obj[item.parentId] ? obj[item.parentId].vADesignation.push(...item.vADesignation) : (obj[item.parentId] = { ...item });
-                return obj;
-            }, {});
-            const mergedArray = Object.values(arrayHashmap);
+            const arrayHashmap = selectedAreaNeed.map(e=>e.vADesignation.map(elem=>{return({parentName:e.parentName,parentId:e.parentId, profileName:elem.profileName,id:elem.id})}))
 
+            // let arrayHashmap = selectedAreaNeed.reduce((obj, item) => {obj.concat(item.vADesignation.map((e,index)=>{return({parentName:item.parentName, parentId:item.parentId ,profileName:e.profileName,id:e.id})})),[]}); 
+
+            // console.log("mergedArray BEFORE--",[].concat.apply([], arrayHashmap))
+            // const mergedArray = Object.values(arrayHashmap);
+            const mergedArray = [].concat.apply([], arrayHashmap);
+            console.log("mergedArray",mergedArray)
+        //    return;
             const formData = {
                 howManyVas: this.state.needMore >= parseInt(this.state.selectedVaNumberByImage) ? this.state.needMore : parseInt(this.state.selectedVaNumberByImage),
                 WhichIndustryYouBelong: selectedIndustry,
                 others: this.state.others,
                 AreaAndSkillFreelancer: mergedArray,
                 giveSpecification: selectedTabValue[5],
-                completeWishTime: { completeWishTime: this.state.completeWishTime, StartAndEndTime: this.state.timer },
+                // completeWishTime: { completeWishTime: this.state.completeWishTime, StartAndEndTime: this.state.timer },
+                completeWishTime:this.state.completeWishTime,
+                StartTime: this.state.timer.start,
+                EndTime:this.state.timer.end,
+
+
                 ChooseYourPlan: selectedTabValue[6],
                 howQuicklyNeed: this.state.selectedTabValue[7][0],
-                somthingAboutYou: somthingAboutYou,
+                // somthingAboutYou: somthingAboutYou,
+
+                firstName:somthingAboutYou.firstPersonName,
+                lastName:somthingAboutYou.lastPersonName,
+                companyName:somthingAboutYou.companyName,
+                companyAddress:somthingAboutYou.companyAddress,
+                email:somthingAboutYou.email,
+                phoneNumber:somthingAboutYou.phoneNumber,
             };
             // console.log("formData-------------->Front",formData)
             // return;
@@ -307,7 +327,7 @@ class HireVaPage extends Component {
         }
 
         if (endMin < startMin) {
-            completeWishTime = (endHrs - startHrs) + ":" + (startMin - endMin)
+            completeWishTime = (endHrs - startHrs-1) + ":" + ( 60 - startMin)
 
         }
         if (endMin == startMin) {

@@ -30,7 +30,7 @@ export default class ClienrtVAMeetingData extends Component {
   render() {
     let rowsItem = [];
     for (const [i, meeting] of this.props.data.entries()) {
-      // console.log("meeting",meeting)
+      console.log("meeting",meeting)
 
       let resInfo = {
         clinetAuthId: meeting.clientId,

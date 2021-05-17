@@ -16,6 +16,9 @@ class VaProfilePage extends React.Component {
     this.state = {
       vaUniqueDetails:'',
       // hireVaId:'',
+      skillset_1:'',
+      skillset_2:'',
+      skillset_3:'',
       formField: { firstName:'', lastName:'', email:'', phoneNumber:'', interestedOn:'Business looking to hire', message:'', kickoff_date:'',hireVaId:'', vaAuthId:'' },
       loading: false,
       // kickoffDate:'',
@@ -56,6 +59,11 @@ class VaProfilePage extends React.Component {
         return;
       }
       this.setState({loading:false, vaUniqueDetails: res.data.data.requestList[0]});
+      const skillSet_1= this.state.vaUniqueDetails.skillSet1.map(e=>e.profileName).toString()
+      const skillSet_2= this.state.vaUniqueDetails.skillSet2.map(e=>e.profileName).toString()
+      const skillSet_3= this.state.vaUniqueDetails.skillSet3.map(e=>e.profileName).toString()
+      // console.log("skillset_1",skillSet_1, skillSet_2, skillSet_3)
+      this.setState({skillSet_1:skillSet_1, skillSet_2:skillSet_2, skillSet_3:skillSet_3});
     } )
     .catch( err => {         
       if(err.response !== undefined && err.response.status === 401) {
@@ -208,8 +216,8 @@ class VaProfilePage extends React.Component {
 
 
   render() {
-    const { loading, formField, errors, vaUniqueDetails,} = this.state;
-    // console.log("va unique details", formField.hireVaId)
+    const { loading, formField, errors, vaUniqueDetails, skillSet_1, skillSet_2, skillSet_3} = this.state;
+    console.log("va unique details", skillSet_1, skillSet_2, skillSet_3)
     let loaderElement = '';
     if(loading)
       loaderElement = <Loader />
@@ -296,7 +304,7 @@ class VaProfilePage extends React.Component {
 
                       <li>
                           <label>Skills:</label>
-                          <p>{vaUniqueDetails.skillSet1}, {vaUniqueDetails.skillSet2},  {vaUniqueDetails.skillSet3}</p>
+                          <p>{skillSet_1}, {skillSet_2},  {skillSet_3}</p>
                       </li>
 
                       

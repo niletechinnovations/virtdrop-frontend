@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { Multiselect } from 'multiselect-react-dropdown';
 import DatePicker from "react-datepicker";
 import ClientAreaNeed from './clientNeedAreaList.json';
+import WhichIndustryYouBelong from './industryBelongList.json';
 // import './HireVA_Listing.css';
 
 
@@ -24,16 +25,43 @@ class HireVA_Listing extends Component {
             modal1: false,
             selectedValues: [],
             selectedIndustry: [],
+            selectedIndustry1: [],
+            industryList1:[],
             changeName: '',
             meetingLink: '',
             // selectedValues1:[],
             rowIndex: -1,
+            WhichDays:[{"day":"Monday"}, {"day":"Tuesday"}, {"day":"Wednesday"}, {"day":"Thursday"}, {"day":"Friday"}, {"day":"Saturday"}, {"day":"Sunday"}],
+            SelectDays:[],
 
-            formDataShowField:{howManyVas:'', whichIndustry:'', requiredArea:'', },
+            formDataShowField:{howManyVas:'', whichIndustry:'', requiredArea:'',
+             },
             formField: {
-                // loading: true,
+             plan:'',
+             StartTime:10,
+             EndTime:0,
+             minute:0,
+            howManyVas:'',
+            whichIndustry :'',
+            // othersIndustry:'',
+             whichDaysOfWeek:'',
+            requiredArea:'',
+            freelancerSkills:'',
+            hoursADay:'',
+            quicklyNeed:'',
+            choosePlan:'',
+            firstName:'',
+            lastName:'',
+            companyName:'',
+            companyAddress:'',
+            emailAddress:'',
+            phoneNumber:'',
+            skillSet1:'',
+                
+                 // loading: true,
                 // hireVaListData: [],
                 clientName: '',
+                // clientLastName: '',
                 authId: '',
                 modal: false,
                 industry: '',
@@ -57,30 +85,14 @@ class HireVA_Listing extends Component {
                 // mid_Level:''
                 requestInfo: '',
                 industyFrom: '',
+                SelectedClientAreaNeed:[],
+                childList:[],
             },
 
             formErrors: { authId: '', industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', skills: [], which_plan: '', quickly_Need: '', requiredTime: '', organizationName: '', during_Those_Days: '', requestInfo: '' },
 
             filterItem: { filter_Skills: '', filter_client: '', filter_choose: '', filterFrom: '', filterTo: '' },
-            // IndustryList: [
-            // { industryName: "Advertising", cat: "Group 1" },
-            // { industryName: "AccountingFinance", cat: "Group 1" },
-            // { industryName: "Apparel", cat: "Group 1" },
-            // { industryName: "ConstructionArchitectureEngineering", cat: "Group 2" },
-            // { industryName: "Design", cat: "Group 2" },
-            // { industryName: "Entertainment", cat: "Group 2" },
-            // { industryName: "Education", cat: "Group 2" },
-            // { industryName: "HealthcareMedical", cat: "Group 1" },
-            // { industryName: "HospitalityCatering", cat: "Group 1" },
-            // { industryName: "LogisticsAndTransport", cat: "Group 1" },
-            // { industryName: "Management", cat: "Group 2" },
-            // { industryName: "Retail", cat: "Group 2" },
-            // { industryName: "RealEstate", cat: "Group 2" },
-            // { industryName: "Telecommunication", cat: "Group 2" },
-            // { industryName: "TravelAndLeisureAndTourism", cat: "Group 1" },
-            // { industryName: "Others", cat: "Group 1" },
-            // ]
-
+            
         }
 
         this.hireVaList = this.hireVaList.bind(this);
@@ -96,6 +108,16 @@ class HireVA_Listing extends Component {
         this.onSelectIndstry = this.onSelectIndstry.bind(this);
         this.onRemoveIndustry = this.onRemoveIndustry.bind(this);
         this.handleShowItem= this.handleShowItem.bind(this);
+
+        // Area and Skills
+        this.onSelectArea = this.onSelectArea.bind(this);
+        this.onRemoveArea = this.onRemoveArea.bind(this);
+        this.onSelectSubSkill = this.onSelectSubSkill.bind(this);
+        this.onRemoveSubSkill = this.onRemoveSubSkill.bind(this);
+
+        // handle Which Days
+        this.onSelectWhichDays =  this.onSelectWhichDays.bind(this);
+       this.onRemoveWhichDays  = this.onRemoveWhichDays.bind(this); 
     }
 
     itemList(filterItem = {}) {
@@ -128,7 +150,7 @@ class HireVA_Listing extends Component {
             // commonService.getAPIWithAccessToken('hire/get-hire-va' + filterQuery)
             commonService.getAPIWithAccessToken('hire/get-hire-va1' + filterQuery)
                 .then(res => {
-                    console.log("VA Hire32", res.data.data)
+                    // console.log("VA Hire32", res.data.data)
                     if (undefined === res.data.data || !res.data.status) {
                         this.setState({ loading: false });
                         toast.error(res.data.message);
@@ -142,7 +164,8 @@ class HireVA_Listing extends Component {
                     // console.log("industryHava", industryHava)
 
 
-                    this.setState({ loading: false, hireVaListData: res.data.data.requestList, selectedValues: result, selectedIndustry: industryHava });
+                    // this.setState({ loading: false, hireVaListData: res.data.data.requestList, selectedValues: result, selectedIndustry: industryHava });
+                    this.setState({ loading: false, hireVaListData: res.data.data.requestList, selectedValues: result });
                 })
                 .catch(err => {
                     if (err.response !== undefined && err.response.status === 401) {
@@ -264,10 +287,46 @@ class HireVA_Listing extends Component {
         // this.hireVaList();
         // this.addItem();
         this.itemList();
+
+        this.setState({SelectedClientAreaNeed:ClientAreaNeed.clientArea.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
+
+        // console.log("WhichIndustryYouBelong",WhichIndustryYouBelong.industries)
+        this.setState({industryList1:WhichIndustryYouBelong.industries})
     }
 
+    // ***********************************Area And Skills**************************************
+    onSelectSubSkill(selectedList, selectedItem){
+        console.log("LLLLL",selectedList,"---------------",selectedItem)
+        const childList = this.state.childList;
+        this.setState({childSelectedItem:selectedList})
+      }
+    
+      onRemoveSubSkill(selectedList, removedItem){
+        console.log("child oN Sub REmove",selectedList)
+        this.setState({childSelectedItem:selectedList})
+    
+    
+      }
+    
+      onSelectArea(selectedList, selectedItem) {
+        console.log("selectedList************************>", selectedList)
+          let seletedVaList = ClientAreaNeed.clientArea.filter(item =>selectedList.some(o=>item.parentId===o.parentId)).map(skill =>skill.vADesignation.map(e=>{return({profileName:e.profileName,id:e.id,parentId:skill.parentId,parentName:skill.parentName})}))
+          var merged = [].concat.apply([], seletedVaList);
+                  // console.log("merged",merged);   
+                  this.setState({childList:merged})             
+      }
+    
+      onRemoveArea(selectedList, removedItem) {
+        console.log("remove---------", selectedList)
+        let childList= this.state.childList;
+            const result =  childList.filter(el=>{return(el.parentId!==removedItem.parentId)})
+            console.log("Rwsult Chnn--------",result)
+          this.setState({childList:result})
+      }
+    // *************************************End Area And Skills************************************
+
     onSelect(selectedList, selectedItem) {
-        // console.log("selectedList************************>",selectedList)
+        console.log("selectedList************************>",selectedList)
         this.setState({ selectedValues: selectedList.map(item => item) })
 
     }
@@ -278,15 +337,15 @@ class HireVA_Listing extends Component {
     }
 
     onSelectIndstry(selectedList, selectedItem) {
-        // console.log("SELECTED=============************************>",selectedList)
-        this.setState({ selectedIndustry: selectedList.map(item => item) })
+        console.log("SELECTED=============************************>",selectedList)
+        this.setState({ selectedIndustry1: selectedList.map(item => item) })
 
     }
 
     onRemoveIndustry(selectedList, removedItem) {
-        // console.log("REMOVE----------------------------",selectedList)
+        console.log("REMOVE--------------66--------------",selectedList)
         // this.setState({ selectedValues: selectedList.filter((item) => (item.skillName !== removedItem.skillName)).map(skill => skill.skillName) })
-        this.setState({ selectedIndustry: selectedList.filter((item) => (item.name !== removedItem.name)).map(industry => industry) })
+        this.setState({ selectedIndustry1: selectedList.filter((item) => (item.name !== removedItem.name)).map(industry => industry) })
     }
 
     // onKeyDown(keyEvent) {
@@ -302,6 +361,21 @@ class HireVA_Listing extends Component {
     //     // }
     //   }
 
+    // which Days Select 
+    onSelectWhichDays(selectedList, selectedItem){
+        console.log("Select--------------which Days-------------",selectedList)
+        this.setState({ SelectDays: selectedList})
+
+    }
+    //  which Days Remove
+    onRemoveWhichDays(selectedList, removedItem){
+        console.log("Remove--------------which Days-------------",selectedList,"removedItem",removedItem)
+        this.setState({ SelectDays: selectedList.filter((item) => (item.day !== removedItem.day))})
+        // console.log("After remvoe",selectedList.filter((item) => (item.day !== removedItem.day)))
+
+
+    }
+
     /* Submit Form Handler*/
     submitHandler(event) {
         event.preventDefault();
@@ -311,15 +385,23 @@ class HireVA_Listing extends Component {
         let getMappedSkilled = [];
         getMappedSkilled = this.state.selectedValues.map(skill => skill.skillName);
 
-        let getMappedIndustry = this.state.selectedIndustry.map(element => element._id);
-
+        // let getMappedIndustry = this.state.selectedIndustry.map(element => element._id);
+        console.log("Selected Check---------->",this.state.childSelectedItem)
+        console.log("selectedIndustry1",this.state.selectedIndustry1)
+        console.log("TIME", this.state.formField.plan)
+        let time  = this.state.formField.EndTime? this.state.formField.EndTime.split(':'):[];
         event.target.className += "was-validated";
 
         // valid.industry === "" ||
-        if (valid.getMappedSkilled === '' || valid.jobDescreption === "" || valid.Days_A_Week === '' || valid.which_Days_Week === '' || valid.which_plan === '' || valid.quickly_Need === '' || valid.requiredTime === '' || valid.Hours_A_Day === '' || valid.during_Those_Days === '' || valid.requestInfo === '') {
-            console.log("Please file the form")
-            return window.confirm("Please file the form")
-        }
+        // if (valid.getMappedSkilled === '' || valid.jobDescreption === "" || valid.Days_A_Week === '' || valid.which_Days_Week === '' || valid.which_plan === '' || valid.quickly_Need === '' || valid.requiredTime === '' || valid.Hours_A_Day === '' || valid.during_Those_Days === '' || valid.requestInfo === '') {
+        //     console.log("Please file the form")
+        //     return window.confirm("Please file the form")
+        // }
+                //  companyName:formInputField.companyName,
+        // if (valid.howManyVas === '' || valid.industry === "" || valid.Days_A_Week === '' || valid.skillsFreelancer === '' || valid.which_plan === '' || valid.which_Days_Week === '' || valid.EndTime === '' || valid.Hours_A_Day === '' || valid.StartTime === '' || valid.firstName === '' || valid.lastName === '' || valid.companyName === '' || valid.emailAddress === '' || valid.quicklyNeed === '' ) {
+        //     console.log("Please file the form")
+        //     return window.confirm("Please file the form")
+        // }
         // else{
 
 
@@ -328,30 +410,47 @@ class HireVA_Listing extends Component {
             //    console.log("8**********************",formInputField)
             const formData = {
                 // authId: formInputField.authId,
-                clientName: formInputField.clientName,
-                organizationName: formInputField.organizationName,
-                industry: formInputField.industry,
-                which_plan: formInputField.which_plan,
-                which_Days_Week: formInputField.which_Days_Week,
-                Hours_A_Day: formInputField.Hours_A_Day,
+                howManyVas:formInputField.howManyVas,
+                // clientName: formInputField.clientName,
+                // organizationName: formInputField.organizationName,
+                // industry: formInputField.industry,
+                WhichIndustryYouBelong:this.state.selectedIndustry1,
+                AreaAndSkillFreelancer: this.state.childSelectedItem,
+                ChooseYourPlan: formInputField.plan,
+                // which_Days_Week: formInputField.which_Days_Week,
+                giveSpecification:this.state.SelectDays.map(e=>e.day),
+                completeWishTime: time[0] - 10 +":"+time[1],
+                EndTime:formInputField.EndTime,
+                StartTime:"10:00",
+
+                firstName: formInputField.firstName,
+                 lastName :formInputField.lastName,
+                 companyName:formInputField.companyName,
+                 companyAddress:formInputField.companyAddress,
+                 email:formInputField.emailAddress,
+                 phoneNumber:formInputField.phoneNumber,
+                 howQuicklyNeed:formInputField.quicklyNeed,
                 // skillsFreelancer: formInputField.skillsFreelancer,
                 // skillsFreelancer: this.state.selectedValues.map(skill=>skill.skillName),
-                skillsFreelancer: getMappedSkilled,
-                industryType: getMappedIndustry,
-                quickly_Need: formInputField.quickly_Need,
-                during_Those_Days: formInputField.during_Those_Days,
-                Days_A_Week: formInputField.Days_A_Week,
-                jobDescreption: formInputField.jobDescreption,
-                status: formInputField.status,
+                // skillsFreelancer: getMappedSkilled,
+              
+                // industryType: getMappedIndustry,
+                // quickly_Need: formInputField.quickly_Need,
+                // during_Those_Days: formInputField.during_Those_Days,
+                // Days_A_Week: formInputField.Days_A_Week,
+                // Days_A_Week:SelectDays.map(e=>e.day),
+                // jobDescreption: formInputField.jobDescreption,
+                // status: formInputField.status,
                 // entery_Level:formInputField.entery_Level,
                 // mid_Level:formInputField.mid_Level,
                 // expert_Level:formInputField.expert_Level
             };
-            // console.log("for------------>",formData)
+            console.log("for------------>",formData)
+            // return
             const rowIndex = this.state.rowIndex;
             if (rowIndex > -1) {
                 formData['_id'] = formInputField._id;
-
+                
                 commonService.putAPIWithAccessToken('hire/', formData)
                     .then(res => {
                         if (undefined === res.data.data || !res.data.status) {
@@ -373,7 +472,8 @@ class HireVA_Listing extends Component {
                         }
                     })
             } else {
-                commonService.postAPIWithAccessToken('hire/hire-va/', formData)
+                // commonService.postAPIWithAccessToken('hire/hire-va/', formData)
+                commonService.postAPIWithAccessToken('hire/hire-va1/', formData)
                     .then(res => {
                         if (undefined === res.data.data || !res.data.status) {
                             this.setState({ formProccessing: false });
@@ -497,7 +597,8 @@ class HireVA_Listing extends Component {
             othersIndustry:itemInfo.othersIndustry,
             whichDaysOfWeek:itemInfo.Days_A_Week,
             requiredArea:itemInfo.skillsFreelancer.map(e=>e.parentName),
-            freelancerSkills:itemInfo.skillsFreelancer.map(e=>e.vADesignation.map(el=>el.profileName)),
+            // freelancerSkills:itemInfo.skillsFreelancer.map(e=>e.vADesignation.map(el=>el.profileName)),
+            freelancerSkills:itemInfo.skillsFreelancer.map(e=>e.profileName),
             hoursADay:itemInfo.Hours_A_Day + " hrs",
             quicklyNeed:itemInfo.quickly_Need == 2 ? "Under No Rush , wait best candidate":"Within 48 Hours",
             choosePlan:itemInfo.which_plan,
@@ -519,6 +620,7 @@ class HireVA_Listing extends Component {
         const selectedIndustryType = []
 
         const getSkllls = itemInfo.skillsFreelancer
+        // console.log("Gggggggggggggg",getSkllls)
         this.state.skillList.forEach(el1 => getSkllls.forEach(el2 => {
             // console.log("E1>>>>>>>>>>>",typeof((el1.skillName)),"E2========",typeof(el2))
 
@@ -667,8 +769,9 @@ class HireVA_Listing extends Component {
 
     render() {
 
-        const { loading, hireVaListData, modal, modal1, formProccessing, skillList, selectedValues, formField, filterItem, IndustryList, selectedIndustry, formDataShowField } = this.state;
+        const { loading, hireVaListData, modal, modal1, formProccessing, skillList, selectedValues, formField, filterItem, IndustryList, selectedIndustry, formDataShowField, childList, SelectedClientAreaNeed, industryList1, selectedIndustry1,WhichDays, SelectDays, minute } = this.state;
         let loaderElement = '';
+        // console.log("FORM +R", formField.StartTime)
         if (loading)
             loaderElement = <Loader />
         const processingBtnText = <>Submit <i className="fa fa-spinner"></i></>;
@@ -715,9 +818,9 @@ class HireVA_Listing extends Component {
                                         // value={filterItem.filter_choose} 
                                         onChange={this.changeFilterHandler}>
                                         <option value="">All</option>
-                                        <option value="Standard">Standard</option>
-                                        <option value="Premium">Premium</option>
-                                        <option value="Gold">Gold</option>
+                                        <option id="Standard" value="Standard">Standard</option>
+                                        <option id="Premium" value="Premium">Premium</option>
+                                        <option id="Gold"value="Gold">Gold</option>
                                      {/* {organizatiosnList.map((organizationInfo, index) =>
                                 <SetOrganizationDropDownItem key={index} organizationInfo={organizationInfo} />
                               )}  */}
@@ -799,6 +902,13 @@ class HireVA_Listing extends Component {
                                         </Input>
                                     </FormGroup>
                                 </Col> */}
+                                 <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="howManyVas">How many VA do you need?</Label>
+                                        <Input type="text" placeholder="How many VA do you need?*" id="howManyVas" name="howManyVas" value={this.state.formField.howManyVas} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
 
                                 <Col md={"6"}>
 
@@ -809,14 +919,14 @@ class HireVA_Listing extends Component {
                                     </FormGroup> */}
 
                                     <FormGroup>
-                                        <Label htmlFor="industry">Industry</Label>
+                                        <Label htmlFor="industry">Which industry you belong?</Label>
                                         <Multiselect
-                                            options={IndustryList}
+                                            options={industryList1}
                                             // groupBy="cat"
                                             onChange={this.changeHandler}
                                             onSelect={this.onSelectIndstry}
                                             onRemove={this.onRemoveIndustry}
-                                            selectedValues={selectedIndustry}
+                                            // selectedValues={selectedIndustry1}
                                             displayValue="name"
                                             showCheckbox={true}
                                         />
@@ -826,45 +936,51 @@ class HireVA_Listing extends Component {
                                         <option value="AccountingFinance">AccountingFinance</option>
                                         <option value="Apparel">Apparel</option>
                                         <option value="ConstructionArchitectureEngineering">ConstructionArchitectureEngineering</option>
-                                        <option value="Design">Design</option>
-                                        <option value="Entertainment">Entertainment</option>
-                                        <option value="Education">Education</option>
-                                        <option value="HealthcareMedical">HealthcareMedical</option>
-                                        <option value="HospitalityCatering">HospitalityCatering</option>
-                                        <option value="LogisticsAndTransport">LogisticsAndTransport</option>
-                                        <option value="Management">Management</option>
-                                        <option value="Retail">Retail</option>
-                                        <option value="RealEstate">RealEstate</option>
-                                        <option value="Telecommunication">Telecommunication</option>
-                                        <option value="TravelAndLeisureAndTourism">TravelAndLeisureAndTourism</option>
-                                        <option value="Others">Others</option> */}
-                                        {/* <option value="">All</option>
-                                        <option value="1">Advertising</option>
-                                        <option value="2">AccountingFinance</option>
-                                        <option value="3">Apparel</option>
-                                        <option value="4">ConstructionArchitectureEngineering</option>
-                                        <option value="5">Design</option>
-                                        <option value="6">Entertainment</option>
-                                        <option value="7">Education</option>
-                                        <option value="8">HealthcareMedical</option>
-                                        <option value="9">HospitalityCatering</option>
-                                        <option value="10">LogisticsAndTransport</option>
-                                        <option value="11">Management</option>
-                                        <option value="12">Retail</option>
-                                        <option value="13">RealEstate</option>
-                                        <option value="14">Telecommunication</option>
-                                        <option value="15">TravelAndLeisureAndTourism</option>
-                                        <option value="16">Others</option>
+                                       
                                         </Input> */}
 
                                     </FormGroup>
                                 </Col>
+                                {/* Area */}
                                 <Col md={"6"}>
+                                    <FormGroup>
+                                    <Label htmlFor="area">Area </Label>
+                                <Multiselect
+                                  options={SelectedClientAreaNeed}
+                                  ref={this.multiselectRef}
+                                  onChange={this.changeHandler}
+                                  onSelect={this.onSelectArea}
+                                  onRemove={this.onRemoveArea}
+                                  // groupBy="parentName"
+                                  selectedValues={formField.AreaSkillSet1}
+                                  displayValue="parentName"
+                                  showCheckbox={true}
+                                />
+                                    </FormGroup>
+                                </Col>
+                                {/* Skills */}
+                                <Col md={6}>
+                                <FormGroup>
+                                <Label htmlFor="skillSet1">Skills </Label>
+                                <Multiselect
+                                  options={childList}
+                                  // groupBy="cat"
+                                  onChange={this.changeHandler}
+                                  onSelect={this.onSelectSubSkill}
+                                  onRemove={this.onRemoveSubSkill}
+                                  groupBy="parentName"
+                                  selectedValues={formField.skillSet1}
+                                  displayValue="profileName"
+                                  showCheckbox={true}
+                                />
+                                 </FormGroup>
+                                 </Col>
+                                {/* <Col md={"6"}>
                                     <FormGroup onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} >
-                                        <Label htmlFor="skills">Skills</Label>
+                                        <Label htmlFor="skills">Skills</Label> */}
                                         {/* <Input type="text" placeholder="Skills *" id="skills" name="skills" value={this.state.formField.skills} onChange={this.changeHandler} required >
                                         </Input> */}
-                                        <Multiselect onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+                                        {/* <Multiselect onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
 
                                             options={skillList}
                                             onChange={this.changeHandler}
@@ -872,34 +988,43 @@ class HireVA_Listing extends Component {
                                             onRemove={this.onRemove}
                                             displayValue="skillName"
                                             selectedValues={selectedValues}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md={"6"}>
+                                        /> */}
+                                    {/* </FormGroup>
+                                </Col> */}
+
+                                {/* <Col md={"6"}>
                                     <FormGroup>
                                         <Label htmlFor="jobDescreption">Job Descreption</Label>
                                         <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Job Description*" id="jobDescreption" name="jobDescreption" value={this.state.formField.jobDescreption} onChange={this.changeHandler} required >
                                         </Input>
                                     </FormGroup>
-                                </Col>
+                                </Col> */}
 
-                                <Col md={"5"}>
+                                {/* <Col md={"6"}> */}
                                     {/* <Row> */}
-                                    <FormGroup tag="fieldset">
-                                        <FormGroup >
+                                    {/* <FormGroup tag="fieldset">
+                                        <FormGroup > */}
                                             {/* <Label>Choose which plan they want for hourly?</Label></FormGroup> */}
-                                            <Label>Plan</Label></FormGroup>
-                                        <Label className="radio-inline" htmlFor="entery_Level" ><Input style={{ padding: "20px", marginRight: "5px" }} type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="entery_Level" name="entery_Level" value="entery_Level" checked={this.state.formField.which_plan === 'entery_Level'}
+                                            {/* <Label>Choose Your Plan</Label></FormGroup> */}
+{/*                                             
+                                            <Input style={{ padding: "20px", marginRight: "5px" }} type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="entery_Level" name="entery_Level" value="entery_Level" checked={this.state.formField.which_plan === 'entery_Level'}
+                                            onChange={this.changeRadioButtonHandler} >
+                                            <option>Standard ($12/mo) </option>
+                                            <option>Premium ($15/mo) </option>
+                                            <option>Gold ($20/mo) </option>
+                                            </Input> */}
+                                        {/* <Label className="radio-inline" htmlFor="entery_Level" ><Input style={{ padding: "20px", marginRight: "5px" }} type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="entery_Level" name="entery_Level" value="entery_Level" checked={this.state.formField.which_plan === 'entery_Level'}
                                             onChange={this.changeRadioButtonHandler} />Entry Level-12$ </Label>{'       '}
+                                            
 
                                         <Label className="radio-inline" htmlFor="mid_Level" style={{ marginRight: "10px", }}  ><input type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="mid_Level" name="mid_Level" value="mid_Level" checked={this.state.formField.which_plan === 'mid_Level'} style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Mid Level-15$</Label>{' '}
 
-                                        <Label className="radio-inline" htmlFor="expert_Level"><Input type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} checked={this.state.formField.which_plan === "expert_Level"} id="expert_Level" name="expert_Level" value="expert_Level" style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Expert Level-20$</Label>
+                                        <Label className="radio-inline" htmlFor="expert_Level"><Input type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} checked={this.state.formField.which_plan === "expert_Level"} id="expert_Level" name="expert_Level" value="expert_Level" style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Expert Level-20$</Label> */}
 
                                         {/* {''} <Input type="radio" value  checked={formField.expert_Level === 'expert_Level'} onChange={this.changeHandler}  value={formField.expert_Level}/> */}
-                                    </FormGroup>
+                                    {/* </FormGroup> */}
                                     {/* </Row> */}
-                                </Col>
+                                {/* </Col> */}
                                 {/* <FormGroup tag="fieldset"> */}
                                 {/* <Col md={"6"}> */}
                                 {/* <FormGroup> */}
@@ -917,28 +1042,125 @@ class HireVA_Listing extends Component {
                                 {/* </FormGroup> */}
                                 {/* </Col> */}
 
-                                <Col md={"6"}>
+                                {/* <Col md={"6"}>
                                     <FormGroup>
                                         <Label htmlFor="quickly_Need">Need</Label>
                                         <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="quickly_Need *" id="quickly_Need" name="quickly_Need" value={this.state.formField.quickly_Need} onChange={this.changeHandler} required >
                                         </Input>
                                     </FormGroup>
-                                </Col>
-                                <Col md={"6"}>
+                                </Col> */}
+                                <Col md={"12"}>
                                     <FormGroup>
-                                        <Label htmlFor="which_Days_Week">Weekdays</Label>
-                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Weekdays *" id="which_Days_Week" name="which_Days_Week" value={this.state.formField.which_Days_Week} onChange={this.changeHandler} required >
-                                        </Input>
+                                        <Label htmlFor="which_Days_Week">Which days of the week?</Label>
+                                        {/* <Label htmlFor="skillSet1">Skills </Label> */}
+                                           <Multiselect
+                                             options={WhichDays}
+                                             // groupBy="cat"
+                                             onChange={this.changeHandler}
+                                             onSelect={this.onSelectWhichDays}
+                                             onRemove={this.onRemoveWhichDays}
+                                            //  groupBy="days"
+                                            //  selectedValues={SelectDays}
+                                             displayValue="day"
+                                             showCheckbox={true}
+                                           />
+                                        {/* <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Weekdays *" id="which_Days_Week" name="which_Days_Week" value={this.state.formField.which_Days_Week} onChange={this.changeHandler} required >
+                                            <option>Monday</option>
+                                            <option>Tuesday </option>
+                                            <option>Wednesday</option>
+                                            <option>Thursday</option>
+                                            <option>Friday</option>
+                                            <option>Saturday</option>
+                                            <option>Sunday</option>
+                                        </Input> */}
                                     </FormGroup>
                                 </Col>
                                 <Col md={"6"}>
+                                <Label htmlFor="StartTime">How many hours a day?
+                                <br/>Start Time</Label>
+                                {/* <Row> */}
                                     <FormGroup>
-                                        <Label htmlFor="during_Those_Days">Required Time</Label>
-                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Required Time *" id="during_Those_Days" name="during_Those_Days" value={this.state.formField.during_Those_Days} onChange={this.changeHandler} required >
+                                        {/* <Label>Start Time</Label> */}
+                                        <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Required Time *" id="StartTime" name="StartTime" value={this.state.formField.StartTime} onChange={this.changeHandler} required >
+                                            <option value={10}>10:00 AM</option>
+                                        </Input>
+                                    </FormGroup>
+                                    {/* </Row> */}
+                                    {/* <Row> */}
+                                    
+                                    {/* </Row> */}
+                                </Col>
+                                <Col>
+                                <FormGroup>
+                                    <Label> <br/>End Time</Label>
+                                        <Input type="time"  min="10:00" max="18:00"  formate="24" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder=" Time- 24 hrs formate( 18:00)" id="EndTime" name="EndTime" value={ formField.EndTime} onChange={this.changeHandler} required >
+                                        {/* <option>Select Hours</option>
+                                            <option value={11}>11 AM</option>
+                                            <option value={12}>12 AM</option>
+                                            <option value={13}>13 PM</option>
+                                            <option value={14}>14 PM</option>
+                                            <option value={15}>15 PM</option>
+                                            <option value={16}>16 PM</option>
+                                            <option value={17}>17 PM</option>
+                                            <option value={18}>18 PM</option> */}
+                                            {/* <option>10:00 hrs</option> */}
+                                        </Input>
+                                    </FormGroup>
+                                    {/* <FormGroup> */}
+                                    {/* <Label> <br/>End Time</Label> */}
+                                        {/* <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Required Time *" id="minute" name="minute" value={formField.minute} onChange={this.changeHandler} required >
+                                        <option>Select Miniute</option>
+                                            <option value={"00"}>:00</option>
+                                            <option value={"05"}>:05</option>
+                                            <option value={"10"}>:10</option>
+                                            <option value={"15"}>:15</option>
+                                            <option value={"20"}>:20</option>
+                                            <option value={"25"}>:25</option>
+                                            <option value={"30"}>:30</option>
+                                            <option value={"35"}>:35</option>
+                                            <option value={"40"}>:40</option>
+                                            <option value={"45"}>:45</option>
+                                            <option value={"50"}>:50</option>
+                                            <option value={"55"}>:55</option>
+                                            
+                                        </Input> */}
+                                    {/* </FormGroup> */}
+                                </Col>
+                                
+                                       <Col md={"6"}>
+                                       <FormGroup>
+                                       <Label htmlFor="plan">Choose Your Plan</Label>
+                                            <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="plan" name="plan" value={formField.plan} onChange={this.changeHandler} required>
+                                            
+                                            <option value="">All </option>
+                                            <option value="Standard">Standard ($12/mo) </option>
+                                            <option value="Premium">Premium ($15/mo) </option>
+                                            <option value="Gold">Gold ($20/mo) </option>
+                                            </Input>
+                                            </FormGroup>
+                                            </Col>
+                                            
+
+                                            {/* <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="quicklyNeed"> How quickly do you need someone? </Label>
+                                        <Input type="text" placeholder="Quickly Need" id="quicklyNeed" name="quicklyNeed" value={this.state.formDataShowField.quicklyNeed} onChange={this.changeHandler} readOnly={true}>
+                                        </Input>
+                                    </FormGroup>
+                                </Col> */}
+
+                                            <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="quicklyNeed">How quickly do you need someone?</Label>
+                                        <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Quickly Need *" id="quicklyNeed" name="quicklyNeed" value={this.state.formField.quicklyNeed} onChange={this.changeHandler} required >
+                                        <option>All</option>
+                                        <option value={1}>Within 48 hours </option>
+                                        <option value={2}>Under No, Rush, Wait for the best candidate </option>
                                         </Input>
                                     </FormGroup>
                                 </Col>
-                                <Col md={"6"}>
+
+                                {/* <Col md={"6"}>
                                     <FormGroup>
                                         <Label htmlFor="Hours_A_Day">Hours A Day</Label>
                                         <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Hours_A_Day *" id="Hours_A_Day" name="Hours_A_Day" value={this.state.formField.Hours_A_Day} onChange={this.changeHandler} required >
@@ -951,8 +1173,65 @@ class HireVA_Listing extends Component {
                                         <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Days_A_Week *" id="Days_A_Week" name="Days_A_Week" value={this.state.formField.Days_A_Week} onChange={this.changeHandler} required >
                                         </Input>
                                     </FormGroup>
-                                </Col>
+                                </Col> */}
+                             <Form noValidate className="" >
+                                    {/* <h5 ></h5> */}
+                                    {/* <span className="block-example border border-dark"> */}
 
+                                    <FormGroup tag="fieldset">
+                                        <legend style={{"borderBottom":"2px solid grey", "margin": "1em", "marginBottom": "-1.5rem", "padding": "1em 0.8em","fontSize":"15px"}}> Client Info</legend>
+                                       {/* Text within the box <br />
+                                       Etc */}
+                                       </FormGroup>
+                                         <ModalBody>
+                                        <Row>
+
+                                            <Col md={"6"}>
+                                                <FormGroup>
+                                                    <Label htmlFor="firstName"> First Name</Label>
+                                                    <Input type="text" placeholder=" First Name" id="firstName" name="firstName" value={this.state.formDataShowField.firstName} onChange={this.changeHandler} required>
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={"6"}>
+                                                <FormGroup>
+                                                    <Label htmlFor="lastName"> Last Name</Label>
+                                                    <Input type="text" placeholder=" Last Name" id="lastName" name="lastName" value={this.state.formField.lastName} onChange={this.changeHandler} required>
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={"6"}>
+                                                <FormGroup>
+                                                    <Label htmlFor="companyName">Company Name</Label>
+                                                    <Input type="text" placeholder="Company Name" id="companyName" name="companyName" value={this.state.formField.companyName} onChange={this.changeHandler} required>
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={"6"}>
+                                                <FormGroup>
+                                                    <Label htmlFor="companyAddress"> Company Address</Label>
+                                                    <Input type="text" placeholder="Company Address" id="companyAddress" name="companyAddress" value={this.state.formField.companyAddress} onChange={this.changeHandler} required>
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={"6"}>
+                                                <FormGroup>
+                                                    <Label htmlFor="emailAddress">Email</Label>
+                                                    <Input type="email" placeholder="Email" id="emailAddress" name="emailAddress" value={this.state.formField.emailAddress} onChange={this.changeHandler} required>
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={"6"}>
+                                                <FormGroup>
+                                                    <Label htmlFor="phoneNumber"> Phone Number</Label>
+                                                    <Input type="text" placeholder="Phone Number" id="phoneNumber" name="phoneNumber" value={this.state.formField.phoneNumber} onChange={this.changeHandler} >
+                                                    </Input>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    </ModalBody>
+                                    {/* </span> */}
+                                </Form>
                             </Row>
                         </ModalBody>
                         <ModalFooter>
@@ -1263,7 +1542,7 @@ class HireVA_Listing extends Component {
 
 function SetSkillDropDownItem(props) {
     const skillInfo = props.skillInfo;
-    // console.log("skillInfo",skillInfo)
+    // console.log("skillInfoooooooo",skillInfo)
     return (<option value={skillInfo.parentId} >{skillInfo.parentName}</option>)
 }
 

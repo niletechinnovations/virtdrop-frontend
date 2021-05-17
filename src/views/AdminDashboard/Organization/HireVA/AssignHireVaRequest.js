@@ -132,7 +132,7 @@ class AssignHireVaRequest extends Component {
   }
 
   onSelectIndstry(selectedList, selectedItem) {
-    console.log("selectedList****yuyuy********************>", selectedList)
+    // console.log("selectedList****yuyuy********************>", selectedList)
 
     // let arr=[]
     let seletedVaList = ClientAreaNeed.clientArea.filter(item => selectedList.some(o => item.parentId === o.parentId)).map(skill => skill.vADesignation.map(e => { return ({ profileName: e.profileName, id: e.id, parentId: skill.parentId, parentName: skill.parentName }) }))
@@ -461,7 +461,7 @@ class AssignHireVaRequest extends Component {
                                   onChange={this.changeHandler}
                                   singleSelect
                                   id="css_custom"
-                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "border-bottom": "1px solid grey", "border-radius": "0px" } }}
+                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "borderBottom": "1px solid grey", "borderRadius": "0px" } }}
                                                
 
                                   // .searchBox#css_custom_input::placeholder {{color: red} }
@@ -485,7 +485,7 @@ class AssignHireVaRequest extends Component {
                                   groupBy="parentName"
                                   // selectedValues={SelectedClientAreaNeed}
                                   id="css_custom"
-                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "border-bottom": "1px solid grey", "border-radius": "0px" } }}
+                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "borderBottom": "1px solid grey", "borderRadius": "0px" } }}
                                   displayValue="profileName"
                                   showCheckbox={true}
                                 />

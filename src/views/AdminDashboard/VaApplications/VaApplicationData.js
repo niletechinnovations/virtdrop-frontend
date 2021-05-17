@@ -24,7 +24,7 @@ class VaApplicationData extends Component {
     let count=0;
     let rowsItem = [];
     for(const [i, item] of this.props.data.entries()){
-      console.log((item.skillSet1))
+      console.log("Skilll",item.skillSet1)
       let itemInfo = {   
         vaApplicationId: item.vaApplicationId,
         userName: item.firstName+' '+item.lastName,      
@@ -33,6 +33,11 @@ class VaApplicationData extends Component {
         skillSet1: item.skillSet1.map(e=>e.profileName) + (item.rateSkill1 !=='' ? " ("+item.rateSkill1+")" :''  ) || " ",
         skillSet2: item.skillSet2.map(e=>e.profileName) + (item.rateSkill2 !=='' ? " ("+item.rateSkill2+")" :''  ) || " ",
         skillSet3: item.skillSet3.map(e=>e.profileName) + (item.rateSkill3 !=='' ? " ("+item.rateSkill3+")" :''  ) || " ",
+
+        // skillSet1: Array.isArray(item.skillSet1)===true ? item.skillSet1.map(e=>e.profileName):'' + (item.rateSkill1 !=='' ? " ("+item.rateSkill1+")" :''  ) || " ",
+        // skillSet2: Array.isArray(item.skillSet2)===true ? item.skillSet2.map(e=>e.profileName):'' + (item.rateSkill2 !=='' ? " ("+item.rateSkill2+")" :''  ) || " ",
+        // skillSet3: Array.isArray(item.skillSet3)===true ?item.skillSet3.map(e=>e.profileName) :'' + (item.rateSkill3 !=='' ? " ("+item.rateSkill3+")" :''  ) || " ",
+
         createdAt: (new Date(item.createdAt)).toLocaleDateString("en-US"),
         status: ( item.statusText !==''  ? item.statusText : "Pending")
       }      
