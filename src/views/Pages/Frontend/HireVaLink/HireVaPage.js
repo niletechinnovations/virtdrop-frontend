@@ -6,17 +6,20 @@ import 'jquery-easing';
 import commonService from '../../../../core/services/commonService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import clientAreaNeed from './clientNeedAreaList1.json';
+// import clientAreaNeed from './clientNeedAreaList1.json';
 import industryBelongList from './industryBelongList1.json';
 import TimeRangeSlider from 'react-time-range-slider';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import './progressBar.css'
 
 
 class HireVaPage extends Component {
     constructor(params) {
         super(params)
         this.state = {
+            temp:0,
+            progress: 12.5,
             selectedArea: [],
             IndustryList: [],
             clientArea: [],
@@ -42,8 +45,8 @@ class HireVaPage extends Component {
             disabledPageNew: { '1': true, '2': true, '3': true, '4': true, '5': true, '6': true, '7': true },
             disabledPage: true,
             selectedVaNumberByImage: '',
-            selectedTabValue: { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': []},
-            somthingAboutYou: { firstPersonName: '', lastPersonName:'', companyName: '', companyAddress: '', email: '', phoneNumber: '' },
+            selectedTabValue: { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': [] },
+            somthingAboutYou: { firstPersonName: '', lastPersonName: '', companyName: '', companyAddress: '', email: '', phoneNumber: '' },
         }
         this.featureRef = React.createRef();
         this.changeStartHandler = this.changeStartHandler.bind(this);
@@ -71,7 +74,7 @@ class HireVaPage extends Component {
         let others = this.state.others;
         // needMore = value;
         others = value;
-        this.setState({ others: others});
+        this.setState({ others: others });
 
     }
 
@@ -111,15 +114,15 @@ class HireVaPage extends Component {
             //    Area Where you need
             const selectedAreaNeed = []
             this.state.selectedArea.forEach((element, index) => {
-
-                if (element.parentId == selectedTabValue[3][index]) {
+                //    console.log()
+                if (element.areaId == selectedTabValue[3][index]) {
                     element.vADesignation.filter(va => {
 
                         selectedTabValue[4].some(e => {
                             const FinalAreaObj = {}
-                            if (e == va.id) {
-                                FinalAreaObj.parentId = element.parentId
-                                FinalAreaObj.parentName = element.parentName
+                            if (e == va.skillId) {
+                                FinalAreaObj.areaId = element.areaId
+                                FinalAreaObj.areaName = element.areaName
                                 FinalAreaObj.vADesignation = [va]
                                 selectedAreaNeed.push(FinalAreaObj)
                             }
@@ -129,21 +132,21 @@ class HireVaPage extends Component {
 
             });
 
-// console.log("selectedAreaNeed444-------->",selectedAreaNeed)
+            // console.log("selectedAreaNeed444-------->",selectedAreaNeed)
             // const arrayHashmap = selectedAreaNeed.reduce((obj, item) => {
             //     obj[item.parentId] ? obj[item.parentId].vADesignation.push(...item.vADesignation) : (obj[item.parentId] = { ...item });
             //     return obj;
             // }, {});
-
-            const arrayHashmap = selectedAreaNeed.map(e=>e.vADesignation.map(elem=>{return({parentName:e.parentName,parentId:e.parentId, profileName:elem.profileName,id:elem.id})}))
+            console.log("selectedAreaNeed", selectedAreaNeed)
+            const arrayHashmap = selectedAreaNeed.map(e => e.vADesignation.map(elem => { return ({ areaName: e.areaName, areaId: e.areaId, skillName: elem.skill, skillId: elem.skillId }) }))
 
             // let arrayHashmap = selectedAreaNeed.reduce((obj, item) => {obj.concat(item.vADesignation.map((e,index)=>{return({parentName:item.parentName, parentId:item.parentId ,profileName:e.profileName,id:e.id})})),[]}); 
 
             // console.log("mergedArray BEFORE--",[].concat.apply([], arrayHashmap))
             // const mergedArray = Object.values(arrayHashmap);
             const mergedArray = [].concat.apply([], arrayHashmap);
-            console.log("mergedArray",mergedArray)
-        //    return;
+            console.log("mergedArray", mergedArray)
+            //    return;
             const formData = {
                 howManyVas: this.state.needMore >= parseInt(this.state.selectedVaNumberByImage) ? this.state.needMore : parseInt(this.state.selectedVaNumberByImage),
                 WhichIndustryYouBelong: selectedIndustry,
@@ -151,25 +154,27 @@ class HireVaPage extends Component {
                 AreaAndSkillFreelancer: mergedArray,
                 giveSpecification: selectedTabValue[5],
                 // completeWishTime: { completeWishTime: this.state.completeWishTime, StartAndEndTime: this.state.timer },
-                completeWishTime:this.state.completeWishTime,
+                completeWishTime: this.state.completeWishTime,
                 StartTime: this.state.timer.start,
-                EndTime:this.state.timer.end,
+                EndTime: this.state.timer.end,
 
 
                 ChooseYourPlan: selectedTabValue[6],
                 howQuicklyNeed: this.state.selectedTabValue[7][0],
                 // somthingAboutYou: somthingAboutYou,
 
-                firstName:somthingAboutYou.firstPersonName,
-                lastName:somthingAboutYou.lastPersonName,
-                companyName:somthingAboutYou.companyName,
-                companyAddress:somthingAboutYou.companyAddress,
-                email:somthingAboutYou.email,
-                phoneNumber:somthingAboutYou.phoneNumber,
+                firstName: somthingAboutYou.firstPersonName,
+                lastName: somthingAboutYou.lastPersonName,
+                companyName: somthingAboutYou.companyName,
+                companyAddress: somthingAboutYou.companyAddress,
+                email: somthingAboutYou.email,
+                phoneNumber: somthingAboutYou.phoneNumber,
             };
             // console.log("formData-------------->Front",formData)
             // return;
-            commonService.postAPIWithAccessToken('hire/hire-va1', formData)
+
+            // commonService.postAPIWithAccessToken('hire/hire-va1', formData)
+            commonService.postAPIWithAccessToken('hire/hire-va1-common', formData)
                 .then(res => {
                     // console.log("HireVA 1>>>", res)
                     if (undefined === res.data.data || !res.data.status) {
@@ -221,6 +226,7 @@ class HireVaPage extends Component {
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
         const name = event.target.name;
+        // console.log("selectedTabValue",selectedTabValue,"value", value,"name=====", name)
 
         if (event.target.checked == true) {
 
@@ -285,11 +291,11 @@ class HireVaPage extends Component {
     // Time Slider
     changeStartHandler(time) {
         // console.log("Start Handler Called", time);
-        if (time){
+        if (time) {
             // console.log("INSIDE IFFFFF")
             this.setState({ timeChangeFound: true })
         }
-           
+
     }
 
     timeChangeHandler(time) {
@@ -327,7 +333,7 @@ class HireVaPage extends Component {
         }
 
         if (endMin < startMin) {
-            completeWishTime = (endHrs - startHrs-1) + ":" + ( 60 - startMin)
+            completeWishTime = (endHrs - startHrs - 1) + ":" + (60 - startMin)
 
         }
         if (endMin == startMin) {
@@ -335,8 +341,8 @@ class HireVaPage extends Component {
 
 
         }
-       
-        this.setState({ completeWishTime: completeWishTime})
+
+        this.setState({ completeWishTime: completeWishTime })
     }
 
 
@@ -351,7 +357,7 @@ class HireVaPage extends Component {
 
             }
         }
-        
+
         var disabledPageNew = this.state.disabledPageNew;
 
         if (selectedTabValue[7].length > 0) {
@@ -387,7 +393,7 @@ class HireVaPage extends Component {
                 }
             });
         }
-               
+
         var disabledPageNew = this.state.disabledPageNew;
         if (selectedTabValue[5].length > 0) {
             disabledPageNew[5] = false;
@@ -407,19 +413,19 @@ class HireVaPage extends Component {
         let list = [];
         // const item = this.state.item
         list = this.state.clientArea;
-
+        // console.log("LLLLLLLLLLLLLLLLL",this.state.clientArea)
         list = list[value];
-      
+
         if (event.target.checked == true) {
-            selectedTabValue[3].push(list.parentId)
+            selectedTabValue[3].push(list.areaId)
             addValue.push(list);
         } else {
             addValue.filter((data, index) => {
-                if (data.parentId == list.parentId) {
+                if (data.areaId == list.areaId) {
                     addValue.splice(index, 1);
                     // remove seleted client area need 
                     selectedTabValue[3].filter((element, i, array) => {
-                        if (element == data.parentId) {
+                        if (element == data.areaId) {
                             const index = array.indexOf(element)
                             // console.log("index", index)
                             if (index > -1) {
@@ -455,7 +461,7 @@ class HireVaPage extends Component {
 
     industryBelongHandler(event) {
         // console.log("eeeeeeeeeeeeeevvvvvvv", event.target.value)
-        const others =this.state.others;
+        const others = this.state.others;
         var selectedTabValue = this.state.selectedTabValue;
         const value = event.target.value;
         const name = event.target.name;
@@ -481,7 +487,7 @@ class HireVaPage extends Component {
         var disabledPageNew = this.state.disabledPageNew;
         if (selectedTabValue[2].length > 0) {
             disabledPageNew[2] = false;
-            this.setState({ selectedTabValue: selectedTabValue, others:others, disabledPageNew: disabledPageNew })
+            this.setState({ selectedTabValue: selectedTabValue, others: others, disabledPageNew: disabledPageNew })
         } else {
             disabledPageNew[2] = true;
             this.setState({ disabledPage: true, disabledPageNew: disabledPageNew })
@@ -543,27 +549,116 @@ class HireVaPage extends Component {
 
 
     }
+    /*New Skill List API*/
+    SkillList() {
+        this.setState({ loading: true }, () => {
+            commonService.getAPIWithAccessToken('skill/get-new-skill')
+                .then(res => {
+                    // console.log("Get Skill List===========>", res)
+                    if (undefined === res.data.data || !res.data.status) {
+                        this.setState({ loading: false });
+                        toast.error(res.data.message);
+                        return;
+                    }
+                    this.setState({ loading: false, skillList: res.data.data });
+
+                    const newArray = []
+                    let unique = []
+                    let obj = {}
+
+                    // console.log("ressss",JSON.stringify(res.data.data))
+                    var newdata = [];
+                    for (let i = 0; i < res.data.data.length; i++) {
+
+                        if (newdata && newdata.length > 0) {
+                            var checkNotExist = false;
+                            for (let k = 0; k < newdata.length; k++) {
+                                if (newdata[k].areaId == res.data.data[i].areaId) {
+                                    checkNotExist = false;
+                                    if (newdata[k].vADesignation && newdata[k].vADesignation.length > 0) {
+                                        // console.log(typeof newdata[k].va, 'insid11e');
+                                        newdata[k].vADesignation.push({ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId });
+                                    } else {
+                                        // console.log('insid2');
+                                        newdata[k].vADesignation = [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }];
+                                    }
+                                    // console.log('inside');
+                                    break;
+                                } else {
+                                    checkNotExist = true;
+                                }
+                            }
+                            if (checkNotExist == true) {
+                                newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+                            }
+                            // console.log(checkNotExist);
+                        } else {
+                            newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+                        }
+
+                    }
+                    // console.log("NEW DATA",newdata)
+                    // this.setState({ ClientArea: newdata})
+                    this.setState({ clientArea: newdata })
+                    // this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { return ({ areaId: item.areaId, areaName: item.areaName }) }) })
+                    // this.setState({ SelectedClientAreaNeed: newdata})
+
+                    // console.log("Hello======",this.state.SelectedClientAreaNeed)
+
+                })
+                .catch(err => {
+                    if (err.response !== undefined && err.response.status === 401) {
+                        localStorage.clear();
+                        this.props.history.push('/login');
+                    } else {
+                        this.setState({ loading: false });
+                        toast.error(err.message);
+                    }
+                })
+        })
+    }
+
+    //******************End SkillList */
 
     componentDidMount() {
+        this.SkillList()
         // window.scrollTo({ bottom: 0, left: 0,  behavior: 'smooth' })
         // this.getIndustryList()
-        this.setState({ clientArea: clientAreaNeed.clientArea })
+        // console.log("clientAreaNeed.clientArea",clientAreaNeed.clientArea)
+        // this.setState({ clientArea: clientAreaNeed.clientArea })
 
         // Belonged Industres List 
         this.setState({ industryBelongList: industryBelongList.industries })
+            //  if(this.state.temp)
+            //  let getTemp =  this.state.temp;
+            //  let getTabIndex = this.state.tabIndex;
+                 console.log("CAlleed")
+      this.state.tabIndex>this.state.temp ?  this.setState({temp:this.state.tabIndex, progress:this.state.progress}) :this.setState({temp:this.state.tabIndex-1, progress:this.state.progress-12.5}) 
+        // window.scrollTo(500, 800)
 
-    
-            // window.scrollTo(500, 800)
-        
 
 
     }
 
     render() {
-        const { loading, selectedArea, clientArea, item, tabIndex, Administrative, industryBelong, addVa, active, selectedTabValue, somthingAboutYou, selectedTab, tabCount, indexChange, needMore, industryBelongList, disabledPage, disabledPageNew, redirect } = this.state;
+        const { loading, selectedArea, clientArea, item, tabIndex, Administrative, industryBelong, addVa, active, selectedTabValue, somthingAboutYou, selectedTab, tabCount, indexChange, needMore, industryBelongList, disabledPage, disabledPageNew, redirect, progress,temp } = this.state;
         // console.log( selectedTabValue, "sssssssss")
+        // console.log("Progress Test",progress)
+        // console.log("TAB INDEX Test",tabIndex)
         // console.log("this//////////////",this.state.selectedVaNumberByImage)
-
+        var test;
+        // if (this.state.progress > 100) {
+            // alert("oops, you hit the max value!")
+            // test = "100" + "%";
+        // }
+        // else{
+            // temp=tabIndex;
+            // tabIndex>temp ?  this.setState({temp:tabIndex, progress:progress})  :this.setState({temp:tabIndex, progress:progress-12.5}) 
+            test = Math.ceil(progress) + "%";
+            // test = progress + "%";
+        // }
+       
+        var style = { width: test }
         return (
             <>
                 <div className="dashboard-section">
@@ -572,12 +667,25 @@ class HireVaPage extends Component {
 
                             <form onSubmit={(event) => this.submitHandler(event)} id="msform">
                                 {/* <Tabs  selectedIndex={tabIndex} onSelect={tabIndex => this.setState({tabIndex:tabIndex,selectedTab:selectedTab+tabIndex })} > */}
+                                {/* Progress bar  */}
+                                <div className="flex-container">
+                                    {/* <h1>Progress</h1> */}
+                                    <div className="progress" data-label={`${test} completed`}>
+                                        <span className="value" style={style}></span>
+                                    </div>
+                                    <br />
+                                    <div>
+                                        {/* <button className="button" onClick={this.handleDecrement}>-</button>
+                                        <button className="button" onClick={this.handleIncrement}>+</button> */}
+                                    </div>
 
-                                <Tabs selectedIndex={tabIndex} onSelect={tabIndex => this.setState({ selectedTab: 2*tabIndex, tabIndex: tabIndex, disabledPage: !disabledPage })} >
+                                </div>
+                                <Tabs className="TabsHide" selectedIndex={tabIndex} onSelect={tabIndex => this.setState({ selectedTab: 2 * tabIndex, tabIndex: tabIndex, progress:(tabIndex*14.2857===0? "14.2857": tabIndex*14.2857), disabledPage: !disabledPage })} >
                                     {/* id ="progressbar"  */}
-                                    <TabList className="Client-form-nav-tabs ">
+                                    {/* <TabList className="Client-form-nav-tabs"> */}
+                                    <TabList className="">
                                         <Tab id="tabid-1" tabfor="0" ></Tab>
-                                        <Tab disabled={disabledPageNew[1]} id="tabid-2" tabfor="1"> </Tab>
+                                        <Tab disabled={disabledPageNew[1]} id="tabid-2" tabfor="1"></Tab>
                                         <Tab disabled={disabledPageNew[2]} id="tabid-3" tabfor="2"></Tab>
                                         <Tab disabled={disabledPageNew[3]} id="tabid-4" tabfor="3"></Tab>
                                         <Tab disabled={disabledPageNew[4]} id="tabid-5" tabfor="4" ></Tab>
@@ -592,11 +700,11 @@ class HireVaPage extends Component {
                                             <div className="Client-form-step">
                                                 <div className="Client-form-step-content">
                                                     <div className="Client-form-question">
-                                                        <h2>How may VA's do you need?</h2>
+                                                        <h2>Number of Employee?</h2>
                                                     </div>
                                                     <div className="Client-form-answer">
                                                         <div className="form-radio-group">
-                                                            <h4 className="heading-title-sm">How many VA do you need?</h4>
+                                                            <h4 className="heading-title-sm">Number of Employee?</h4>
                                                             <ul className="filter-field-list1">
                                                                 <li style={{ "width": "19%" }}>
                                                                     <div className="SRcheckbox">
@@ -711,7 +819,7 @@ class HireVaPage extends Component {
                                             //  className={this.state.isActive === item.id ? 'nav-active' : ''}
                                                       onClick={() => this.setActiveTab("1")} /> */}
                                                 {/* {selectedTabValue[2].length==0 ? */}
-                                                
+
                                                 <input type="button" name="next" className="next action-button" value="Next" disabled={disabledPageNew[1]}
                                                     id="react-tabs-0" onClick={() => this.setActiveTab("0")} />
 
@@ -733,17 +841,17 @@ class HireVaPage extends Component {
                                                             <ul className="filter-field-list">
                                                                 <li>
                                                                     <label htmlFor="1">
-                                                                        <input id="1" type="checkbox" value="1" name="1" checked={selectedTabValue[2].indexOf("1") >= 0 ? true : false} onChange={this.industryBelongHandler} />
+                                                                        <input id="1" type="checkbox" value="1" name="1" checked={selectedTabValue[2].indexOf("1") >= 0 ? true : false} onChange={this.industryBelongHandler} accept="image/*" />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#">
-                                                                                    <img src="/images/advertisingi.svg" height="60"  alt ="Advertising"/>
-                                                                                </a>
+                                                                            
+                                                                                    <img src="/images/advertisingi.svg" height="60" alt="Advertising" />
+                                                                            
 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Advertising
-                                                                </div>
+                                                                           </div>
                                                                         </div>
                                                                     </label>
                                                                 </li>
@@ -752,7 +860,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="2" value="2" name="2" checked={selectedTabValue[2].indexOf("2") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/accounting_finance.svg" alt ="Accounting / Finance" height="60"  /></a>
+                                                                                <img src="/images/accounting_finance.svg" alt="Accounting / Finance" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Accounting / Finance
@@ -765,7 +873,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="3" value="3" name="3" checked={selectedTabValue[2].indexOf("3") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/apparel.svg" height="60" /></a>
+                                                                                <img src="/images/apparel.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Apparel
@@ -779,7 +887,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="4" value="4" name="4" checked={selectedTabValue[2].indexOf("4") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/constructionArchEng.svg" height="60" /></a>
+                                                                                <img src="/images/constructionArchEng.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Construction / Architecture / Engineering
@@ -793,7 +901,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="5" value="5" name="5" checked={selectedTabValue[2].indexOf("5") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/design_icon.svg" height="60" /></a>
+                                                                                <img src="/images/design_icon.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Designs
@@ -807,7 +915,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="6" value="6" name="6" checked={selectedTabValue[2].indexOf("6") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/entertainment.svg" height="60" /></a>
+                                                                                <img src="/images/entertainment.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Entertainment
@@ -821,7 +929,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="7" value="7" name="7" checked={selectedTabValue[2].indexOf("7") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/education_icon.svg" height="60" /></a>
+                                                                                <img src="/images/education_icon.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Education
@@ -836,7 +944,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="8" value="8" name="8" checked={selectedTabValue[2].indexOf("8") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/healthcare.svg" height="60" /></a>
+                                                                                <img src="/images/healthcare.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Healthcare / Medical
@@ -850,7 +958,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="9" value="9" name="9" checked={selectedTabValue[2].indexOf("9") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/hospitality.svg" height="60" /></a>
+                                                                                <img src="/images/hospitality.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Hospitality / Catering
@@ -864,7 +972,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="10" value="10" name="10" checked={selectedTabValue[2].indexOf("10") >= 0 ? true : false} onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/legal.svg" height="60" /></a>
+                                                                                <img src="/images/legal.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Legal / Consulting
@@ -879,7 +987,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="11" value="11" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/logistics.svg" height="60" /></a>
+                                                                                <img src="/images/logistics.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 ALogistics & Transportpparel
@@ -894,7 +1002,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="12" value="12" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/management.svg" height="60" /></a>
+                                                                                <img src="/images/management.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Management
@@ -908,7 +1016,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="13" value="13" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/manufacturing.svg" height="60" /></a>
+                                                                                <img src="/images/manufacturing.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Manufacturing
@@ -922,7 +1030,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="14" value="14" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/retail.svg" height="60" /></a>
+                                                                                <img src="/images/retail.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Retail
@@ -936,7 +1044,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="15" value="15" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/realstate.svg" height="60" /></a>
+                                                                                <img src="/images/realstate.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Real Estate
@@ -950,7 +1058,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="16" value="16" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/telecommunication.svg" height="60" /></a>
+                                                                                <img src="/images/telecommunication.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Telecommunication
@@ -964,7 +1072,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="17" value="17" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/travel.svg" height="60" /></a>
+                                                                                <img src="/images/travel.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Travel, Leisure & Tourism
@@ -978,7 +1086,7 @@ class HireVaPage extends Component {
                                                                         <input type="checkbox" id="18" value="18" name="Skills[]" onChange={this.industryBelongHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/ecommerce.svg" height="60" /></a>
+                                                                                <img src="/images/ecommerce.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 ECommerce
@@ -994,14 +1102,14 @@ class HireVaPage extends Component {
                                                                 <div className="col-md-12 form-info">
                                                                     <div className="form-group">
                                                                         <h4 className="heading-title-sm">Others</h4>
-                                                                        <input type="text" name="Others" id ="Others" value={this.state.others} className="form-control" placeholder="Type" onChange={this.othersHandler} />
+                                                                        <input type="text" name="Others" id="Others" value={this.state.others} className="form-control" placeholder="Type" onChange={this.othersHandler} />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <input type="button" name="previous" className="previous action-button" value="Previous" onClick={() => this.backButton()} />
                                                 <input type="button" name="next" className="next action-button" value="Next" onClick={() => this.setActiveTab("2")} disabled={disabledPageNew[2]} id="react-tabs-2" />
                                             </div>
@@ -1025,10 +1133,10 @@ class HireVaPage extends Component {
                                                                 <li>
                                                                     <label htmlFor="0">
 
-                                                                        <input type="checkbox" id="0" checked={selectedTabValue[3].indexOf("1") >= 0 ? true : false} value="0" name="0" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="0" checked={selectedTabValue[3].indexOf("60a61e5e355ca0c4e0dc7a25") >= 0 ? true : false} value="0" name="0" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/adminstrative.svg" height="60" /> </a>
+                                                                                <img src="/images/adminstrative.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Administrative tasks/ Data Entry
@@ -1038,10 +1146,10 @@ class HireVaPage extends Component {
                                                                 </li>
                                                                 <li>
                                                                     <label htmlFor="1">
-                                                                        <input type="checkbox" id="1" checked={selectedTabValue[3].indexOf("9") >= 0 ? true : false} value="1" name="1" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="1" checked={selectedTabValue[3].indexOf("60a625c98d10a3c88aef945d") >= 0 ? true : false} value="1" name="1" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/executive.svg" height="60" /> </a>
+                                                                                <img src="/images/executive.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Executive Assistants
@@ -1051,10 +1159,10 @@ class HireVaPage extends Component {
                                                                 </li>
                                                                 <li>
                                                                     <label htmlFor="2">
-                                                                        <input type="checkbox" id="2" checked={selectedTabValue[3].indexOf("15") >= 0 ? true : false} value="2" name="2" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="2" checked={selectedTabValue[3].indexOf("60a625858d10a3c88aef945b") >= 0 ? true : false} value="2" name="2" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/ecommarce_related_task.svg" height="60" /> </a>
+                                                                                <img src="/images/ecommarce_related_task.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 ECommerce related tasks
@@ -1065,10 +1173,10 @@ class HireVaPage extends Component {
 
                                                                 <li>
                                                                     <label htmlFor="3">
-                                                                        <input type="checkbox" type="checkbox" id="3" checked={selectedTabValue[3].indexOf("25") >= 0 ? true : false} value="3" name="3" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" type="checkbox" id="3" checked={selectedTabValue[3].indexOf("60a6255e8d10a3c88aef945a") >= 0 ? true : false} value="3" name="3" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/adminstrative.svg" height="60" /> </a>
+                                                                                <img src="/images/adminstrative.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Customer Support Service
@@ -1079,10 +1187,10 @@ class HireVaPage extends Component {
 
                                                                 <li>
                                                                     <label htmlFor="4">
-                                                                        <input type="checkbox" id="4" checked={selectedTabValue[3].indexOf("31") >= 0 ? true : false} value="4" name="4" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="4" checked={selectedTabValue[3].indexOf("60a626118d10a3c88aef945f") >= 0 ? true : false} value="4" name="4" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/graphic_design.svg" height="60" /> </a>
+                                                                                <img src="/images/graphic_design.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Graphic Designing/ Video Editing
@@ -1093,10 +1201,10 @@ class HireVaPage extends Component {
 
                                                                 <li>
                                                                     <label htmlFor="5">
-                                                                        <input type="checkbox" id="5" checked={selectedTabValue[3].indexOf("40") >= 0 ? true : false} value="5" name="5" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="5" checked={selectedTabValue[3].indexOf("60a625a18d10a3c88aef945c") >= 0 ? true : false} value="5" name="5" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/marketing_icon.svg" height="60" /> </a>
+                                                                                <img src="/images/marketing_icon.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Marketing
@@ -1107,10 +1215,10 @@ class HireVaPage extends Component {
 
                                                                 <li>
                                                                     <label htmlFor="6">
-                                                                        <input type="checkbox" id="6" checked={selectedTabValue[3].indexOf("47") >= 0 ? true : false} value="6" name="6" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="6" checked={selectedTabValue[3].indexOf("60a6262b8d10a3c88aef9460") >= 0 ? true : false} value="6" name="6" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/icons/accounting_BookKeeping.svg" height="60" /> </a>
+                                                                                <img src="/images/icons/accounting_BookKeeping.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Accounting/Bookkeeping
@@ -1121,10 +1229,10 @@ class HireVaPage extends Component {
 
                                                                 <li>
                                                                     <label htmlFor="7">
-                                                                        <input type="checkbox" id="7" checked={selectedTabValue[3].indexOf("53") >= 0 ? true : false} value="7" name="7" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="7" checked={selectedTabValue[3].indexOf("60a6263b8d10a3c88aef9461") >= 0 ? true : false} value="7" name="7" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/icons/cold_calling.svg" height="60" /> </a>
+                                                                                <img src="/images/icons/cold_calling.svg" height="60" /> 
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Cold Calling
@@ -1135,10 +1243,10 @@ class HireVaPage extends Component {
 
                                                                 <li>
                                                                     <label htmlFor="8">
-                                                                        <input type="checkbox" id="8" checked={selectedTabValue[3].indexOf("59") >= 0 ? true : false} value="8" name="8" onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id="8" checked={selectedTabValue[3].indexOf("60a625eb8d10a3c88aef945e") >= 0 ? true : false} value="8" name="8" onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon">
-                                                                                <a href="#"><img src="/images/icons/programming_development.svg" height="60"/></a>
+                                                                                <img src="/images/icons/programming_development.svg" height="60" />
                                                                             </div>
                                                                             <div className="field-value-text">
                                                                                 Programming and Development
@@ -1168,20 +1276,20 @@ class HireVaPage extends Component {
                                                                 {
 
                                                                     selectedArea.map((e, index) => {
-
+                                                                        // console.log("eeeeeeee",e)
                                                                         return (<div key={index} className="filter-Category-item-info">
 
-                                                                            <h2>{e.parentName}</h2>
+                                                                            <h2>{e.areaName}</h2>
 
                                                                             <div className="filter-Category-item-body">
                                                                                 <ul>
                                                                                     {e.vADesignation.map((va, i) => {
-                                                                                        return (<li key={va.id}>
+                                                                                        return (<li key={va.skillId}>
                                                                                             <div className="filterCheckbox">
-                                                                                                <input type="checkbox" name={va.id} id={va.id} value={va.id}
+                                                                                                <input type="checkbox" name={va.skillId} id={va.skillId} value={va.skillId}
                                                                                                     onChange={this.skillFreelancers}
-                                                                                                    checked={selectedTabValue[4].indexOf(va.id) >= 0 ? true : false} />
-                                                                                                <label htmlFor={va.id}>{va.profileName}</label>
+                                                                                                    checked={selectedTabValue[4].indexOf(va.skillId) >= 0 ? true : false} />
+                                                                                                <label htmlFor={va.skillId}>{va.skill}</label>
                                                                                             </div>
                                                                                         </li>)
                                                                                     })}
@@ -1282,8 +1390,8 @@ class HireVaPage extends Component {
                                                                                 onChange={this.timeChangeHandler}
                                                                                 step={15}
                                                                                 value={this.state.timer}
-                                                                            //    orientation={String} 
-                                                                            required />
+                                                                                //    orientation={String} 
+                                                                                required />
                                                                             <div className="filter-Price-info">
                                                                                 <div className="filter-content">
                                                                                     <div id="ranged-value1"></div>
@@ -1324,54 +1432,54 @@ class HireVaPage extends Component {
                                                                                         $12<span className="subscript">/mo</span>
                                                                                     </h1>
                                                                                     <small>1 month FREE trial</small>
-                                                         
+
                                                                                 </div>
                                                                                 <table className="table">
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Entry Level Tasks
+                                                                                                Entry Level Tasks
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Virtual Assistant
+                                                                                                Virtual Assistant
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Customer Service
+                                                                                                Customer Service
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Email Support
+                                                                                                Email Support
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Basic Social Media
+                                                                                                Basic Social Media
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Bookeeping
+                                                                                                Bookeeping
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Admin Tasks
+                                                                                                Admin Tasks
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            And More ..
+                                                                                                And More ..
 									                                                         </td>
                                                                                         </tr>
                                                                                         <tr className="active">
                                                                                             <td>
                                                                                                 {/* 1 Project  */}
-                                                                                            </td> 
+                                                                                            </td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1408,66 +1516,66 @@ class HireVaPage extends Component {
 																																				                                             <span className="subscript">/mo</span>
                                                                                     </h1>
                                                                                     <small>1 month FREE trial</small>
-                                                                                    
+
                                                                                 </div>
                                                                                 <table className="table">
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Mid Level Tasks
+                                                                                                Mid Level Tasks
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Video Editing
+                                                                                                Video Editing
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Content Creation
+                                                                                                Content Creation
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Graphic Design
+                                                                                                Graphic Design
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Client Relations
+                                                                                                Client Relations
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Project Management
+                                                                                                Project Management
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Web Development
+                                                                                                Web Development
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Accounting
-									                                                        </td>
-                                                                                        </tr>
-                                                                                         <tr>
-                                                                                            <td>
-                                                                                            Executive Assistant
+                                                                                                Accounting
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            And More...
+                                                                                                Executive Assistant
 									                                                        </td>
                                                                                         </tr>
-                                                                                        
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                And More...
+									                                                        </td>
+                                                                                        </tr>
+
 
                                                                                         <tr className="active">
                                                                                             <td>
                                                                                                 {/* 5 Project */}
-									                                                         </td>
+                                                                                            </td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1498,49 +1606,49 @@ class HireVaPage extends Component {
                                                                                         $20<span className="subscript">/mo</span>
                                                                                     </h1>
                                                                                     <small>1 month FREE trial</small>
-                                                                       
+
                                                                                 </div>
                                                                                 <table className="table">
                                                                                     <tbody>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Expert Level Tasks
+                                                                                                Expert Level Tasks
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Brand Strategist
+                                                                                                Brand Strategist
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Amazon Admin
+                                                                                                Amazon Admin
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Sales/Cold Calling
+                                                                                                Sales/Cold Calling
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            Product Design/Development
+                                                                                                Product Design/Development
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            PPC/Social Media Advertising
+                                                                                                PPC/Social Media Advertising
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                             <td>
-                                                                                            And More...
+                                                                                                And More...
 									                                                        </td>
                                                                                         </tr>
                                                                                         <tr className="active">
                                                                                             <td>
                                                                                                 {/* 20 Project */}
-									                                                    </td>
+                                                                                            </td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
@@ -1617,7 +1725,7 @@ class HireVaPage extends Component {
                                                                         <input type="text" name="personName" value={somthingAboutYou.personName} className="form-control" placeholder="Enter Person Name" onChange={this.somthingAboutYouHandler} required />
                                                                     </div>
                                                                 </div> */}
-                                                                 <div className="col-md-6 form-info">
+                                                                <div className="col-md-6 form-info">
                                                                     <div className="form-group">
                                                                         <h4 className="heading-title-sm">First name of the person</h4>
                                                                         <input type="text" name="firstPersonName" value={somthingAboutYou.firstPersonName} className="form-control" placeholder="Enter  First Name Of the Person" onChange={this.somthingAboutYouHandler} required />

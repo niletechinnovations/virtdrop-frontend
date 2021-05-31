@@ -1,0 +1,31 @@
+.Multiselect-item {
+    position: relative;
+    z-index: 99
+}
+
+.Multiselect-item .search-wrapper span {
+    white-space: normal !important;
+    background: transparent !important;
+}
+
+.Multiselect-item .search-wrapper .searchBox {
+    margin: 0 !important;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.filterRow .form-control {
+    padding: 0.375rem 0.375rem;
+    height: 45px;
+}
+
+.react-datepicker-wrapper {
+    display: block;
+}
+
+.action_button button {
+    height: 45px;
+    width: 65px;
+}

@@ -37,17 +37,17 @@ export class HireVaAssignmentData extends Component {
             // console.log("Storeeeeee----------Authid-----------", Store)
             let hireInfo = {
                 // organizationName: Store.organizationName,
-                industryName: Store.industry,
-                skillName: Store.skillsFreelancer.toString(),
+                industryName: Store.industrytype.map(e=>e.name).toString(),
+                skillName: Store.skillsFreelancer.map(e=>e.areaName).toString(),
                 choosePlan: Store.which_plan,
-                need: Store.quickly_Need,
+                need: Store.quickly_Need===1? "Within 48 hours":"Under No Rush wait for the best candidates",
                 weekdays: Store.which_Days_Week,
                 requiredTime: Store.during_Those_Days,
                 hoursA_Day: Store.Hours_A_Day,
                 authId: Store.authId,
                 _id: Store._id,
                 // client: Store.clientCompleteName,
-                client:Store.firstName + " " + Store.lastName
+                client:Store.firstName ? Store.firstName + " " + Store.lastName: "empty"
 
             }
 

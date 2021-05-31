@@ -71,10 +71,42 @@ export default {
       icon: 'icon-user',   
     },
     {
-      name: 'Skills',
+      name: 'Manage Data',
+      // url: '/admin/skills',
+      icon: 'fas fa-database',  
+       children:[
+        {
+          name: 'Manage Area',
+          url: '/admin/manage-area',
+          icon: 'fa fa-tasks',  
+           
+        },
+        {
+          name: 'Manage Skills',
+          url: '/admin/manage-skill',
+          icon: 'fa fa-cogs',  
+           
+        },
+        {
+      name: 'Area & Skills',
       url: '/admin/skills',
-      icon: 'fa fa-file',   
+      icon: 'fa fa-list',  
+        }
+
+       ]
     },
+    // {
+    //   name: 'Manage Area',
+    //   url: '/admin/manage-area',
+    //   icon: 'fa fa-tasks',  
+       
+    // },
+    // {
+    //   name: 'Manage Skills',
+    //   url: '/admin/manage-skill',
+    //   icon: 'fa fa-tasks',  
+       
+    // },
     {
       name: 'Schedule Meeting',
       url: '/admin/schedule-meeting',

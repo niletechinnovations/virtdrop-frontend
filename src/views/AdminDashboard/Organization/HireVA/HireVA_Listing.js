@@ -7,7 +7,7 @@ import commonService from '../../../../core/services/commonService';
 import { toast } from 'react-toastify';
 import { Multiselect } from 'multiselect-react-dropdown';
 import DatePicker from "react-datepicker";
-import ClientAreaNeed from './clientNeedAreaList.json';
+// import ClientAreaNeed from './clientNeedAreaList.json';
 import WhichIndustryYouBelong from './industryBelongList.json';
 // import './HireVA_Listing.css';
 
@@ -16,6 +16,7 @@ class HireVA_Listing extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            ClientAreaNeed:[],
             loading: true,
             formProccessing: false,
             formValid: false,
@@ -96,7 +97,7 @@ class HireVA_Listing extends Component {
         }
 
         this.hireVaList = this.hireVaList.bind(this);
-        this.getSkillList = this.getSkillList.bind(this);
+        // this.getSkillList = this.getSkillList.bind(this);
         this.handleEditItem = this.handleEditItem.bind(this);
         this.onSelect = this.onSelect.bind(this)
         this.onRemove = this.onRemove.bind(this);
@@ -236,27 +237,27 @@ class HireVA_Listing extends Component {
         this.setState({ filterItem: filterItem });
     };
 
-    getSkillList = () => {
-        commonService.getAPIWithAccessToken('skill')
-            .then(res => {
-                if (undefined === res.data.data || !res.data.status) {
-                    this.setState({ loading: false });
-                    toast.error(res.data.message);
-                    return;
-                }
+    // getSkillList = () => {
+    //     commonService.getAPIWithAccessToken('skill')
+    //         .then(res => {
+    //             if (undefined === res.data.data || !res.data.status) {
+    //                 this.setState({ loading: false });
+    //                 toast.error(res.data.message);
+    //                 return;
+    //             }
 
-                this.setState({ loading: false, skillList: res.data.data })
-            })
-            .catch(error => {
-                if (error !== undefined) {
-                    localStorage.clear()
-                    // this.props.histroy.push('/login')
-                } else {
-                    this.setState({ loading: false, })
-                    toast.error(error.message)
-                }
-            })
-    }
+    //             this.setState({ loading: false, skillList: res.data.data })
+    //         })
+    //         .catch(error => {
+    //             if (error !== undefined) {
+    //                 localStorage.clear()
+    //                 // this.props.histroy.push('/login')
+    //             } else {
+    //                 this.setState({ loading: false, })
+    //                 toast.error(error.message)
+    //             }
+    //         })
+    // }
     getIndustryList = () => {
         commonService.getAPIWithAccessToken('hire/get-hire-va-Industrylist')
             .then(res => {
@@ -279,16 +280,86 @@ class HireVA_Listing extends Component {
                 }
             })
     }
+     /*New Skill List API*/
+  SkillList() {
+    this.setState({ loading: true }, () => {
+      commonService.getAPIWithAccessToken('skill/get-new-skill/')
+        .then(res => {
+          console.log("Get Skill List===========>", res)
+          if (undefined === res.data.data || !res.data.status) {
+            this.setState({ loading: false });
+            toast.error(res.data.message);
+            return;
+          }
+          this.setState({ loading: false, skillList: res.data.data });
+          
+          const newArray = []
+          let unique=[]
+          let obj = {}
+
+          // console.log("ressss",JSON.stringify(res.data.data))
+          var newdata = [];
+for (let i = 0; i < res.data.data.length; i++) {
+
+    if (newdata && newdata.length > 0) {
+        var checkNotExist = false;
+        for (let k = 0; k < newdata.length; k++) {
+            if (newdata[k].areaId == res.data.data[i].areaId) {
+                checkNotExist = false;
+                if (newdata[k].vADesignation && newdata[k].vADesignation.length > 0) {
+                    // console.log(typeof newdata[k].va, 'insid11e');
+                    newdata[k].vADesignation.push({ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId });
+                } else {
+                    // console.log('insid2');
+                    newdata[k].vADesignation = [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }];
+                }
+                // console.log('inside');
+                break;
+            } else {
+                checkNotExist = true;
+            }
+        }
+        if (checkNotExist == true) {
+            newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+        }
+        // console.log(checkNotExist);
+    } else {
+        newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+    }
+
+}
+// this.setState({ clientArea: newdata })
+console.log("NEW DATA",newdata)
+this.setState({ ClientAreaNeed: newdata})
+this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { return ({ areaId: item.areaId, areaName: item.areaName }) }) })
+// this.setState({ SelectedClientAreaNeed: newdata})
+
+// console.log("Hello======",this.state.SelectedClientAreaNeed)
+
+        })
+        .catch(err => {
+          if (err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          } else {
+            this.setState({ loading: false });
+            toast.error(err.message);
+          }
+        })
+    })
+  }
+
     componentDidMount() {
+        this.SkillList()
         // const { match: { params } } = this.props;
         // console.log("match", this.props);
-        this.getSkillList();
+        // this.getSkillList();
         this.getIndustryList();
         // this.hireVaList();
         // this.addItem();
         this.itemList();
 
-        this.setState({SelectedClientAreaNeed:ClientAreaNeed.clientArea.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
+        this.setState({SelectedClientAreaNeed:this.state.ClientAreaNeed.map(e=>{return({areaId:e.areaId,areaName:e.areaName, vaDesignation:e.vADesignation.map(va=>{return({areaId:e.areaId,areaName:e.areaName, skillName:va.skill, skillId:va.skillId})})})})})
 
         // console.log("WhichIndustryYouBelong",WhichIndustryYouBelong.industries)
         this.setState({industryList1:WhichIndustryYouBelong.industries})
@@ -310,8 +381,8 @@ class HireVA_Listing extends Component {
     
       onSelectArea(selectedList, selectedItem) {
         console.log("selectedList************************>", selectedList)
-          let seletedVaList = ClientAreaNeed.clientArea.filter(item =>selectedList.some(o=>item.parentId===o.parentId)).map(skill =>skill.vADesignation.map(e=>{return({profileName:e.profileName,id:e.id,parentId:skill.parentId,parentName:skill.parentName})}))
-          var merged = [].concat.apply([], seletedVaList);
+        let seletedVaList = this.state.ClientAreaNeed.filter(item => selectedList.some(o => item.areaId === o.areaId)).map(skill => skill.vADesignation.map(e => { return ({ skillName: e.skill, skill: e.skillId, areaId: skill.areaId, areaName: skill.areaName }) }))
+        var merged = [].concat.apply([], seletedVaList);
                   // console.log("merged",merged);   
                   this.setState({childList:merged})             
       }
@@ -319,7 +390,7 @@ class HireVA_Listing extends Component {
       onRemoveArea(selectedList, removedItem) {
         console.log("remove---------", selectedList)
         let childList= this.state.childList;
-            const result =  childList.filter(el=>{return(el.parentId!==removedItem.parentId)})
+            const result =  childList.filter(el=>{return(el.areaId!==removedItem.areaId)})
             console.log("Rwsult Chnn--------",result)
           this.setState({childList:result})
       }
@@ -769,9 +840,9 @@ class HireVA_Listing extends Component {
 
     render() {
 
-        const { loading, hireVaListData, modal, modal1, formProccessing, skillList, selectedValues, formField, filterItem, IndustryList, selectedIndustry, formDataShowField, childList, SelectedClientAreaNeed, industryList1, selectedIndustry1,WhichDays, SelectDays, minute } = this.state;
+        const { loading, hireVaListData, modal, modal1, formProccessing, skillList, selectedValues, formField, filterItem, IndustryList, selectedIndustry, formDataShowField, childList, SelectedClientAreaNeed, ClientAreaNeed,  industryList1, selectedIndustry1,WhichDays, SelectDays, minute } = this.state;
         let loaderElement = '';
-        // console.log("FORM +R", formField.StartTime)
+        // console.log("SelectedClientAreaNeed +R", SelectedClientAreaNeed)
         if (loading)
             loaderElement = <Loader />
         const processingBtnText = <>Submit <i className="fa fa-spinner"></i></>;
@@ -838,7 +909,7 @@ class HireVA_Listing extends Component {
                                         {/* {return({profileName:skillInfo.profileName,id :skillInfo.id})} */}
                                         {
                                         // ClientAreaNeed.clientArea.map(e=>e.vADesignation.map((skillInfo,index)=><SetSkillDropDownItem key={index} skillInfo={skillInfo} />))
-                                        ClientAreaNeed.clientArea.map((skillInfo,index)=><SetSkillDropDownItem key={index} skillInfo={skillInfo} />)
+                                        ClientAreaNeed.map((skillInfo,index)=><SetSkillDropDownItem key={index} skillInfo={skillInfo} />)
                                         // ClientAreaNeed.map((skillInfo, index) =>
                                         //     <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
                                         // )
@@ -953,7 +1024,7 @@ class HireVA_Listing extends Component {
                                   onRemove={this.onRemoveArea}
                                   // groupBy="parentName"
                                   selectedValues={formField.AreaSkillSet1}
-                                  displayValue="parentName"
+                                  displayValue="areaName"
                                   showCheckbox={true}
                                 />
                                     </FormGroup>
@@ -968,9 +1039,9 @@ class HireVA_Listing extends Component {
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectSubSkill}
                                   onRemove={this.onRemoveSubSkill}
-                                  groupBy="parentName"
+                                  groupBy="areaName"
                                   selectedValues={formField.skillSet1}
-                                  displayValue="profileName"
+                                  displayValue="skillName"
                                   showCheckbox={true}
                                 />
                                  </FormGroup>
@@ -1543,7 +1614,7 @@ class HireVA_Listing extends Component {
 function SetSkillDropDownItem(props) {
     const skillInfo = props.skillInfo;
     // console.log("skillInfoooooooo",skillInfo)
-    return (<option value={skillInfo.parentId} >{skillInfo.parentName}</option>)
+    return (<option value={skillInfo.areaId} >{skillInfo.areaName}</option>)
 }
 
 export default HireVA_Listing;
