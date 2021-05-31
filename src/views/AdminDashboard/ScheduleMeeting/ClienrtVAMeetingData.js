@@ -29,20 +29,40 @@ export default class ClienrtVAMeetingData extends Component {
 
   render() {
     let rowsItem = [];
+    // console.log("this.props.data".this.props.data)
     for (const [i, meeting] of this.props.data.entries()) {
-      console.log("meeting",meeting)
-
+    
+      console.log("meeting", meeting.kickoff_date)
+      // let [name] =meeting.clientCompleteDetails.map(e=>e.FirstName)
+            //  var [clientName] =meeting.map(e=>e.clientCompleteDetails.map(el=>el.FirstName))
+            //  console.log("clei",name)
       let resInfo = {
+        // clinetAuthId: meeting.clientId,
+        // clientName: meeting.clientFirstName + ' ' + meeting.clientLastName || " ",
+        // clientEmail: meeting.clientEmail || " ",
+        // clientMob: meeting.clientMobileNo || " ",
+        // clientOrganizationName: meeting.clientOrganizationName,
+        // hireVAId: meeting.hireVAId,
+        // vAAuthId: meeting.VADetails.vaAuthid || " ",
+        // VaName: meeting.VADetails.vACompleteName.join(",  ")  || " ",
+        // VaEmail: meeting.VADetails.vAEmail.join(",        ")|| " ",
+        // VaMobile: meeting.VADetails.vAMobileNo || " ",
+        // suggestedDate:new Date(meeting.suggestedDate).getDate() +"/"+new Date(meeting.suggestedDate).getMonth() +"/"+new Date(meeting.suggestedDate).getFullYear() ||'',
+        // suggestedTime:meeting.suggestedTime ||'',
+
         clinetAuthId: meeting.clientId,
-        clientName: meeting.clientFirstName + ' ' + meeting.clientLastName || " ",
-        clientEmail: meeting.clientEmail || " ",
-        clientMob: meeting.clientMobileNo || " ",
-        clientOrganizationName: meeting.clientOrganizationName,
+        clientName:  meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.FirstName):'',
+        clientEmail: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.email):'',
+        clientMob: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.PhoneNumber):'',
+        clientOrganizationName: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.companyName):'',
         hireVAId: meeting.hireVAId,
-        vAAuthId: meeting.VADetails.vaAuthid || " ",
-        VaName: meeting.VADetails.vACompleteName.join(",  ")  || " ",
-        VaEmail: meeting.VADetails.vAEmail.join(",        ")|| " ",
-        VaMobile: meeting.VADetails.vAMobileNo || " ",
+        vAAuthId: meeting.selectedVaDetails?  meeting.selectedVaDetails.map(e=>e.authId):'',
+        VaName: meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.firstName).toString():'',
+        VaEmail:meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.email).join(",        "):'',
+        VaMobile: meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.mobileNumber):'',
+        suggestedDate:meeting.suggestedDate? new Date(meeting.suggestedDate).getDate() +"/"+new Date(meeting.suggestedDate).getMonth() +"/"+new Date(meeting.suggestedDate).getFullYear() :'',
+        suggestedTime:meeting.suggestedTime ? meeting.suggestedTime + "AM":'',
+        kickoff_Date: meeting.kickoff_date?  meeting.kickoff_date:'Not Available',
 
         indexVal: i,
 
@@ -58,6 +78,18 @@ export default class ClienrtVAMeetingData extends Component {
       {
         label: 'Email',
         name: 'clientEmail',
+      },
+      {
+        label: 'Kick Off Date',
+        name: 'kickoff_Date',
+      },
+      {
+        label: 'suggested Date',
+        name: 'suggestedDate',
+      },
+      {
+        label: 'suggested Time.',
+        name: 'suggestedTime',
       },
       {
         label: 'Client Phone no.',

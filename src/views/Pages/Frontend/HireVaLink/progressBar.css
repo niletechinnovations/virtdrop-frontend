@@ -1,0 +1,65 @@
+.flex-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 20vh;
+	font-family: "Titillium Web", sans-serif;
+}
+
+.progress {
+  color: #2521c5;
+  height: 2em;
+  width: 90%;
+  background-color: #1360fe;
+  position: relative;
+	border-radius: 16px;
+	box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+    line-height: 1.8;
+    font-size: 1.79rem;
+}
+
+.progress:before {
+  content: attr(data-label);
+  font-size: 0.8em;
+  position: absolute;
+  text-align: left;
+  padding-left: 5vh;
+  padding-top: 5px;
+  color: white;
+}
+
+.progress .value {
+  background-color:#041c52;
+  display: inline-block;
+  height: 100%;
+ 	border-radius: 3px;
+     
+}
+
+.button {
+  background-color: transparent;
+  border-radius: 3px;
+	border: 1.5px solid #ffa500;
+  height: 38px;
+	padding: 0 30px;
+	color: #ffa500;
+  margin-right: 15px;
+}
+
+.button:hover {
+  background-color: #ffa500;
+  color: #fff;
+}
+
+h1 {
+  text-transform: uppercase;
+  color: #ffa500;
+}
+
+
+.react-tabs__tab--selected {
+  /* background: #fff; */
+  border-color: #f8f9fa;
+  border: none;
+}

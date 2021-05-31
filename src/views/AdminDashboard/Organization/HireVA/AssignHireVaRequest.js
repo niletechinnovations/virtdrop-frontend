@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../../core/services/commonService';
 import Loader from '../../../Loader/Loader';
 import { Link } from 'react-router-dom';
-import ClientAreaNeed from './clientNeedAreaList.json';
+// import ClientAreaNeed from './clientNeedAreaList.json';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import './AssignHireVaRequest.css';
@@ -18,6 +18,7 @@ class AssignHireVaRequest extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      ClientAreaNeed:[],
       clientId: '',
       formField: { organizationId: '', organizationName: '', userName: '', hireVARequestId: '', vaType: '', natureOfBusiness: '', engagementType: '', engagementDescription: '', numberOfVA: '', skillSet: '' },
       filterItem: { emailOrName: '', filter_Parent_Skills: '', filter_Skills: '' },
@@ -39,6 +40,8 @@ class AssignHireVaRequest extends Component {
       // showDropdown: "always"
     }
     this.myRef = React.createRef()
+    this.multiselectRef = React.createRef();
+    this.multiselectRef1 = React.createRef();
     this.handleChange = this.handleChange.bind(this);
     this.filterVaMemberList = this.filterVaMemberList.bind(this);
     // this.onCheck = this.onCheck.bind(this);
@@ -51,9 +54,77 @@ class AssignHireVaRequest extends Component {
     // this.assignObjectPaths = this.assignObjectPaths.bind(this);
   }
 
+/*New Skill List API*/
+SkillList() {
+  this.setState({ loading: true }, () => {
+    commonService.getAPIWithAccessToken('skill/get-new-skill')
+      .then(res => {
+        // console.log("Get Skill List===========>", res)
+        if (undefined === res.data.data || !res.data.status) {
+          this.setState({ loading: false });
+          toast.error(res.data.message);
+          return;
+        }
+        this.setState({ loading: false, skillList: res.data.data });
+        
+        const newArray = []
+        let unique=[]
+        let obj = {}
 
+        // console.log("ressss",JSON.stringify(res.data.data))
+        var newdata = [];
+for (let i = 0; i < res.data.data.length; i++) {
+
+  if (newdata && newdata.length > 0) {
+      var checkNotExist = false;
+      for (let k = 0; k < newdata.length; k++) {
+          if (newdata[k].areaId == res.data.data[i].areaId) {
+              checkNotExist = false;
+              if (newdata[k].vADesignation && newdata[k].vADesignation.length > 0) {
+                  // console.log(typeof newdata[k].va, 'insid11e');
+                  newdata[k].vADesignation.push({ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId });
+              } else {
+                  // console.log('insid2');
+                  newdata[k].vADesignation = [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }];
+              }
+              // console.log('inside');
+              break;
+          } else {
+              checkNotExist = true;
+          }
+      }
+      if (checkNotExist == true) {
+          newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+      }
+      // console.log(checkNotExist);
+  } else {
+      newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+  }
+
+}
+console.log("NEW DATA",newdata)
+this.setState({ ClientAreaNeed: newdata})
+this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { return ({ areaId: item.areaId, areaName: item.areaName }) }) })
+// this.setState({ SelectedClientAreaNeed: newdata})
+
+// console.log("Hello======",this.state.SelectedClientAreaNeed)
+
+      })
+      .catch(err => {
+        if (err.response !== undefined && err.response.status === 401) {
+          localStorage.clear();
+          this.props.history.push('/login');
+        } else {
+          this.setState({ loading: false });
+          toast.error(err.message);
+        }
+      })
+  })
+}
+// *****************New Skill List End**************
 
   componentDidMount() {
+    this.SkillList();
     const { history: { location: { state } } } = this.props;
     console.log("local..............", state)
     const client_AuthId = state;
@@ -66,12 +137,12 @@ class AssignHireVaRequest extends Component {
       this.getAssignedVA(params.hireVARequestId);
     }
     this.itemList();
-    this.getSkillList();
+    // this.getSkillList();
     this.parentChildrenDataHandler();
     // this.onChangeSelectHandler();
     // this.assignObjectPaths(ClientAreaNeed);
 
-    this.setState({ SelectedClientAreaNeed: ClientAreaNeed.clientArea.map(item => { return ({ parentId: item.parentId, parentName: item.parentName }) }) })
+    // this.setState({ SelectedClientAreaNeed: ClientAreaNeed.map(item => { return ({ parentId: item.parentId, parentName: item.parentName }) }) })
 
     //   this.assignObjectPaths(this.state.SelectedClientAreaNeed);
     // this.onNodeToggle()
@@ -135,7 +206,7 @@ class AssignHireVaRequest extends Component {
     // console.log("selectedList****yuyuy********************>", selectedList)
 
     // let arr=[]
-    let seletedVaList = ClientAreaNeed.clientArea.filter(item => selectedList.some(o => item.parentId === o.parentId)).map(skill => skill.vADesignation.map(e => { return ({ profileName: e.profileName, id: e.id, parentId: skill.parentId, parentName: skill.parentName }) }))
+    let seletedVaList = this.state.ClientAreaNeed.filter(item =>selectedList.some(o=>item.areaId===o.areaId)).map(skill =>skill.vADesignation.map(e=>{return({skillName:e.skill, skill:e.skillId , areaId:skill.areaId,areaName:skill.areaName})}))
     var merged = [].concat.apply([], seletedVaList);
 
     console.log("merged", merged);
@@ -191,6 +262,19 @@ class AssignHireVaRequest extends Component {
     // this.setState({ nodes: parents })
 
 
+  }
+
+  resetfilterForm = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    // childList:'', childSelectedItem:''
+    console.log("childList", this.state.childList)
+    this.multiselectRef.current.resetSelectedValues();
+    this.multiselectRef1.current.resetSelectedValues();
+    this.setState({
+      filterItem: { filterFirstName: '', filterEmail: '', filterSkill: '', filterSkill1: '', filterRating: '', filterFrom: '', filterTo: '', filterStatus: '' }
+    });
+    this.itemList();
   }
 
   onCheck(checked) {
@@ -276,34 +360,34 @@ class AssignHireVaRequest extends Component {
     })
   }
 
-  getSkillList = () => {
-    commonService.getAPIWithAccessToken('skill')
-      .then(res => {
-        // console.log("Skilssss",res)
-        if (undefined === res.data.data || !res.data.status) {
-          this.setState({ loading: false });
-          toast.error(res.data.message);
-          return;
-        }
+  // getSkillList = () => {
+  //   commonService.getAPIWithAccessToken('skill')
+  //     .then(res => {
+  //       console.log("Skilssss---------888--------",res)
+  //       if (undefined === res.data.data || !res.data.status) {
+  //         this.setState({ loading: false });
+  //         toast.error(res.data.message);
+  //         return;
+  //       }
 
-        this.setState({ loading: false, skillList: res.data.data })
-      })
-      .catch(error => {
-        if (error !== undefined) {
-          localStorage.clear()
-          // this.props.histroy.push('/login')
-        } else {
-          this.setState({ loading: false, })
-          toast.error(error.message)
-        }
-      })
-  }
+  //       this.setState({ loading: false, skillList: res.data.data })
+  //     })
+  //     .catch(error => {
+  //       if (error !== undefined) {
+  //         localStorage.clear()
+  //         // this.props.histroy.push('/login')
+  //       } else {
+  //         this.setState({ loading: false, })
+  //         toast.error(error.message)
+  //       }
+  //     })
+  // }
 
   filterVaMemberList() {
     const filterItem = this.state.filterItem;
     const skillSearch = this.state.childSelectedItem;
-    filterItem.filter_Parent_Skills = this.state.selectedParentSkill.length > 0 ? this.state.selectedParentSkill[0].parentId : [];
-    filterItem.filter_Skills = this.state.childSelectedItem.id;
+    filterItem.filter_Parent_Skills = this.state.selectedParentSkill.length > 0 ? this.state.selectedParentSkill[0].areaId : [];
+    filterItem.filter_Skills = this.state.childSelectedItem.skillId;
     console.log("Test Search************", filterItem.filter_Parent_Skills)
     this.itemList(filterItem);
   }
@@ -381,7 +465,7 @@ class AssignHireVaRequest extends Component {
     let rowsItem = [];
 
     for (const [i, userData] of vaApplicationList.entries()) {
-      // console.log("userData.skillSet",userData.ParentSkillSet)
+      console.log("userData.skillSet",userData)
 
       let userInfo = {
         SNo: i,
@@ -389,8 +473,9 @@ class AssignHireVaRequest extends Component {
         userName: userData.firstName + ' ' + userData.lastName,
         email: userData.email,
         // Area: userData.ParentSkillSet1.map(e=>e.parentName) + ',' + userData.ParentSkillSet2.map(e=>e.parentName)  + ',' + userData.ParentSkillSet3.map(e=>e.parentName),
-        Area: userData.ParentSkillSet.map(e => e.parentName).toString(),
-        skillSet: userData.skillSet1.map(e => e.profileName) + ',' + userData.skillSet2.map(e => e.profileName) + ',' + userData.skillSet3.map(e => e.profileName),
+        // Area: userData.ParentSkillSet.map(e => e.areaName).toString(),
+        Area: userData.skillSet1?"":([ ...new Set(userData.ParentSkillSet.map(e => e.areaName))]).toString(),
+        skillSet: userData.skillSet1? " ": userData.skillSet1.map(e => e.skillName) + ',' + userData.skillSet2.map(e => e.skillName) + ',' + userData.skillSet3.map(e => e.skillName),
       }
       rowsItem.push(userInfo);
     }
@@ -457,19 +542,19 @@ class AssignHireVaRequest extends Component {
                                 <Label htmlFor="area">Area</Label>
                                 <Multiselect
                                   options={SelectedClientAreaNeed}
-                                  // groupBy="cat"
+                                  ref={this.multiselectRef1}
                                   onChange={this.changeHandler}
                                   singleSelect
                                   id="css_custom"
-                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "borderBottom": "1px solid grey", "borderRadius": "0px" } }}
-                                               
+                                  style={{ chips: { background: "#4bb8f9" }, searchBox: { border: "1px solid grey", "borderBottom": "1px solid grey", "borderRadius": "0px" } }}
+
 
                                   // .searchBox#css_custom_input::placeholder {{color: red} }
                                   onSelect={this.onSelectIndstry}
                                   onRemove={this.onRemoveIndustry}
                                   // groupBy="parentName"
                                   // selectedValues={SelectedClientAreaNeed}
-                                  displayValue="parentName"
+                                  displayValue="areaName"
                                   showCheckbox={true}
                                 />
                               </Col>
@@ -477,16 +562,16 @@ class AssignHireVaRequest extends Component {
                                 <Label htmlFor="skills">Skills</Label>
                                 <Multiselect
                                   options={childList}
-                                  // groupBy="cat"
+                                  ref={this.multiselectRef}
                                   onChange={this.changeHandler}
                                   singleSelect
                                   onSelect={this.onSelectSubIndstry}
                                   onRemove={this.onRemoveSubIndustry}
-                                  groupBy="parentName"
+                                  groupBy="areaName"
                                   // selectedValues={SelectedClientAreaNeed}
                                   id="css_custom"
-                                  style={{chips: {background: "#4bb8f9" }, searchBox: {border: "1px solid grey", "borderBottom": "1px solid grey", "borderRadius": "0px" } }}
-                                  displayValue="profileName"
+                                  style={{ chips: { background: "#4bb8f9" }, searchBox: { border: "1px solid grey", "borderBottom": "1px solid grey", "borderRadius": "0px" } }}
+                                  displayValue="skillName"
                                   showCheckbox={true}
                                 />
                                 {/* <div ref={this.myRef} className="AddScroll">
@@ -504,10 +589,16 @@ class AssignHireVaRequest extends Component {
                                 {/* </Input> */}
 
                               </Col>
-                              <Col md={1}>
-                                <Label htmlFor="area">Search</Label>
-                                <Button onClick={this.filterVaMemberList}><i className="fa fa-search"></i></Button>
-                              </Col>
+                              <Row>
+                                <Col md={1}>
+                                  <Label htmlFor="area">Search</Label>
+                                  <Button onClick={this.filterVaMemberList}><i className="fa fa-search"></i></Button>
+                                </Col>
+                                <Col style={{ marginLeft: "10px" }} md={1}>
+                                  <Label style={{ marginBottom: "23px" }} htmlFor="refresh"></Label>
+                                  <Button color="danger" type="reset" onClick={event => this.resetfilterForm(event)} title="Reset Fields"><i className="fa fa-refresh"></i></Button>
+                                </Col>
+                              </Row>
                             </Row>
                           </div>
                           <CardBody>

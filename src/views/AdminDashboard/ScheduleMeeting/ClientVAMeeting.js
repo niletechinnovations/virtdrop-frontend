@@ -85,7 +85,7 @@ export class ClientVAMeeting extends Component {
       console.log("filterQuerydd", filterQuery)
       commonService.getAPIWithAccessToken('schedule-meeting' + filterQuery)
         .then(res => {
-          console.log("result", res);
+          console.log("result===========>", res);
           if (undefined === res.data.data || !res.data.status) {
             this.setState({ loading: false });
             toast.error(res.data.message);
@@ -197,10 +197,15 @@ export class ClientVAMeeting extends Component {
       clientEmail: rowInfo.clientEmail,
       clientName: rowInfo.clientFirstName,
       hireVAId: rowInfo.hireVAId,
-      vAEmail: rowInfo.VADetails.vAEmail,
-      vAMobileNo: rowInfo.VADetails.vAMobileNo,
-      vAName: rowInfo.VADetails.vACompleteName,
-      vAAuthId: rowInfo.VADetails.vaAuthid,
+
+      vAEmail: rowInfo.selectedVaDetails.map(e=>e.email),
+      vAMobileNo: rowInfo.selectedVaDetails.map(e=>e.mobileNumber),
+      vAName: rowInfo.selectedVaDetails.map(e=>e.firstName),
+      vAAuthId: rowInfo.selectedVaDetails.map(e=>e.authId),
+      // vAEmail: rowInfo.VADetails.vAEmail,
+      // vAMobileNo: rowInfo.VADetails.vAMobileNo,
+      // vAName: rowInfo.VADetails.vACompleteName,
+      // vAAuthId: rowInfo.VADetails.vaAuthid,
     }
     this.setState({ formField: formData })
     console.log("FORM DATA ", this.state.formField)

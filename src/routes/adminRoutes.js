@@ -25,6 +25,8 @@ import ViewHireVA_List from '../views/AdminDashboard/Organization/HireVA/ViewHir
 import HireVaAssignmentList from '../views/AdminDashboard/Organization/HireVA/HireVaAssignmentList';
 import AssignHireVaRequest from '../views/AdminDashboard/Organization/HireVA/AssignHireVaRequest';
 import ClientVAMeeting from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
+import ManageArea from '../views/AdminDashboard/Skill/ManageArea';
+import ManageSkill from '../views/AdminDashboard/Skill/ManageSkill';
 // import ClientVAMeeting1 from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
 
 const adminRoutes = [
@@ -51,7 +53,7 @@ const adminRoutes = [
   { path: '/admin/timesheet', exact: true, name: 'Manage Timesheet', component: VaTimesheetList },
   { path: '/admin/newsletter', exact: true, name: 'eBook Downloads', component: SubscribersList },
   { path: '/admin/billing', exact: true, name: 'Clients Billing', component: BillingList },
-  { path: '/admin/skills', exact: true, name: 'Manage Skills', component: Skill },
+  { path: '/admin/skills', exact: true, name: 'Area & Skills', component: Skill },
   { path: '/admin/active-vas', exact: true, name: 'Manage Active VAs', component: ActiveApplicationLists },
   { path: '/admin/hire-va', exact: true, name: "Manage Hire VA Request", component: HireVA_Listing },
   { path: '/admin/hire-va/view-hire-va-list/:hireVARequestId', exact: true, name: "View Hire VA List", component: ViewHireVA_List },
@@ -59,6 +61,8 @@ const adminRoutes = [
   { path: '/admin/assign-hire-va/:hireVARequestId', exact: true, name: "Assign Hire VA", component: AssignHireVaRequest },
   { path: '/admin/schedule-meeting/', exact: true, name: 'Manage Client Meeting', component: ClientVAMeeting },
   // { path: '/admin/schedule-meeting-new', exact: true, name: 'Manage Client Meeting', component: ClientVAMeeting1 },
+  {path: '/admin/manage-area', exact:true, name:"Manage Area", component:ManageArea},
+  {path:'/admin/manage-skill', exact:true, name: "Manage Skills", component:ManageSkill}
 ];
 
 export default adminRoutes;

@@ -24,7 +24,7 @@ class HireVaAssignmentList extends Component {
         }
 
         this.hireVaList = this.hireVaList.bind(this);
-        this.getSkillList = this.getSkillList.bind(this);
+        // this.getSkillList = this.getSkillList.bind(this);
         // this.handleEditItem = this.handleEditItem.bind(this);
         this.onSelect = this.onSelect.bind(this)
         this.onRemove = this.onRemove.bind(this);
@@ -56,7 +56,7 @@ class HireVaAssignmentList extends Component {
         }
 
         this.setState({ loading: true }, () => {
-            commonService.getAPIWithAccessToken('hire/get-hire-va' + filterQuery)
+            commonService.getAPIWithAccessToken('hire/get-hire-va1' + filterQuery)
                 .then(res => {
                     // console.log("VA Hire32", res.data.data)
                     if (undefined === res.data.data || !res.data.status) {
@@ -137,31 +137,102 @@ class HireVaAssignmentList extends Component {
         this.setState({ filterItem: filterItem });
     };
 
-    getSkillList = () => {
-        commonService.getAPIWithAccessToken('skill')
-            .then(res => {
-                if (undefined === res.data.data || !res.data.status) {
-                    this.setState({ loading: false });
-                    toast.error(res.data.message);
-                    return;
-                }
+    // getSkillList = () => {
+    //     commonService.getAPIWithAccessToken('skill')
+    //         .then(res => {
+    //             // console.log("eeeeeeeeee",res)
+    //             if (undefined === res.data.data || !res.data.status) {
+    //                 this.setState({ loading: false });
+    //                 toast.error(res.data.message);
+    //                 return;
+    //             }
 
-                this.setState({ loading: false, skillList: res.data.data })
-            })
-            .catch(error => {
-                if (error !== undefined) {
-                    localStorage.clear()
-                    // this.props.histroy.push('/login')
+    //             this.setState({ loading: false, skillList: res.data.data })
+    //         })
+    //         .catch(error => {
+    //             if (error !== undefined) {
+    //                 localStorage.clear()
+    //                 // this.props.histroy.push('/login')
+    //             } else {
+    //                 this.setState({ loading: false, })
+    //                 toast.error(error.message)
+    //             }
+    //         })
+    // }
+
+    /*New Skill List API*/
+  SkillList() {
+    this.setState({ loading: true }, () => {
+      commonService.getAPIWithAccessToken('skill/get-new-skill')
+        .then(res => {
+          // console.log("Get Skill List===========>", res)
+          if (undefined === res.data.data || !res.data.status) {
+            this.setState({ loading: false });
+            toast.error(res.data.message);
+            return;
+          }
+          this.setState({ loading: false, skillList1: res.data.data });
+          
+          const newArray = []
+          let unique=[]
+          let obj = {}
+
+          // console.log("ressss",JSON.stringify(res.data.data))
+          var newdata = [];
+for (let i = 0; i < res.data.data.length; i++) {
+
+    if (newdata && newdata.length > 0) {
+        var checkNotExist = false;
+        for (let k = 0; k < newdata.length; k++) {
+            if (newdata[k].areaId == res.data.data[i].areaId) {
+                checkNotExist = false;
+                if (newdata[k].vADesignation && newdata[k].vADesignation.length > 0) {
+                    // console.log(typeof newdata[k].va, 'insid11e');
+                    newdata[k].vADesignation.push({ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId });
                 } else {
-                    this.setState({ loading: false, })
-                    toast.error(error.message)
+                    // console.log('insid2');
+                    newdata[k].vADesignation = [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }];
                 }
-            })
+                // console.log('inside');
+                break;
+            } else {
+                checkNotExist = true;
+            }
+        }
+        if (checkNotExist == true) {
+            newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+        }
+        // console.log(checkNotExist);
+    } else {
+        newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
     }
+
+}
+console.log("NEW DATA",newdata)
+this.setState({ skillList: newdata})
+// this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { return ({ areaId: item.areaId, areaName: item.areaName }) }) })
+// this.setState({ SelectedClientAreaNeed: newdata})
+
+// console.log("Hello======",this.state.SelectedClientAreaNeed)
+
+        })
+        .catch(err => {
+          if (err.response !== undefined && err.response.status === 401) {
+            localStorage.clear();
+            this.props.history.push('/login');
+          } else {
+            this.setState({ loading: false });
+            toast.error(err.message);
+          }
+        })
+    })
+  }
+
     componentDidMount() {
+        this.SkillList()
         const { match: { params } } = this.props;
         // console.log("match", this.props);
-        this.getSkillList();
+        // this.getSkillList();
         // this.hireVaList();
         // this.addItem();
         this.itemList();
@@ -308,7 +379,9 @@ class HireVaAssignmentList extends Component {
 
 function SetSkillDropDownItem(props) {
     const skillInfo = props.skillInfo;
-    return (<option value={skillInfo.skillName} >{skillInfo.skillName}</option>)
+    // console.log("skillInfo",skillInfo)
+    // return (<option value={skillInfo.skillName} >{skillInfo.skillName}</option>)
+    return (<option value={skillInfo.areaId} >{skillInfo.areaName}</option>)
 }
 
 export default HireVaAssignmentList;

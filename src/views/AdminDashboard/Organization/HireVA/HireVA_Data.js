@@ -39,15 +39,16 @@ export class HireVA_Data extends Component {
         // let dataItem= [];
         let rowsItem = [];
         for (const [i, Store] of this.props.data.entries()) {
-            // console.log("Storeeeeee--------------------", Store)
+            // console.log("Storeeeeee-----iii---------------", Store)
             let hireInfo = {
                 // organizationName: Store.organizationName,
                 // industryName: Store.industry,
                 industryName: Store.industrytype.map(e=>e.name).toString(),
                 // skillName: Store.skillsFreelancer.toString(),
                 //  skillName: Store.skillsFreelancer.map(e=>e.parentName).toString(),
-                skillName:Store.skillsFreelancer.map(item => item.parentName)
+                skillName:Store.skillsFreelancer.map(item => item.areaName)
                 .filter((value, index, self) => self.indexOf(value) === index).toString(),
+                
                 choosePlan: Store.which_plan,
                 // need: Store.quickly_Need >1 ? Store.quickly_Need + " "+ 'days' :Store.quickly_Need + " "+ 'day' ,
                 need:  Store.quickly_Need == 2 ? "Under No Rush , wait best candidate":"Within 48 Hours",

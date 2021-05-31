@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import commonService from '../../../core/services/commonService';
 import Loader from '../../Loader/Loader';
 import "./../../Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage.css";
-import ClientAreaNeed from '../Organization/HireVA/clientNeedAreaList.json';
+// import ClientAreaNeed from '../Organization/HireVA/clientNeedAreaList.json';
 import { Multiselect } from 'multiselect-react-dropdown';
 
 //const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
@@ -15,6 +15,7 @@ class EditVaApplication extends Component {
   constructor(props){
     super(props);
     this.state = {
+      ClientAreaNeed:[],
       vaApplicationId: '',
       requestStatus:'',
       formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'',skillSet1:[], skillSet2:[], skillSet3:[], AreaSkillSet1:[],AreaSkillSet2:[], AreaSkillSet3:[], rateSkill1:'', rateSkill2:'', rateSkill3:'', referenceName:'', referenceEmail:'', notes:'', statusText:'' },
@@ -76,17 +77,17 @@ class EditVaApplication extends Component {
   }
 
   onSelectIndstry(selectedList, selectedItem) {
-    console.log("selectedList************************>", selectedList)
-      let seletedVaList = ClientAreaNeed.clientArea.filter(item =>selectedList.some(o=>item.parentId===o.parentId)).map(skill =>skill.vADesignation.map(e=>{return({profileName:e.profileName,id:e.id,parentId:skill.parentId,parentName:skill.parentName})}))
+    console.log("selectedList***********888*************>", selectedList,this.state.ClientAreaNeed)
+      let seletedVaList = this.state.ClientAreaNeed.filter(item =>selectedList.some(o=>item.areaId===o.areaId)).map(skill =>skill.vADesignation.map(e=>{return({skillName:e.skill, skill:e.skillId , areaId:skill.areaId,areaName:skill.areaName})}))
       var merged = [].concat.apply([], seletedVaList);
-              // console.log("merged",merged);   
+              console.log("merged----s>",merged);   
               this.setState({childList:merged})             
   }
 
   onRemoveIndustry(selectedList, removedItem) {
     console.log("remove---------", selectedList)
     let childList= this.state.childList;
-        const result =  childList.filter(el=>{return(el.parentId!==removedItem.parentId)})
+        const result =  childList.filter(el=>{return(el.areaId!==removedItem.areaId)})
         console.log("Rwsult Chnn--------",result)
       this.setState({childList:result})
   }
@@ -107,9 +108,9 @@ class EditVaApplication extends Component {
   }
 
   onSelectIndstry1(selectedList, selectedItem) {
-    console.log("selectedList************************>", selectedList)
-      let seletedVaList = ClientAreaNeed.clientArea.filter(item =>selectedList.some(o=>item.parentId===o.parentId)).map(skill =>skill.vADesignation.map(e=>{return({profileName:e.profileName,id:e.id,parentId:skill.parentId,parentName:skill.parentName})}))
-      var merged = [].concat.apply([], seletedVaList);
+    console.log("selectedList**********1**************>", selectedList)
+    let seletedVaList = this.state.ClientAreaNeed.filter(item =>selectedList.some(o=>item.areaId===o.areaId)).map(skill =>skill.vADesignation.map(e=>{return({skillName:e.skill, skill:e.skillId , areaId:skill.areaId,areaName:skill.areaName})}))
+    var merged = [].concat.apply([], seletedVaList);
               // console.log("merged",merged);   
               this.setState({childList1:merged})             
   }
@@ -117,7 +118,7 @@ class EditVaApplication extends Component {
   onRemoveIndustry1(selectedList, removedItem) {
     console.log("remove---------", selectedList)
     let childList1= this.state.childList1;
-        const result =  childList1.filter(el=>{return(el.parentId!==removedItem.parentId)})
+        const result =  childList1.filter(el=>{return(el.areaId!==removedItem.areaId)})
         console.log("Rwsult Chnn--------",result)
       this.setState({childList1:result})
   }
@@ -139,21 +140,22 @@ class EditVaApplication extends Component {
 
   onSelectIndstry2(selectedList, selectedItem) {
     console.log("selectedList************************>", selectedList)
-      let seletedVaList = ClientAreaNeed.clientArea.filter(item =>selectedList.some(o=>item.parentId===o.parentId)).map(skill =>skill.vADesignation.map(e=>{return({profileName:e.profileName,id:e.id,parentId:skill.parentId,parentName:skill.parentName})}))
-      var merged = [].concat.apply([], seletedVaList);
-              console.log("merged",merged);   
+    let seletedVaList = this.state.ClientAreaNeed.filter(item =>selectedList.some(o=>item.areaId===o.areaId)).map(skill =>skill.vADesignation.map(e=>{return({skillName:e.skill, skill:e.skillId , areaId:skill.areaId,areaName:skill.areaName})}))
+    var merged = [].concat.apply([], seletedVaList);
+              // console.log("merged",merged);   
               this.setState({childList2:merged})          
   }
 
   onRemoveIndustry2(selectedList, removedItem) {
     console.log("remove---------", selectedList)
     let childList2= this.state.childList2;
-        const result =  childList2.filter(el=>{return(el.parentId!==removedItem.parentId)})
+        const result =  childList2.filter(el=>{return(el.areaId!==removedItem.areaId)})
         console.log("Rwsult Chnn--------",result)
       this.setState({childList2:result})
   }
  
   componentDidMount() { 
+    this.SkillList();
     const { match: { params } } = this.props;    
     if(params.vaApplicationId !== undefined && params.vaApplicationId !=="") {
       this.setState({vaApplicationId: params.vaApplicationId});
@@ -162,14 +164,14 @@ class EditVaApplication extends Component {
       this.props.history.push('/admin/va-application');
 
     this.SkillListData();
-    console.log("ClientAreaNeed",ClientAreaNeed.clientArea.map(e=>{return(e.vADesignation.map(va=>
+    console.log("ClientAreaNeed-------------::::::",this.state.ClientAreaNeed.map(e=>{return(e.vADesignation.map(va=>
       ({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})))}))
 
-    this.setState({SelectedClientAreaNeed:ClientAreaNeed.clientArea.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
-    this.setState({SelectedClientAreaNeed1:ClientAreaNeed.clientArea.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
-    this.setState({SelectedClientAreaNeed2:ClientAreaNeed.clientArea.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
+    // this.setState({SelectedClientAreaNeed:this.state.ClientAreaNeed.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
+    // this.setState({SelectedClientAreaNeed1:this.state.ClientAreaNeed.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
+    // this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
 
-    // this.setState({childList:ClientAreaNeed.clientArea.map(e=>{return(e.vADesignation.map(va=>
+    // this.setState({childList:ClientAreaNeed.clentArea.map(e=>{return(e.vADesignation.map(va=>
     //   ({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})))})})
     // this.setState({childList1:ClientAreaNeed.clientArea.map(e=>{return(e.vADesignation.map(va=>
     //   ({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})))})})
@@ -177,6 +179,81 @@ class EditVaApplication extends Component {
     //   ({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})))})})
     
   }
+
+  // ************************
+  /*New Skill List API*/
+  SkillList() {
+    this.setState({ loading: true }, () => {
+      commonService.getAPIWithAccessToken('skill/get-new-skill')
+        .then(res => {
+          // console.log("Get Skill List===========>", res)
+          if (undefined === res.data.data || !res.data.status) {
+            this.setState({ loading: false });
+            toast.error(res.data.message);
+            return;
+          }
+          this.setState({ loading: false, skillList: res.data.data });
+          
+          const newArray = []
+          let unique=[]
+          let obj = {}
+
+          // console.log("ressss",JSON.stringify(res.data.data))
+          var newdata = [];
+for (let i = 0; i < res.data.data.length; i++) {
+
+    if (newdata && newdata.length > 0) {
+        var checkNotExist = false;
+        for (let k = 0; k < newdata.length; k++) {
+            if (newdata[k].areaId == res.data.data[i].areaId) {
+                checkNotExist = false;
+                if (newdata[k].vADesignation && newdata[k].vADesignation.length > 0) {
+                    // console.log(typeof newdata[k].va, 'insid11e');
+                    newdata[k].vADesignation.push({ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId });
+                } else {
+                    // console.log('insid2');
+                    newdata[k].vADesignation = [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }];
+                }
+                // console.log('inside');
+                break;
+            } else {
+                checkNotExist = true;
+            }
+        }
+        if (checkNotExist == true) {
+            newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+        }
+        // console.log(checkNotExist);
+    } else {
+        newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
+    }
+
+}
+console.log("NEW DATA",newdata)
+this.setState({ ClientAreaNeed: newdata})
+// this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { return ({ parentId: item.areaId, parentName: item.areaName }) }) })
+
+this.setState({SelectedClientAreaNeed:this.state.ClientAreaNeed.map(e=>{return({areaId:e.areaId,areaName:e.areaName, vaDesignation:e.vADesignation.map(va=>{return({areaId:e.areaId,areaName:e.areaName, skillName:va.skillName, skill:va.skill})})})})})
+this.setState({SelectedClientAreaNeed1:this.state.ClientAreaNeed.map(e=>{return({areaId:e.areaId,areaName:e.areaName, vaDesignation:e.vADesignation.map(va=>{return({areaId:e.areaId,areaName:e.areaName, skillName:va.skillName, skill:va.skill})})})})})
+this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return({areaId:e.areaId,areaName:e.areaName, vaDesignation:e.vADesignation.map(va=>{return({areaId:e.areaId,areaName:e.areaName, skillName:va.skillName, skill:va.skill})})})})})
+
+// this.setState({SelectedClientAreaNeed1:this.state.ClientAreaNeed.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
+// this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
+
+})
+.catch(err => {
+  if (err.response !== undefined && err.response.status === 401) {
+    localStorage.clear();
+    this.props.history.push('/login');
+  } else {
+    this.setState({ loading: false });
+    toast.error(err.message);
+  }
+})
+})
+}
+
+  // ************************
   
   /*Skill List API*/
   SkillListData() {  
@@ -227,7 +304,7 @@ class EditVaApplication extends Component {
 const uniqueObjectArray1=[]
 const uniqueObjectSet1 = new Set()
 for(const object1 of appDetail.skillSet1){
-  const objectJSON1 = JSON.stringify(object1.parentId);
+  const objectJSON1 = JSON.stringify(object1.areaId);
   if(!uniqueObjectSet1.has(objectJSON1)){
     uniqueObjectArray1.push(object1)
   }
@@ -240,7 +317,7 @@ for(const object1 of appDetail.skillSet1){
 const uniqueObjectArray2=[]
 const uniqueObjectSet2 = new Set()
 for(const object2 of appDetail.skillSet2){
-  var objectJSON2 = JSON.stringify(object2.parentId);
+  var objectJSON2 = JSON.stringify(object2.areaId);
   if(!uniqueObjectSet2.has(objectJSON2)){
     uniqueObjectArray2.push(object2)
   }
@@ -253,7 +330,7 @@ for(const object2 of appDetail.skillSet2){
 const uniqueObjectArray3=[]
 const uniqueObjectSet3 = new Set()
 for(const object3 of appDetail.skillSet3){
-  var objectJSON3 = JSON.stringify(object3.parentId);
+  var objectJSON3 = JSON.stringify(object3.areaId);
   if(!uniqueObjectSet3.has(objectJSON3)){
     uniqueObjectArray3.push(object3)
   }
@@ -337,7 +414,7 @@ for(const object3 of appDetail.skillSet3){
         // if(formInputField.skillSet3 !== "")
         //   formData.append('skillSet3',  this.state.formField.skillSet3.length>0? JSON.stringify(this.state.formField.skillSet3): JSON.stringify(this.state.childSelectedItem2));
 
-console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----SkillSee-----",this.state.formField.skillSet1)
+        console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----SkillSee-----",this.state.formField.skillSet1)
        
        if(formInputField.skillSet1 !== "")
         formData.append('skillSet1', this.state.childSelectedItem.length>0? JSON.stringify(this.state.childSelectedItem):JSON.stringify(this.state.formField.skillSet1) );
@@ -686,9 +763,9 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectIndstry}
                                   onRemove={this.onRemoveIndustry}
-                                  // groupBy="parentName"
+                                  // groupBy="areaName"
                                   selectedValues={formField.AreaSkillSet1}
-                                  displayValue="parentName"
+                                  displayValue="areaName"
                                   showCheckbox={true}
                                 />
                                 <FormFeedback>{errors['skillSet1']}</FormFeedback>
@@ -705,9 +782,9 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectSubIndstry}
                                   onRemove={this.onRemoveSubIndustry}
-                                  groupBy="parentName"
+                                  groupBy="areaName"
                                   selectedValues={formField.skillSet1}
-                                  displayValue="profileName"
+                                  displayValue="skillName"
                                   showCheckbox={true}
                                 />
                                 <FormFeedback>{errors['skillSet1']}</FormFeedback>
@@ -736,9 +813,9 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectIndstry1}
                                   onRemove={this.onRemoveIndustry1}
-                                  // groupBy="parentName"
+                                  // groupBy="areaName"
                                   selectedValues={formField.AreaSkillSet2}
-                                  displayValue="parentName"
+                                  displayValue="areaName"
                                   showCheckbox={true}
                                 />
                                 <FormFeedback>{errors['skillSet1']}</FormFeedback>
@@ -755,9 +832,9 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectSubIndstry1}
                                   onRemove={this.onRemoveSubIndustry1}
-                                  groupBy="parentName"
+                                  groupBy="areaName"
                                   selectedValues={formField.skillSet2}
-                                  displayValue="profileName"
+                                  displayValue="skillName"
                                   showCheckbox={true}
                                 />
                                 <FormFeedback>{errors['skillSet2']}</FormFeedback>
@@ -766,7 +843,7 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                             <Col md="2" sm="6">
                               <FormGroup>
                               <Label htmlFor="area">Rating 2</Label>
-                                <Input type="number" name="rateSkill1" value={formField.rateSkill2} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
+                                <Input type="number" name="rateSkill2" value={formField.rateSkill2} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
                               </FormGroup>
                             </Col>  
                           </Row>
@@ -786,9 +863,9 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectIndstry2}
                                   onRemove={this.onRemoveIndustry2}
-                                  // groupBy="parentName"
+                                  // groupBy="areaName"
                                   selectedValues={formField.AreaSkillSet3}
-                                  displayValue="parentName"
+                                  displayValue="areaName"
                                   showCheckbox={true}
                                 />
                                 <FormFeedback>{errors['skillSet3']}</FormFeedback>
@@ -805,9 +882,9 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectSubIndstry2}
                                   onRemove={this.onRemoveSubIndustry2}
-                                  groupBy="parentName"
+                                  groupBy="areaName"
                                   selectedValues={formField.skillSet3}
-                                  displayValue="profileName"
+                                  displayValue="skillName"
                                   showCheckbox={true}
                                 />
                                 <FormFeedback>{errors['skillSet3']}</FormFeedback>
@@ -821,8 +898,6 @@ console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----Ski
                             </Col>  
                           </Row>
                         </Col>
-
-
                         {/* <Col md="4" sm="12">
                           <h4>Skill Set 2</h4>
                           <Row>
