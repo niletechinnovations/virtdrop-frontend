@@ -8,6 +8,7 @@ class ApiService {
 
     /*Get API*/
     getAPI(urlSegment) {
+        console.log("axxxx",API_BASE_URL+urlSegment)
         return axios.get(API_BASE_URL+urlSegment);
     }
     /*Get API With Authentication header */

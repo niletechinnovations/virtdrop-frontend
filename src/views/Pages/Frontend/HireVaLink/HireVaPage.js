@@ -552,9 +552,10 @@ class HireVaPage extends Component {
     /*New Skill List API*/
     SkillList() {
         this.setState({ loading: true }, () => {
-            commonService.getAPIWithAccessToken('skill/get-new-skill')
+            commonService.getAPIWithAccessToken('skill/get-new-skill/')
+            // commonService.getAPI('skill/get-new-skill/')
                 .then(res => {
-                    // console.log("Get Skill List===========>", res)
+                    console.log("Get Skill List===========>", res)
                     if (undefined === res.data.data || !res.data.status) {
                         this.setState({ loading: false });
                         toast.error(res.data.message);

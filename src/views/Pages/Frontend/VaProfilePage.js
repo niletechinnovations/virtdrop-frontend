@@ -53,24 +53,25 @@ class VaProfilePage extends React.Component {
   meetingsLists() {
     this.setState({ loading: true }, () => {
       // console.log("filterQuerydd", filterQuery)
-      commonService.getAPIWithAccessToken('schedule-meeting')
+      commonService.getAPIWithAccessToken('schedule-meeting/')
         .then(res => {
-          console.log("result====Meeting=======>", res);
+          console.log("result====Meeting=======>", res.data.data.requestList);
           if (undefined === res.data.data || !res.data.status) {
             this.setState({ loading: false });
             toast.error(res.data.message);
             return;
           }
-          console.log("Form Field===========", typeof this.state.formField.hireVaId)
+          console.log("Form Field===========", this.state.formField.hireVaId)
           //  if(this.state.formField.hireVaId==res.data.data.requestList.map(e=>e.hireVaId))
-          const result = res.data.data.requestList.some(e => e.hireVaId==this.state.formField.hireVaId)
-          console.log("result", result)
-          if (result == true) {
+          const result = res.data.data.requestList.find(e => e.hireVaId==this.state.formField.hireVaId)
+          console.log("result====>", result.flag)
+          if (result.flag ==true ) {
             this.setState({ flag: true });
           } else { this.setState({ flag: false }) }
           this.setState({ loading: false, meetingsLists: res.data.data.requestList });
         })
         .catch(err => {
+          // console.log("Meeting------------->", err)
           if (err.response !== undefined && err.response.status === 401) {
             localStorage.clear();
             this.props.history.push('/login');
@@ -87,20 +88,22 @@ class VaProfilePage extends React.Component {
       // commonService.getAPIWithAccessToken('va-assignment/assigned-clients/?clientId='+clientId)
       commonService.getAPIWithAccessToken('va-application/va-unique-member/?vaAuthid=' + vaAuthId)
         .then(res => {
-          console.log("res VA MEMBER111111111", res.data.data.requestList[0])
+          // console.log("res VA MEMBER111111111", res.data.data.requestList[0])
           if (undefined === res.data.data || !res.data.status) {
             this.setState({ loading: false });
             toast.error(res.data.message);
             return;
           }
           this.setState({ loading: false, vaUniqueDetails: res.data.data.requestList[0] });
-          const skillSet_1 = this.state.vaUniqueDetails.skillSet1.map(e => e.skillName).toString()
-          const skillSet_2 = this.state.vaUniqueDetails.skillSet2.map(e => e.skillName).toString()
-          const skillSet_3 = this.state.vaUniqueDetails.skillSet3.map(e => e.skillName).toString()
-          // console.log("skillset_1",skillSet_1, skillSet_2, skillSet_3)
+          console.log("skill set----->", this.state.vaUniqueDetails.skillSet1)
+          const skillSet_1 = this.state.vaUniqueDetails.skillSet1 !=undefined? this.state.vaUniqueDetails.skillSet1.map(e => e.skillName).toString():""
+          const skillSet_2 = this.state.vaUniqueDetails.skillSet2 !=undefined? this.state.vaUniqueDetails.skillSet2.map(e => e.skillName).toString():''
+          const skillSet_3 = this.state.vaUniqueDetails.skillSet3 !=undefined? this.state.vaUniqueDetails.skillSet3.map(e => e.skillName).toString():''
+          console.log("skillset_1",skillSet_1, skillSet_2, skillSet_3)
           this.setState({ skillSet_1: skillSet_1, skillSet_2: skillSet_2, skillSet_3: skillSet_3 });
         })
         .catch(err => {
+          console.log("error-------------->",err)
           if (err.response !== undefined && err.response.status === 401) {
             localStorage.clear();
             this.props.history.push('/login');
@@ -161,7 +164,7 @@ class VaProfilePage extends React.Component {
     this.setState({ loading: true }, () => {
       commonService.postAPI(`va-application/kickoff/`, formData)
         .then(res => {
-          // console.log("formData VA Profile", res.data.flag)
+          console.log("formData VA Profile", res.data.flag)
           // this.setState( { flag:res.data.flag});
           if (undefined === res.data || !res.data.status) {
             this.setState({ loading: false });
@@ -282,7 +285,7 @@ class VaProfilePage extends React.Component {
 
   render() {
     const { loading, formField, errors, vaUniqueDetails, skillSet_1, skillSet_2, skillSet_3, flag } = this.state;
-    console.log("va unique details", flag)
+    console.log("Flag==================", flag)
     let loaderElement = '';
     if (loading)
       loaderElement = <Loader />
@@ -467,9 +470,7 @@ class VaProfilePage extends React.Component {
                               onChange={this.setSelectedDate} dateFormat="MM/dd/yyyy"
                             // onChange={this.changeHandler} dateFormat="MM/dd/yyyy" 
                             />
-                          
-                        </Col>
-                                                 
+                        </Col>    
                           <Col style={{marginTop:"1em"}} md={6} sm={{ size: '2', offset: 1 }}>
                             <input type="time" className="form-control input-lg" name="suggestedTime"
                               // selected={formField.suggestedTime}
