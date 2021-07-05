@@ -20,6 +20,7 @@ class VaProfilePage extends React.Component {
       skillset_2: '',
       skillset_3: '',
       flag: false,
+      kickoff_visible: false,
       formField: { firstName: '', lastName: '', email: '', phoneNumber: '', interestedOn: 'Business looking to hire', message: '', kickoff_date: '', suggestedDate: '', suggestedTime: '', hireVaId: '', vaAuthId: '' },
       loading: false,
       // kickoffDate:'',
@@ -64,10 +65,17 @@ class VaProfilePage extends React.Component {
           console.log("Form Field===========", this.state.formField.hireVaId)
           //  if(this.state.formField.hireVaId==res.data.data.requestList.map(e=>e.hireVaId))
           const result = res.data.data.requestList.find(e => e.hireVaId==this.state.formField.hireVaId)
-          console.log("result====>", result.flag)
-          if (result.flag ==true ) {
-            this.setState({ flag: true });
-          } else { this.setState({ flag: false }) }
+          if(result){
+              console.log("result====>", result)
+            if (result.flag ==true ) {
+              this.setState({ flag: true });
+            } else { this.setState({ flag: false }) }
+
+            if(result.kickoff_date!=='')
+              this.setState({ kickoff_visible: true });
+              
+          }else { this.setState({ flag: false }) }
+          
           this.setState({ loading: false, meetingsLists: res.data.data.requestList });
         })
         .catch(err => {
@@ -119,16 +127,6 @@ class VaProfilePage extends React.Component {
 
   setSelectedDate = date => {
 
-    //********************* */
-    // const name = date.target.name;
-    // const value = date.target.value;
-    // const formField = this.state.formField
-    // formField[name] = value;
-    // console.log("Name and Value", name  , value)
-    // this.setState({ formField: formField })
-
-    // ************************
-    // console.log("DATEETEST",date)
     let selectedDate = this.state.formField;
     // selectedDate.kickoff_date = date;
     selectedDate.suggestedDate = date;
@@ -164,19 +162,25 @@ class VaProfilePage extends React.Component {
     this.setState({ loading: true }, () => {
       commonService.postAPI(`va-application/kickoff/`, formData)
         .then(res => {
-          console.log("formData VA Profile", res.data.flag)
-          // this.setState( { flag:res.data.flag});
+          //console.log("formData VA Profile", res.data.flag)
+          console.log( "Res Data",res.data);
+          
+          this.setState( { flag:res.data.flag});
           if (undefined === res.data || !res.data.status) {
             this.setState({ loading: false });
             toast.error(res.data.message);
             return;
           }
+          
+          if (undefined === res.data || !res.cardAdded) {
+            this.setState({ loading: false });
+            toast.error('TEST CARD');
+            return;
+          }
+          
           // this.props.history.push('/va-profile/');
           toast.success(res.data.message);
-          this.setState({
-            loading: false,
-            errors: {}
-          })
+          this.setState({ loading: false, errors: {} })
         })
         .catch(err => {
           toast.error(err.message);
@@ -184,7 +188,7 @@ class VaProfilePage extends React.Component {
         })
     })
 
-    setTimeout(function(){window.location.reload()},6000)
+    //setTimeout(function(){window.location.reload()},6000)
   }
 
   submitContactForm(e) {
@@ -304,7 +308,7 @@ class VaProfilePage extends React.Component {
                     <img src="/images/avatar.jpg" alt="user" className="profile-pic" />
                   </div>
                   <div className="profile-content">
-                    <h2>{vaUniqueDetails.firstName + " " + vaUniqueDetails.lastName}</h2>
+                    <h2>{ (vaUniqueDetails!=='' ?  vaUniqueDetails.firstName + " " + vaUniqueDetails.lastName : '' ) }</h2>
                   </div>
                 </div>
               </div>
@@ -335,7 +339,7 @@ class VaProfilePage extends React.Component {
                       <div className="profile-personal-icon"><i className="fa fa-phone" aria-hidden="true"></i></div>
                       <div className="profile-personal-text">
                         <h2>Phone No.:</h2>
-                        <p><a href="tel:+91-8989899899">+91-{vaUniqueDetails.mobileNumber}</a></p>
+                        <p><a href="#">{vaUniqueDetails.mobileNumber}</a></p>
                       </div>
                     </div>
 
@@ -362,135 +366,129 @@ class VaProfilePage extends React.Component {
                     <ul className="user-info">
                       <li>
                         <label>Website/ Portfolio Links:</label>
-                        {/* <p>https://www.niletechnologies.com/</p> */}
                         <p>{vaUniqueDetails.portfolioLink}</p>
                       </li>
                       <li>
                         <label>Platforms, Tools, Systems , CRM :</label>
                         <p>VA Applcation</p>
                       </li>
-
                       <li>
                         <label>Skills:</label>
                         <p>{skillSet_1}, {skillSet_2},  {skillSet_3}</p>
                       </li>
-
-
                     </ul>
                     <Row>
+                    { vaUniqueDetails.audioFile !=='' ?
                       <Col md="3" lg="3" sm="3">
                         <div className="view-attachment-card">
                           <div className="view-attachment-icon">
                             <i className="fa fa-file-audio-o" aria-hidden="true"></i>
                           </div>
                           <div className="view-attachment-text">
-                            {/* <h2>Audio clip editor</h2>  audioFile */}
                             <p><a href={vaUniqueDetails.audioFile} download="VA Audio clip"><h2>Audio clip editor</h2></a></p>
-                          </div>
+                            </div>
                         </div>
                       </Col>
+                      : '' }
+                      
+                      { vaUniqueDetails.resumeCV !=='' ?
                       <Col md="3" lg="3" sm="3">
                         <div className="view-attachment-card">
                           <div className="view-attachment-icon">
                             <i className="fa fa-file-word-o" aria-hidden="true"></i>
                           </div>
                           <div className="view-attachment-text">
-                            {/* <h2>ResumeCV */}
-                            <p><a href="http://localhost:3000/1610693626165Data.csv" download="VA Resume"><h2>ResumeCV</h2></a></p>
-                            {/* </h2> */}
-                            {/* <p><a href="http://localhost:3000/1610693626165Data.csv" download="VA Resume">ddd</a></p> */}
+                            <p><a href={vaUniqueDetails.resumeCV} download="VA Resume"><h2>Resume / CV</h2></a></p>
                           </div>
                         </div>
                       </Col>
+                      : '' }
+                    
+                      { vaUniqueDetails.intentLetter !=='' ?
                       <Col md="3" lg="3" sm="3">
                         <div className="view-attachment-card">
                           <div className="view-attachment-icon">
                             <i className="fa fa-file-pdf-o" aria-hidden="true"></i>
                           </div>
                           <div className="view-attachment-text">
-                            {/* <h2>Intent Letter</h2> */}
-                            {/* <p><a href="http://localhost:3000/`${va}` download="VA Resume">ddd</a></p> */}
-                            {/* <a href={dataInfo.invoiceAttachment} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-primary" title="Download Invoice"></a> */}
-                            {/* <a href={`http://localhost:3000/va-profile/`+vaUniqueDetails.intentLettr}  */}
                             <p><a href={vaUniqueDetails.intentLetter} download="Intent Lettter"
                               target="_blank" rel="noopener noreferrer" title="Download Intent Letter"><h2>Intent Letter</h2></a></p>
                           </div>
                         </div>
                       </Col>
+                      : '' }
+
+                      { vaUniqueDetails.internetSpeedScreenshot !=='' ?
                       <Col md="3" lg="3" sm="3">
                         <div className="view-attachment-card">
                           <div className="view-attachment-icon">
                             <i className="fa fa-picture-o" aria-hidden="true"></i>
                           </div>
                           <div className="view-attachment-text">
-                            {/* <h2>Internet Connection Speed</h2> */}
-                            <p><a href={`http://localhost:3000/` + vaUniqueDetails.internetSpeedScreenshot} download="InternetSpeed Screenshot"><h2>Internet Connection Speed</h2></a></p>
-
+                            <p><a href={vaUniqueDetails.internetSpeedScreenshot} download="InternetSpeed Screenshot"><h2>Internet Connection Speed</h2></a></p>
                           </div>
                         </div>
                       </Col>
+                    : '' }
                     </Row>
                   </div>
                 </div>
 
                 {flag == true ? (<div className="kickoff-date-card">
+                {this.state.kickoff_visible == true ?
+                <div>
                   <h2>Enter Your Kickoff Date</h2>
-                  <div className="date-form-group">
-                    {/* <input name="kickoff_date" type="date" className="form-control" min={new Date()} value={formField.kickoff_date} onChange={this.changeHandler} />  */}
-                   
-                      <Col md={"12"}>
+                  <div className="date-form-group">    
+                    <Row>               
+                      <Col md={"6"} className="suggested-date">
                         <FormGroup >
                           <DatePicker className="form-control input-lg"
                             selected={formField.kickoff_date}
                             minDate={(new Date())}
                             onChange={this.setSelectedDateKickoff} dateFormat="MM/dd/yyyy"
-
                           />
-                          <Button type="submit" className="btn-start" onClick={this.submitKickoff}>Submit</Button>
+                          <i className="fa fa-calendar"></i>
                         </FormGroup>
-
                       </Col>
+                      <Col md={"6"}>
+                        <Button type="submit" className="btn-start" onClick={this.submitKickoff}>Submit</Button>
+                      </Col>
+                    </Row>
+                    </div>
                   </div>
+                  : '' }
+
                 </div>) : 
 
                (<div className="kickoff-date-card">
-                  <h2 style={{marginLeft:"2em"}} >Suggested Date & TIme</h2>
+                  <h2 >Suggested Date & TIme</h2>
                   <div className="date-form-group">
-                    {/* <input name="suggestedDate" type="date" className="form-control" min={new Date()} value={formField.suggestedDate} onChange={this.changeHandler} />  */}
-                   <Row>
-                    {/* <Col md={"12"}> */}
-                      <FormGroup >
+                    <FormGroup >
                       <Row >
-                         <Col  md={6} sm={{ size: '2', offset: 1 }}> 
-                          
+                         <Col md={5} className="suggested-date">                           
                             <DatePicker className="form-control input-lg"
                               selected={formField.suggestedDate}
                               minDate={(new Date())}
-                              // name="suggestedDate"
                               onChange={this.setSelectedDate} dateFormat="MM/dd/yyyy"
-                            // onChange={this.changeHandler} dateFormat="MM/dd/yyyy" 
                             />
+                            <i className="fa fa-calendar"></i>
                         </Col>    
-                          <Col style={{marginTop:"1em"}} md={6} sm={{ size: '2', offset: 1 }}>
-                            <input type="time" className="form-control input-lg" name="suggestedTime"
-                              // selected={formField.suggestedTime}
-                              value={formField.suggestedTime}
-                              // minDate={(new Date())}
-                              // timeFormat="HH:mm"
-                              // onChange={this.setSelectedTime} 
-                              onChange={this.changeHandler}
-                            />
-                            </Col> 
-                         </Row>
+                        <Col md={5}>
+                          <input type="time" className="form-control input-lg" name="suggestedTime"
+                            value={formField.suggestedTime}
+                            onChange={this.changeHandler}
+                          />
+                        </Col> 
+                        <Col md={2}>
+                          <Button type="submit" className="btn-start" onClick={this.submitKickoff}>Submit</Button>
+                        </Col>
+                      </Row>
                         
-                     <Col style={{marginTop:"1em", marginLeft:"5em"}} >
-                     <Button type="submit" className="btn-start" onClick={this.submitKickoff}>Submit</Button>
-                     </Col>
+                     
                         
                       </FormGroup>
 
                     {/* </Col> */}
-                    </Row>
                   </div>
                 </div>)}
                 {/* <div className="kickoff-date-card">

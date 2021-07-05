@@ -36,33 +36,30 @@ export default class ClienrtVAMeetingData extends Component {
       // let [name] =meeting.clientCompleteDetails.map(e=>e.FirstName)
             //  var [clientName] =meeting.map(e=>e.clientCompleteDetails.map(el=>el.FirstName))
             //  console.log("clei",name)
-          let  dt = new Date(meeting.kickoff_date)
-          console.log("dddddddddddd",dt)
+      let  dt = new Date(meeting.kickoff_date)
+      console.log("dddddddddddd",dt)
+      let suggestedMonth = new Date(meeting.suggestedDate).getMonth()+1;
       let resInfo = {
-        // clinetAuthId: meeting.clientId,
-        // clientName: meeting.clientFirstName + ' ' + meeting.clientLastName || " ",
-        // clientEmail: meeting.clientEmail || " ",
-        // clientMob: meeting.clientMobileNo || " ",
-        // clientOrganizationName: meeting.clientOrganizationName,
-        // hireVAId: meeting.hireVAId,
-        // vAAuthId: meeting.VADetails.vaAuthid || " ",
-        // VaName: meeting.VADetails.vACompleteName.join(",  ")  || " ",
-        // VaEmail: meeting.VADetails.vAEmail.join(",        ")|| " ",
-        // VaMobile: meeting.VADetails.vAMobileNo || " ",
-        // suggestedDate:new Date(meeting.suggestedDate).getDate() +"/"+new Date(meeting.suggestedDate).getMonth() +"/"+new Date(meeting.suggestedDate).getFullYear() ||'',
-        // suggestedTime:meeting.suggestedTime ||'',
        
         clinetAuthId: meeting.clientId,
-        clientName:  meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.FirstName):'',
-        clientEmail: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.email):'',
-        clientMob: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.PhoneNumber):'',
-        clientOrganizationName: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.companyName):'',
+        clientName: meeting.clientName,
+        //clientName:  meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.FirstName):'',
+        //clientEmail: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.email):'',
+        //clientMob: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.PhoneNumber):'',
+        clientEmail: meeting.clientEmail,
+        clientMob: meeting.clientPhone,
+        clientMob: meeting.clientPhone,
+        clientOrganizationName: meeting.organizationName,
+        //clientOrganizationName: meeting.clientCompleteDetails? meeting.clientCompleteDetails.map(e=>e.companyName):'',
         hireVAId: meeting.hireVAId,
-        vAAuthId: meeting.selectedVaDetails?  meeting.selectedVaDetails.map(e=>e.authId):'',
-        VaName: meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.firstName).toString():'',
-        VaEmail:meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.email).join(",        "):'',
-        VaMobile: meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.mobileNumber):'',
-        suggestedDate:meeting.suggestedDate? new Date(meeting.suggestedDate).getDate() +"/"+new Date(meeting.suggestedDate).getMonth()+1 +"/"+new Date(meeting.suggestedDate).getFullYear() :'',
+        vAAuthId: meeting.vaAuthId,
+        VaName: meeting.vaName,
+        VaEmail:meeting.vaEmail,
+        VaMobile: meeting.vaMobile,
+        //VaName: meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.firstName).toString():'',
+        //VaEmail:meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.email).join(",        "):'',
+       //VaMobile: meeting.selectedVaDetails? meeting.selectedVaDetails.map(e=>e.mobileNumber):'',
+        suggestedDate:meeting.suggestedDate? new Date(meeting.suggestedDate).getDate() +"/"+suggestedMonth +"/"+new Date(meeting.suggestedDate).getFullYear() :'',
         suggestedTime:meeting.suggestedTime ? meeting.suggestedTime + "AM":'',
         kickoff_Date: meeting.kickoff_date? dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear() :'Not Available',
 
@@ -86,21 +83,21 @@ export default class ClienrtVAMeetingData extends Component {
         name: 'kickoff_Date',
       },
       {
-        label: 'suggested Date',
+        label: 'Suggested Date',
         name: 'suggestedDate',
       },
       {
-        label: 'suggested Time.',
+        label: 'Suggested Time.',
         name: 'suggestedTime',
       },
       {
-        label: 'Client Phone no.',
+        label: 'Client Phone',
         name: 'clientMob',
       },
-      {
-        label: 'Client Company name',
+      /*{
+        label: "Client's Company",
         name: 'clientOrganizationName',
-      },
+      },*/
       {
         label: 'VA Name',
         name: 'VaName',
@@ -108,14 +105,11 @@ export default class ClienrtVAMeetingData extends Component {
       {
         label: 'VA Email',
         name: 'VaEmail',
-        
       },
       {
         label: "VA Mobile",
         name: 'VaMobile'
-
       },
-      
       {
         name: "action",
         label: " Action ",
@@ -127,30 +121,11 @@ export default class ClienrtVAMeetingData extends Component {
             let i = tableMeta.rowIndex;
             let link = this.state.meetinglink
 
-
-
-
             return (
 
               <div className="actionBtnGroup">
-                {/* <Button className="btn-edit btn-success" size='sm' onClick={() => { if (link=prompt('Please! Add meeting Link into the box',"Add meeting Link")) { this.sendMeetingMail(link,i) }; }} to={`admin/schedule-meeting/${rowsItem[i].clinetAuthId}`} title=" Schedule Meeting"><i className="fa fa-handshake-o"></i>
-              </Button> */}
-
-                {/* <Link className="btn btn-sm btn-primary" size='sm' onClick={() => { if (link=prompt('Please! Add meeting Link into the box',"Add meeting Link")) { this.sendMeetingMail(link,i) } }} to={{pathname:`/admin/schedule-meeting/${rowsItem[i].clinetAuthId}`, state: rowsItem[i]}}><i className="fa fa-envelope"></i></Link> */}
-
-                {/* <Link className="btn-edit btn-success" size='sm' onClick={() => { if (link = prompt('Please! Add meeting Link into the box', "Add meeting Link")) { this.sendMeetingMail(link, i, rowsItem[i]) } }} to={{ pathname: `/admin/schedule-meeting`, state: rowsItem[i] }}><i className="fa fa-envelope"></i></Link> */}
-
                 <Button className="btn-edit btn-success" size='sm' onClick={() => { this.sendMeetingMail(link, i, rowsItem[i]) } } title="Sechdule Meeting"><i className="fa fa-envelope"></i></Button>
-
-
-                {/* // <div className="actionBtnGroup"> */}
-                {/* <div className="actionBtnGroup"> */}
-                {/* <Button className="btn-edit btn-success" size='sm' onClick={() => { if (link=prompt('Please! Add meeting Link into the box',"Add meeting Link")) { this.sendMeetingMail(link,i) }; }} title="Schedule Meeting"><i className="fa fa-envelope"></i>
-                    </Button> */}
-
-                {/* <Link className="btn btn-sm btn-primary" size='sm' onClick={() => { if (link=prompt('Please! Add meeting Link into the box',"Add meeting Link")) { this.sendMeetingMail(link,i) }; }} to={`admin/schedule-meeting/${rowsItem[i].clinetAuthId}`}><i className="fa fa-envelope"></i></Link> */}
-                {/* </Button> */}
-                <Button className="btn-delete btn-danger" size='sm' onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteEnquiryItem(i) }; }} title="Delete Meeting"><i className="fa fa-trash"></i> </Button>
+               <Button className="btn-delete btn-danger" size='sm' onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteEnquiryItem(i) }; }} title="Delete Meeting"><i className="fa fa-trash"></i> </Button>
               </div>
 
             );

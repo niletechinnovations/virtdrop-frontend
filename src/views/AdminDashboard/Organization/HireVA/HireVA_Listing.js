@@ -660,16 +660,19 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
 
     handleShowItem(rowIndex){
         const itemInfo = this.state.hireVaListData[rowIndex];
-        // console.log("itemInfo----------------->",itemInfo)
+         console.log("itemInfo----------------->",itemInfo)
         
+        const areaArr = itemInfo.skillsFreelancer.map(e=>e.areaName);
+        const uniqueArea = [...new Set(areaArr)];
+
         const formDataShowField ={
             howManyVas: itemInfo.howManyVas,
             whichIndustry:itemInfo.industrytype.map(e=>e.name).toString(),
             othersIndustry:itemInfo.othersIndustry,
             whichDaysOfWeek:itemInfo.Days_A_Week,
-            requiredArea:itemInfo.skillsFreelancer.map(e=>e.parentName),
+            requiredArea: uniqueArea,
             // freelancerSkills:itemInfo.skillsFreelancer.map(e=>e.vADesignation.map(el=>el.profileName)),
-            freelancerSkills:itemInfo.skillsFreelancer.map(e=>e.profileName),
+            freelancerSkills:itemInfo.skillsFreelancer.map(e=>e.skillName),
             hoursADay:itemInfo.Hours_A_Day + " hrs",
             quicklyNeed:itemInfo.quickly_Need == 2 ? "Under No Rush , wait best candidate":"Within 48 Hours",
             choosePlan:itemInfo.which_plan,
@@ -680,6 +683,9 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
             phoneNumber:itemInfo.phoneNumber
 
         }
+       // console.log("itemInfo----------------->",formDataShowField)
+        
+
 
         this.setState({ rowIndex: rowIndex, formDataShowField: formDataShowField, modal1: true, formValid: true });
 
@@ -1210,16 +1216,7 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                             </Input>
                                             </FormGroup>
                                             </Col>
-                                            
-
-                                            {/* <Col md={"6"}>
-                                    <FormGroup>
-                                        <Label htmlFor="quicklyNeed"> How quickly do you need someone? </Label>
-                                        <Input type="text" placeholder="Quickly Need" id="quicklyNeed" name="quicklyNeed" value={this.state.formDataShowField.quicklyNeed} onChange={this.changeHandler} readOnly={true}>
-                                        </Input>
-                                    </FormGroup>
-                                </Col> */}
-
+                                          
                                             <Col md={"6"}>
                                     <FormGroup>
                                         <Label htmlFor="quicklyNeed">How quickly do you need someone?</Label>

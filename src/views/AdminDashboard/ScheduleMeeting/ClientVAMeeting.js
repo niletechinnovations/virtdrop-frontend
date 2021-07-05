@@ -193,19 +193,19 @@ export class ClientVAMeeting extends Component {
     const formData = {
       meetingLink: this.state.formField.meetingLink,
       clientId: rowInfo.clientId,
-      clientOrganizationName: rowIndex.clientOrganizationName,
+      clientOrganizationName: rowInfo.clientOrganizationName,
       clientEmail: rowInfo.clientEmail,
       clientName: rowInfo.clientFirstName,
-      hireVAId: rowInfo.hireVAId,
+      hireVAId: rowInfo.hireVaId,
 
-      vAEmail: rowInfo.selectedVaDetails.map(e=>e.email),
-      vAMobileNo: rowInfo.selectedVaDetails.map(e=>e.mobileNumber),
-      vAName: rowInfo.selectedVaDetails.map(e=>e.firstName),
-      vAAuthId: rowInfo.selectedVaDetails.map(e=>e.authId),
-      // vAEmail: rowInfo.VADetails.vAEmail,
-      // vAMobileNo: rowInfo.VADetails.vAMobileNo,
-      // vAName: rowInfo.VADetails.vACompleteName,
-      // vAAuthId: rowInfo.VADetails.vaAuthid,
+      //vAEmail: rowInfo.selectedVaDetails.map(e=>e.email),
+      //vAMobileNo: rowInfo.selectedVaDetails.map(e=>e.mobileNumber),
+      //vAName: rowInfo.selectedVaDetails.map(e=>e.firstName),
+      //vAAuthId: rowInfo.selectedVaDetails.map(e=>e.authId),
+       vAEmail: rowInfo.vaEmail,
+       vAMobileNo: rowInfo.vaMobile,
+       vAName: rowInfo.vaName,
+       vAAuthId: rowInfo.vaAuthId,
     }
     this.setState({ formField: formData })
     console.log("FORM DATA ", this.state.formField)
@@ -219,7 +219,8 @@ export class ClientVAMeeting extends Component {
     const rowInfo = this.state.meetingsLists[0];
     console.log("rowInfo", rowInfo)
     const delFormData = {
-      "clientId": rowInfo.clientId,
+      '_id': rowInfo._id,
+      "hireVaId": rowInfo.hireVaId,
     };
     this.setState({ loading: true }, () => {
       commonService.deleteAPIWithAccessToken(`schedule-meeting`, delFormData)
@@ -352,10 +353,10 @@ export class ClientVAMeeting extends Component {
             <ModalBody>
               {/* <FormErrors formErrors={this.state.formErrors} /> */}
               <Row>
-                <Col md={"6"}>
+                <Col md={"12"}>
                   <FormGroup>
-                    <Label htmlFor="meetingLink" style={{ "font-size": "16px" }}>Meeting Link</Label>
-                    <Input type="textarea" style={{ "min-width": "100%", "height": "10rem", "font-size": "14pt" }} placeholder="Meeting Link*" value={this.state.formField.meetingLink} name="meetingLink" onChange={this.changeHandler} required>
+                    <Label htmlFor="meetingLink" style={{ "fontSize": "16px" }}>Meeting Link</Label>
+                    <Input type="textarea" className="form-control" placeholder="Meeting Link*" value={this.state.formField.meetingLink} name="meetingLink" onChange={this.changeHandler} required>
                     </Input>
                   </FormGroup>
                 </Col>

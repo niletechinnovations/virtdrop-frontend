@@ -3,20 +3,20 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	height: 20vh;
+	height: 15vh;
 	font-family: "Titillium Web", sans-serif;
 }
 
 .progress {
   color: #2521c5;
-  height: 2em;
+  height: 1.5em;
   width: 90%;
   background-color: #1360fe;
   position: relative;
 	border-radius: 16px;
-	box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
-    line-height: 1.8;
-    font-size: 1.79rem;
+	/*box-shadow: 0 2px 3px rgba(0,0,0,.5) inset; */
+    line-height: 1.5;
+    font-size: 1.3rem;
 }
 
 .progress:before {
@@ -28,7 +28,7 @@
   padding-top: 5px;
   color: white;
 }
-
+.nav-steps{ display: none;}
 .progress .value {
   background-color:#041c52;
   display: inline-block;

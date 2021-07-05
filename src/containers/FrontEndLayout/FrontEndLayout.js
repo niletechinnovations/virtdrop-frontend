@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 // routes config
 import frontendRoutes from '../../routes/frontendRoutes.js';
 import FrontEndHeader from '../CommonLayout/CommonFrontEndHeader';
-import FrontEndFooter from './FrontEndFooter';
+//import FrontEndFooter from './FrontEndFooter';
 import CommonFrontEndFooter from '../CommonLayout/CommonFrontEndFooter';
 import '../CommonLayout/CommonFrontEndHeader.css';
 // import './FrontEndHeader.css'

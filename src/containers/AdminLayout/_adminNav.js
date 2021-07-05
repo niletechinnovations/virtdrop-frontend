@@ -10,21 +10,21 @@ export default {
       url: '/admin/organization',
       icon: 'icon-people',   
     },
-    {
+    /*{
       name: 'VA Requests',
       url: '/admin/va-request', 
       icon: 'fa fa-list',
-    },
+    },*/
     {
       name: 'Hire VA Request',
       url: '/admin/hire-va',
       icon:"fa fa-globe"
     },
-    {
+    /*{
       name: 'VA Assignment',
       url: '/admin/hire-va-assignment-list',
       icon: 'fa fa-tasks'
-    },
+    },*/
     {
       name: 'Discovery Call',      
       icon: 'fa fa-calendar-o',

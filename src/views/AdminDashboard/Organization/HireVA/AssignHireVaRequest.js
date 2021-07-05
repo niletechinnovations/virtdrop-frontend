@@ -137,62 +137,13 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
       this.getAssignedVA(params.hireVARequestId);
     }
     this.itemList();
-    // this.getSkillList();
     this.parentChildrenDataHandler();
-    // this.onChangeSelectHandler();
-    // this.assignObjectPaths(ClientAreaNeed);
-
-    // this.setState({ SelectedClientAreaNeed: ClientAreaNeed.map(item => { return ({ parentId: item.parentId, parentName: item.parentName }) }) })
-
-    //   this.assignObjectPaths(this.state.SelectedClientAreaNeed);
-    // this.onNodeToggle()
-    // this.onAction()
-
-
-    // this.scrollToMyRef()
-
-    // tree view selection 
-    // ClientAreaNeed.clientArea
-
   }
-  // scrollToMyRef = () => window.scrollTo(0, this.myRef.current.offsetTop)   
-
-  // tree select 
-
-  // onChangeSelectHandler = (currentNode, selectedNodes) => {
-  //   console.log("path::", selectedNodes,"====curentNode===>",currentNode);
-  //   // console.log("selectedNodes",selectedNodes._children)
-  //   if(selectedNodes !=undefined){
-  //     console.log("selectedNodes",selectedNodes._children)
-  //   }
-  // };
-
-  // assignObjectPaths = (obj, stack) => {
-  //   console.log("obje-------->",obj,"Stack",stack)
-  //   Object.keys(obj).forEach(k => {
-  //     const node = obj[k];
-  //     if (typeof node === "object") {
-  //       node.path = stack ? `${stack}.${k}` : k;
-  //       this.assignObjectPaths(node, node.path);
-  //     }
-  //   });
-  // };
-
-  // onNodeToggle(currentNode) {
-  //   console.log("currentNode On===>>>>>>>>>",currentNode)
-  //   // currentNode: { label, value, children, expanded, checked, className, ...extraProps }
-  // }
-  //  onAction = (node, action) => {
-  //   console.log('onAction::>>>>>>>>', action, node)
-  // }
 
   onSelectSubIndstry(selectedList, selectedItem) {
     console.log("LLLLL", selectedList, "---------------", selectedItem)
     const childList = this.state.childList;
     this.setState({ childSelectedItem: selectedItem })
-
-
-
   }
   onRemoveSubIndustry(selectedList, removedItem) {
     // const result =  this.state.childList.filter(el=>el.parentName!==removedItem.parentName)
@@ -360,28 +311,6 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
     })
   }
 
-  // getSkillList = () => {
-  //   commonService.getAPIWithAccessToken('skill')
-  //     .then(res => {
-  //       console.log("Skilssss---------888--------",res)
-  //       if (undefined === res.data.data || !res.data.status) {
-  //         this.setState({ loading: false });
-  //         toast.error(res.data.message);
-  //         return;
-  //       }
-
-  //       this.setState({ loading: false, skillList: res.data.data })
-  //     })
-  //     .catch(error => {
-  //       if (error !== undefined) {
-  //         localStorage.clear()
-  //         // this.props.histroy.push('/login')
-  //       } else {
-  //         this.setState({ loading: false, })
-  //         toast.error(error.message)
-  //       }
-  //     })
-  // }
 
   filterVaMemberList() {
     const filterItem = this.state.filterItem;
@@ -516,29 +445,6 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                 <Input id="vaNameEmail" placeholder="Filter by name or email..." name="emailOrName" value={this.state.filterItem.emailOrName} onChange={this.changeFilterHandler} />
                               </Col>
                               <Col className="dropdown-scrollbar" md="4">
-                                {/* <Input type = "select" placeholder="Filter by skills" name="filter_Skills" value={this.state.filterItem.filter_Skills} onChange={this.changeFilterHandler}>
-                                    <option value="">All</option>
-                                        {skillList.map((skillInfo, index) =>
-                                            <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
-                                        )}
-                                        </Input> */}
-                                {/* <Input type = "select" placeholder="Filter by skills" name="filter_Skills" value={this.state.filterItem.filter_Skills} onChange={this.changeFilterHandler}>
-                                       <option value="">All</option> */}
-                                {/* {ClientAreaNeed.clientArea.map((skillInfo, index) =>
-                                            <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
-                                        )} */}
-                                {/* <CheckboxTree
-                                             checked={checked}
-                                             expanded={expanded}
-                                            //  iconsClass="fa5"
-                                             nodes={nodes}
-                                             onCheck={checked => this.setState({ checked })}
-                                             onExpand={expanded => this.setState({ expanded })}
-                                           /> */}
-                                {/* </Input> */}
-                                {/* 
-                                        <Input type = "select" placeholder="Filter by skills" name="filter_Skills" value={this.state.filterItem.filter_Skills} onChange={this.changeFilterHandler}>
-                                       <option value="">All</option> */}
                                 <Label htmlFor="area">Area</Label>
                                 <Multiselect
                                   options={SelectedClientAreaNeed}
@@ -547,18 +453,13 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                   singleSelect
                                   id="css_custom"
                                   style={{ chips: { background: "#4bb8f9" }, searchBox: { border: "1px solid grey", "borderBottom": "1px solid grey", "borderRadius": "0px" } }}
-
-
-                                  // .searchBox#css_custom_input::placeholder {{color: red} }
                                   onSelect={this.onSelectIndstry}
                                   onRemove={this.onRemoveIndustry}
-                                  // groupBy="parentName"
-                                  // selectedValues={SelectedClientAreaNeed}
                                   displayValue="areaName"
                                   showCheckbox={true}
                                 />
                               </Col>
-                              <Col md={4}>
+                              <Col md={3}>
                                 <Label htmlFor="skills">Skills</Label>
                                 <Multiselect
                                   options={childList}
@@ -574,31 +475,13 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                   displayValue="skillName"
                                   showCheckbox={true}
                                 />
-                                {/* <div ref={this.myRef} className="AddScroll">
-                                <DropdownTreeSelect
-                                texts={{ placeholder: 'Select' }}
-                                  data={SelectedClientAreaNeed}
-                                  onChange={this.onChangeSelectHandler}
-                                  className="bootstrap-demo"
-                                  onAction={this.onAction} 
-                                  onNodeToggle={this.onNodeToggle}
-                                  // showDropdown= {showDropdown}
-                                  // inlineSearchInput={true}
-                                />
-                                </div> */}
-                                {/* </Input> */}
-
                               </Col>
-                              <Row>
-                                <Col md={1}>
-                                  <Label htmlFor="area">Search</Label>
-                                  <Button onClick={this.filterVaMemberList}><i className="fa fa-search"></i></Button>
-                                </Col>
-                                <Col style={{ marginLeft: "10px" }} md={1}>
-                                  <Label style={{ marginBottom: "23px" }} htmlFor="refresh"></Label>
-                                  <Button color="danger" type="reset" onClick={event => this.resetfilterForm(event)} title="Reset Fields"><i className="fa fa-refresh"></i></Button>
-                                </Col>
-                              </Row>
+                              <Col md={2}  style={{ marginTop: "30px" }}>
+                                <Label htmlFor="area" >&nbsp;</Label>
+                                <Button onClick={this.filterVaMemberList}><i className="fa fa-search"></i></Button>
+                                <Label htmlFor="area" >&nbsp;</Label>
+                                <Button color="danger" type="reset" onClick={event => this.resetfilterForm(event)} title="Reset Fields"><i className="fa fa-refresh"></i></Button>
+                              </Col>
                             </Row>
                           </div>
                           <CardBody>

@@ -27,9 +27,9 @@ h1, h2, h3, h4, h5, h6 {padding: 5px 0 15px 0;color: #333;font-weight: normal;-w
 
 
 .client-body{background: #fafafe;    background-size: cover; background-repeat: no-repeat;}
-.Client-form-question h2 {color: #051441;margin-bottom: 24px;line-height: 1.2em;margin-top: 24px;font-size: 28px;font-weight: 700;text-align: center;}
+.Client-form-question h2 {color: #051441;margin-bottom: 24px;line-height: 1.2em;margin-top: 0px;font-size: 28px;font-weight: 700;text-align: center;}
 .Client-form-answer {position: relative;margin: 0 auto;/* min-height: 350px; */text-align: center;padding: 30px;box-shadow: 0 0px 30px #d3d8e242;border-radius: 20px;border: 1px solid #ececf3;background: transparent;/* background: rgb(254,255,255); *//* background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(243,243,251,1) 100%);*//* background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(243,243,251,1) 100%); *//* background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(243,243,251,1) 100%); *//*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#f3f3fb',GradientType=0 );*/}
-.Client-form-section{position: relative; padding: 3rem 0; }
+.Client-form-section{position: relative; padding: 2rem 0; }
 .Client-form-section .container {max-width: 860px; } 
 .Client-form-body{position: relative;}
 
@@ -276,12 +276,13 @@ span.SRRadio-value-text {position: absolute; bottom: 5px; text-align: center; le
 .panel {text-align: center; border: 1px solid #dee2e6;border-radius: 4px; }
 .panel:hover { box-shadow:0 0 30px #e8f1f7; }
 .panel-body {padding: 0px; text-align: center; }
+.panel-heading .panel-title{ font-weight: 500; }
 .the-price {background-color: rgba(220,220,220,.17); box-shadow: 0 1px 0 #dcdcdc, inset 0 1px 0 #fff; padding: 20px; margin: 0; }
-.the-price h1 {line-height: 1em; padding: 0; margin: 0; }
-.subscript {font-size: 25px; }
+.the-price h1 {line-height: 1em; padding: 0; margin: 0; font-weight: 600; }
+.subscript {font-size: 28px; text-transform: none; }
 .cnrflash {position: absolute; top: -9px; right: 4px; z-index: 1; overflow: hidden; width: 70px; height: 70px; border-radius: 3px 5px 3px 0; }
-.cnrflash-inner{position: absolute; bottom: 0; right: 0; width: 104px; height: 91px; -ms-transform: rotate(45deg); -o-transform: rotate(45deg); -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -webkit-transform-origin: 100% 100%; -ms-transform-origin: 100% 100%; -o-transform-origin: 100% 100%; -moz-transform-origin: 100% 100%; background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.1) 50%), linear-gradient(0deg, transparent 0%, rgba(1,1,1,.2) 50%); background-size: 4px,auto, auto,auto; background-color: #aa0101; box-shadow: 0 3px 3px 0 rgba(1,1,1,.5), 0 1px 0 0 rgba(1,1,1,.5), inset 0 -1px 8px 0 rgba(255,255,255,.3), inset 0 -1px 0 0 rgba(255,255,255,.2); }
-.cnrflash-inner:before, .cnrflash-inner:after{content: " "; display: block; position: absolute; bottom: -16px; width: 0; height: 0; border: 8px solid #800000; }
+.cnrflash-inner{position: absolute; bottom: 0; right: 0; width: 104px; height: 91px; -ms-transform: rotate(45deg); -o-transform: rotate(45deg); -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -webkit-transform-origin: 100% 100%; -ms-transform-origin: 100% 100%; -o-transform-origin: 100% 100%; -moz-transform-origin: 100% 100%; background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.1) 50%), linear-gradient(0deg, transparent 0%, rgba(1,1,1,.2) 50%); background-size: 4px,auto, auto,auto; background-color: #1360fe; box-shadow: 0 3px 3px 0 rgba(1,1,1,.5), 0 1px 0 0 rgba(22 99 254, 0.5), inset 0 -1px 8px 0 rgba(255,255,255,.3), inset 0 -1px 0 0 rgba(255,255,255,.2); }
+.cnrflash-inner:before, .cnrflash-inner:after{content: " "; display: block; position: absolute; bottom: -16px; width: 0; height: 0; border: 8px solid #1360fe; }
 .cnrflash-inner:before {left: 3px; border-bottom-color: transparent; border-right-color: transparent; }
 .cnrflash-inner:after {right: 0; border-bottom-color: transparent; border-left-color: transparent; }
 .cnrflash-label {position: absolute; bottom: -5px; left: 3px; display: block; width: 100%; padding-bottom: 5px; color: #fff; text-shadow: 0 1px 1px rgb(1 1 1 / 80%); font-size: 0.95em; font-weight: bold; text-align: center;}
