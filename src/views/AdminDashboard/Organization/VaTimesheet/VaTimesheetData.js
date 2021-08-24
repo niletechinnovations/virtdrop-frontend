@@ -42,8 +42,8 @@ class VaTimesheetData extends Component {
         duration: `${Store.TotalWorkingTime === "00:00:00" ? Store.duration : Store.TotalWorkingTime}`,
         // duration: Store.duration,
         billingHours: Store.billingHours || 0,
-        vaName: Store.vaName || " ",
         clientName: Store.clientName || " ",
+        vaName: Store.vaName || " ",
         createdAt: (new Date(Store.createdAt)).toLocaleDateString("en-US"),
         // status: (Store.status===2 ? 'Completed' : 'Active'),  
         status: (Store.status === 0 ? 'Unapproved' : 'Approved'),
@@ -54,18 +54,9 @@ class VaTimesheetData extends Component {
     }
 
     const columns = [
-      {
-        label: 'Task name',
-        name: 'title',
-      },
-      {
-        label: 'VA name',
-        name: 'vaName',
-      },
-      {
-        label: 'Client',
-        name: 'clientName',
-      },
+      { label: 'Task name', name: 'title'},
+      { label: 'Client', name: 'clientName' },
+      { label: 'VA name', name: 'vaName' },
       {
         label: 'Total working hours',
         name: 'duration',

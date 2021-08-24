@@ -7,6 +7,7 @@ import Loader from '../../Loader/Loader';
 import "./../../Pages/Frontend/BeAVirtdropVA/BecomeVirtdropPage.css";
 // import ClientAreaNeed from '../Organization/HireVA/clientNeedAreaList.json';
 import { Multiselect } from 'multiselect-react-dropdown';
+import { useHistory } from "react-router-dom";
 
 //const skillArr = ['ECommerce','Data Entry and Research','SEO','Content Writing and Copywriting','Photo & Video Editing','Customer Support','Social Media Marketing and Management','Real Estate','Web Development and Graphics','Telesales and Telemarketing','Lead Generation','Others'];
 
@@ -673,6 +674,7 @@ for(const object3 of appDetail.skillSet3){
     // console.log("ChildList11--3", childSelectedItem2)
     // console.log("formField.skillSet1",[... new Set(formField.skillSet1.map(e=>({parentName:e.parentName})))])
     // console.log("formField.skillSet1",(new Set(Object.entries(formField.skillSet1))))
+
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -685,7 +687,7 @@ for(const object3 of appDetail.skillSet3){
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>Edit VA Application</strong>
+                <strong>Edit VA Application</strong> <Button color="secondary" className="categoryAdd" type="button" onClick={() => this.props.history.goBack()}><i className="fa fa-arrow-left"></i>Back</Button>
               </CardHeader>
               <CardBody>
                 <Form onSubmit={this.submitFormData} noValidate>
@@ -964,7 +966,7 @@ for(const object3 of appDetail.skillSet3){
                         <div className="col-md-3">
                             <div className="file-box">
                                 <h3>Resumes/CVS</h3>
-                                { applicationFiles.resumeCV!=='' ? <p className="text-center"><a href={ applicationFiles.resumeCV } target="_blank" rel="noopener noreferrer">{ applicationFiles.resumeCVName }</a></p> : '' }
+                                { applicationFiles.resumeCV!=='' ? <p className="text-center"><a href={ "https://view.officeapps.live.com/op/embed.aspx?src="+applicationFiles.resumeCV+"&embedded=true" } target="_blank" rel="noopener noreferrer">{ applicationFiles.resumeCVName }</a></p> : '' }
                                 <Input type="file" id="resumeCV" name="resumeCV" className="inputfile inputfile-4" data-multiple-caption="{count} files selected" onChange={this.handleResumeCVeChange} />
                                 <label htmlFor="resumeCV">
                                     <figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg></figure> 

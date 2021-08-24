@@ -232,7 +232,7 @@ class AddVaApplication extends Component {
   componentDidMount() {
     this.SkillList();
     window.scrollTo(0, 0);
-    this.SkillListData();
+    //this.SkillListData();
 
 
     // this.SkillListData();
@@ -420,7 +420,7 @@ class AddVaApplication extends Component {
 
   render() {
 
-    const { loading, formField, skillList, errors, SelectedClientAreaNeed, SelectedClientAreaNeed1, SelectedClientAreaNeed2, childList, childList1, childList2, childSelectedItem, childSelectedItem1, childSelectedItem2, } = this.state;
+    const { loading, formField, errors, SelectedClientAreaNeed, SelectedClientAreaNeed1, SelectedClientAreaNeed2, childList, childList1, childList2, childSelectedItem, childSelectedItem1, childSelectedItem2, } = this.state;
 
     console.log("ChildList11--1", childSelectedItem)
     console.log("ChildList11--2", childSelectedItem1)

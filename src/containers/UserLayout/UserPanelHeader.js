@@ -28,6 +28,7 @@ class UserPanelHeader extends React.Component {
   logoutUser() {
     localStorage.clear();
     this.setState({isLoggedOut:true});
+    window.location = 'https://www.virtdrop.com/';
   };
 
   toggleUserMenu = () => {
@@ -59,7 +60,7 @@ class UserPanelHeader extends React.Component {
             <DropdownItem><Link to={ `/user/va-task` } ><i className="fa fa-tasks"></i> Manage Task</Link></DropdownItem>
           }
           { localStorage.getItem( 'role' ).toLowerCase() === "organization" && 
-            <DropdownItem><Link to={ `/user/manage-request` } ><i className="fa fa-list-ul"></i> Manage Request</Link></DropdownItem>
+            <DropdownItem><Link to={ `/user/hire-va1` } ><i className="fa fa-list-ul"></i> Hire VA</Link></DropdownItem>
           }
           { (localStorage.getItem( 'role' ).toLowerCase() === "organization" || localStorage.getItem( 'role' ).toLowerCase() !== "admin" ) && 
             <DropdownItem><Link to={ (localStorage.getItem( 'role' ).toLowerCase() === "organization") ? `/user/my-profile` : `/user/va-profile` } ><i className="fa fa-user"></i> Manage Profile</Link></DropdownItem>

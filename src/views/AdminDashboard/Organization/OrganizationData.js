@@ -35,7 +35,7 @@ class OrganizationData extends Component {
         authId: orgnization.authId,
         firstName: orgnization.firstName +' '+ orgnization.lastName,
         email: orgnization.email,
-        mobileNumber: orgnization.mobileNumber || " ",
+        phoneNumber: orgnization.phoneNumber || " ",
         address: orgnization.address || " ",
         ccNumber: orgnization.ccNumber || " ",
         createdAt: (new Date(orgnization.createdAt)).toLocaleDateString("en-US"),
@@ -59,8 +59,8 @@ class OrganizationData extends Component {
         name: 'email',
       },
       {
-        label: 'Mobile no.',
-        name: 'mobileNumber',
+        label: 'Phone no.',
+        name: 'phoneNumber',
       },
       {
         label: 'Card no.',
@@ -86,8 +86,8 @@ class OrganizationData extends Component {
             return (
               <p>
             
-               {rowsItem[i].authId === "" ? (<Link className="btn btn-info btn-edit" to={`/admin/organization/assign-va-from-clientpanel`}><i className="fa fa-user-plus"></i> </Link>) :
-               (<Link className="btn btn-info btn-edit" to={`/admin/organization/assign-va-from-clientpanel/${rowsItem[i].authId}`}><i className="fa fa-user-plus"></i> </Link>) }
+               {/* {rowsItem[i].authId === "" ? (<Link className="btn btn-info btn-edit" to={`/admin/organization/assign-va-from-clientpanel`}><i className="fa fa-user-plus"></i> </Link>) :
+               (<Link className="btn btn-info btn-edit" to={`/admin/organization/assign-va-from-clientpanel/${rowsItem[i].authId}`}><i className="fa fa-user-plus"></i> </Link>) } */}
 
                 <button className="btn-edit" disabled={this.state.buttonProcessing} onClick={() => 
                 this.editOrganizationItem(i)}><i className="fa fa-pencil"></i> </button>

@@ -55,14 +55,14 @@ class UserNavbar extends Component {
                   </Link>
                 </NavItem>
               }
-              {(localStorage.getItem('role').toLowerCase() === "organization") &&
+              {/* {(localStorage.getItem('role').toLowerCase() === "organization") &&
                 <NavItem>
                   <Link to="/user/manage-request" className="nav-link">
                     <span className="icon-orders"><img src="/images/timezone.svg" height="24" alt="Inquiries" /></span>
                     <span className="value-orders">Manage Request</span>
                   </Link>
                 </NavItem>
-              }
+              } */}
               {/* {(localStorage.getItem('role').toLowerCase() === "organization") &&
                 <NavItem>
                   <Link to="/user/hire-va" className="nav-link">
@@ -121,7 +121,7 @@ class UserNavbar extends Component {
                 </NavItem>
               }
 
-              {localStorage.getItem('isOrganization') === "true" && <>
+              {(localStorage.getItem('role').toLowerCase() === "organization") && <>
                 <NavItem>
                   <Link to="/user/my-profile" className="nav-link">
                     <span className="icon-orders"><img src="/images/account.svg" height="24" alt="Account Settings" /></span>
@@ -130,8 +130,7 @@ class UserNavbar extends Component {
                 </NavItem>
               </>
               }
-
-              {localStorage.getItem('isOrganization') === "false" && <>
+              { localStorage.getItem( 'role' ).toLowerCase() === "va_member" &&  <>
                 <NavItem>
                   <Link to="/user/va-profile" className="nav-link">
                     <span className="icon-orders"><img src="/images/account.svg" height="24" alt="Account Settings" /></span>
@@ -140,7 +139,6 @@ class UserNavbar extends Component {
                 </NavItem>
               </>
               }
-
             </Nav>
           </Collapse>
         </Navbar>

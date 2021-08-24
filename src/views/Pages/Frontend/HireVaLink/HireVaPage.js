@@ -99,24 +99,21 @@ class HireVaPage extends Component {
             const somthingAboutYou = this.state.somthingAboutYou;
             const selectedTabValue = this.state.selectedTabValue;
 
-            //    Selected Industry 
+            //  Selected Industry 
             const selectedIndustry = []
             this.state.industryBelongList.forEach(element => {
                 selectedTabValue[2].map(e => {
                     if (e == element.id) {
                         selectedIndustry.push(element)
-
                     }
-
                 })
-
             });
 
             //    Area Where you need
             const selectedAreaNeed = []
             this.state.selectedArea.forEach((element, index) => {
                 //    console.log()
-                if (element.areaId == selectedTabValue[3][index]) {
+                //if (element.areaId == selectedTabValue[3][index]) {
                     element.vADesignation.filter(va => {
 
                         selectedTabValue[4].some(e => {
@@ -129,7 +126,7 @@ class HireVaPage extends Component {
                             }
                         })
                     });
-                }
+                //}
 
             });
 
@@ -404,57 +401,32 @@ class HireVaPage extends Component {
 
     clientAreaNeedHandler(event) {
 
-        var selectedTabValue = this.state.selectedTabValue;
-        var addValue = this.state.selectedArea;
-        console.log(selectedTabValue);
+        var selectedArea = this.state.selectedArea;
         const value = event.target.value;
-        const name = event.target.name;
-        let list = [];
-        list = this.state.clientArea;
-        console.log(list);
-        list = list[value];
+        
         //console.log(list);
         //return;
-        if (event.target.checked == true && undefined !== list.areaId  ) {
-            selectedTabValue[3].push(list.areaId)
-            addValue.push(list);
+        if (event.target.checked == true  ) {
+            let areaInfo = this.state.clientArea;
+            areaInfo = areaInfo.filter(function(item){ return item.areaId == value;});
+            if(areaInfo.length > 0)
+            selectedArea.push(areaInfo[0]);
         } else {
-            addValue.filter((data, index) => {
-                if (data.areaId == list.areaId) {
-                    addValue.splice(index, 1);
-                    // remove seleted client area need 
-                    selectedTabValue[3].filter((element, i, array) => {
-                        if (element == data.areaId) {
-                            const index = array.indexOf(element)
-                            // console.log("index", index)
-                            if (index > -1) {
-                                selectedTabValue[3].splice(index, 1);
-                            }
-                        }
-                    });
-                }
-            });
-
-            // selectedTabValue[3].filter((data, i, array) => {
-            //     console.log("t---------------ttta", data, value)
-            //     if (data == value) {
-            //         var index = array.indexOf(data)
-            //         console.log("index", index)
-            //         if (index > -1) {
-            //             selectedTabValue[3].splice(index, 1);
-            //         }
-            //     }
-            // });
+            let currentIndex = selectedArea.map(item => item.areaId).indexOf(value);
+            if(currentIndex > -1) {
+               selectedArea.splice(currentIndex, 1);
+            }
+           
         }
 
         var disabledPageNew = this.state.disabledPageNew;
 
-        if (selectedTabValue[3].length > 0) {
+        if (selectedArea.length > 0) {
             disabledPageNew[3] = false;
-            this.setState({ selectedArea: addValue, selectedTabValue: selectedTabValue, disabledPageNew: disabledPageNew })
+            this.setState({ selectedArea: selectedArea, disabledPageNew: disabledPageNew })
         } else {
             disabledPageNew[3] = true;
-            this.setState({ disabledPageNew: disabledPageNew })
+            this.setState({ disabledPageNew: disabledPageNew, selectedArea: selectedArea });
         }
     }
 
@@ -667,22 +639,8 @@ class HireVaPage extends Component {
 
     render() {
         const { loading, selectedArea, areaList, clientArea, item, tabIndex, Administrative, industryBelong, addVa, active, selectedTabValue, somthingAboutYou, selectedTab, tabCount, indexChange, needMore, industryBelongList, disabledPage, disabledPageNew, redirect, progress,temp } = this.state;
-        // console.log( selectedTabValue, "sssssssss")
-        // console.log("Progress Test",progress)
-        // console.log("TAB INDEX Test",tabIndex)
-        // console.log("this//////////////",this.state.selectedVaNumberByImage)
         var test;
-        // if (this.state.progress > 100) {
-            // alert("oops, you hit the max value!")
-            // test = "100" + "%";
-        // }
-        // else{
-            // temp=tabIndex;
-            // tabIndex>temp ?  this.setState({temp:tabIndex, progress:progress})  :this.setState({temp:tabIndex, progress:progress-12.5}) 
-            test = Math.ceil(progress) + "%";
-            // test = progress + "%";
-        // }
-       
+        test = Math.ceil(progress) + "%";
         var style = { width: test }
         return (
             <>
@@ -1155,7 +1113,7 @@ class HireVaPage extends Component {
                                                                 // console.log("eeeeeeee",e)
                                                                 return (<li key={index}>
                                                                     <label htmlFor={index}>
-                                                                        <input type="checkbox" id={index} checked={selectedTabValue[3].indexOf(ar.AreaId) >= 0 ? true : false} value={index} name={index} onChange={this.clientAreaNeedHandler} />
+                                                                        <input type="checkbox" id={index} checked={selectedArea.map(item => item.areaId).includes(ar.AreaId) ? true : false} value={ar.AreaId} name={index} onChange={this.clientAreaNeedHandler} />
                                                                         <div className="ar-field-list-option-1">
                                                                             <div className="field-svg-icon"><img src={"/images/"+ar.imageName} height="60" alt="" /></div>
                                                                             <div className="field-value-text">{ar.AreaName}</div>
@@ -1280,12 +1238,7 @@ class HireVaPage extends Component {
                                                             <ul className="week-day-list">
                                                                 <div data-role="page">
                                                                     <div data-role="main" className="ui-content">
-                                                                        {/* <form> */}
                                                                         <FormGroup>
-                                                                            {/* <input type="text" value={this.state.timer.start} onChange={this.timeChangeHandler} name="timer" id="time" /> */}
-
-                                                                            {/* <input type="text" value={this.state.timer.start} onChange={this.timeChangeHandler} name="timer" id="time" />{this.state.timer.start} AM
-                                                                        <input type="text" value={this.state.timer.end} onChange={this.timeChangeHandler} name="timer" id="time" /> */}
                                                                             <Label >Start Time: {this.state.timer.start} {this.state.start_am_pm}
                                                                             </Label>
                                                                             <Label style={{ "marginLeft": "10px" }}>End Time :{this.state.timer.end} {this.state.end_am_pm} </Label>
@@ -1300,7 +1253,6 @@ class HireVaPage extends Component {
                                                                                 onChange={this.timeChangeHandler}
                                                                                 step={15}
                                                                                 value={this.state.timer}
-                                                                                //    orientation={String} 
                                                                                 required />
                                                                             <div className="filter-Price-info">
                                                                                 <div className="filter-content">
@@ -1308,7 +1260,6 @@ class HireVaPage extends Component {
                                                                                 </div>
                                                                             </div>
                                                                         </FormGroup>
-                                                                        {/* </form> */}
                                                                     </div>
                                                                 </div>
                                                             </ul>

@@ -37,7 +37,7 @@ class VaApplicationData extends Component {
         // skillSet1: Array.isArray(item.skillSet1)===true ? item.skillSet1.map(e=>e.profileName):'' + (item.rateSkill1 !=='' ? " ("+item.rateSkill1+")" :''  ) || " ",
         // skillSet2: Array.isArray(item.skillSet2)===true ? item.skillSet2.map(e=>e.profileName):'' + (item.rateSkill2 !=='' ? " ("+item.rateSkill2+")" :''  ) || " ",
         // skillSet3: Array.isArray(item.skillSet3)===true ?item.skillSet3.map(e=>e.profileName) :'' + (item.rateSkill3 !=='' ? " ("+item.rateSkill3+")" :''  ) || " ",
-
+        resumeCV: item.resumeCV!=='' ? <a href={ "https://view.officeapps.live.com/op/embed.aspx?src="+item.resumeCV+"&embedded=true" } target="_blank" rel="noopener noreferrer">Resume</a> : '',
         createdAt: (new Date(item.createdAt)).toLocaleDateString("en-US"),
         status: ( item.statusText !==''  ? item.statusText : "Pending")
       }      
@@ -47,11 +47,12 @@ class VaApplicationData extends Component {
     
     const columns = [ 
       { label: 'Name', name: 'userName'},     
-      { label: 'Email', name: 'email' },
+      //{ label: 'Email', name: 'email' },
       //{ label: 'Mobile no.', name: 'mobileNumber'},
       { label: 'Skill Set 1 (Rating)', name: 'skillSet1'},
       { label: 'Skill Set 2 (Rating)', name: 'skillSet2'},
       { label: 'Skill Set 3 (Rating)', name: 'skillSet3'},
+      { label: 'Documents', name: 'resumeCV'},
       { label: 'Status', name: 'status'},
       { label: 'Created on', name: 'createdAt'},
       {

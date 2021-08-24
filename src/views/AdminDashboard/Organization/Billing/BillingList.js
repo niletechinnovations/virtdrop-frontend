@@ -271,7 +271,7 @@ class BillingList extends Component {
       transactionId: itemInfo.invoiceId,
       clientName: itemInfo.clientName,
       amount: itemInfo.amount,
-      billingPeriod: itemInfo.billingTo+' - '+itemInfo.billingTo,
+      billingPeriod: itemInfo.billingFrom+' - '+itemInfo.billingTo,
       notes: itemInfo.notes,
       billingHours: itemInfo.billingHours,
       billingDate: itemInfo.billingDate,
@@ -558,13 +558,13 @@ class BillingList extends Component {
                     <label><strong>Transaction ID:</strong> {formField.transactionId}</label>
                   </FormGroup>
                 </Col>
-                <Col md={"6"}>
+                <Col md={"12"}>
                   <FormGroup>
                     <label>Notes:</label>
                     <input type="text" name="notes" id="notes" className="form-control" placeholder="Invoice notes" value={formField.notes} onChange={this.changeHandler} />
                   </FormGroup>
                 </Col>
-                <Col md="6">
+                {/* <Col md="6">
                   <FormGroup> 
                     <Label>Status</Label>
                     <Input type="select" name="status" value={formField.status} onChange={this.changeHandler}>
@@ -573,7 +573,7 @@ class BillingList extends Component {
                       <option value="1">Paid</option>
                     </Input>
                   </FormGroup>
-                </Col>  
+                </Col>   */}
               </Row>
             </ModalBody>
             <ModalFooter>

@@ -14,8 +14,9 @@ class VaProfilePage extends React.Component {
     super(props);
 
     this.state = {
+      loggedIn: false,
       vaUniqueDetails: '',
-      // hireVaId:'',
+      vaAuthId:'',
       skillset_1: '',
       skillset_2: '',
       skillset_3: '',
@@ -71,7 +72,7 @@ class VaProfilePage extends React.Component {
               this.setState({ flag: true });
             } else { this.setState({ flag: false }) }
 
-            if(result.kickoff_date!=='')
+            if(result.suggestedDate!=='')
               this.setState({ kickoff_visible: true });
               
           }else { this.setState({ flag: false }) }
@@ -158,29 +159,34 @@ class VaProfilePage extends React.Component {
       suggestedDate: this.state.formField.suggestedDate,
       suggestedTime: this.state.formField.suggestedTime,
     }
-    console.log("formData", formData)
     this.setState({ loading: true }, () => {
       commonService.postAPI(`va-application/kickoff/`, formData)
         .then(res => {
-          //console.log("formData VA Profile", res.data.flag)
-          console.log( "Res Data",res.data);
-          
           this.setState( { flag:res.data.flag});
-          if (undefined === res.data || !res.data.status) {
+          if (undefined === res.data || !res.status) {
             this.setState({ loading: false });
             toast.error(res.data.message);
-            return;
+            return false;
           }
-          
-          if (undefined === res.data || !res.cardAdded) {
-            this.setState({ loading: false });
-            toast.error('TEST CARD');
+          const loggedInfo = res.data;
+          if ( undefined === loggedInfo.data.ccNumber || loggedInfo.data.ccNumber==="" ) {
+            localStorage.setItem( 'accessToken', loggedInfo.data.accessToken );
+            localStorage.setItem( 'role', loggedInfo.data.role );
+            localStorage.setItem( 'authId', loggedInfo.data.authId );
+            localStorage.setItem( 'userName', loggedInfo.data.firstName+' '+loggedInfo.data.lastName );
+            localStorage.setItem( 'userEmail', loggedInfo.data.email );
+            localStorage.setItem( 'profilePic', loggedInfo.data.profilePic );
+            localStorage.setItem( 'isActivePlan', false );
+            localStorage.setItem( 'isOrganization', false );        
+            this.setState( { loading: false, loggedIn: true } )
+            toast.error(res.data.message);
+            this.props.history.push('/user/my-card')
             return;
+          }else{
+            this.meetingsLists();
+            this.getProfile(this.state.vaAuthId)
+            toast.success(res.data.message);
           }
-          
-          // this.props.history.push('/va-profile/');
-          toast.success(res.data.message);
-          this.setState({ loading: false, errors: {} })
         })
         .catch(err => {
           toast.error(err.message);
@@ -391,14 +397,14 @@ class VaProfilePage extends React.Component {
                       </Col>
                       : '' }
                       
-                      { vaUniqueDetails.resumeCV !=='' ?
+                      { vaUniqueDetails.resumeCV !==undefined && vaUniqueDetails.resumeCV !=='' ?
                       <Col md="3" lg="3" sm="3">
                         <div className="view-attachment-card">
                           <div className="view-attachment-icon">
                             <i className="fa fa-file-word-o" aria-hidden="true"></i>
                           </div>
                           <div className="view-attachment-text">
-                            <p><a href={vaUniqueDetails.resumeCV} download="VA Resume"><h2>Resume / CV</h2></a></p>
+                            <p><a href={ "https://view.officeapps.live.com/op/embed.aspx?src="+vaUniqueDetails.resumeCV+"&embedded=true" } target="_blank" rel="noopener noreferrer"><h2>Resume / CV</h2></a></p>
                           </div>
                         </div>
                       </Col>
@@ -411,7 +417,7 @@ class VaProfilePage extends React.Component {
                             <i className="fa fa-file-pdf-o" aria-hidden="true"></i>
                           </div>
                           <div className="view-attachment-text">
-                            <p><a href={vaUniqueDetails.intentLetter} download="Intent Lettter"
+                            <p><a href={vaUniqueDetails.intentLetter}  download="Intent Lettter"
                               target="_blank" rel="noopener noreferrer" title="Download Intent Letter"><h2>Intent Letter</h2></a></p>
                           </div>
                         </div>
@@ -425,7 +431,7 @@ class VaProfilePage extends React.Component {
                             <i className="fa fa-picture-o" aria-hidden="true"></i>
                           </div>
                           <div className="view-attachment-text">
-                            <p><a href={vaUniqueDetails.internetSpeedScreenshot} download="InternetSpeed Screenshot"><h2>Internet Connection Speed</h2></a></p>
+                            <p><a href={vaUniqueDetails.internetSpeedScreenshot} download="InternetSpeed Screenshot" target="_blank" rel="noopener noreferrer"><h2>Internet Connection Speed</h2></a></p>
                           </div>
                         </div>
                       </Col>

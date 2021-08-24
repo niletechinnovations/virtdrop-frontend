@@ -401,10 +401,18 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
         authId: userData.authId,
         userName: userData.firstName + ' ' + userData.lastName,
         email: userData.email,
+        vaApplicationId: userData.vaApplicationId,
         // Area: userData.ParentSkillSet1.map(e=>e.parentName) + ',' + userData.ParentSkillSet2.map(e=>e.parentName)  + ',' + userData.ParentSkillSet3.map(e=>e.parentName),
         // Area: userData.ParentSkillSet.map(e => e.areaName).toString(),
-        Area: userData.skillSet1?"":([ ...new Set(userData.ParentSkillSet.map(e => e.areaName))]).toString(),
-        skillSet: userData.skillSet1? " ": userData.skillSet1.map(e => e.skillName) + ',' + userData.skillSet2.map(e => e.skillName) + ',' + userData.skillSet3.map(e => e.skillName),
+        Area: userData.skillSet1 ? ([ ...new Set(userData.ParentSkillSet.map(e => e.areaName))]).toString() : "",
+        //skillSet: userData.skillSet1? userData.skillSet1.map(e => e.skillName) + ',' + userData.skillSet2.map(e => e.skillName) + ',' + userData.skillSet3.map(e => e.skillName) : " ",
+        skillSet1: userData.skillSet1.map(e=>e.skillName) + (userData.rateSkill1 !=='' ? " ("+userData.rateSkill1+")" :''  ) || " ",
+        skillSet2: userData.skillSet2.map(e=>e.skillName) + (userData.rateSkill2 !=='' ? " ("+userData.rateSkill2+")" :''  ) || " ",
+        skillSet3: userData.skillSet3.map(e=>e.skillName) + (userData.rateSkill3 !=='' ? " ("+userData.rateSkill3+")" :''  ) || " ",
+        audioFile: userData.audioFile!=='' ? <a href={ userData.audioFile } target="_blank" rel="noopener noreferrer">Audio Clip</a> : '' ,
+        resumeCV: userData.resumeCV!=='' ? <a href={ "https://view.officeapps.live.com/op/embed.aspx?src="+userData.resumeCV+"&embedded=true" } target="_blank" rel="noopener noreferrer">Resume</a> : '',
+        status: ( userData.statusText !==''  ? userData.statusText : "Pending")
+ 
       }
       rowsItem.push(userInfo);
     }
@@ -414,10 +422,13 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
           {/* {assignedVaList.includes(user.authId) ? <td><input type="checkbox" onChange={(e) => { this.handleChange(user.authId, e) }} checked={(this.state.checkedItems.indexOf(user.authId) > -1) ? true : false} /></td> : <td><input type="checkbox" onChange={(e) => { this.handleChange(user.authId, e) }} checked={this.state.checkedItems.indexOf(user.authId) > -1 ? true : false} /></td>} */}
           { assignedVaList.find(el => el.authId === user.authId) ? <td><input type="checkbox" onChange={(e) => { this.handleChange(user.authId, e) }} checked={(this.state.checkedItems.indexOf(user.authId) > -1) ? true : false} /></td> : <td><input type="checkbox" onChange={(e) => { this.handleChange(user.authId, e) }} checked={this.state.checkedItems.indexOf(user.authId) > -1 ? true : false} /></td>}
           <td>{user.SNo + 1}</td>
-          <td>{user.userName}</td>
-          <td>{user.email}</td>
+          <td><Link to={"/admin/va-application/"+user.vaApplicationId}>{user.userName}</Link></td>
           <td>{user.Area}</td>
-          <td>{user.skillSet}</td>
+          <td>{user.skillSet1}</td>
+          <td>{user.skillSet2}</td>
+          <td>{user.skillSet3}</td>
+          <td>{user.resumeCV} {user.audioFile}</td>
+          <td>{user.status}</td>
         </tr>)
     }
     );
@@ -492,9 +503,12 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                     <th><input type="checkbox" name="checkAll" checked={this.state.checkAll} onChange={(e) => { this.handleChange("All", e) }} /></th>
                                     <th>S&nbsp;no.</th>
                                     <th>User</th>
-                                    <th>Email</th>
                                     <th>Area</th>
-                                    <th>Skills</th>
+                                    <th>Skill Set 1 (Rating)</th>
+                                    <th>Skill Set 2 (Rating)</th>
+                                    <th>Skill Set 3 (Rating)</th>
+                                    <th>Documents</th>
+                                    <th>Status</th>
                                   </tr>
                                 </thead>
                                 <tbody>{list}</tbody>
