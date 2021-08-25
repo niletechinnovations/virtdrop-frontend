@@ -216,11 +216,10 @@ export class ClientVAMeeting extends Component {
   // delete handler
   handleDeleteEnquiry(rowIndex) {
     // return;
-    const rowInfo = this.state.meetingsLists[rowIndex];
-    console.log("rowInfo", rowInfo);
-    
+    const rowInfo = this.state.meetingsLists[0];
+    console.log("rowInfo", rowInfo)
     const delFormData = {
-      '_id': rowInfo.id,
+      '_id': rowInfo._id,
       "hireVaId": rowInfo.hireVaId,
     };
     this.setState({ loading: true }, () => {

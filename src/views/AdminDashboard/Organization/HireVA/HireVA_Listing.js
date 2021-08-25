@@ -30,7 +30,7 @@ class HireVA_Listing extends Component {
             industryList1:[],
             changeName: '',
             meetingLink: '',
-            vaHireRequestId: '',
+            // selectedValues1:[],
             rowIndex: -1,
             WhichDays:[{"day":"Monday"}, {"day":"Tuesday"}, {"day":"Wednesday"}, {"day":"Thursday"}, {"day":"Friday"}, {"day":"Saturday"}, {"day":"Sunday"}],
             SelectDays:[],
@@ -58,33 +58,39 @@ class HireVA_Listing extends Component {
             emailAddress:'',
             phoneNumber:'',
             skillSet1:'',
-            clientName: '',
-            authId: '',
-            modal: false,
-            industry: '',
-            skillsFreelancer: [],
-            jobDescreption: '',
-            Hours_A_Day: '',
-            Days_A_Week: '',
-            which_Days_Week: '',
-            during_Those_Days: '',
-            which_plan: '',
-            billingAmount: '',
-            quickly_Need: '',
-            // weekdays: '',
-            requiredTime: '',
-            // hoursADay: '',
-            organizationName: '',
-            // selectedValues:[],
-            _id: '',
-            status: '',
-            requestInfo: '',
-            industyFrom: '',
-            SelectedClientAreaNeed:[],
-            childList:[],
+                
+                 // loading: true,
+                // hireVaListData: [],
+                clientName: '',
+                // clientLastName: '',
+                authId: '',
+                modal: false,
+                industry: '',
+                skillsFreelancer: [],
+                jobDescreption: '',
+                Hours_A_Day: '',
+                Days_A_Week: '',
+                which_Days_Week: '',
+                during_Those_Days: '',
+                which_plan: '',
+                quickly_Need: '',
+                // weekdays: '',
+                requiredTime: '',
+                // hoursADay: '',
+                organizationName: '',
+                // selectedValues:[],
+                _id: '',
+                status: '',
+                // entery_Level:'',
+                // expert_Level:'',
+                // mid_Level:''
+                requestInfo: '',
+                industyFrom: '',
+                SelectedClientAreaNeed:[],
+                childList:[],
             },
 
-            formErrors: { authId: '', industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', skills: [], which_plan: '', billingAmount:'', quickly_Need: '', requiredTime: '', organizationName: '', during_Those_Days: '', requestInfo: '' },
+            formErrors: { authId: '', industry: '', skillsFreelancer: [], jobDescreption: '', Hours_A_Day: '', Days_A_Week: '', which_Days_Week: '', skills: [], which_plan: '', quickly_Need: '', requiredTime: '', organizationName: '', during_Those_Days: '', requestInfo: '' },
 
             filterItem: { filter_Skills: '', filter_client: '', filter_choose: '', filterFrom: '', filterTo: '' },
             
@@ -96,7 +102,6 @@ class HireVA_Listing extends Component {
         this.onSelect = this.onSelect.bind(this)
         this.onRemove = this.onRemove.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
-        this.submitVaHandler = this.submitVaHandler.bind(this);
         this.changeRadioButtonHandler = this.changeRadioButtonHandler.bind(this);
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         // this.onKeyDown = this.onKeyDown.bind(this);
@@ -217,6 +222,7 @@ class HireVA_Listing extends Component {
 
 
     resetfilterForm = () => {
+
         this.setState({
             filterItem: { filterFrom: '', filterTo: '', filter_Skills: '', filter_client: '', filter_need:'', filter_choose: '' },
         });
@@ -231,14 +237,37 @@ class HireVA_Listing extends Component {
         this.setState({ filterItem: filterItem });
     };
 
+    // getSkillList = () => {
+    //     commonService.getAPIWithAccessToken('skill')
+    //         .then(res => {
+    //             if (undefined === res.data.data || !res.data.status) {
+    //                 this.setState({ loading: false });
+    //                 toast.error(res.data.message);
+    //                 return;
+    //             }
+
+    //             this.setState({ loading: false, skillList: res.data.data })
+    //         })
+    //         .catch(error => {
+    //             if (error !== undefined) {
+    //                 localStorage.clear()
+    //                 // this.props.histroy.push('/login')
+    //             } else {
+    //                 this.setState({ loading: false, })
+    //                 toast.error(error.message)
+    //             }
+    //         })
+    // }
     getIndustryList = () => {
         commonService.getAPIWithAccessToken('hire/get-hire-va-Industrylist')
             .then(res => {
+                // console.log("INDDDDD",res)
                 if (undefined === res.data.data || !res.data.status) {
                     this.setState({ loading: false });
                     toast.error(res.data.message);
                     return;
                 }
+
                 this.setState({ loading: false, IndustryList: res.data.data })
             })
             .catch(error => {
@@ -390,6 +419,19 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
         this.setState({ selectedIndustry1: selectedList.filter((item) => (item.name !== removedItem.name)).map(industry => industry) })
     }
 
+    // onKeyDown(keyEvent) {
+    //     keyEvent.preventDefault();
+    //     console.log("keyEvent",keyEvent.keyCode)
+    //     // if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+    //         // console.log("Please file the form")
+    //             // return window.confirm( "Please file the form")
+
+    //     //   keyEvent.preventDefault();
+    //     //   keyEvent.stopPropagation();
+
+    //     // }
+    //   }
+
     // which Days Select 
     onSelectWhichDays(selectedList, selectedItem){
         console.log("Select--------------which Days-------------",selectedList)
@@ -401,6 +443,8 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
         console.log("Remove--------------which Days-------------",selectedList,"removedItem",removedItem)
         this.setState({ SelectDays: selectedList.filter((item) => (item.day !== removedItem.day))})
         // console.log("After remvoe",selectedList.filter((item) => (item.day !== removedItem.day)))
+
+
     }
 
     /* Submit Form Handler*/
@@ -412,23 +456,44 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
         let getMappedSkilled = [];
         getMappedSkilled = this.state.selectedValues.map(skill => skill.skillName);
 
+        // let getMappedIndustry = this.state.selectedIndustry.map(element => element._id);
         console.log("Selected Check---------->",this.state.childSelectedItem)
         console.log("selectedIndustry1",this.state.selectedIndustry1)
         console.log("TIME", this.state.formField.plan)
         let time  = this.state.formField.EndTime? this.state.formField.EndTime.split(':'):[];
         event.target.className += "was-validated";
 
+        // valid.industry === "" ||
+        // if (valid.getMappedSkilled === '' || valid.jobDescreption === "" || valid.Days_A_Week === '' || valid.which_Days_Week === '' || valid.which_plan === '' || valid.quickly_Need === '' || valid.requiredTime === '' || valid.Hours_A_Day === '' || valid.during_Those_Days === '' || valid.requestInfo === '') {
+        //     console.log("Please file the form")
+        //     return window.confirm("Please file the form")
+        // }
+                //  companyName:formInputField.companyName,
+        // if (valid.howManyVas === '' || valid.industry === "" || valid.Days_A_Week === '' || valid.skillsFreelancer === '' || valid.which_plan === '' || valid.which_Days_Week === '' || valid.EndTime === '' || valid.Hours_A_Day === '' || valid.StartTime === '' || valid.firstName === '' || valid.lastName === '' || valid.companyName === '' || valid.emailAddress === '' || valid.quicklyNeed === '' ) {
+        //     console.log("Please file the form")
+        //     return window.confirm("Please file the form")
+        // }
+        // else{
+
+
         this.setState({ formProccessing: true }, () => {
             const formInputField = this.state.formField;
+            //    console.log("8**********************",formInputField)
             const formData = {
+                // authId: formInputField.authId,
                 howManyVas:formInputField.howManyVas,
+                // clientName: formInputField.clientName,
+                // organizationName: formInputField.organizationName,
+                // industry: formInputField.industry,
                 WhichIndustryYouBelong:this.state.selectedIndustry1,
                 AreaAndSkillFreelancer: this.state.childSelectedItem,
                 ChooseYourPlan: formInputField.plan,
+                // which_Days_Week: formInputField.which_Days_Week,
                 giveSpecification:this.state.SelectDays.map(e=>e.day),
                 completeWishTime: time[0] - 10 +":"+time[1],
                 EndTime:formInputField.EndTime,
                 StartTime:"10:00",
+
                 firstName: formInputField.firstName,
                  lastName :formInputField.lastName,
                  companyName:formInputField.companyName,
@@ -436,12 +501,27 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                  email:formInputField.emailAddress,
                  phoneNumber:formInputField.phoneNumber,
                  howQuicklyNeed:formInputField.quicklyNeed,
-
+                // skillsFreelancer: formInputField.skillsFreelancer,
+                // skillsFreelancer: this.state.selectedValues.map(skill=>skill.skillName),
+                // skillsFreelancer: getMappedSkilled,
+              
+                // industryType: getMappedIndustry,
+                // quickly_Need: formInputField.quickly_Need,
+                // during_Those_Days: formInputField.during_Those_Days,
+                // Days_A_Week: formInputField.Days_A_Week,
+                // Days_A_Week:SelectDays.map(e=>e.day),
+                // jobDescreption: formInputField.jobDescreption,
+                // status: formInputField.status,
+                // entery_Level:formInputField.entery_Level,
+                // mid_Level:formInputField.mid_Level,
+                // expert_Level:formInputField.expert_Level
             };
             console.log("for------------>",formData)
+            // return
             const rowIndex = this.state.rowIndex;
             if (rowIndex > -1) {
-                formData['_id'] = formInputField._id;                
+                formData['_id'] = formInputField._id;
+                
                 commonService.putAPIWithAccessToken('hire/', formData)
                     .then(res => {
                         if (undefined === res.data.data || !res.data.status) {
@@ -498,6 +578,8 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
         formField.which_plan = value;
         this.setState({ formField: formField })
     }
+
+
 
     /* Input Field On changes*/
     changeHandler = event => {
@@ -579,9 +661,7 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
     handleShowItem(rowIndex){
         const itemInfo = this.state.hireVaListData[rowIndex];
          console.log("itemInfo----------------->",itemInfo)
-
-        this.setState({ vaHireRequestId: itemInfo._id })
-
+        
         const areaArr = itemInfo.skillsFreelancer.map(e=>e.areaName);
         const uniqueArea = [...new Set(areaArr)];
 
@@ -596,38 +676,44 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
             hoursADay:itemInfo.Hours_A_Day + " hrs",
             quicklyNeed:itemInfo.quickly_Need == 2 ? "Under No Rush , wait best candidate":"Within 48 Hours",
             choosePlan:itemInfo.which_plan,
-            billingAmount: itemInfo.billingAmount,
             personName:itemInfo.firstName,
             companyName:itemInfo.companyName,
             companyAddress:itemInfo.companyAddress,
             emailAddress:itemInfo.companyEmail,
             phoneNumber:itemInfo.phoneNumber
+
         }
-        const formField = {
-            which_plan: itemInfo.which_plan,
-            billingAmount: itemInfo.billingAmount,
-        };
-        this.setState({ rowIndex: rowIndex, formDataShowField: formDataShowField, formField: formField, modal1: true, formValid: true });
+       // console.log("itemInfo----------------->",formDataShowField)
+        
+
+
+        this.setState({ rowIndex: rowIndex, formDataShowField: formDataShowField, modal1: true, formValid: true });
+
     }
 
     handleEditItem(rowIndex) {
         const itemInfo = this.state.hireVaListData[rowIndex];
-        this.setState({ vaHireRequestId: itemInfo._id })
         const selectedSkill = []
         const selectedIndustryType = []
 
         const getSkllls = itemInfo.skillsFreelancer
+        // console.log("Gggggggggggggg",getSkllls)
         this.state.skillList.forEach(el1 => getSkllls.forEach(el2 => {
+            // console.log("E1>>>>>>>>>>>",typeof((el1.skillName)),"E2========",typeof(el2))
+
             if (el1.skillName === el2) {
                 (selectedSkill.push(el1))
             }
+
         }))
+        // console.log("finalResult", selectedSkill)
         this.setState({ selectedValues: selectedSkill })
 
         const getIndustryType = itemInfo.industrytype;
         this.state.IndustryList.forEach(list => getIndustryType.forEach(list1 => {
             if (list.name === list1) {
                 (selectedIndustryType.push(list))
+
             }
         }))
         this.setState({ selectedIndustry: selectedIndustryType })
@@ -637,8 +723,8 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
             organizationName: itemInfo.organizationName,
             jobDescreption: itemInfo.jobDescreption,
             authId: itemInfo.authId,
+            // industry: itemInfo.industry,
             which_plan: itemInfo.which_plan,
-            billingAmount: itemInfo.billingAmount,
             which_Days_Week: itemInfo.which_Days_Week,
             Hours_A_Day: itemInfo.Hours_A_Day,
             Days_A_Week: itemInfo.Days_A_Week,
@@ -689,37 +775,6 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
         })
     }
 
-    // Submit edited VA Data
-    submitVaHandler(e) {
-        e.preventDefault();
-        const formData = {
-            _id: this.state.vaHireRequestId,
-            billingAmount: this.state.formField.billingAmount
-        };
-        this.setState({ loading: true }, () => {
-            commonService.postAPIWithAccessToken('hire/update-billing', formData).then(res => {
-                if (undefined === res.data.data || !res.data.status) {
-                    this.setState({ formProccessing: false });
-                    toast.error(res.data.message);
-                    return;
-                }
-                this.setState({ modal1: false, formProccessing: false });
-                toast.success(res.data.message);
-                this.itemList();
-            })
-            .catch(err => {
-                if (err.response !== undefined && err.response.status === 401) {
-                    localStorage.clear();
-                    this.props.history.push('/login');
-                } else {
-                    this.setState({ formProccessing: false });
-                    toast.error(err.message);
-                }
-            })
-        })
-    }
-    
-
     toggle1 = () => {
         // console.log("modal",this.state.modal1)
 
@@ -735,7 +790,7 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
             formDataShowField: {
                 loading: true,
                 // hireVaListData: [],
-                organizationName: '', authId: '', modal: false, industry: '', skillsFreelancer: '', selectedIndustry: '', which_plan: '', billingAmount: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Hours_A_Day: '', Days_A_Week: '', jobDescreption: '', industrytype: '',
+                organizationName: '', authId: '', modal: false, industry: '', skillsFreelancer: '', selectedIndustry: '', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Hours_A_Day: '', Days_A_Week: '', jobDescreption: '', industrytype: '',
             },
 
             formErrors: { modal: false, industry: '', skills: [], skillsFreelancer: '', selectedIndustry: '', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Days_A_Week: '', requiredTime: '', hoursADay: '', }
@@ -757,10 +812,10 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
             formField: {
                 loading: true,
                 // hireVaListData: [],
-                organizationName: '', authId: '', modal: false, industry: '', skillsFreelancer: '', selectedIndustry: '', which_plan: '', billingAmount: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Hours_A_Day: '', Days_A_Week: '', jobDescreption: '', industrytype: '',
+                organizationName: '', authId: '', modal: false, industry: '', skillsFreelancer: '', selectedIndustry: '', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Hours_A_Day: '', Days_A_Week: '', jobDescreption: '', industrytype: '',
             },
 
-            formErrors: { modal: false, industry: '', skills: [], skillsFreelancer: '', selectedIndustry: '', which_plan: '', billingAmount:'', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Days_A_Week: '', requiredTime: '', hoursADay: '', }
+            formErrors: { modal: false, industry: '', skills: [], skillsFreelancer: '', selectedIndustry: '', which_plan: '', quickly_Need: '', which_Days_Week: '', during_Those_Days: '', Days_A_Week: '', requiredTime: '', hoursADay: '', }
 
 
         });
@@ -917,14 +972,29 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                         <ModalBody>
                             <FormErrors formErrors={this.state.formErrors} />
                             <Row>
-                                <Col md={"6"}>
+                                {/* <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="organizationName">OrganizationName</Label>
+                                        <Input type="text" placeholder="OrganizationName*" id="organizationName" name="organizationName" value={this.state.formField.organizationName} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col> */}
+                                 <Col md={"6"}>
                                     <FormGroup>
                                         <Label htmlFor="howManyVas">How many VA do you need?</Label>
                                         <Input type="text" placeholder="How many VA do you need?*" id="howManyVas" name="howManyVas" value={this.state.formField.howManyVas} onChange={this.changeHandler} required >
                                         </Input>
                                     </FormGroup>
                                 </Col>
+
                                 <Col md={"6"}>
+
+                                    {/* <FormGroup>
+                                        <Label htmlFor="industry">Industry</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Industry*" id="industry" name="industry" value={this.state.formField.industry} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup> */}
+
                                     <FormGroup>
                                         <Label htmlFor="industry">Which industry you belong?</Label>
                                         <Multiselect
@@ -1085,41 +1155,97 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                 <Col md={"6"}>
                                 <Label htmlFor="StartTime">How many hours a day?
                                 <br/>Start Time</Label>
+                                {/* <Row> */}
                                     <FormGroup>
-                                        <Input type="time"  min="10:00" max="18:00" formate="24" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder=" Time- 24 hrs formate( 13:00)" id="StartTime" name="StartTime" value={ this.state.formField.StartTime} onChange={this.changeHandler} required >
+                                        {/* <Label>Start Time</Label> */}
+                                        <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Required Time *" id="StartTime" name="StartTime" value={this.state.formField.StartTime} onChange={this.changeHandler} required >
+                                            <option value={10}>10:00 AM</option>
                                         </Input>
                                     </FormGroup>
+                                    {/* </Row> */}
+                                    {/* <Row> */}
+                                    
+                                    {/* </Row> */}
                                 </Col>
                                 <Col>
                                 <FormGroup>
                                     <Label> <br/>End Time</Label>
                                         <Input type="time"  min="10:00" max="18:00"  formate="24" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder=" Time- 24 hrs formate( 18:00)" id="EndTime" name="EndTime" value={ formField.EndTime} onChange={this.changeHandler} required >
+                                        {/* <option>Select Hours</option>
+                                            <option value={11}>11 AM</option>
+                                            <option value={12}>12 AM</option>
+                                            <option value={13}>13 PM</option>
+                                            <option value={14}>14 PM</option>
+                                            <option value={15}>15 PM</option>
+                                            <option value={16}>16 PM</option>
+                                            <option value={17}>17 PM</option>
+                                            <option value={18}>18 PM</option> */}
+                                            {/* <option>10:00 hrs</option> */}
                                         </Input>
                                     </FormGroup>
-                                </Col>                                
-                                <Col md={"6"}>
-                                    <FormGroup>
-                                       <Label htmlFor="plan">Choose Your Plan *</Label>
-                                        <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="plan" name="plan" value={formField.plan} onChange={this.changeHandler} required>  
-                                        <option value="">Select </option>
-                                        <option value="Standard">Standard ($12/mo) </option>
-                                        <option value="Premium">Premium ($15/mo) </option>
-                                        <option value="Gold">Gold ($20/mo) </option>
-                                        </Input>
-                                    </FormGroup>
+                                    {/* <FormGroup> */}
+                                    {/* <Label> <br/>End Time</Label> */}
+                                        {/* <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Required Time *" id="minute" name="minute" value={formField.minute} onChange={this.changeHandler} required >
+                                        <option>Select Miniute</option>
+                                            <option value={"00"}>:00</option>
+                                            <option value={"05"}>:05</option>
+                                            <option value={"10"}>:10</option>
+                                            <option value={"15"}>:15</option>
+                                            <option value={"20"}>:20</option>
+                                            <option value={"25"}>:25</option>
+                                            <option value={"30"}>:30</option>
+                                            <option value={"35"}>:35</option>
+                                            <option value={"40"}>:40</option>
+                                            <option value={"45"}>:45</option>
+                                            <option value={"50"}>:50</option>
+                                            <option value={"55"}>:55</option>
+                                            
+                                        </Input> */}
+                                    {/* </FormGroup> */}
                                 </Col>
-                                <Col md={"6"}>
+                                
+                                       <Col md={"6"}>
+                                       <FormGroup>
+                                       <Label htmlFor="plan">Choose Your Plan</Label>
+                                            <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="plan" name="plan" value={formField.plan} onChange={this.changeHandler} required>
+                                            
+                                            <option value="">All </option>
+                                            <option value="Standard">Standard ($12/mo) </option>
+                                            <option value="Premium">Premium ($15/mo) </option>
+                                            <option value="Gold">Gold ($20/mo) </option>
+                                            </Input>
+                                            </FormGroup>
+                                            </Col>
+                                          
+                                            <Col md={"6"}>
                                     <FormGroup>
-                                        <Label htmlFor="quicklyNeed">How quickly do you need someone? *</Label>
+                                        <Label htmlFor="quicklyNeed">How quickly do you need someone?</Label>
                                         <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Quickly Need *" id="quicklyNeed" name="quicklyNeed" value={this.state.formField.quicklyNeed} onChange={this.changeHandler} required >
-                                        <option>Select</option>
+                                        <option>All</option>
                                         <option value={1}>Within 48 hours </option>
                                         <option value={2}>Under No, Rush, Wait for the best candidate </option>
                                         </Input>
                                     </FormGroup>
                                 </Col>
 
+                                {/* <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="Hours_A_Day">Hours A Day</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Hours_A_Day *" id="Hours_A_Day" name="Hours_A_Day" value={this.state.formField.Hours_A_Day} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="Days_A_Week">Days A Week</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Days_A_Week *" id="Days_A_Week" name="Days_A_Week" value={this.state.formField.Days_A_Week} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col> */}
                              <Form noValidate className="" >
+                                    {/* <h5 ></h5> */}
+                                    {/* <span className="block-example border border-dark"> */}
+
                                     <FormGroup tag="fieldset">
                                         <legend style={{"borderBottom":"2px solid grey", "margin": "1em", "marginBottom": "-1.5rem", "padding": "1em 0.8em","fontSize":"15px"}}> Client Info</legend>
                                        {/* Text within the box <br />
@@ -1188,7 +1314,8 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
 
                 <Modal isOpen={modal1} toggle={this.toggle1} className="full-width-modal-section store-modal">
                     <ModalHeader title="hire VA Request Info" toggle={this.toggle1}>Hire VA Request Info</ModalHeader>
-                    <Form onSubmit={this.submitVaHandler} noValidate>
+                    {/* <Form onSubmit={this.submitHandler1} noValidate> */}
+                    <Form noValidate>
                         <ModalBody>
                             <FormErrors formErrors={this.state.formErrors} />
                             <Row>
@@ -1246,13 +1373,7 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                         </Input>
                                     </FormGroup>
                                 </Col>
-                                <Col md={"6"}>
-                                    <FormGroup>
-                                        <Label htmlFor="quicklyNeed"> How quickly do you need someone? </Label>
-                                        <Input type="text" placeholder="Quickly Need" id="quicklyNeed" name="quicklyNeed" value={this.state.formDataShowField.quicklyNeed} onChange={this.changeHandler} readOnly={true}>
-                                        </Input>
-                                    </FormGroup>
-                                </Col>
+
                                 <Col md={"6"}>
                                     <FormGroup>
                                         <Label htmlFor="choosePlan">Selected Plan</Label>
@@ -1260,14 +1381,19 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                         </Input>
                                     </FormGroup>
                                 </Col>
+
                                 <Col md={"6"}>
                                     <FormGroup>
-                                        <Label htmlFor="billingAmount">Plan Price ($)</Label>
-                                        <Input type="text" placeholder="Choose Billing Amount" id="billingAmount" name="billingAmount" value={this.state.formField.billingAmount} onChange={this.changeHandler}>
+                                        <Label htmlFor="quicklyNeed"> How quickly do you need someone? </Label>
+                                        <Input type="text" placeholder="Quickly Need" id="quicklyNeed" name="quicklyNeed" value={this.state.formDataShowField.quicklyNeed} onChange={this.changeHandler} readOnly={true}>
                                         </Input>
                                     </FormGroup>
                                 </Col>
-                                
+
+
+                                <Form noValidate className="" >
+                                    {/* <h5 ></h5> */}
+                                    {/* <span className="block-example border border-dark"> */}
 
                                     <FormGroup tag="fieldset">
                                         <legend style={{"borderBottom":"2px solid grey", "margin": "1em", "marginBottom": "-1.5rem", "padding": "1em 0.8em","fontSize":"15px"}}> Client Info</legend>
@@ -1294,7 +1420,7 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                             <Col md={"12"}>
                                                 <FormGroup>
                                                     <Label htmlFor="companyAddress"> Company Address</Label>
-                                                    <Input type="text" placeholder="Company Address" id="companyAddress" name="companyAddress" value={this.state.formDataShowField.companyAddress} onChange={this.changeHandler} readOnly={true}>
+                                                    <Input type="text" placeholder="Company Name" id="companyAddress" name="companyAddress" value={this.state.formDataShowField.companyAddress} onChange={this.changeHandler} readOnly={true}>
                                                     </Input>
                                                 </FormGroup>
                                             </Col>
@@ -1314,11 +1440,165 @@ this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { 
                                             </Col>
                                         </Row>
                                     </ModalBody>
-                                    
-                                </Row>
-                            </ModalBody>
-                            <ModalFooter>
-                            <Button color="primary" type="submit">{formProccessing ? processingBtnText : 'Submit'}</Button>
+                                    {/* </span> */}
+                                </Form>
+                                {/* <Col md={"6"}> */}
+
+                                {/* <FormGroup>
+                                        <Label htmlFor="industry">Industry</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Industry*" id="industry" name="industry" value={this.state.formField.industry} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup> */}
+
+                                {/* <FormGroup>
+                                        <Label htmlFor="industry">Industry</Label>
+                                        <Multiselect
+                                            options={IndustryList}
+                                            // groupBy="cat"
+                                            onChange={this.changeHandler}
+                                            onSelect={this.onSelectIndstry}
+                                            onRemove={this.onRemoveIndustry}
+                                            selectedValues={selectedIndustry}
+                                            displayValue="name"
+                                            showCheckbox={true}
+                                        /> */}
+                                {/* <Input type="select" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Industry*" id="industry" name="industry" value={this.state.formField.industry} onChange={this.changeHandler} required > */}
+                                {/* <option value="">All</option>
+                                        <option value="Advertising">Advertising</option>
+                                        <option value="AccountingFinance">AccountingFinance</option>
+                                        <option value="Apparel">Apparel</option>
+                                        <option value="ConstructionArchitectureEngineering">ConstructionArchitectureEngineering</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Education">Education</option>
+                                        <option value="HealthcareMedical">HealthcareMedical</option>
+                                        <option value="HospitalityCatering">HospitalityCatering</option>
+                                        <option value="LogisticsAndTransport">LogisticsAndTransport</option>
+                                        <option value="Management">Management</option>
+                                        <option value="Retail">Retail</option>
+                                        <option value="RealEstate">RealEstate</option>
+                                        <option value="Telecommunication">Telecommunication</option>
+                                        <option value="TravelAndLeisureAndTourism">TravelAndLeisureAndTourism</option>
+                                        <option value="Others">Others</option> */}
+                                {/* <option value="">All</option>
+                                        <option value="1">Advertising</option>
+                                        <option value="2">AccountingFinance</option>
+                                        <option value="3">Apparel</option>
+                                        <option value="4">ConstructionArchitectureEngineering</option>
+                                        <option value="5">Design</option>
+                                        <option value="6">Entertainment</option>
+                                        <option value="7">Education</option>
+                                        <option value="8">HealthcareMedical</option>
+                                        <option value="9">HospitalityCatering</option>
+                                        <option value="10">LogisticsAndTransport</option>
+                                        <option value="11">Management</option>
+                                        <option value="12">Retail</option>
+                                        <option value="13">RealEstate</option>
+                                        <option value="14">Telecommunication</option>
+                                        <option value="15">TravelAndLeisureAndTourism</option>
+                                        <option value="16">Others</option>
+                                        </Input> */}
+
+                                {/* </FormGroup>
+                                </Col> */}
+                                {/* <Col md={"6"}>
+                                    <FormGroup onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} >
+                                        <Label htmlFor="skills">Skills</Label>
+                                        {/* <Input type="text" placeholder="Skills *" id="skills" name="skills" value={this.state.formField.skills} onChange={this.changeHandler} required >
+                                        </Input> */}
+                                {/* <Multiselect onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+
+                                            options={skillList}
+                                            onChange={this.changeHandler}
+                                            onSelect={this.onSelect}
+                                            onRemove={this.onRemove}
+                                            displayValue="skillName"
+                                            selectedValues={selectedValues}
+                                        /> */}
+                                {/* </FormGroup> */}
+                                {/* </Col>  */}
+                                {/* <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="jobDescreption">Job Descreption</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Job Description*" id="jobDescreption" name="jobDescreption" value={this.state.formField.jobDescreption} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col> */}
+
+                                {/* <Col md={"5"}> */}
+                                {/* <Row> */}
+                                {/* <FormGroup tag="fieldset">
+                                        <FormGroup > */}
+                                {/* <Label>Choose which plan they want for hourly?</Label></FormGroup> */}
+                                {/* <Label>Plan</Label></FormGroup>
+                                        <Label className="radio-inline" htmlFor="entery_Level" ><Input style={{ padding: "20px", marginRight: "5px" }} type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="entery_Level" name="entery_Level" value="entery_Level" checked={this.state.formField.which_plan === 'entery_Level'}
+                                            onChange={this.changeRadioButtonHandler} />Entry Level-12$ </Label>{'       '}
+
+                                        <Label className="radio-inline" htmlFor="mid_Level" style={{ marginRight: "10px", }}  ><input type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} id="mid_Level" name="mid_Level" value="mid_Level" checked={this.state.formField.which_plan === 'mid_Level'} style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Mid Level-15$</Label>{' '}
+
+                                        <Label className="radio-inline" htmlFor="expert_Level"><Input type="radio" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} checked={this.state.formField.which_plan === "expert_Level"} id="expert_Level" name="expert_Level" value="expert_Level" style={{ "marginRight": "5px" }} onChange={this.changeRadioButtonHandler} />Expert Level-20$</Label> */}
+
+                                {/* {''} <Input type="radio" value  checked={formField.expert_Level === 'expert_Level'} onChange={this.changeHandler}  value={formField.expert_Level}/> */}
+                                {/* </FormGroup> */}
+                                {/* </Row> */}
+                                {/* </Col> */}
+                                {/* <FormGroup tag="fieldset"> */}
+                                {/* <Col md={"6"}> */}
+                                {/* <FormGroup> */}
+                                {/* <Label htmlFor="which_plan">Choose Plan</Label> */}
+                                {/* <Input type="select" name="which_plan" id="which_plan" value={this.state.formField.which_plan} onChange={this.changeHandler} required > */}
+                                {/* <SetOrganizationDropDownItem key={index} organizationInfo={organizationInfo} /> */}
+                                {/* <option value="">Select</option> */}
+                                {/* <option value={this.state.formField.which_plan ='' ? "Entry Level":`${this.state.formField.which_plan}`}>Entry Level</option>
+                                            <option value={this.state.formField.which_plan ='' ? "Mid Level":`${this.state.formField.which_plan}`}>Mid Level</option>
+                                            <option value={this.state.formField.which_plan ='' ? "Expert Level":`${this.state.formField.which_plan}`}>Expert Level</option> */}
+                                {/* <option value="Entry Level-12$">Entry Level</option>
+                                            <option value="Mid Level-15$">Mid Level</option>
+                                            <option value="Expart Level-20$">Expert Level</option> */}
+                                {/* </Input> */}
+                                {/* </FormGroup> */}
+                                {/* </Col> */}
+
+                                {/* <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="quickly_Need">Need</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="quickly_Need *" id="quickly_Need" name="quickly_Need" value={this.state.formField.quickly_Need} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="which_Days_Week">Weekdays</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Weekdays *" id="which_Days_Week" name="which_Days_Week" value={this.state.formField.which_Days_Week} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="during_Those_Days">Required Time</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Required Time *" id="during_Those_Days" name="during_Those_Days" value={this.state.formField.during_Those_Days} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="Hours_A_Day">Hours A Day</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Hours_A_Day *" id="Hours_A_Day" name="Hours_A_Day" value={this.state.formField.Hours_A_Day} onChange={this.changeHandler} readOnly={true} >
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
+                                <Col md={"6"}>
+                                    <FormGroup>
+                                        <Label htmlFor="Days_A_Week">Days A Week</Label>
+                                        <Input type="text" onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }} placeholder="Days_A_Week *" id="Days_A_Week" name="Days_A_Week" value={this.state.formField.Days_A_Week} onChange={this.changeHandler} required >
+                                        </Input>
+                                    </FormGroup>
+                                </Col> */}
+
+                            </Row>
+                        </ModalBody>
+                        <ModalFooter>
+                            {/* <Button color="primary" type="submit">{formProccessing ? processingBtnText : 'Submit'}</Button> */}
                             <Button color="secondary" onClick={this.toggle1}>Cancel</Button>
                         </ModalFooter>
                     </Form>

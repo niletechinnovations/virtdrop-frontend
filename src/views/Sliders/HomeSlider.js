@@ -1,14 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 const HomeSlider = (props) => {
-    
   return (
-    
-    <OwlCarousel id="Main-Slider" className="owl-theme" loop nav={false} lazyLoad items="1" dots={false} autoplay={true} autoplayTimeout={20000} >
+    <OwlCarousel
+      id="Main-Slider"
+      className="owl-theme"
+      loop
+      nav={false}
+      lazyLoad
+      items="1"
+      dots={false}
+      autoplay={true}
+      autoplayTimeout={20000}
+    >
       {/* <div className="item">
         <div className="slider-item-info">
           <div className="slider-media">
@@ -26,8 +34,13 @@ const HomeSlider = (props) => {
             <img src="/images/slider1.jpg" alt="Slide 1" />
           </div>
           <div className="slider-content">
-            <h6 style={{color:'#ffffff'}}>Achieve optimal time management and better work-life balance with our amazing Virtual Assistants</h6>
-            <Link className="explore-btn" to="/booking">Find the Best Virtual Assistant Today</Link>
+            <h6 style={{ color: "#ffffff" }}>
+              Achieve optimal time management and better work-life balance with
+              our amazing Virtual Assistants
+            </h6>
+            <Link className="explore-btn" to="/enquiry">
+              Find the Best Virtual Assistant Today
+            </Link>
           </div>
         </div>
       </div>
@@ -39,8 +52,13 @@ const HomeSlider = (props) => {
           </div>
           <div className="slider-content">
             <h2>Why VIRTDROP?</h2>
-            <h6 style={{color:'#ffffff'}}>We help businesses become more efficient and productive, enabling them to more easily achieve their goals.</h6>
-            <Link className="explore-btn" to="/booking">Find the Best Virtual Assistant Today</Link>
+            <h6 style={{ color: "#ffffff" }}>
+              We help businesses become more efficient and productive, enabling
+              them to more easily achieve their goals.
+            </h6>
+            <Link className="explore-btn" to="/booking">
+              Find the Best Virtual Assistant Today
+            </Link>
           </div>
         </div>
       </div>
@@ -52,7 +70,7 @@ const HomeSlider = (props) => {
           </div>
           <div className="slider-content">
             <h2>Services</h2>
-            <ul style={{color:'#ffffff'}}>
+            <ul style={{ color: "#ffffff" }}>
               <li>Administrative/data entry tasks</li>
               <li>E-commerce related tasks</li>
               <li>Social media management</li>
@@ -61,7 +79,15 @@ const HomeSlider = (props) => {
               <li>Bookkeeping</li>
             </ul>
             {/* <Link className="explore-btn" to="/services">Click here for more services offered</Link> */}
-            <li> <a className="explore-btn" href= "https://www.virtdrop.com/our-services/">Click here for more services offered</a></li>
+            <li>
+              {" "}
+              <a
+                className="explore-btn"
+                href="https://www.virtdrop.com/our-services/"
+              >
+                Click here for more services offered
+              </a>
+            </li>
           </div>
         </div>
       </div>
@@ -72,18 +98,19 @@ const HomeSlider = (props) => {
           </div>
           <div className="slider-content">
             <h2>PRICING</h2>
-            <h6 style={{color:'#ffffff'}}>Our pricing is as straight forward and stream lined as everything else we offer.</h6>
+            <h6 style={{ color: "#ffffff" }}>
+              Our pricing is as straight forward and stream lined as everything
+              else we offer.
+            </h6>
             {/* <Link className="explore-btn" to="/booking">Request a Quote</Link> */}
-            <a className="explore-btn" href="https://www.virtdrop.com/pricing/" >Request a Quote</a>
+            <a className="explore-btn" href="https://www.virtdrop.com/pricing/">
+              Request a Quote
+            </a>
           </div>
         </div>
       </div>
-
-      
-      
     </OwlCarousel>
-  
   );
-}
+};
 
 export default HomeSlider;

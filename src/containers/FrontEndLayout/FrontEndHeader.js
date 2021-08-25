@@ -3,8 +3,9 @@ import {Link} from 'react-router-dom';
 // import logo from './../../assets/images/logo.png';
 import logo from './../../assets/images/virtlogo-2.png';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
-
+ 
 import commonService from '../../core/services/commonService';
+
 import './FrontEndHeader.css';
 import UserAvtar from '../UserLayout/UserAvtar'
 

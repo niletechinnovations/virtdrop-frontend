@@ -57,7 +57,7 @@ export class HireVA_Data extends Component {
                 hoursA_Day: Store.Hours_A_Day+" "+'hrs',
                 authId: Store.authId,
                 _id: Store._id,
-                createdAt: (new Date(Store.createdAt)).toLocaleDateString("en-US"),
+                // client: Store.clientCompleteName,
                 // client: Store.firstName + " " + Store.lastName
                 client: Store.firstName
 
@@ -89,17 +89,18 @@ export class HireVA_Data extends Component {
                 label: 'Need',
                 name: 'need'
             },
+
             {
                 label: 'Weekdays',
                 name: 'weekdays'
             },
+            // {
+            //     label: 'Required Time',
+            //     name: 'requiredTime'
+            // },
             {
                 label: 'Hours A Day ',
                 name: 'hoursA_Day'
-            },
-            {
-                label: 'Created on',
-                name: 'createdAt'
             },
             {
                 label: 'Action',

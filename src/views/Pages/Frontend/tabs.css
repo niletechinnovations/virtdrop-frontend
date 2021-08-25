@@ -1,0 +1,37 @@
+.App {
+  margin-top: 68px;
+}
+.App ul {
+  counter-reset: step;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 40%;
+  margin-bottom: 77px;
+  margin-left: 488px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.App li {
+  margin-bottom: -1px;
+  position: relative;
+  padding: 0;
+  flex: 1 1;
+  min-width: 0;
+  width: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  list-style: none;
+  width: 3px;
+  display: flex;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+/* .App li:nth-child(1) {
+  background: black;
+  color: white;
+} */

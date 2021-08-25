@@ -1,4 +1,4 @@
-body{background: #f4f9fc; margin:0px;}
+body{background: #f4f9fc}
 
 .app.dashboard-template{ min-height: 100vh;}
 body.header-fixed .app.dashboard-template{

@@ -62,7 +62,9 @@ export default class ClienrtVAMeetingData extends Component {
         suggestedDate:meeting.suggestedDate? new Date(meeting.suggestedDate).getDate() +"/"+suggestedMonth +"/"+new Date(meeting.suggestedDate).getFullYear() :'',
         suggestedTime:meeting.suggestedTime ? meeting.suggestedTime + "AM":'',
         kickoff_Date: meeting.kickoff_date? dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear() :'Not Available',
+
         indexVal: i,
+
       }
       rowsItem.push(resInfo);
     }
@@ -122,7 +124,7 @@ export default class ClienrtVAMeetingData extends Component {
             return (
 
               <div className="actionBtnGroup">
-                <Button className="btn-edit btn-success" size='sm' onClick={() => { this.sendMeetingMail(link, i, rowsItem[i]) } } title="Schedule Meeting"><i className="fa fa-envelope"></i></Button>
+                <Button className="btn-edit btn-success" size='sm' onClick={() => { this.sendMeetingMail(link, i, rowsItem[i]) } } title="Sechdule Meeting"><i className="fa fa-envelope"></i></Button>
                <Button className="btn-delete btn-danger" size='sm' onClick={() => { if (window.confirm('Are you sure you want to delete this record?')) { this.deleteEnquiryItem(i) }; }} title="Delete Meeting"><i className="fa fa-trash"></i> </Button>
               </div>
 

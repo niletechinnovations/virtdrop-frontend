@@ -197,10 +197,10 @@ class Dashboard extends Component {
             <div className="dashboard-card">
               <div className="dashboard-card-inner">
                 <div className="dashboard-card-icon">
-                  <Link to="/user/hire-va1"><img src="/images/hire-a-helper-brands.svg" height="50" alt="" /></Link>
+                  <Link to="/user/manage-request"><img src="/images/timezone.svg" height="50" alt="" /></Link>
                 </div>
                 <div className="dashboard-card-content">
-                  <h2><Link to="/user/hire-va1">Hire a VA</Link></h2>
+                  <h2><Link to="/user/manage-request">Manage Request</Link></h2>
                 </div>
               </div>
             </div>

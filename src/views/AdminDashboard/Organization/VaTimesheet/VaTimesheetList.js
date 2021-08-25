@@ -70,6 +70,7 @@ class VaTimesheetList extends Component {
     this.setState( { loading: true}, () => {
       commonService.getAPIWithAccessToken('timesheet'+filterQuery)
         .then( res => {
+          // console.log("VA TIMESHEET=====",res)
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);
@@ -92,11 +93,8 @@ class VaTimesheetList extends Component {
   /* VA List API */
   vaListItem(filterItem = {}) {
     this.setState( { loading: true}, () => {
-      let filterQuery = "?pageSize=10000";
-      if(filterItem.clientId !== undefined && filterItem.clientId !== "" ) 
-      filterQuery += (filterQuery !=="" ) ? "&clientId="+filterItem.clientId: "&clientId="+filterItem.clientId;
-    
-      commonService.getAPIWithAccessToken('va-assignment/clients-va'+filterQuery).then( res => {
+      commonService.getAPIWithAccessToken('va-assignment/clients-va?pageSize=1000')
+        .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
             toast.error(res.data.message);
@@ -119,11 +117,8 @@ class VaTimesheetList extends Component {
   /* Client List API */
   clientListItem(filterItem = {}) {
     this.setState( { loading: true}, () => {
-      let filterQuery = "?pageSize=10000";
-    //if(filterItem.VAauthId !== undefined && filterItem.VAauthId !== "" ) 
-      //filterQuery += (filterQuery !=="" ) ? "&vaAuthId="+filterItem.filterVaAuth: "&vaAuthId="+filterItem.filterVaAuth;
-    
-      commonService.getAPIWithAccessToken('organization'+filterQuery)
+      commonService.getAPIWithAccessToken('organization?pageSize=1000')
+      
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( { loading: false } );
@@ -234,19 +229,6 @@ class VaTimesheetList extends Component {
     this.setState({ filterItem: filterItem });
   };
 
-  changeVaHandler = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    const formField = this.state.formField
-    formField[name] = value;
-    this.setState({ formField: formField });
-
-    console.log(value);
-    if(value!=='')
-      this.vaListItem({clientId: value});
-  };
-  
-
   /* Validate Form Field */
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
@@ -336,6 +318,22 @@ class VaTimesheetList extends Component {
           }
       } )
     })
+    // const formField = {
+    //   vaAuthId: itemInfo.authId,
+    //   vaTaskId: itemInfo.vaTaskId,
+    //   clientId: itemInfo.clientId,
+    //   projectId: itemInfo.projectId,
+    //   title: itemInfo.taskName,
+    //   description: itemInfo.notes,
+    //   duration: itemInfo.duration,
+    //   TotalWorkingTime:itemInfo.TotalWorkingTime,
+    //   billingHours: itemInfo.billingHours,
+         
+    // };
+    // const statusBtn = <Button type="button" size="sm" className={`changeStatusBtn `+( itemInfo.status ? 'btn-danger' : 'btn-success' )} onClick={() => 
+    //   this.changeProfileStatus(itemInfo.vaRequestId, itemInfo.status )} >{ ( itemInfo.status ? 'De-Activate Account' : 'Activate Account' )}</Button>
+    
+    // this.setState({rowIndex: rowIndex, formField: formField, modal: true, changeStatusBtn:statusBtn, formValid: true});
   }
   
   /* Delete Record*/
@@ -408,7 +406,7 @@ class VaTimesheetList extends Component {
           <Col lg={12}>
             <Card>
               <CardHeader className="mainHeading">
-                <strong>VA Timesheet List</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add Timesheet</Button>
+                <strong>VA Timesheet List</strong> <Button color="primary" className="categoryAdd" type="button" onClick={this.toggle}><i className="fa fa-plus"></i> Add VA</Button>
               </CardHeader>
               <CardBody>
                 <Row>
@@ -416,22 +414,22 @@ class VaTimesheetList extends Component {
                     <Row className="filterRow">                      
                       <Col md={"2"} className="pl-3">
                         <FormGroup> 
-                          <Label htmlFor="filterClientId">Client</Label>            
-                          <Input type="select" placeholder="Filter by Client" id="filterClientId" name="filterClientId" value={filterItem.filterClientId} onChange={this.changeFilterHandler} >
+                          <Label htmlFor="filterVaAuth">VA User</Label>            
+                          <Input type="select" placeholder="Filter by VA " id="filterVaAuth" name="filterVaAuth" value={filterItem.filterVaAuth} onChange={this.changeFilterHandler} >
                             <option value="">All</option>
-                            {clientList.map((clientInfo, index) =>
-                              <SetClientDropDownItem key={index} clientInfo={clientInfo} />
+                            {vaLists.map((vaInfo, index) =>
+                              <SetVaDropDownItem key={index} vaInfo={vaInfo} />
                             )}
                           </Input>
                         </FormGroup> 
                       </Col>
                       <Col md={"2"} className="pl-3">
                         <FormGroup> 
-                          <Label htmlFor="filterVaAuth">VA User</Label>            
-                          <Input type="select" placeholder="Filter by VA " id="filterVaAuth" name="filterVaAuth" value={filterItem.filterVaAuth} onChange={this.changeFilterHandler} >
+                          <Label htmlFor="filterClientId">Client</Label>            
+                          <Input type="select" placeholder="Filter by Client" id="filterClientId" name="filterClientId" value={filterItem.filterClientId} onChange={this.changeFilterHandler} >
                             <option value="">All</option>
-                            {vaLists.map((vaInfo, index) =>
-                              <SetVaDropDownItem key={index} vaInfo={vaInfo} />
+                            {clientList.map((clientInfo, index) =>
+                              <SetClientDropDownItem key={index} clientInfo={clientInfo} />
                             )}
                           </Input>
                         </FormGroup> 
@@ -483,22 +481,11 @@ class VaTimesheetList extends Component {
           </Col>
         </Row>
         <Modal isOpen={modal} toggle={this.toggle} className="full-width-modal-section store-modal">
-          <ModalHeader toggle={this.toggle}>Timesheet Info</ModalHeader>
+          <ModalHeader toggle={this.toggle}>VA Task Info</ModalHeader>
           <Form onSubmit={this.submitHandler} noValidate>
             <ModalBody>
               <FormErrors formErrors={this.state.formErrors} />
               <Row>
-                <Col md={"6"}>
-                  <FormGroup> 
-                    <Label htmlFor="clientId">Client</Label>            
-                    <Input type="select" id="clientId" name="clientId" value={formField.clientId} onChange={this.changeVaHandler} >
-                      <option value="">Select Client</option>
-                      {clientList.map((clientInfo, index) =>
-                        <SetClientDropDownItem key={index} clientInfo={clientInfo} />
-                      )}
-                    </Input>
-                  </FormGroup> 
-                </Col>
                 <Col md={"6"}>
                   <FormGroup>
                     <Label htmlFor="vaAuthId">VirDrop VA *</Label>            
@@ -510,6 +497,28 @@ class VaTimesheetList extends Component {
                     </Input>
                   </FormGroup>  
                 </Col>
+                <Col md={"6"}>
+                  <FormGroup> 
+                    <Label htmlFor="clientId">Client</Label>            
+                    <Input type="select" id="clientId" name="clientId" value={formField.clientId} onChange={this.changeHandler} >
+                      <option value="">Select Client</option>
+                      {clientList.map((clientInfo, index) =>
+                        <SetClientDropDownItem key={index} clientInfo={clientInfo} />
+                      )}
+                    </Input>
+                  </FormGroup> 
+                </Col>
+                {/* <Col md={"6"}>
+                  <div className="form-group">
+                    <label htmlFor="projectId">Project </label>
+                    <Input type="select" name="projectId" id="projectId" className="form-control" value={formField.projectId} onChange={this.changeHandler}>
+                      <option value="1">Project 1</option>
+                      <option value="2">Project 2</option>
+                      <option value="3">Project 3</option>
+                      <option value="4">Project 4</option>
+                    </Input>
+                  </div>
+                </Col> */}
                 <Col md={"12"}>
                   <FormGroup>
                     <label htmlFor="title">Task Name *</label>
@@ -554,7 +563,7 @@ class VaTimesheetList extends Component {
               </Row>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" type="submit">{formProccessing ? processingBtnText : 'Submit' }</Button>
+              <Button color="primary" type="submit">{formProccessing ? processingBtnText : 'Update' }</Button>
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
           </Form>

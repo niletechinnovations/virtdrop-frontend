@@ -70,7 +70,7 @@ class MyCard extends Component {
         toast.error("Invalid Profile ID");
         return false;
       }
-      //let history = useHistory();
+      
       const ccInputField = this.state.ccField;
       
       if(ccInputField.ccType ==='' || ccInputField.ccNumber ==='' || ccInputField.ccExpMonth ==='' || ccInputField.ccExpYear ==='' || ccInputField.ccCVV ==='' ){
@@ -96,9 +96,8 @@ class MyCard extends Component {
             return;
           }
           this.setState({ loading:false, ccFormProccessing: false});
-          this.getCreditCardInfo(this.state.profileId); 
-          this.props.history.goBack();
           toast.success(res.data.message);
+          this.getCreditCardInfo(this.state.profileId); 
         } )
         .catch( err => {         
           if(err.response !== undefined && err.response.status === 401) {

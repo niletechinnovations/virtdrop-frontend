@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from './../../assets/images/logo.png';
+import logo from './../../assets/images/virtdroplogo.png';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import commonService from '../../core/services/commonService';
 import './CommonFrontEndHeader.css';
@@ -125,7 +125,7 @@ class CommonFrontEndHeader extends React.Component {
             <div className="header-navigation">
               <Navbar expand="lg">
                 <div className="navbar-brand">
-                  <a href="https://www.virtdrop.com" ><img src={logo} height="60" alt="Logo" /></a>
+                  <a href="https://www.virtdrop.com" ><img src={logo} height="55" alt="Logo" /></a>
                   {/* <Link to="/" target="blank"><img src={logo} height="60" alt="Logo" /></Link> */}
                 </div>
                 <NavbarToggler onClick={this.onToggle} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" />

@@ -98,7 +98,7 @@ class TransactionDetails extends Component {
                 </Col>
                 <Col md={"6"}>
                   <FormGroup>
-                    <label><strong>Transaction Date:</strong> { (new Date(transactionInfo.createdAt)).toLocaleDateString("en-US")}</label>
+                    <label><strong>Transaction Date:</strong> {transactionInfo.createdAt}</label>
                   </FormGroup>
                 </Col>
                 <Col md="12">

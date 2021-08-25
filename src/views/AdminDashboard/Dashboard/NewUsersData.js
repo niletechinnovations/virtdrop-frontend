@@ -23,7 +23,7 @@ class NewUserData extends Component{
                 organizationName: userData.organizationName,
                 userName: userData.firstName+' '+userData.lastName,  
                 userEmail: userData.email,
-                phoneNumber: userData.phoneNumber || " ",
+                phoneNumber: userData.mobileNumber || " ",
                 address: userData.address || " ",
                 status: userData.status ? "Active" : "Inactive",   
                 createdAt: (new Date(userData.createdAt)).toLocaleDateString("en-US"),

@@ -38,7 +38,7 @@ class Dashboard extends Component {
         }
         )
 
-      commonService.getAPIWithAccessToken('organization?status=1&pageNo=1&pageSize=10')
+      commonService.getAPIWithAccessToken('organization?pageNo=1&pageSize=10')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( {  loading: false } );
@@ -49,7 +49,7 @@ class Dashboard extends Component {
           this.setState({loading:false, userList: responseData.profileList});
         } )
         
-      commonService.getAPIWithAccessToken('va-application/?status=2&pageNo=1&pageSize=10')
+      commonService.getAPIWithAccessToken('va-application/?pageNo=1&pageSize=10')
         .then( res => {
           if ( undefined === res.data.data || !res.data.status ) {
             this.setState( {  loading: false } );

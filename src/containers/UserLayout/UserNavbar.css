@@ -1,7 +1,7 @@
 .dashboard-memu { margin-bottom: 0px; background: #3c65b9; padding: 0 10px; }
 .dashboard-memu ul{display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; padding-left: 0; margin-bottom: 0; list-style: none;}
 .dashboard-memu ul li {position: relative; padding:0px;  }
-.dashboard-memu ul li a {position: relative; color: #fff; text-align: center; font-weight: 600;padding: 5px 15px !important;  font-size: 12px; }
+.dashboard-memu ul li a {position: relative; color: #fff; text-align: center; font-weight: 600;padding: 5px 7px !important;  font-size: 12px; }
 .dashboard-memu ul li a img {margin-right: 10px; }
 .table-dragable tr td{ cursor: move;}
 .quickStart{ line-height: 22px;}
