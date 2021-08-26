@@ -1,32 +1,47 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import commonService from './core/services/commonService';
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import commonService from "./core/services/commonService";
 
-import './App.css';
-import Loader from './views/Loader/Loader';
-import PageNotFound from './views/Pages/404/PageNotFound';
+import "./App.css";
+import Loader from "./views/Loader/Loader";
+import PageNotFound from "./views/Pages/404/PageNotFound";
+import {Enquiry} from "./views/Pages/Frontend/Enquiry";
 
 // Containers
-const FrontEndLayout = React.lazy(() => import('./containers/FrontEndLayout/FrontEndLayout'));
-const CommonLayout = React.lazy(() => import('./containers/CommonLayout/CommonLayout'));
-const UserLayout = React.lazy(() => import('./containers/UserLayout/UserLayout'));
-const AdminLayout = React.lazy(() => import('./containers/AdminLayout/AdminLayout'));
+const FrontEndLayout = React.lazy(() =>
+  import("./containers/FrontEndLayout/FrontEndLayout")
+);
+const CommonLayout = React.lazy(() =>
+  import("./containers/CommonLayout/CommonLayout")
+);
+const UserLayout = React.lazy(() =>
+  import("./containers/UserLayout/UserLayout")
+);
+const AdminLayout = React.lazy(() =>
+  import("./containers/AdminLayout/AdminLayout")
+);
 
 const loading = () => <Loader />;
 
 class App extends Component {
-  render(){
+  render() {
     return (
       <Router>
-          <React.Suspense fallback={loading()}>
-            <Switch>
-              <PrivateRoute path="/admin" name="Admin" component={AdminLayout} />
-              <Route path="/common" name="Common" component={CommonLayout} />
-              <ProtectedRoute path="/user" name="User" component={UserLayout} />
-              <Route path="/" name="Home" component={FrontEndLayout} />
-              <Route name="Page not found" component={PageNotFound} />
-            </Switch>
-          </React.Suspense>
+        <React.Suspense fallback={loading()}>
+          <Switch>
+            <PrivateRoute path="/admin" name="Admin" component={AdminLayout} />
+            <Route path="/common" name="Common" component={CommonLayout} />
+            <ProtectedRoute path="/user" name="User" component={UserLayout} />
+            <Route path="/" name="Home" component={FrontEndLayout} />
+            <Route name="Page not found" component={PageNotFound} />
+            <Route path="/enquiry" name="Enquiry" component={Enquiry} />
+          </Switch>
+        </React.Suspense>
       </Router>
     );
   }
@@ -34,40 +49,56 @@ class App extends Component {
 
 const PrivateRoute = ({ component, ...rest }) => {
   return (
-    <Route {...rest} render={routeProps => {
-      const role = localStorage.getItem("role");
-      return commonService.getAuth() && ( role === "admin" || role === "recruitmentAdmin" || role === "recruitmentTeam" || role === "marketingTeam" || role === "accountingAdmin" || role === "teamLead" ) ? (
-        renderMergedProps(component, routeProps, rest)
-      ) : (
-        <Redirect to={{
-          pathname: '/login',
-          state: { from: routeProps.location }
-        }}/>
-      );
-    }}/>
+    <Route
+      {...rest}
+      render={(routeProps) => {
+        const role = localStorage.getItem("role");
+        return commonService.getAuth() &&
+          (role === "admin" ||
+            role === "recruitmentAdmin" ||
+            role === "recruitmentTeam" ||
+            role === "marketingTeam" ||
+            role === "accountingAdmin" ||
+            role === "teamLead") ? (
+          renderMergedProps(component, routeProps, rest)
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: routeProps.location },
+            }}
+          />
+        );
+      }}
+    />
   );
 };
 
 const ProtectedRoute = ({ component, ...rest }) => {
+  console.log("compo", { component });
   return (
-    <Route {...rest} render={routeProps => {
-      return commonService.getAuth() && localStorage.getItem("role") !== "" ? (
-        renderMergedProps(component, routeProps, rest)
-      ) : (
-        <Redirect to={{
-          pathname: '/login',
-          state: { from: routeProps.location }
-        }}/>
-      );
-    }}/>
+    <Route
+      {...rest}
+      render={(routeProps) => {
+        return commonService.getAuth() &&
+          localStorage.getItem("role") !== "" ? (
+          renderMergedProps(component, routeProps, rest)
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: routeProps.location },
+            }}
+          />
+        );
+      }}
+    />
   );
 };
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
-  return (
-    React.createElement(component, finalProps)
-  );
-}
+  return React.createElement(component, finalProps);
+};
 
 export default App;
