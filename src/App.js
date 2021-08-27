@@ -10,7 +10,6 @@ import commonService from "./core/services/commonService";
 import "./App.css";
 import Loader from "./views/Loader/Loader";
 import PageNotFound from "./views/Pages/404/PageNotFound";
-import {Enquiry} from "./views/Pages/Frontend/Enquiry";
 
 // Containers
 const FrontEndLayout = React.lazy(() =>
@@ -39,7 +38,6 @@ class App extends Component {
             <ProtectedRoute path="/user" name="User" component={UserLayout} />
             <Route path="/" name="Home" component={FrontEndLayout} />
             <Route name="Page not found" component={PageNotFound} />
-            <Route path="/enquiry" name="Enquiry" component={Enquiry} />
           </Switch>
         </React.Suspense>
       </Router>

@@ -1,9 +1,3 @@
-.rangeSlider .input-range__track--active {
-  background: #182c44;
-}
-.rangeSlider .input-range__slider {
-  background: #182c44;
-}
 
 .products {
   display: grid;
@@ -279,16 +273,15 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
   }
   .b1Add:hover{
   background-position: 200px 0px;
-  
   }
   
-  a{
+  /* a{
   color:white;
   font-size: 30px;
   font-family: 'Montstreet',sans-serif;
   text-transform: capitalize;
   text-decoration: none;
-  }
+  } */
   
   /* AddButton End */
 
