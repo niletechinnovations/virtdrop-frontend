@@ -33,11 +33,11 @@ body{ background: none !important;}
 .header-social ul li a {display: block; color: #fff; text-align: center; line-height:24px; height: 24px; width: 24px; background: #dee4fc; border-radius: 50%; margin-left: 5px;}
 .header-social ul li a i{color: #fff;line-height: 24px;text-align: center;font-size: 12px;}
 
-.header-social ul li a.facebook{background:#3b5998;}
-.header-social ul li a.twitter{background:#1da1f2;}
-.header-social ul li a.linkedin{background:#0077b5;}
-.header-social ul li a.instagram{background:#262626;}
-.header-social ul li a.youtube{background:#cd201f;}
+.header-social ul li a.facebook{background:#3b5998;display:flex;justify-content: center;}
+.header-social ul li a.twitter{background:#1da1f2;display:flex;justify-content: center;}
+.header-social ul li a.linkedin{background:#0077b5;display:flex;justify-content: center;}
+.header-social ul li a.instagram{background:#262626;display:flex;justify-content: center;}
+.header-social ul li a.youtube{background:#cd201f;display:flex;justify-content: center;}
 
 
 .header-contact-list{display: -webkit-box; margin: 0; list-style: none; display: -ms-flexbox; display: flex; } 
