@@ -204,8 +204,8 @@ class LoginPage extends Component {
 
         <section className="banner-section">
           <div className="banner-media-content">
-              <div className="banner-media">
-                <img src="/images/banner4.jpg" alt="Login banner" />
+              <div className="banner-media1">
+                <img src="/images/banner-virtdrop.jpg" alt="Login banner" />
               </div>
               <div className="banner-content">
                 <h1>VirtDrop is the easiest way to find and hire Virtual Assistants.</h1>
