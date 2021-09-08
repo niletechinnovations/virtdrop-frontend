@@ -114,6 +114,7 @@ class CommonFrontEndHeader extends React.Component {
                     <li><a className="linkedin" href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-twitter"></i></a></li>
                     <li><a className="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-linkedin"></i></a></li>
                     <li><a className="instagram" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><i className="fa fa-instagram"></i></a></li>
+                    <li><a className="facebook" href="#" target="_blank" rel="noopener noreferrer"><i className="fa fa-whatsapp"></i></a></li>
                   </ul>
                 </div>
               </div>

@@ -7,6 +7,8 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import RemoveCircleOutlineOutlinedIcon from "@material-ui/icons/RemoveCircleOutlineOutlined";
 import TimeRangeSlider from "react-time-range-slider";
 import { motion } from "framer-motion";
+import sound from "../../../assets/images/sound2.wav";
+
 
 class FifthEnquiry extends Component {
   constructor(props) {
@@ -35,6 +37,9 @@ class FifthEnquiry extends Component {
     }, 500);
   };
 
+  playAudio=()=>{
+    new Audio(sound).play();
+  }
   // handleSubmit = (e) => {
   //   e.preventDefault();
   //   axios
@@ -86,10 +91,10 @@ class FifthEnquiry extends Component {
                       this.changeHandle(e);
                     }}
                   >
-                    <div className="imageSectionFifth"  style={{boxShadow:this.state.hours ? "11px 22px 44px #7e70a221" : null }}>
-                      <img src="/images/seasonUndraw.png" />
+                    <div className="imageSectionFifth"  style={{boxShadow:this.state.hours ? "11px 22px 44px #7e70a221" : null }} onClick={this.playAudio}>
+                      <img src="/images/fifthShort.png" />
                     </div>
-                    <div className="imageSectionhours">
+                    <div className="imageSectionhours" onClick={this.playAudio}>
                       <h5 style={{ color: this.state.days ? "gray" : null,backgroundColor: this.state.hours ? "lightgray" : null,borderRadius:38  }}>
                       Need Someone Urgently
                       </h5>
@@ -116,10 +121,10 @@ class FifthEnquiry extends Component {
 
                     }}
                   >
-                    <div className="imageSectionFifth" style={{boxShadow:this.state.days ? "11px 22px 44px #7e70a221" : null }}>
-                      <img src="/images/bookingUndraw.png" />
+                    <div className="imageSectionFifth" style={{boxShadow:this.state.days ? "11px 22px 44px #7e70a221" : null }} onClick={this.playAudio}>
+                      <img src="/images/fifthlong.png" />
                     </div>
-                    <div>
+                    <div onClick={this.playAudio}>
                       <h5 style={{ color: this.state.hours ? "gray" : null,backgroundColor: this.state.days ? "lightgray" : null,borderRadius:38 }}>
                         No rush,wait best candidates
                       </h5>

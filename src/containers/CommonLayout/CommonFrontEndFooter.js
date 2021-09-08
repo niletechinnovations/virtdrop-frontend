@@ -94,7 +94,7 @@ class CommonFrontEndFooter extends React.Component {
                       individual clients and major businesses alike. VirtDrop
                       provides ongoing training and support for our Virtual
                       Assistants, guaranteeing our client’s goals can always be
-                      achieved. VirtDrop began operations in 2019.
+                      achieved.
                     </p>
                   </div>
                 </div>
@@ -257,7 +257,7 @@ class CommonFrontEndFooter extends React.Component {
             </div>
           </div>
         </footer>
-        <div className="discovery-call-info">
+        {/* <div className="discovery-call-info">
           <div className="discovery-call-inner">
             <Link to="/booking">
               <div className="pulse">
@@ -266,7 +266,7 @@ class CommonFrontEndFooter extends React.Component {
               <div className="booking-text">Book Discovery Call</div>
             </Link>
           </div>
-        </div>
+        </div> */}
       </>
     );
   }
