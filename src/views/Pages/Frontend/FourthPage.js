@@ -30,6 +30,10 @@ class FourthPage extends Component {
     this.setState({ plan: rate });
   };
   render() {
+    // const standard = ["Basic To intermediate knowledge and experience in the field of expertise."];
+    // const gold = ["More advanced skills and proficiency with supervisory or managerial know-how."];
+    // const premium = ["Broad and deep competence through practice and education in specific fields."];
+
     const standard = [
       { head: "Entry Level tasks" },
       { head: "Virtual Assistant" },
@@ -58,6 +62,7 @@ class FourthPage extends Component {
       { head: "Product Design/Developement" },
       { head: "PPC/Social Media Advertising" },
     ];
+
 
     const rateObj = [
       { top: "Standard", rate: "12", includes: standard },
@@ -106,10 +111,7 @@ class FourthPage extends Component {
                         {item.rate}
                       </h4>
                       <p>per month</p>
-                      <h3 class="time-period"></h3>
-                      <div class="plan-btn">Select</div>
-                    </div>
-                    <div class="plan-bottom-sec">
+                      <div class="plan-bottom-sec">
                       <p>INCLUDES:</p>
                       <div class="plan-decs">
                         {item?.includes?.map((item) => {
@@ -117,6 +119,16 @@ class FourthPage extends Component {
                         })}
                       </div>
                     </div>
+                      <div class="plan-btn">Select</div>
+                    </div>
+                    {/* <div class="plan-bottom-sec">
+                      <p>INCLUDES:</p>
+                      <div class="plan-decs">
+                        {item?.includes?.map((item) => {
+                          return <p>{item.head}</p>;
+                        })}
+                      </div>
+                    </div> */}
                   </div>
                 </>
               );

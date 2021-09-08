@@ -6,7 +6,7 @@ const initState = {
     adduser:[]
 }
 export default (state = initState, action) => {
-    const {type, payload,index} = action ;
+    const {type, payload} = action ;
     switch (type){
         case "SET_LOADING":
             return {

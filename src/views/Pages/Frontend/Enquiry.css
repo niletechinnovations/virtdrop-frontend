@@ -71,7 +71,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
-  margin-top: 30px;
+  margin-top: 54px;
 }
 /* 
 .skip {
@@ -114,7 +114,7 @@
   font-weight: 500;
   color:rgb(0, 83, 130);
   padding: 0;
-  margin: 20px;
+  margin: 55px;
 }
 .selecthover:hover{
   background-color:#f2f2f2;
@@ -164,7 +164,7 @@
   box-shadow: -1px -3px 6px #00000029;
   position: relative;
   cursor:pointer ;
-  border-radius: 24px 0px 2px;
+  border-radius: 24px 24px 24px;
 }
 
 .imageProp img {
@@ -203,12 +203,12 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
   /* width: 866px; */
   /* margin-left: 370px; */
   margin-top: 25px;
-  padding: 40px;
+  padding:12px;
   
   box-shadow: 7px 5px 30px #00000029;;
   border: 1px solid #d1d1d1;
   border-radius: 6px;
-  margin: 95px 0px 95px 0px;
+  margin:37px 0px 37px 0px;
 
 }
 .insideOption {
@@ -488,16 +488,16 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
 }
 .plan-top-sec {
   cursor: pointer;
-  box-shadow: 11px 22px 44px #7e70a221;
-  border: 1px solid #707070;
-  border-radius: 28px;
-  padding: 0px 15px;
-  position: relative;
-  margin: 0 59px;
+    box-shadow: 11px 22px 44px #7e70a221;
+    border: 1px solid lightgray;
+    border-radius: 28px;
+    padding: 0px 15px;
+    position: relative;
+    margin: 0 2px;
 }
 .price {
   font-size: 47px;
-  color: #1360fb;
+  color: #44496d;
   font-weight: 700;
   text-align: center;
   padding: 0;
@@ -513,6 +513,17 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
   margin: 15px 0;
   text-align: center;
 }
+
+.timeInput{
+  margin: 12px;
+  border: none;
+  box-shadow: 10px 6px 8px #1c225038;
+  outline: none;
+  border: 1px solid lightgray;
+}
+.timeInput::placeholder {
+  color:#182c44;
+}
 .plan-btn {
   box-shadow: 10px 15px 21px #1c225038;
   border: 1px solid #707070;
@@ -523,8 +534,9 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
   padding: 1px;
   position: absolute;
   left: 0;
-  right: 0;
-  top: 194px;
+  right: 19px;
+    bottom: -23px;
+  /* top: 194px; */
   margin: auto;
   text-align: center;
   font-size: 18px;
@@ -539,7 +551,7 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
   margin-bottom: 30px;
 }
 .plan-bottom-sec {
-  margin-top: 60px;
+  margin-top: 26px;
   text-align: center;
 }
 .plan-bottom-sec p {
@@ -550,11 +562,11 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
   margin-top: 26px;
 }
 .plan-bottom-sec .plan-decs p {
-  letter-spacing: normal;
   padding: 1px;
   color: #44496d;
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 25px;
 }
 .plan-bottom-sec p {
   font-size: 17px;
@@ -562,6 +574,7 @@ span.spanCheck .MuiCheckbox-root svg.MuiSvgIcon-root {
 .plan-bottom-sec .plan-decs p:nth-child(odd) {
   background: #f9fafd;
 }
+
 
 /* ProgressBar */
 

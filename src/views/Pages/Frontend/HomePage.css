@@ -62,7 +62,7 @@
   font-weight: bold;
 }
 .explore-btn {
-  background: #1360fe;
+  background: rgb(0, 83, 130);
   padding: 15px 20px;
   border-radius: 5px;
   color: #fff !important;
@@ -264,7 +264,7 @@
   margin: 1.75rem auto;
   height: 345px;
   background: #fff;
-  border: 3px solid #1360fe;
+  border: 3px solid ;
   border-radius: 5%;
 }
 .subscribeNewsletter-modal .modal-content {
@@ -285,7 +285,7 @@
   padding: 0;
   margin: 0;
   font-size: 22px;
-  color: #1360fe;
+  color: rgb(0, 83, 130);
   text-align: center;
   font-weight: bold;
 }
@@ -325,7 +325,7 @@ button.submit_button {
   font-size: 14px;
   display: inline-block;
   position: relative;
-  background: #1360fe;
+  background: rgb(0, 83, 130);
   outline: none;
 }
 .subscribe-text-info {
@@ -437,14 +437,14 @@ button.submit_button {
   color: #091e42;
 }
 .service-content-info .learn-btn {
-  border: 2px solid #1360fe;
+  border: 2px solid rgb(0, 83, 130);
   color: #fff;
   border-radius: 2px;
   padding: 8px 20px;
   font-weight: 600;
   font-size: 14px;
   display: inline-block;
-  background: #1360fe;
+  background: rgb(0, 83, 130);
   position: relative;
 }
 .learn-btn:hover {
@@ -595,7 +595,7 @@ button.submit_button {
   position: relative;
   border: 1px solid #eaebf6;
   border-radius: 2px;
-  border-top: 2px solid #1360fe;
+  border-top: 2px solid rgb(0, 83, 130);
 }
 .best-strip {
   background: #375288;
@@ -664,12 +664,12 @@ button.submit_button {
 }
 .btn-conversion {
   background: transparent;
-  color: #1360fe;
+  color: rgb(0, 83, 130);
   font-size: 14px;
   padding: 6px 25px;
   border-radius: 2px;
   font-weight: 600;
-  border: 1px solid #1360fe;
+  border: 1px solid rgb(0, 83, 130);
   display: inline-block;
 }
 
@@ -680,7 +680,7 @@ button.submit_button {
   display: inline-block;
   text-align: center;
   padding: 5px 15px;
-  background: #1560fe;
+  background: rgb(0, 83, 130);
   width: 100%;
   margin: 10px 0;
 }

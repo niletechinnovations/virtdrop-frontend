@@ -10,28 +10,36 @@ import { connect } from "react-redux";
 import { CodeSharp, HighlightSharp, NoteTwoTone } from "@material-ui/icons";
 import { motion } from "framer-motion";
 import Notfound from "./page404/Notfound";
+import { toast } from "react-toastify";
+import sound from "../../../assets/images/sound2.wav";
+
 
 class ThirdEnquiryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      satColor: false,
+      BydefaultDays: "",
+      daysNeeded: [],
       count: [],
       items: [],
+      setColor:[],
       dayu: {},
+      demodaysback:[],
       industry: "",
       setday: "",
       skills: [],
       vaTime: {},
       vatimeStart: "",
       vatimeEnd: "",
-      demoCount:  {},
+      demoCount: {},
       demoTIme: [],
       skill: [],
       day: [],
-      demodays: [],
+      demodays: [{}],
       demoStart: "9:00",
       demoend: "17:00",
-      vacnt: 0,
+      vacnt: 1,
       nameOf: "",
       selectMap: [],
       value: {
@@ -45,31 +53,21 @@ class ThirdEnquiryPage extends Component {
   }
 
   componentDidMount() {
+  this.handleprops();
     const { demoCount } = this.state;
-    if (this.props.skill && this.props.skill.length > 0) {
-      let allSkill = this.props.skill.flatMap((x, index) => [
-        {
-          id: index,
-          name: x,
-          count: 0,
-          value: {
-            start: "9:00",
-            end: "17:00",
-            bgcolor: "",
-            selected: "lightgray",
-            days: "",
-          },
-        },
-      ]);
-      this.setState(
-        {
-          skill: allSkill,
-        },
-        () => {
-          // console.log(this.state.skill);
-        }
-      );
-    }
+    
+      if(this.state.demodaysback.length===0){
+        this.setState({
+          BydefaultDays: "User Want Monday to friday of every selected field",
+        },()=>{console.log("bydef",this.state.BydefaultDays)});
+      }
+      else{
+        this.setState({
+          BydefaultDays: null,
+        },()=>{console.log("bydef",this.state.BydefaultDays)});
+      }
+     
+   
     const selectMap = this.props.adduser
       ? this.props.adduser
       : JSON.parse(localStorage.getItem("secondPageSkill"));
@@ -84,7 +82,7 @@ class ThirdEnquiryPage extends Component {
         return this.state.selectMap
           ? this.setState({
               demoCount: this.state.selectMap.reduce(
-                (acc, _, index) => ({ ...acc, [index]: 0 }),
+                (acc, _, index) => ({ ...acc, [index]: 1 }),
                 {}
               ),
             })
@@ -104,13 +102,15 @@ class ThirdEnquiryPage extends Component {
   }
   render() {
     const list = [
-      { tab: "M" },
-      { tab: "T" },
-      { tab: "W" },
-      { tab: "Th" },
-      { tab: "F" },
-      { tab: "S" },
+      { tab: "M", bool: true,full:"Monday" },
+      { tab: "T", bool: true,full:"Tuesday" },
+      { tab: "W", bool: true,full:"Wednesday" },
+      { tab: "Th", bool: true,full:"Thursday" },
+      { tab: "F", bool: true,full:"Friday" },
+      { tab: "S", bool: this.state.satColor,full:"Saturday" },
     ];
+
+
     const { demoCount, demodays, nameOf } = this.state;
     return (
       <>
@@ -140,14 +140,13 @@ class ThirdEnquiryPage extends Component {
                       className="leftSection offset-md-1 col-md-4 col-lg-4 col-sm-12"
                       onClick={() => this.handleprops(index)}
                     >
-                      <h3 className="heading mt_30">
-                         VA's do you need?
-                      </h3>
+                      <h3 className="heading mt_30">VA's do you need?</h3>
                       <div className="va_middle mt_30">
                         <div className="subIcon">
                           <RemoveCircleOutlineOutlinedIcon
                             onClick={() => {
-                              this.decrementCount(index,item)
+                              this.playAudio();
+                              this.decrementCount(index, item);
                               this.setState(
                                 {
                                   demoCount: {
@@ -186,6 +185,7 @@ class ThirdEnquiryPage extends Component {
                         <div className="addicon">
                           <AddCircleOutlineOutlinedIcon
                             onClick={(e) => {
+                              this.playAudio();
                               this.incrementCount(index, item);
                               this.setState(
                                 {
@@ -211,9 +211,6 @@ class ThirdEnquiryPage extends Component {
                           />
                         </div>
                       </div>
-                      <div className="va-subheading">
-                        <h6>How many VA's do you need?</h6>
-                      </div>
                     </section>
                     <motion.section
                       animate={{ x: 0 }}
@@ -236,29 +233,27 @@ class ThirdEnquiryPage extends Component {
                                 <div
                                   className="round"
                                   style={{
-                                    backgroundColor:
-                                      item === nameOf &&
+                                    backgroundColor:item === nameOf &&
+                                    day.tab === this.state.setday &&
+                                    demodays.some(
+                                      (itemss) => itemss[item] === day.tab
+                                    )
+                                      ? "#F2F2F2"
+                                      : !demodays.some(
+                                          (itemss) => itemss[item] === day.tab
+                                        ) && day.bool === true
+                                      ? "#182c44"
+                                      : "null",
+                                    color:item === nameOf &&
                                       day.tab === this.state.setday &&
                                       demodays.some(
                                         (itemss) => itemss[item] === day.tab
                                       )
-                                        ? "#182c44"
-                                        : !demodays.some(
-                                            (itemss) => itemss[item] === day.tab
-                                          )
-                                        ? "#F2F2F2"
-                                        : "null",
-                                    color:
-                                      item === nameOf &&
-                                      day.tab === this.state.setday &&
-                                      demodays.some(
-                                        (itemss) => itemss[item] === day.tab
-                                      )
-                                        ? "white"
-                                        : !demodays.some(
-                                            (itemss) => itemss[item] === day.tab
-                                          )
                                         ? "gray"
+                                        : !demodays.some(
+                                            (itemss) => itemss[item] === day.tab
+                                          ) && day.bool === true
+                                        ? "white"
                                         : "null",
                                   }}
                                   // style={{
@@ -275,12 +270,19 @@ class ThirdEnquiryPage extends Component {
                                   //   //   : null,
                                   // }}
                                   onClick={() => {
-                                    this.handleDays(id, day.tab, item, index);
+                                    this.handleDays(id, day.tab, item, index,day.full);
+                                     this.playAudio();
                                     this.setState(
                                       { nameOf: item, setday: day.tab },
                                       () => {
-                                        {
-                                        }
+                                        setTimeout(() => {
+                                         
+                                            this.setState({
+                                              satColor: !this.state.satColor,
+                                            });
+                                          
+                                         
+                                        }, 500);
                                       }
                                     );
                                   }}
@@ -301,27 +303,33 @@ class ThirdEnquiryPage extends Component {
                       </div>
                       <div>
                         <form onChange={this.submitForm}>
+
                           <input
+                            className="timeInput"
                             style={{ margin: 12 }}
-                            placeholder="12:00"
-                            type="time"
-                            min="12:00"
-                            max="00:00"
+                            type="text"
+                            autoComplete="off"
+                            placeholder="10:00"
+                            // min="10:00"
+                            // max="18:00"
                             name="vatimeStart"
                             value={[this.state.vatimeStart][item]}
                             onChange={(e) => this.inputHandle(e, item, index)}
-                          />
+                          /><span style={{position:'absolute',right:344,top:198,color:'#182c44'}}>AM</span>
                           <b>To</b>
                           <input
+                            className="timeInput"
                             style={{ margin: 12 }}
-                            placeholder="00:00"
-                            type="time"
-                            min="12:00"
-                            max="00:00"
+                            placeholder="06:00"
+                            autoComplete="off"
+
+                            type="text"
+                            // min="12:00"
+                            // max="00:00"
                             name="vatimeEnd"
                             value={[this.state.vatimeEnd][item]}
                             onChange={(e) => this.inputHandle(e, item, index)}
-                          />
+                          /><span style={{position:'absolute',right:166,top:198,color:'#182c44'}}>PM</span>
                         </form>
                       </div>
 
@@ -350,25 +358,32 @@ class ThirdEnquiryPage extends Component {
     );
   }
 
+
+
+  //Handling Sound  
+  playAudio=()=>{
+    new Audio(sound).play();
+  }
+
   //Handling VA Count
 
   incrementCount = (index, item) => {
     let count = this.state.count;
-    count[item]={[item]:this.state.demoCount[index] + 1}
+    count[item] = { [item]: this.state.demoCount[index] + 1 };
     this.setState({ count: count }, () => {
-      const values=Object.values(count)
-    localStorage.setItem("vacount",JSON.stringify(values));
+      const values = Object.values(count);
+      localStorage.setItem("vacount", JSON.stringify(values));
     });
   };
 
-  decrementCount=(index,item)=>{
+  decrementCount = (index, item) => {
     let count = this.state.count;
-    count[item]={[item]:this.state.demoCount[index] - 1}
+    count[item] = { [item]: this.state.demoCount[index] - 1 };
     this.setState({ count: count }, () => {
-    const values=Object.values(count)
-    localStorage.setItem("vacount",JSON.stringify(values));
+      const values = Object.values(count);
+      localStorage.setItem("vacount", JSON.stringify(values));
     });
-  }
+  };
 
   submitForm = (e) => {
     e.preventDefault();
@@ -376,31 +391,81 @@ class ThirdEnquiryPage extends Component {
 
   //Handling Time Input
   inputHandle = (e, item, index) => {
+
+//Addig Colon after every 2nd word.
+  var time = document.getElementsByClassName('timeInput'); 
+  for (var i = 0; i < time.length; i++) { //Loop trough elements
+    time[i].addEventListener('keyup', function (e) {; //Add event listener to every element
+        var reg = /[0-9]/;
+        if (this.value.length == 2 && reg.test(this.value)) this.value = this.value + ":"; //Add colon if string length > 2 and string is a number 
+        if (this.value.length > 5) this.value = this.value.substr(0, this.value.length - 1); //Delete the last digit if string length > 5
+    });
+};
     const { name, value } = e.target;
     let va = this.state.vaTime;
     va[item] = { ...va[item], [name]: value };
-    this.setState({
-      vaTime: va,
-      [e.target.name]: e.target.value,
-    });
+    this.setState(
+      {
+        vaTime: va,
+        [e.target.name]: e.target.value,
+      },
+      () => {}
+    );
     this.handleprops();
     setTimeout(() => {}, 500);
   };
 
-  handleDays = (id, tab, increment, index) => {
-    let items = [...this.state.items];
-    const { demodays } = this.state;
+  //Handling Days
+  handleDays = (id, tab, increment, index,fullName) => {
+   
+   
+    const list = ["M","T","W","Th","F","S"];
+
+    const { demodays,demodaysback} = this.state;
     let toggle = true;
+    let flag=false;
+    demodaysback.forEach((element) => {
+      if (element.hasOwnProperty(increment)) {
+        if(element[increment].includes(tab)){
+          toast.success(`Removed ${fullName} For ${increment} VA`)
 
-    //   items.push([tab,increment]);
+          element[increment]=element[increment].filter(x=>tab!==x)
+          flag=true;
+          return;
+        }
+        else{
+          element[increment].push(tab);
+          toast.success(`Added ${fullName} For ${increment} VA`)
 
-    // // items.push(tab);
+        }
+        flag=true;
+      }
+    }
+    );
+    if(!flag){
+      // demodays.push({[increment]:[tab]});
+      let arr=list.filter(x=>x!==tab);
+      demodaysback.push({[increment]:arr});
+    }
 
-    // this.setState({ items: items }, () => {
-    //   console.log("items", items);
-    // });
+    if(this.state.demodaysback.length>0){
+      this.setState({BydefaultDays:null})
+    }
+    this.setState({setColor:demodaysback[Object.keys(demodaysback)[index]]?.[increment]})
+  
+ 
 
-    demodays.push({ [increment]: tab });
+
+    // const list = [
+    //   { tab: "M", bool: true },
+    //   { tab: "T", bool: true },
+    //   { tab: "W", bool: true },
+    //   { tab: "Th", bool: true },
+    //   { tab: "F", bool: true },
+    //   { tab: "S", bool: this.state.satColor },
+    // ];
+
+     demodays.push({ [increment]: tab });
     //we are filtering that no object with same key value should enter in array.
     const filteredObject = demodays.reduce((res, itm) => {
       // Test if the item is already in the new array
@@ -409,12 +474,13 @@ class ThirdEnquiryPage extends Component {
       );
       // If not lets add it
       if (!result) {
-        return res.concat(itm);
+        return  res.concat(itm) 
       } else {
         // If we have and we click on same day then it will get deleted from array of object.
         const removeDayObject = res.filter(
           (item) => JSON.stringify(item) !== JSON.stringify(itm)
         );
+
         toggle = false;
         this.setState({ demodays: removeDayObject }, () => {});
         return res;
@@ -424,8 +490,14 @@ class ThirdEnquiryPage extends Component {
     Object.keys(demodays);
 
     if (toggle === true) {
-      this.setState({ demodays: filteredObject }, () => {});
+      this.setState({ demodays: filteredObject }, () => {
+      });
+
     }
+     
+    // if(document.getElementsByClassName("round").style.backgroundColor)
+
+
 
     //   let items = [...this.state.items];
     //   let pushItem = true;
@@ -462,10 +534,11 @@ class ThirdEnquiryPage extends Component {
   handleprops = (index) => {
     setTimeout(() => {
       this.props.thirdValue(
-        this.state.demodays,
+        this.state.demodaysback,
         this.state.skills,
         this.state.count,
-        this.state.vaTime
+        this.state.vaTime,
+        this.state.BydefaultDays
       );
     }, 1000);
   };
@@ -475,8 +548,6 @@ class ThirdEnquiryPage extends Component {
       value: time,
     });
   };
-
-  timeChange = (name, index) => {};
 }
 
 //redux
@@ -493,3 +564,33 @@ const connectedThirdEnquiryPage = connect(mapStates, actions)(ThirdEnquiryPage);
 export { connectedThirdEnquiryPage as ThirdEnquiryPage };
 
 // export default ThirdEnquiryPage;
+
+
+
+
+
+
+// backgroundColor:
+// item === nameOf &&
+// day.tab === this.state.setday &&
+// demodays.some(
+//   (itemss) => itemss[item] === day.tab
+// )
+//   ? "#F2F2F2"
+//   : !demodays.some(
+//       (itemss) => itemss[item] === day.tab
+//     ) && day.bool === true
+//   ? "#182c44"
+//   : "null",
+// color:
+// item === nameOf &&
+// day.tab === this.state.setday &&
+// demodays.some(
+//   (itemss) => itemss[item] === day.tab
+// )
+//   ? "gray"
+//   : !demodays.some(
+//       (itemss) => itemss[item] === day.tab
+//     ) && day.bool === true
+//   ? "white"
+//   : "null",

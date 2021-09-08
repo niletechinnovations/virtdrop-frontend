@@ -12,8 +12,9 @@ import FourthPage from "./FourthPage";
 import commonService from "../../../core/services/commonService";
 import { Redirect, Switch } from "react-router";
 import { motion } from "framer-motion";
-import Particles from "react-particles-js";
-import Loader from "react-loader-spinner";
+import Loader from "react-loader-spinner"
+import sound from "../../../assets/images/sound1.wav";
+
 
 import {
   setLoading,
@@ -45,6 +46,7 @@ class Enquiry extends Component {
       redirect: false,
       vaCount: {},
       vaTime: [],
+      bydefaultDays:""
     };
   }
   render() {
@@ -81,7 +83,7 @@ class Enquiry extends Component {
             }
           }}
         /> */}
-          <ul id="progressbar">
+          <ul id="progressbar" onClick={this.playAudio}>
             {list.map((item) => {
               return (
                 <li
@@ -159,89 +161,89 @@ class Enquiry extends Component {
               </motion.button>
             )}
           </div>
-          <div className="social_Icons">
-            <div className="Icons">
-              <img src="/images/Image 3.png " height={43} />
-            </div>
-            <div className="Icons">
-              <img src="/images/Image 4.png " height={43} />
-            </div>
-
-            <div className="Icons">
-              <img src="/images/Image 5.png  " height={43} />
-            </div>
-          </div>
+         
         </div>
       </>
     );
   }
 
+  playAudio=()=>{
+    new Audio(sound).play();
+  }
+
   submit = (e) => {
     const { formData } = this.state;
+
        this.setState({loading:true})
-      commonService.postAPI('hireva',this.state)
-      .then((resp) => {
-        if (!formData.howMuchTime) {
-          toast.error("Please Select In How Much Time You Want VA !");
-          this.setState({ loading: false });
-        }
-        if (formData.phone.length < 10) {
-          toast.error(" Please Enter 10 digit Number Only !");
-          this.setState({ loading: false });
-        }
-        if (isNaN(formData.phone)) {
-          toast.error(" Please Enter Number Only !");
-          this.setState({ loading: false });
-        }
-        if (!formData.lastname) {
-          toast.error(" Please Enter Lastname !");
-          this.setState({ loading: false });
-        }
-        if (!formData.phone) {
-          toast.error(" Please Enter ContactNumber !");
-          this.setState({ loading: false });
-        }
-        if (!formData.companyAddress) {
-          toast.error(" Please Enter Company Address !");
-          this.setState({ loading: false });
-        }
-        if (!formData.companyname) {
-          toast.error(" Please Enter Company Name !");
-          this.setState({ loading: false });
-        }
-        if (!formData.email) {
-          toast.error(" Please Enter Email !");
-          this.setState({ loading: false });
-        }
-        if (!formData.firstname) {
-          toast.error(" Please Enter FirstName !");
-          this.setState({ loading: false });
-        } else {
-          if (
-            formData.firstname &&
-            !isNaN(formData.phone) &&
-            formData.phone &&
-            formData.phone.length >= 10 &&
-            formData.howMuchTime &&
-            formData.lastname &&
-            formData.companyname &&
-            formData.email &&
-            formData.companyAddress
-          ) {
-            this.setState({ loading: false });
-            this.setState({ redirect: true });
-            // console.log("this is main ", resp);
-            // console.log("state", this.state);
-            toast.success("SuccessFully Saved!");
-            localStorage.clear();
-          }
-        }
-      })
-      .catch((error) => {
+
+       if (!formData.howMuchTime) {
+        toast.error("Please Select In How Much Time You Want VA !");
         this.setState({ loading: false });
-        toast.error("Some Error Occured on Server side! ");
-        console.log(error);
-      });
+      }
+      if (formData.phone ? formData.phone.length < 10:null) {
+        toast.error(" Please Enter 10 digit Number Only !");
+        this.setState({ loading: false });
+      }
+       if (isNaN(formData.phone)) {
+        toast.error(" Please Enter Number Only !");
+        this.setState({ loading: false });
+      }
+        if (!formData.lastname) {
+        toast.error(" Please Enter Lastname !");
+        this.setState({ loading: false });
+      }
+        if (!formData.phone) {
+        toast.error(" Please Enter ContactNumber !");
+        this.setState({ loading: false });
+      }
+        if (!formData.companyAddress) {
+        toast.error(" Please Enter Company Address !");
+        this.setState({ loading: false });
+      }
+        if (!formData.companyname) {
+        toast.error(" Please Enter Company Name !");
+        this.setState({ loading: false });
+      }
+        if (!formData.email) {
+        toast.error(" Please Enter Email !");
+        this.setState({ loading: false });
+      }
+        if (!formData.firstname) {
+        toast.error(" Please Enter FirstName !");
+        this.setState({ loading: false });
+      } 
+
+      if (
+        formData.firstname &&
+        !isNaN(formData.phone) &&
+        formData.phone &&
+        formData.phone.length >= 10 &&
+        formData.howMuchTime &&
+        formData.lastname &&
+        formData.companyname &&
+        formData.email &&
+        formData.companyAddress
+      ) {
+        this.setState({ loading: true });
+
+        commonService.postAPI('hireva',this.state)
+        .then((resp) => {
+             
+              this.setState({ loading: false });
+              this.setState({ redirect: true });
+              // console.log("this is main ", resp);
+              // console.log("state", this.state);
+              toast.success("SuccessFully Saved!");
+              localStorage.clear();
+            
+          
+        })
+        .catch((error) => {
+          this.setState({ loading: false });
+          toast.error("Some Error Occured on Server side! ");
+          console.log(error);
+        });
+      }
       // axios.get("https://api.virtdrop.com/api/hireva")
       // .then(res=>{
       //   console.log("resposnseeee",res)
@@ -249,7 +251,7 @@ class Enquiry extends Component {
       // .catch(err=>{
       //   console.log("errorrr",err)
       // })
-      console.log("this.state",this.state)
+      // console.log("this.state",this.state)
   };
 
   redirectfirst = () => {
@@ -272,16 +274,18 @@ class Enquiry extends Component {
     this.setState({ firstpage: first, FristpageinputVal: inputVal });
   };
   fourthProp = (price) => {
+    console.log("fourthvadays",this.state.vaDays)
     this.setState({ price: price });
   };
   fifthProp = (formData) => {
     this.setState({ formData: formData }, () => {});
   };
-  thirdProp = (days, skills, vaCount, vaTime) => {
+  thirdProp = (days, skills, vaCount, vaTime,defaultday) => {
     this.setState({
       vaDays: days,
       vaCount: vaCount,
       vaTime: vaTime,
+      bydefaultDays:defaultday
     });
   };
   handleprops = (value, itemTag) => {

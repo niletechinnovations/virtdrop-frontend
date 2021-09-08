@@ -10,6 +10,7 @@ import commonService from "./core/services/commonService";
 import "./App.css";
 import Loader from "./views/Loader/Loader";
 import PageNotFound from "./views/Pages/404/PageNotFound";
+import { Enquiry } from "./views/Pages/Frontend/Enquiry";
 
 // Containers
 const FrontEndLayout = React.lazy(() =>

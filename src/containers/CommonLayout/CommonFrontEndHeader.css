@@ -42,7 +42,7 @@ body{ background: none !important;}
 
 .header-contact-list{display: -webkit-box; margin: 0; list-style: none; display: -ms-flexbox; display: flex; } 
 .header-contact-list li{margin-right: 8px; margin-left: 8px;} 
-.header-contact-list li a{font-size: 12px; font-weight: 600; color: #1360fe;}
+.header-contact-list li a{font-size: 12px; font-weight: 600; color:rgb(0, 83, 130);}
 .header-contact-list li a i{margin-right: 10px; font-size: 16px;}
 .header-contact-list li a:hover {color: #000; transition: all .3s ease-in-out; }
 
@@ -92,7 +92,7 @@ a.Sell-btn i {background: #fff; width: 30px; height: 30px; border-radius: 50%; l
 }.booking-text {
     font-size: 14px;
     padding-top: 7rem;
-    color: #f9a43d;font-weight: bold;
+    color: rgb(0, 83, 130);font-weight: bold;
 }
 .pulse {
     position: absolute;
@@ -101,7 +101,7 @@ a.Sell-btn i {background: #fff; width: 30px; height: 30px; border-radius: 50%; l
     transform: translate(-50%, -50%);
     width: 60px;
     height: 60px;
-    background: #f9a43d;
+    background: rgb(0, 83, 130);
     color: #fff;
     border-radius: 50%;
     text-align: center;

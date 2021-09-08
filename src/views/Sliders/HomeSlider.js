@@ -56,7 +56,7 @@ const HomeSlider = (props) => {
               We help businesses become more efficient and productive, enabling
               them to more easily achieve their goals.
             </h6>
-            <Link className="explore-btn" to="/booking">
+            <Link className="explore-btn" to="/enquiry">
               Find the Best Virtual Assistant Today
             </Link>
           </div>
