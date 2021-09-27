@@ -54,7 +54,7 @@ class BillingList extends Component {
 
   /*VA Request List API*/
   itemList(filterItem = {}) {
-    let filterQuery = "?pageSize=10000";
+    let filterQuery = "?pageSize=10000&billingFor=client";
     if(filterItem.filterVaAuth !== undefined && filterItem.filterVaAuth !== "" ) 
       filterQuery += (filterQuery !=="" ) ? "&vaAuthId="+filterItem.filterVaAuth: "&vaAuthId="+filterItem.filterVaAuth;
     if(filterItem.filterClientId !== undefined && filterItem.filterClientId !== "" ) 

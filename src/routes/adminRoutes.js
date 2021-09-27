@@ -27,6 +27,8 @@ import AssignHireVaRequest from '../views/AdminDashboard/Organization/HireVA/Ass
 import ClientVAMeeting from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
 import ManageArea from '../views/AdminDashboard/Skill/ManageArea';
 import ManageSkill from '../views/AdminDashboard/Skill/ManageSkill';
+import VaPayoutList from '../views/AdminDashboard/Organization/VaPayout/VaPayoutList';
+import VaTransactionLists from '../views/AdminDashboard/Organization/VaPayout/VaTransactionList';
 // import ClientVAMeeting1 from '../views/AdminDashboard/ScheduleMeeting/ClientVAMeeting';
 
 const adminRoutes = [
@@ -62,7 +64,9 @@ const adminRoutes = [
   { path: '/admin/schedule-meeting/', exact: true, name: 'Manage Client Meeting', component: ClientVAMeeting },
   // { path: '/admin/schedule-meeting-new', exact: true, name: 'Manage Client Meeting', component: ClientVAMeeting1 },
   {path: '/admin/manage-area', exact:true, name:"Manage Area", component:ManageArea},
-  {path:'/admin/manage-skill', exact:true, name: "Manage Skills", component:ManageSkill}
+  {path:'/admin/manage-skill', exact:true, name: "Manage Skills", component:ManageSkill},
+  {path:'/admin/va-payouts/', exact:true, name: "VA Payouts", component:VaPayoutList},
+  {path:'/admin/va-transactions', exact:true, name: "VA Transactions", component:VaTransactionLists},
 ];
 
 export default adminRoutes;

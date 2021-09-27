@@ -20,11 +20,6 @@ export default {
       url: '/admin/hire-va',
       icon:"fa fa-globe"
     },
-    /*{
-      name: 'VA Assignment',
-      url: '/admin/hire-va-assignment-list',
-      icon: 'fa fa-tasks'
-    },*/
     {
       name: 'Discovery Call',      
       icon: 'fa fa-calendar-o',
@@ -59,6 +54,23 @@ export default {
       name: 'Billing',
       url: '/admin/billing',
       icon: 'fa fa-credit-card',
+    },
+    {
+      name: 'Payouts',
+      //url: '/admin/va-payouts/',
+      icon: 'fa fa-paypal',
+      children:[
+        {
+          name: 'VA Payouts',
+          url: '/admin/va-payouts',
+          icon: 'fa fa-list',  
+        },
+        {
+          name: 'VA Transactions',
+          url: '/admin/va-transactions',
+          icon: 'fa fa-dollar',  
+        }
+       ]
     },
     {
       name: 'Transactions',
