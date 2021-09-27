@@ -72,13 +72,13 @@ a.Sell-btn i {background: #fff;white-space: nowrap; width: 30px; height: 30px; b
     z-index: 99;
     padding: 10px 20px 35px;
 }
-.discovery-call-info a:hover{color: #1360fe;}
+.discovery-call-info a:hover{color: rgb(0, 83, 130);}
 .discovery-call-inner {
     position: relative;
 }.booking-text {
     font-size: 14px;
     padding-top: 7rem;
-    color: #f9a43d;font-weight: bold;
+    color: rgb(0, 83, 130);font-weight: bold;
 }
 .pulse {
     position: absolute;
@@ -87,7 +87,7 @@ a.Sell-btn i {background: #fff;white-space: nowrap; width: 30px; height: 30px; b
     transform: translate(-50%, -50%);
     width: 60px;
     height: 60px;
-    background:#f9a43d;
+    background: rgb(0, 83, 130);
     color: #fff;
     border-radius: 50%;
     text-align: center;

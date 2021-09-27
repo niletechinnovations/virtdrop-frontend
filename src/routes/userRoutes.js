@@ -43,8 +43,7 @@ const userRoutes = [
   { path: '/user/transactions', exact:true, name:'Transaction Lists', component: TransactionList},
   { path: '/user/my-card', exact:true, name:'My Card', component: MyCard},
   { path: '/user/transaction/:transactionId', exact:true, name:'Transaction Details', component: TransactionDetails},
-  { path:'/user/timesheet', exact: true, name: "timeSheet", component: timeSheet}
-  
+  { path:'/user/timesheet', exact: true, name: "timeSheet", component: timeSheet},
 ];
 
 export default userRoutes;

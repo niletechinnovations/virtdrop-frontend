@@ -12,6 +12,8 @@ import socialmedia from "../../../assets/images/socialmedia.svg";
 import customersupport from "../../../assets/images/customersupport.svg";
 import adminis from "../../../assets/images/adminins.svg";
 import graphic from "../../../assets/images/graphicdes.svg";
+import ecom from "../../../assets/images/ecom.svg";
+import sound from "../../../assets/images/sound3.wav";
 
 
 
@@ -226,7 +228,7 @@ const all = [
 const nineSkills = [
   { heading: "Administrative Task",image: adminis },
   { heading: "Data Entry task", image: dataentry },
-  { heading: "E Commerce Related tasks",image:frame },
+  { heading: "E Commerce Related tasks",image:ecom },
   { heading: "Customer support/Service",image:customersupport },
   { heading: "Graphic Designing",image: graphic },
   { heading: "Social Media Management",image:socialmedia },
@@ -252,6 +254,7 @@ class SecondEnquiryPage extends Component {
       checkbox: JSON.parse(localStorage.getItem("secondPageSkill")) || [],
       newUser: [],
       items: [],
+      inp:"",
       checkedValue: false,
       prevState: "",
       onhover: false,
@@ -334,6 +337,7 @@ class SecondEnquiryPage extends Component {
                               className="imageProp"
                               onClick={(e) => {
                                 this.getValue(e, item.heading);
+                                this.playAudio()
                               }}
                               style={{
                                 backgroundColor: this.state.checkbox.includes(
@@ -374,11 +378,7 @@ class SecondEnquiryPage extends Component {
             )}
             <h2 className="heading ">Skills Freelancers Need</h2>
 
-            <div className="subheading">
-              <h6>
-                <b>{this.state.head ? this.state.head : null}</b>
-              </h6>
-            </div>
+
             <div className="skillSelect">
               {this.props.userInput ? null : (
                 <form onSubmit={(e) => this.submitForm(e)}>
@@ -391,7 +391,7 @@ class SecondEnquiryPage extends Component {
                     onChange={(e) => this.getValueInput(e)}
                     disabled={this.state.otherInput}
                   />
-                  <button className="skillButton btn1Add b1Add" type="submit">
+                  <button className="skillButton btn1Add b1Add" type="submit" onClick={()=>{this.setState({inp:this.state.extraSkill})}}>
                     Add
                   </button>
                   <div><span>(Note: Single Input allowed & After Entering Input, Field will get locked ,To unlock Go back And select Industry)</span></div>
@@ -415,7 +415,7 @@ class SecondEnquiryPage extends Component {
             </div>
             {smallHeadSelector ? (
               <motion.div
-                className="option"
+                className={this.state.inp || this.props.adduser ? "option":null}
                 animate={{ x: 0 }}
                 initial={{ x: 1000 }}
                 transition={{
@@ -424,27 +424,31 @@ class SecondEnquiryPage extends Component {
                   duration: 1,
                 }}
               >
-                <div>
-                  {smallHeadSelector.map((item, index) => {
-                    return (
+                {this.state.inp ? <div>                 
                       <div className="insideOption">
-                        {item}
+                        {this.state.inp}
                         <span
-                          onClick={() => this.smallHeadRemoverFunc(item, index)}
+                          onClick={() => this.smallHeadRemoverFunc()}
                         >
-                          <CancelTwoToneIcon color="disabled" />
+                          {/* <CancelTwoToneIcon color="disabled" /> */}
                         </span>
-                      </div>
-                    );
-                  })}
-                  {/* {this.state.otherInput ? (
-                    <div className="insideOption">
-                     <span onClick={() => this.RemoverFuncOutside()}>
-                        <CancelTwoToneIcon color="disabled" />
-                      </span>
-                    </div>
-                  ) : null} */}
-                </div>
+                      </div>                              
+                </div>:null}
+
+                {this.props.adduser ?this.props.adduser.map((item,index)=>{
+                     return <div>                 
+                     <div className="insideOption">
+                       {item}
+                       <span
+                         onClick={() => this.smallHeadRemoverFunc(item,index)}
+                       >
+                        
+                         <CancelTwoToneIcon color="disabled" />
+                       </span>
+                     </div>                              
+               </div>
+                }):null}
+                
               </motion.div>
             ) : null}
           </div>
@@ -498,12 +502,12 @@ class SecondEnquiryPage extends Component {
     
     let data = this.state.checkbox;
     if (data.includes(this.state.extraSkill)) {
-      toast.error("Area Already Exist in your list!");
+      toast.error("Go to first page and Select Industry again!");
     }
     if (this.state.extraSkill) {
       if (!data.includes(this.state.extraSkill)) {
         data.push(this.state.extraSkill);
-        this.setState({ checkbox: data, extraSkill: "" });
+        this.setState({ checkbox: data,});
         this.props.inputValue(this.state.checkbox, this.state.items);
         localStorage.setItem(
           "secondPageSkill",
@@ -558,6 +562,10 @@ class SecondEnquiryPage extends Component {
     //   );
     //    }
   };
+
+  playAudio=()=>{
+    new Audio(sound).play();
+  }
 
   mouseOut = (event) => {
     event.target.style.background = null;

@@ -1,32 +1,19 @@
 import React, { Component, Suspense } from "react";
 import "./Enquiry.css";
-import logo from "../../../assets/images/inquiry.svg";
-import apparel from "../../../assets/images/Apparel.png";
-import advertising from "../../../assets/images/Advertising.png";
-import designs from "../../../assets/images/Designs.png";
-import softwareDeveloper from "../../../assets/images/SoftwareDevelopers.png";
-import graphicDesigner from "../../../assets/images/GraphicDesigners.png";
-import logoDesigner from "../../../assets/images/LogoDesigners.png";
-import webDesigner from "../../../assets/images/WebDesigners.png";
-import translator from "../../../assets/images/Translators.png";
-import webDeveloper from "../../../assets/images/WebDevelopers.png";
-import marketing from "../../../assets/images/InternetMarketing.png";
-import mobileApp from "../../../assets/images/MobileAppDevelopers.png";
-import financial from "../../../assets/images/FinancialExperts.png";
-import writers from "../../../assets/images/Writers.png";
+import marketing from "../../../assets/images/icon/sales.png";
 import sound from "../../../assets/images/sound3.wav";
 
-import insurance from "../../../assets/images/Industry/Insurance.png";
-import ecommerce from "../../../assets/images/Industry/ecommerce.png";
-import healthcare from "../../../assets/images/Industry/Healthcare.png";
-import retail from "../../../assets/images/Industry/Ratail.png";
-import developement from "../../../assets/images/Industry/Development.png";
-import logistics from "../../../assets/images/Industry/Logistics.png";
-import accounting from "../../../assets/images/Industry/accounting.png";
-import mortgages from "../../../assets/images/Industry/Mortgages.png";
-import service from "../../../assets/images/Industry/servicebusiness.png";
-import wholesale from "../../../assets/images/Industry/wholesale.png";
-import realestate from "../../../assets/images/Industry/realestate.png";
+import insurance from "../../../assets/images/icon/Insurance.png";
+import ecommerce from "../../../assets/images/icon/ecomm.png";
+import healthcare from "../../../assets/images/icon/Healthcare.png";
+import retail from "../../../assets/images/icon/Ratail.png";
+import developement from "../../../assets/images/icon/Development.png";
+import logistics from "../../../assets/images/icon/Logistics.png";
+import accounting from "../../../assets/images/icon/finance.png";
+import mortgages from "../../../assets/images/icon/Mortgages.png";
+import service from "../../../assets/images/icon/servicebusiness.png";
+import wholesale from "../../../assets/images/icon/wholesale.png";
+import realestate from "../../../assets/images/icon/Realestate.png";
 
 
 
