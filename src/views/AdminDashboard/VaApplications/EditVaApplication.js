@@ -19,7 +19,7 @@ class EditVaApplication extends Component {
       ClientAreaNeed:[],
       vaApplicationId: '',
       requestStatus:'',
-      formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'',skillSet1:[], skillSet2:[], skillSet3:[], AreaSkillSet1:[],AreaSkillSet2:[], AreaSkillSet3:[], rateSkill1:'', rateSkill2:'', rateSkill3:'', referenceName:'', referenceEmail:'', notes:'', statusText:'' },
+      formField: { authId:'', firstName: '', lastName: '', email:'', mobileNumber:'', skypeID:'', socialMediaID:'', platform:'', portfolioLink:'', status:'', skillSet:'',skillSet1:[], skillSet2:[], skillSet3:[], AreaSkillSet1:[],AreaSkillSet2:[], AreaSkillSet3:[], rateSkill1:'', rateSkill2:'', rateSkill3:'', referenceName:'', referenceEmail:'', notes:'', paypalEmail:'', billingPrice:'', statusText:'' },
       applicationFiles: {audioFile:'', resumeCV:'', intentLetter:'', internetSpeedScreenshot:'' },
       audioFile:'',
       resumeCV:'',
@@ -187,7 +187,6 @@ class EditVaApplication extends Component {
     this.setState({ loading: true }, () => {
       commonService.getAPIWithAccessToken('skill/get-new-skill')
         .then(res => {
-          // console.log("Get Skill List===========>", res)
           if (undefined === res.data.data || !res.data.status) {
             this.setState({ loading: false });
             toast.error(res.data.message);
@@ -199,9 +198,8 @@ class EditVaApplication extends Component {
           let unique=[]
           let obj = {}
 
-          // console.log("ressss",JSON.stringify(res.data.data))
           var newdata = [];
-for (let i = 0; i < res.data.data.length; i++) {
+  for (let i = 0; i < res.data.data.length; i++) {
 
     if (newdata && newdata.length > 0) {
         var checkNotExist = false;
@@ -229,17 +227,14 @@ for (let i = 0; i < res.data.data.length; i++) {
         newdata.push({ areaId: res.data.data[i].areaId, areaName: res.data.data[i].areaName, 'vADesignation': [{ skill: res.data.data[i].skillName, skillId: res.data.data[i].skillId }] });
     }
 
-}
-console.log("NEW DATA",newdata)
+  }
+
 this.setState({ ClientAreaNeed: newdata})
-// this.setState({ SelectedClientAreaNeed: this.state.ClientAreaNeed.map(item => { return ({ parentId: item.areaId, parentName: item.areaName }) }) })
 
 this.setState({SelectedClientAreaNeed:this.state.ClientAreaNeed.map(e=>{return({areaId:e.areaId,areaName:e.areaName, vaDesignation:e.vADesignation.map(va=>{return({areaId:e.areaId,areaName:e.areaName, skillName:va.skillName, skill:va.skill})})})})})
 this.setState({SelectedClientAreaNeed1:this.state.ClientAreaNeed.map(e=>{return({areaId:e.areaId,areaName:e.areaName, vaDesignation:e.vADesignation.map(va=>{return({areaId:e.areaId,areaName:e.areaName, skillName:va.skillName, skill:va.skill})})})})})
 this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return({areaId:e.areaId,areaName:e.areaName, vaDesignation:e.vADesignation.map(va=>{return({areaId:e.areaId,areaName:e.areaName, skillName:va.skillName, skill:va.skill})})})})})
 
-// this.setState({SelectedClientAreaNeed1:this.state.ClientAreaNeed.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
-// this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return({parentId:e.parentId,parentName:e.parentName, vaDesignation:e.vADesignation.map(va=>{return({parentId:e.parentId,parentName:e.parentName, profileName:va.profileName, id:va.id})})})})})
 
 })
 .catch(err => {
@@ -253,8 +248,6 @@ this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return(
 })
 })
 }
-
-  // ************************
   
   /*Skill List API*/
   SkillListData() {  
@@ -279,7 +272,6 @@ this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return(
     this.setState( { loading: true}, () => {
         commonService.getAPIWithAccessToken('va-application/'+vaApplicationId)
         .then( res => {
-          // console.log("Get",res)
           if ( undefined === res.data.data || !res.data.status ) {
            
             this.setState( { loading: false} );
@@ -299,8 +291,6 @@ this.setState({SelectedClientAreaNeed2:this.state.ClientAreaNeed.map(e=>{return(
           formField.status = appDetail.status;
           formField.status = appDetail.statusText;
 
-// console.log("eeeee", [... new Set(appDetail.skillSet1.map(e=>e.parentName))])
-
 // skill 1
 const uniqueObjectArray1=[]
 const uniqueObjectSet1 = new Set()
@@ -312,7 +302,6 @@ for(const object1 of appDetail.skillSet1){
   uniqueObjectSet1.add(objectJSON1)
 
 }
-// console.log("uniqueObjectArray",...uniqueObjectArray1)
 
 // skill 2
 const uniqueObjectArray2=[]
@@ -325,7 +314,6 @@ for(const object2 of appDetail.skillSet2){
   uniqueObjectSet2.add(objectJSON2)
 
 }
-// console.log("uniqueObjectArray",uniqueObjectArray2)
 
 // skill 3
 const uniqueObjectArray3=[]
@@ -338,7 +326,6 @@ for(const object3 of appDetail.skillSet3){
   uniqueObjectSet3.add(objectJSON3)
 
 }
-// console.log("uniqueObjectArray",...uniqueObjectArray3)
 
           formField.skillSet1 = appDetail.skillSet1;
           formField.skillSet2 = appDetail.skillSet2;
@@ -355,6 +342,8 @@ for(const object3 of appDetail.skillSet3){
           formField.referenceEmail = appDetail.referenceEmail;
           formField.notes = appDetail.notes;
           formField.statusText = appDetail.statusText;
+          formField.billingPrice = appDetail.billingPrice;
+          formField.paypalEmail = appDetail.paypalEmail;
          
           let applicationFiles = this.state.applicationFiles;
           applicationFiles.audioFileName = appDetail.audioFileName;
@@ -399,22 +388,10 @@ for(const object3 of appDetail.skillSet3){
         formData.append('platform', formInputField.platform);
         formData.append('portfolioLink', formInputField.portfolioLink);
         formData.append('status', formInputField.status);
+        formData.append('billingPrice', formInputField.billingPrice);
+        formData.append('paypalEmail', formInputField.paypalEmail);
         
-        // if(formInputField.skillSet1 !== "")
-        //   formData.append('skillSet1', formInputField.skillSet1);
-        // if(formInputField.skillSet2 !== "")
-        //   formData.append('skillSet2', formInputField.skillSet2);
-        // if(formInputField.skillSet3 !== "")
-        //   formData.append('skillSet3', formInputField.skillSet3);
-
         
-        // if(formInputField.skillSet1 !== "")
-        //   formData.append('skillSet1', this.state.formField.skillSet1.length>0? JSON.stringify(this.state.formField.skillSet1): JSON.stringify(this.state.childSelectedItem));
-        // if(formInputField.skillSet2 !== "")
-        //   formData.append('skillSet2', this.state.formField.skillSet2.length>0? JSON.stringify(this.state.formField.skillSet2): JSON.stringify(this.state.childSelectedItem1));
-        // if(formInputField.skillSet3 !== "")
-        //   formData.append('skillSet3',  this.state.formField.skillSet3.length>0? JSON.stringify(this.state.formField.skillSet3): JSON.stringify(this.state.childSelectedItem2));
-
         console.log("this.state.childSelectedItem",this.state.childSelectedItem,"----SkillSee-----",this.state.formField.skillSet1)
        
        if(formInputField.skillSet1 !== "")
@@ -669,12 +646,7 @@ for(const object3 of appDetail.skillSet3){
   render() {
 
     const { loading, formField, applicationFiles, skillList, errors, SelectedClientAreaNeed,SelectedClientAreaNeed1,SelectedClientAreaNeed2, childList, childList1, childList2, childSelectedItem, childSelectedItem1,childSelectedItem2, AreaSelectedList  } = this.state;
-    // console.log("ChildList11--1", childSelectedItem)
-    // console.log("ChildList11--2", childSelectedItem1)
-    // console.log("ChildList11--3", childSelectedItem2)
-    // console.log("formField.skillSet1",[... new Set(formField.skillSet1.map(e=>({parentName:e.parentName})))])
-    // console.log("formField.skillSet1",(new Set(Object.entries(formField.skillSet1))))
-
+    
     let loaderElement = '';
     if(loading)        
       loaderElement = <Loader />
@@ -757,7 +729,6 @@ for(const object3 of appDetail.skillSet3){
                           <Row>
                             <Col md="5" sm="6">
                               <FormGroup>
-                              
                                 <Label htmlFor="area">Area 1</Label>
                                 <Multiselect
                                   options={SelectedClientAreaNeed}
@@ -765,7 +736,6 @@ for(const object3 of appDetail.skillSet3){
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectIndstry}
                                   onRemove={this.onRemoveIndustry}
-                                  // groupBy="areaName"
                                   selectedValues={formField.AreaSkillSet1}
                                   displayValue="areaName"
                                   showCheckbox={true}
@@ -775,12 +745,10 @@ for(const object3 of appDetail.skillSet3){
                             </Col>
                            
                             <Col md="5" sm="6">
-                              <FormGroup>
-                               
+                              <FormGroup>                               
                                 <Label htmlFor="skillSet1">Skill Set 1</Label>
                                 <Multiselect
                                   options={childList}
-                                  // groupBy="cat"
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectSubIndstry}
                                   onRemove={this.onRemoveSubIndustry}
@@ -807,7 +775,6 @@ for(const object3 of appDetail.skillSet3){
                           <Row>
                             <Col md="5" sm="6">
                               <FormGroup>
-                              
                                 <Label htmlFor="area">Area 2</Label>
                                 <Multiselect
                                   options={SelectedClientAreaNeed1}
@@ -815,7 +782,6 @@ for(const object3 of appDetail.skillSet3){
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectIndstry1}
                                   onRemove={this.onRemoveIndustry1}
-                                  // groupBy="areaName"
                                   selectedValues={formField.AreaSkillSet2}
                                   displayValue="areaName"
                                   showCheckbox={true}
@@ -830,7 +796,6 @@ for(const object3 of appDetail.skillSet3){
                                 <Label htmlFor="skillSet2">Skill Set 2</Label>
                                 <Multiselect
                                   options={childList1}
-                                  // groupBy="cat"
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectSubIndstry1}
                                   onRemove={this.onRemoveSubIndustry1}
@@ -865,7 +830,6 @@ for(const object3 of appDetail.skillSet3){
                                   onChange={this.changeHandler}
                                   onSelect={this.onSelectIndstry2}
                                   onRemove={this.onRemoveIndustry2}
-                                  // groupBy="areaName"
                                   selectedValues={formField.AreaSkillSet3}
                                   displayValue="areaName"
                                   showCheckbox={true}
@@ -900,52 +864,6 @@ for(const object3 of appDetail.skillSet3){
                             </Col>  
                           </Row>
                         </Col>
-                        {/* <Col md="4" sm="12">
-                          <h4>Skill Set 2</h4>
-                          <Row>
-                            <Col md="8" sm="6">
-                              <FormGroup>
-                                <Input type="select" name="skillSet2" value={formField.skillSet2} onChange={this.changeHandler}>
-                                  <option value="">Select Skill 2</option>
-                                  {skillList.map((skillInfo, index) =>
-                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
-                                  )} */}
-                                  {/* { ClientAreaNeed.clientArea.map((skillInfo, index) =>
-                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
-                                  )} */}
-                                {/* </Input>
-                              </FormGroup>
-                            </Col>
-                            <Col md="4" sm="6">
-                              <FormGroup>
-                                <Input type="number" name="rateSkill2" value={formField.rateSkill2} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
-                              </FormGroup>
-                            </Col>  
-                          </Row>
-                        </Col> */}
-                        {/* <Col md="4" sm="12">
-                          <h4>Skill Set 3</h4>
-                          <Row>
-                            <Col md="8" sm="6">
-                              <FormGroup>
-                                <Input type="select" name="skillSet3" value={formField.skillSet3} onChange={this.changeHandler}>
-                                  <option value="">Select Skill 3</option>
-                                  {skillList.map((skillInfo, index) =>
-                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
-                                  )} */}
-                                  {/* { ClientAreaNeed.clientArea.map((skillInfo, index) =>
-                                    <SetSkillDropDownItem key={index} skillInfo={skillInfo} />
-                                  )} */}
-                                {/* </Input>
-                              </FormGroup>
-                            </Col>
-                            <Col md="4" sm="6">
-                              <FormGroup>
-                                <Input type="number" name="rateSkill3" value={formField.rateSkill3} placeholder="Rating" min="1" max="5" onChange={this.changeHandler} />
-                              </FormGroup>
-                            </Col>  
-                          </Row>
-                        </Col>   */}
                       </Row>
                     </div>
 
@@ -1026,6 +944,18 @@ for(const object3 of appDetail.skillSet3){
                         <FormGroup>
                           <Label htmlFor="notes">Notes</Label>
                           <Input type="textarea" name="notes" id="notes" value={formField.notes} onChange={this.changeHandler} placeholder="Notes" />
+                        </FormGroup>
+                      </Col>
+                      <Col md={6}>
+                        <FormGroup>
+                          <Label htmlFor="billingPrice">Billing Price ($)</Label>
+                          <Input type="number" name="billingPrice" id="billingPrice" value={formField.billingPrice} onChange={this.changeHandler} placeholder="Billing Price" />
+                        </FormGroup>
+                      </Col>
+                      <Col md={6}>
+                        <FormGroup>
+                          <Label htmlFor="paypalEmail">PayPal Email</Label>
+                          <Input type="email" name="paypalEmail" id="paypalEmail" value={formField.paypalEmail} onChange={this.changeHandler} placeholder="PayPal Email" />
                         </FormGroup>
                       </Col>
                     </Row>
